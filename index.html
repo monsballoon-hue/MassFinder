@@ -401,6 +401,78 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .more-link-pill svg { width: 16px; height: 16px; flex-shrink: 0; }
 .more-footer { text-align: center; padding: var(--space-6) 0 var(--space-4); font-size: var(--text-xs); color: var(--color-text-tertiary); line-height: 1.6; }
 .more-footer a { color: var(--color-info); }
+
+/* SEASONAL BADGE on cards */
+.card-seasonal-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 11px; font-weight: var(--weight-semibold); color: var(--color-verified); background: var(--color-verified-bg); padding: 2px 8px; border-radius: var(--radius-full); }
+
+/* EVENTS WIDGET */
+.events-widget-wrap { max-width: var(--max-width); margin: 0 auto; padding-bottom: var(--space-2); }
+.events-widget-wrap:empty { display: none; }
+.events-widget-header { display: flex; align-items: center; justify-content: space-between; padding: var(--space-3) var(--space-4) var(--space-2); }
+.events-widget-label { font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.06em; }
+.events-widget-seeall { font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--color-accent-text); }
+.events-widget-strip { display: flex; gap: var(--space-3); overflow-x: auto; padding: 0 var(--space-4) var(--space-2); scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.events-widget-strip::-webkit-scrollbar { display: none; }
+.event-mini-card { flex-shrink: 0; width: 172px; background: linear-gradient(135deg,#FBF8F1 0%,#F5EDD8 100%); border-left: 3px solid var(--color-accent); border-radius: var(--radius-md); padding: var(--space-3); cursor: pointer; box-shadow: var(--shadow-card); transition: box-shadow var(--transition-fast); }
+.event-mini-card:hover { box-shadow: var(--shadow-card-hover); }
+.event-mini-fav { display: flex; align-items: center; gap: 3px; font-size: 10px; font-weight: var(--weight-semibold); color: var(--color-fav); margin-bottom: 3px; }
+.event-mini-church { font-size: var(--text-xs); color: var(--color-text-tertiary); margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.event-mini-title { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-text-primary); line-height: 1.3; margin-bottom: var(--space-2); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.event-mini-date { font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--color-accent-text); }
+.event-mini-near { display: inline-flex; align-items: center; gap: 3px; font-size: 10px; color: var(--color-info); font-weight: var(--weight-semibold); margin-bottom: 3px; }
+
+/* SPARSE MESSAGE */
+.sparse-msg { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--space-4) var(--space-2); }
+.sparse-msg-inner { background: var(--color-info-bg); border-radius: var(--radius-md); padding: var(--space-3) var(--space-4); font-size: var(--text-sm); color: var(--color-text-secondary); line-height: 1.5; }
+.sparse-msg-inner button { color: var(--color-info); font-weight: var(--weight-semibold); }
+
+/* DAILY READINGS */
+.reading-day-name { font-size: var(--text-base); font-weight: var(--weight-semibold); color: var(--color-accent-text); margin-bottom: var(--space-4); line-height: 1.3; }
+.reading-entry { padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border-light); }
+.reading-entry:last-child { border-bottom: none; }
+.reading-heading { font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.05em; }
+.reading-ref { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-text-primary); margin-top: 2px; }
+.reading-usccb { display: inline-flex; align-items: center; gap: var(--space-2); margin-top: var(--space-4); padding: var(--space-3) var(--space-4); background: var(--color-info-bg); border-radius: var(--radius-md); font-size: var(--text-sm); color: var(--color-info); font-weight: var(--weight-medium); text-decoration: none; }
+.reading-usccb:hover { text-decoration: none; background: #dbeafe; }
+.reading-loading { font-size: var(--text-sm); color: var(--color-text-tertiary); font-style: italic; }
+
+/* LITURGICAL CALENDAR */
+.litu-event { display: flex; align-items: flex-start; gap: var(--space-4); padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border-light); }
+.litu-event:last-child { border-bottom: none; }
+.litu-date-badge { flex-shrink: 0; background: var(--color-primary); color: white; border-radius: var(--radius-sm); padding: 4px var(--space-2); text-align: center; min-width: 46px; }
+.litu-month { font-size: 10px; font-weight: var(--weight-semibold); text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.75; }
+.litu-day { font-size: var(--text-xl); font-weight: var(--weight-semibold); line-height: 1.2; }
+.litu-name { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-text-primary); }
+.litu-type { font-size: var(--text-xs); color: var(--color-text-tertiary); margin-top: 2px; }
+.litu-soon { display: inline-block; margin-top: 4px; font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--color-accent-text); background: var(--color-accent-pale); padding: 1px 8px; border-radius: var(--radius-full); }
+
+/* DEVOTIONAL CARDS */
+.devot-card { border: 1px solid var(--color-border-light); border-radius: var(--radius-md); margin-bottom: var(--space-3); overflow: hidden; background: var(--color-surface); }
+.devot-card:last-child { margin-bottom: 0; }
+.devot-card summary { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-4); cursor: pointer; list-style: none; font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-text-primary); min-height: 52px; }
+.devot-card summary::-webkit-details-marker { display: none; }
+.devot-icon { font-size: 20px; flex-shrink: 0; width: 28px; text-align: center; }
+.devot-title { flex: 1; }
+.devot-chevron { width: 18px; height: 18px; color: var(--color-text-tertiary); transition: transform 0.2s; flex-shrink: 0; }
+.devot-card[open] .devot-chevron { transform: rotate(180deg); }
+.devot-body { padding: 0 var(--space-4) var(--space-5); font-size: var(--text-sm); color: var(--color-text-secondary); line-height: 1.75; }
+.devot-body p { margin-bottom: var(--space-3); }
+.devot-body p:last-child { margin-bottom: 0; }
+.devot-body strong { color: var(--color-text-primary); font-weight: var(--weight-semibold); }
+.devot-body ol { padding-left: var(--space-5); margin-bottom: var(--space-3); }
+.devot-body ol li { margin-bottom: var(--space-2); }
+.devot-find-link { display: inline-flex; align-items: center; gap: var(--space-2); margin-top: var(--space-3); color: var(--color-info); font-weight: var(--weight-semibold); cursor: pointer; font-size: var(--text-sm); }
+
+/* FEEDBACK FORM */
+.fb-type-grid { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-3); }
+.fb-type-btn { padding: var(--space-2) var(--space-3); border: 1.5px solid var(--color-border); border-radius: var(--radius-full); font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--color-text-secondary); background: var(--color-surface); transition: all var(--transition-fast); min-height: 40px; }
+.fb-type-btn.selected { background: var(--color-primary); color: white; border-color: var(--color-primary); }
+.fb-submit { width: 100%; padding: var(--space-3); border-radius: var(--radius-md); background: var(--color-primary); color: white; font-size: var(--text-sm); font-weight: var(--weight-semibold); min-height: 44px; margin-top: var(--space-3); transition: opacity var(--transition-fast); }
+.fb-submit:disabled { opacity: 0.5; }
+.fb-thanks { text-align: center; padding: var(--space-4); font-size: var(--text-sm); color: var(--color-verified); font-weight: var(--weight-medium); display: none; }
+
+/* SCHEDULE LOCATION BADGE (multi-location detail panel) */
+.schedule-loc-badge { display: inline-flex; align-items: center; font-size: 11px; font-weight: var(--weight-semibold); color: var(--color-primary); background: var(--color-info-bg); border: 1px solid rgba(52,120,198,0.2); padding: 2px 8px; border-radius: var(--radius-full); margin-top: 3px; }
 </style>
 </head>
 <body>
@@ -449,6 +521,8 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
     </button>
   </div>
 
+  <div id="sparseMsg" class="sparse-msg" style="display:none"><div class="sparse-msg-inner">Fewer services on weekdays — <button onclick="document.querySelector('[data-filter=weekend]').click()">try This Weekend</button> for Sunday Mass times.</div></div>
+  <div id="eventsWidget" class="events-widget-wrap"></div>
   <div id="cardList" class="card-list" role="list" aria-label="Churches"></div>
 </main>
 
@@ -468,9 +542,55 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 
 <div id="panelMore" class="tab-panel" role="tabpanel">
   <div class="more-content">
+
+    <!-- EVENTS WIDGET: scoped upcoming events -->
+    <div class="more-section" id="moreEventsWidget" style="display:none">
+      <h2 class="more-section-title">What's Happening</h2>
+      <div id="moreEventsWidgetList"></div>
+    </div>
+
+    <!-- DAILY READINGS -->
+    <div class="more-section">
+      <h2 class="more-section-title">📖 Today's Readings</h2>
+      <div id="readingsContent"><p class="reading-loading">Loading today's readings…</p></div>
+    </div>
+
+    <!-- LITURGICAL CALENDAR -->
+    <div class="more-section">
+      <h2 class="more-section-title">🕊 Upcoming Observances</h2>
+      <div id="liturgicalContent"></div>
+    </div>
+
+    <!-- DEVOTIONAL GUIDES -->
+    <div class="more-section">
+      <h2 class="more-section-title">Faith Guides</h2>
+      <p>Brief guides to common Catholic devotions and services — written for everyone, whether you're returning after a long absence or simply curious.</p>
+      <div id="devotionalCards"></div>
+    </div>
+
+    <!-- FEEDBACK FORM -->
+    <div class="more-section">
+      <h2 class="more-section-title">Share Your Feedback</h2>
+      <p>Help us make MassFinder better. Suggestions, missing features, or anything else on your mind.</p>
+      <div id="feedbackFormWrap">
+        <div class="fb-type-grid" id="fbTypeGrid">
+          <button class="fb-type-btn" onclick="selectFbType(this,'Suggestion')">Suggestion</button>
+          <button class="fb-type-btn" onclick="selectFbType(this,'Missing feature')">Missing feature</button>
+          <button class="fb-type-btn" onclick="selectFbType(this,'Coverage gap')">Coverage gap</button>
+          <button class="fb-type-btn" onclick="selectFbType(this,'Other')">Other</button>
+        </div>
+        <input type="hidden" id="fbType" value="">
+        <textarea id="fbMessage" class="corr-input" rows="3" placeholder="Tell us what's on your mind…"></textarea>
+        <input id="fbEmail" type="email" class="corr-input" placeholder="Email (optional — for follow-up)" style="margin-top:var(--space-2);resize:none">
+        <button class="fb-submit" onclick="submitFeedback()">Send Feedback</button>
+        <div class="fb-thanks" id="fbThanks">Thank you — your feedback means a lot. God bless!</div>
+      </div>
+    </div>
+
+    <!-- ABOUT + CORRECTION -->
     <div class="more-section">
       <h2 class="more-section-title">About MassFinder</h2>
-      <p>MassFinder helps Catholics across Western Massachusetts find Mass times, Confession, Adoration, and other services at churches in the Diocese of Springfield. Flagging an error when you spot one keeps the data accurate for everyone in the community.</p>
+      <p>MassFinder helps Catholics across Western Massachusetts find Mass times, Confession, Adoration, and other services at churches in the Diocese of Springfield. Flagging an error when you spot one keeps the data accurate for everyone.</p>
       <div class="more-links-inline">
         <a class="more-link-pill" href="https://diospringfield.org" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
@@ -482,7 +602,7 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
         </button>
         <a class="more-link-pill" id="moreEventsLink" href="#" style="display:none">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          Upcoming Events
+          Parish Events
         </a>
       </div>
       <div id="moreCorrectionForm" style="display:none;padding:var(--space-4) 0">
@@ -504,8 +624,9 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
       </div>
     </div>
 
+    <!-- PARISH EVENTS -->
     <div class="more-section" id="moreEventsSection" style="display:none">
-      <h2 class="more-section-title">Upcoming Events</h2>
+      <h2 class="more-section-title">Parish Events</h2>
       <div id="moreEventsList"></div>
     </div>
 
@@ -757,6 +878,13 @@ function renderCards(){
   const el=document.getElementById('cardList'),total=allParishes.length,shown=filteredParishes.length;
   const upcoming=getUpcomingYC();
 
+  // Sparse message — show when Today filter returns few results
+  const sparseEl=document.getElementById('sparseMsg');
+  if(sparseEl)sparseEl.style.display=(currentFilter==='today'&&shown<10)?'block':'none';
+
+  // Events widget — show on all/today filters
+  renderEventsWidget();
+
   // YC filter mode — show only YC events
   if(currentFilter==='yc'){
     document.getElementById('resultsCount').textContent=upcoming.length+' upcoming YC event'+(upcoming.length!==1?'s':'');
@@ -771,8 +899,11 @@ function renderCards(){
   if(!shown&&!upcoming.length){el.innerHTML='<div class="no-results"><h3>No churches found</h3><p>Try adjusting your search or filters.</p></div>';return}
 
   const checkSvg='<svg class="card-verified" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>';
+  const lent=isLentSeason();
   let cards=filteredParishes.map((item,i)=>{
     const p=item.parish,next=item.next,dist=item.distance,tag=getTag(p,next),ver=isVer(p),fav=isFav(p.id),d=Math.min(i*25,250);
+    // Seasonal badge: show 🌿 Lenten Services badge during Lent for parishes that have them
+    const hasLent=lent&&p.services.some(s=>s.seasonal&&s.seasonal.season==='lent');
     let nh;if(next){nh='<div class="card-next-service"><span class="card-next-time">'+next.timeFormatted+'</span><span class="card-next-label">'+esc(SVC[next.service.type]||next.service.type)+'</span>'+(next.isSoon?'<span class="card-soon-badge"><span class="pulse-dot"></span>Soon</span>':'')+'</div><div class="card-next-day">'+next.dayLabel+'</div>'}
     else{nh='<div class="card-next-service"><span class="card-next-label" style="color:var(--color-text-tertiary)">Check bulletin for times</span></div>'}
     return '<article class="parish-card" role="listitem" style="animation-delay:'+d+'ms" onclick="openDetail(\''+p.id+'\')">'
@@ -780,7 +911,7 @@ function renderCards(){
       +'<div class="card-right">'+(dist!==null?'<span class="card-distance">'+fmtDist(dist)+'</span>':'')
       +'<button class="card-fav'+(fav?' is-fav':'')+'" onclick="toggleFav(\''+p.id+"',event)\" aria-label=\"Favorite\"><svg viewBox=\"0 0 24 24\" fill=\""+(fav?'currentColor':'none')+"\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z\"/></svg></button>"
       +'</div></div><div class="card-town">'+esc(p.town)+', '+esc(p.county)+' County</div>'+nh
-      +(tag?'<div class="card-tags"><span class="card-tag '+tag.c+'">'+tag.t+'</span></div>':'')
+      +(tag||hasLent?'<div class="card-tags">'+(tag?'<span class="card-tag '+tag.c+'">'+tag.t+'</span>':'')+(hasLent?'<span class="card-seasonal-badge">🌿 Lenten services</span>':'')+'</div>':'')
       +'</article>';
   });
 
@@ -864,8 +995,12 @@ function openDetail(id){
       +'</button><div class="accordion-body'+(isFirst?' open':'')+'"><div class="accordion-body-inner">'+renderSched(svcs,locL,ml,sec.types)+'</div></div></div>';
   }
 
-  // Multi-loc note
-  let mlNote='';if(ml)mlNote='<div style="padding:var(--space-4) 0 0;font-size:var(--text-xs);color:var(--color-text-tertiary)"><strong>Worship sites:</strong> '+p.locations.map(l=>esc(l.short_name||l.name)).join(' · ')+'</div>';
+  // Multi-loc note — promoted to a visible legend strip
+  let mlNote='';
+  if(ml)mlNote='<div style="margin:var(--space-2) 0;padding:var(--space-3) var(--space-4);background:var(--color-info-bg);border-radius:var(--radius-md);display:flex;flex-wrap:wrap;gap:var(--space-2);align-items:center">'
+    +'<span style="font-size:var(--text-xs);font-weight:var(--weight-semibold);color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:0.05em;flex-shrink:0">Worship sites</span>'
+    +p.locations.map(l=>'<span style="font-size:var(--text-xs);font-weight:var(--weight-semibold);color:var(--color-primary);background:white;border:1px solid rgba(52,120,198,0.2);padding:2px 10px;border-radius:var(--radius-full)">'+esc(l.short_name||l.name)+'</span>').join('')
+    +'</div>';
 
   // Verify prompt + correction form + footer
   const vp='<div class="verify-prompt" id="verifyPrompt"><p>Were these times accurate when you last visited?</p><div class="verify-prompt-btns"><button class="verify-btn yes" onclick="verifyOk(true)">✓ Yes, looks right</button><button class="verify-btn no" onclick="showCorrectionForm()">Not quite</button></div></div>'
@@ -1137,7 +1272,7 @@ function renderSched(svcs,locL,ml,sectionTypes){
 
     let meta='';
     if(dayLabel)meta+='<div class="schedule-location" style="font-weight:var(--weight-medium)">'+esc(dayLabel)+'</div>';
-    if(loc)meta+='<div class="schedule-location">'+esc(loc)+'</div>';
+    if(loc)meta+='<span class="schedule-loc-badge">'+esc(loc)+'</span>';
     if(showTypeLabel)meta+='<div class="schedule-location">'+esc(tl)+'</div>';
     if(note)meta+='<div class="schedule-note">'+esc(note)+'</div>';
     if(merged)meta+='<div class="schedule-note">'+esc(merged)+'</div>';
@@ -1450,12 +1585,278 @@ function renderSaved(){
 }
 
 // ============================================================
+// EVENTS WIDGET (Find tab — scoped YC events)
+// ============================================================
+function renderEventsWidget(){
+  const el=document.getElementById('eventsWidget');
+  if(!el)return;
+  // Only show on all/today filters
+  if(!['all','today'].includes(currentFilter)){el.innerHTML='';return}
+  const upcoming=getUpcomingYC();
+  if(!upcoming.length){el.innerHTML='';return}
+
+  // Priority: favorites first, then within 10 miles, then rest
+  const favSet=new Set(favorites);
+  const favEvents=upcoming.filter(e=>favSet.has(e.parish_id));
+  const nearEvents=upcoming.filter(e=>{
+    if(favSet.has(e.parish_id))return false;
+    const p=allParishes.find(x=>x.id===e.parish_id);
+    if(!p)return false;
+    const d=getDist(p);
+    return d!==null&&d<=10;
+  });
+  const rest=upcoming.filter(e=>!favSet.has(e.parish_id)&&!nearEvents.includes(e));
+  const ordered=[...favEvents,...nearEvents,...rest].slice(0,6);
+  if(!ordered.length){el.innerHTML='';return}
+
+  const cards=ordered.map((e,i)=>{
+    const r=resolveYC(e);
+    const isFavE=favSet.has(e.parish_id);
+    const dist=r.parishName?getDist(allParishes.find(x=>x.id===e.parish_id)):null;
+    const isNear=!isFavE&&dist!==null&&dist<=10;
+    const indicator=isFavE?'<div class="event-mini-fav">♥ Saved church</div>':isNear?'<div class="event-mini-near">📍 '+fmtDist(dist)+' away</div>':'';
+    return '<div class="event-mini-card" onclick="openDetail(\''+e.parish_id+'\')">'
+      +indicator
+      +'<div class="event-mini-church">'+esc(r.locName||r.parishName)+'</div>'
+      +'<div class="event-mini-title">'+esc(e.title)+'</div>'
+      +'<div class="event-mini-date">'+fmtYCDate(e.date)+'</div>'
+      +'</div>';
+  }).join('');
+
+  const seeAll=upcoming.length>6?'<button class="events-widget-seeall" onclick="document.querySelector(\'[data-filter=yc]\').click()">See all '+upcoming.length+' →</button>':'';
+  el.innerHTML='<div class="events-widget-header"><span class="events-widget-label">Upcoming Events</span>'+seeAll+'</div>'
+    +'<div class="events-widget-strip">'+cards+'</div>';
+}
+
+// ============================================================
+// LITURGICAL CALENDAR
+// ============================================================
+function getLiturgicalEvents(){
+  const now=getNow();
+  const today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  const events=[];
+
+  // Generate for current year and next
+  [now.getFullYear(), now.getFullYear()+1].forEach(year=>{
+    const easter=getEaster(year);
+    function easterOffset(days){const d=new Date(easter);d.setDate(d.getDate()+days);return d}
+    function fixed(m,d){return new Date(year,m-1,d)}
+
+    const cal=[
+      {date:easterOffset(-46),name:'Ash Wednesday',type:'Beginning of Lent'},
+      {date:fixed(3,19),name:'St. Joseph',type:'Solemnity'},
+      {date:fixed(3,25),name:'Annunciation',type:'Solemnity'},
+      {date:easterOffset(-7),name:'Palm Sunday',type:'Beginning of Holy Week'},
+      {date:easterOffset(-3),name:'Holy Thursday',type:'Mass of the Lord\'s Supper'},
+      {date:easterOffset(-2),name:'Good Friday',type:'Celebration of the Passion'},
+      {date:easterOffset(0),name:'Easter Sunday',type:'Solemnity — Holy Day of Obligation'},
+      {date:easterOffset(7),name:'Divine Mercy Sunday',type:'Feast'},
+      {date:easterOffset(39),name:'Ascension Thursday',type:'Holy Day of Obligation'},
+      {date:easterOffset(49),name:'Pentecost Sunday',type:'Solemnity'},
+      {date:fixed(8,15),name:'Assumption of Mary',type:'Holy Day of Obligation'},
+      {date:fixed(11,1),name:'All Saints\' Day',type:'Holy Day of Obligation'},
+      {date:fixed(12,8),name:'Immaculate Conception',type:'Holy Day of Obligation'},
+      {date:fixed(12,25),name:'Christmas',type:'Holy Day of Obligation'},
+      {date:fixed(1,1),name:'Mary, Mother of God',type:'Holy Day of Obligation'},
+    ];
+    events.push(...cal);
+  });
+
+  // Filter to future events, sort by date, return next 3
+  return events
+    .filter(e=>e.date>=today)
+    .sort((a,b)=>a.date-b.date)
+    .slice(0,3)
+    .map(e=>{
+      const diff=Math.round((e.date-today)/(1000*60*60*24));
+      return{...e,daysAway:diff};
+    });
+}
+
+// ============================================================
+// DAILY READINGS (Universalis API)
+// ============================================================
+async function fetchReadings(){
+  const el=document.getElementById('readingsContent');
+  if(!el)return;
+  const now=getNow();
+  const yyyymmdd=now.getFullYear()+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0');
+  const usccbUrl='https://bible.usccb.org/bible/readings/'+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0')+now.getFullYear().toString().slice(2)+'.cfm';
+
+  try{
+    const resp=await fetch('https://universalis.com/US/'+yyyymmdd+'/Mass.json',{signal:AbortSignal.timeout(6000)});
+    if(!resp.ok)throw new Error('status '+resp.status);
+    const data=await resp.json();
+
+    // Extract day name
+    const dayName=data.day||(data.Mass&&data.Mass.dayname)||'';
+
+    // Extract readings — Universalis returns them as numbered properties or an array
+    let readings=[];
+    const src=data.Readings||data.Mass?.Readings||data.Mass?.readings||[];
+    if(Array.isArray(src)){
+      readings=src.filter(r=>r.heading||r.subheading||r.ref);
+    } else if(typeof src==='object'){
+      readings=Object.values(src).filter(r=>r&&(r.heading||r.subheading));
+    }
+
+    if(!readings.length&&!dayName)throw new Error('no usable data');
+
+    let html='';
+    if(dayName)html+='<div class="reading-day-name">'+esc(dayName)+'</div>';
+    if(readings.length){
+      html+=readings.map(r=>{
+        const heading=r.heading||'';
+        const ref=r.subheading||r.ref||'';
+        return '<div class="reading-entry">'
+          +(heading?'<div class="reading-heading">'+esc(heading)+'</div>':'')
+          +(ref?'<div class="reading-ref">'+esc(ref)+'</div>':'')
+          +'</div>';
+      }).join('');
+    }
+    html+='<a class="reading-usccb" href="'+usccbUrl+'" target="_blank" rel="noopener">'
+      +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="16" height="16"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>'
+      +'Read full readings at USCCB</a>';
+    el.innerHTML=html;
+  } catch(e){
+    // Fallback: show USCCB link only
+    el.innerHTML='<a class="reading-usccb" href="'+usccbUrl+'" target="_blank" rel="noopener">'
+      +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="16" height="16"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>'
+      +"Read today's readings at USCCB.org</a>";
+  }
+}
+
+// ============================================================
+// DEVOTIONAL CONTENT
+// ============================================================
+const DEVOTIONAL_GUIDES=[
+  {icon:'📿',title:'How to pray the Rosary',body:`
+<p>The Rosary is a meditative prayer built around 20 mysteries — events in the lives of Jesus and Mary — divided into four sets: Joyful, Luminous, Sorrowful, and Glorious. A traditional weekly rotation is Joyful on Monday and Saturday, Luminous on Thursday, Sorrowful on Tuesday and Friday, and Glorious on Wednesday and Sunday.</p>
+<p>To pray the Rosary: begin with the <strong>Apostles' Creed</strong> on the crucifix, then one <strong>Our Father</strong>, three <strong>Hail Marys</strong>, and a <strong>Glory Be</strong> on the introductory beads. For each of the five decades, announce the mystery you're meditating on, pray one Our Father, ten Hail Marys, and a Glory Be. Close with the <strong>Hail, Holy Queen</strong>.</p>
+<p>The power of the Rosary lies less in the words and more in the quiet meditation on the mysteries. It's fine to start slowly — even one decade is a good beginning.</p>
+  `},
+  {icon:'🕯️',title:'What is Adoration?',body:`
+<p><strong>Eucharistic Adoration</strong> is time spent in prayer before the Blessed Sacrament — the consecrated host — which Catholics believe is truly the Body of Christ. The host is placed in a vessel called a monstrance and displayed on the altar. You simply sit, kneel, or stand in its presence.</p>
+<p>There's no required prayer or posture. Many people read Scripture, pray the Rosary, journal, or simply sit in silence. Adoration chapels are typically quiet spaces open for individual prayer, sometimes for extended hours.</p>
+<p>If a parish offers <strong>Perpetual Adoration</strong>, it means the chapel is open 24 hours a day, 7 days a week, kept continuous by volunteers who sign up for hourly slots. Many people find regular Adoration to be the most transformative spiritual practice of their week.</p>
+  `,filter:'adoration'},
+  {icon:'☩',title:'How to go to Confession',body:`
+<p>Confession — also called the Sacrament of Reconciliation — is how Catholics receive forgiveness for serious sins committed after Baptism. It's available to all baptized Catholics in good standing. If you've been away for a long time, a gentle priest will be happy to help you through it.</p>
+<p>The basic steps:</p>
+<ol>
+<li><strong>Examination of conscience</strong> — Quietly reflect on your actions since your last Confession. A simple guide: think through the Ten Commandments and ask where you've fallen short.</li>
+<li><strong>Enter the confessional</strong> — You can kneel behind a screen or sit face to face with the priest. Begin: "Bless me, Father, for I have sinned. It has been [length of time] since my last Confession."</li>
+<li><strong>Confess your sins</strong> — Speak honestly. You don't need to be eloquent. The priest may offer gentle guidance.</li>
+<li><strong>Act of Contrition</strong> — Express sorrow for your sins. A traditional prayer: "O my God, I am heartily sorry…" or simply your own sincere words.</li>
+<li><strong>Absolution</strong> — The priest pronounces absolution. Your sins are forgiven.</li>
+<li><strong>Penance</strong> — Complete the prayer or act the priest assigns, usually shortly after leaving.</li>
+</ol>
+<p>If you're nervous, that's normal. The confessional is one of the most merciful places in the world.</p>
+  `,filter:'confession'},
+  {icon:'🌊',title:'What is the Divine Mercy Chaplet?',body:`
+<p>The Divine Mercy Chaplet is a short prayer given to St. Faustina Kowalska in the 1930s, centred on trust in God's mercy. It is prayed on ordinary Rosary beads and takes about 10–15 minutes.</p>
+<p>Begin with one <strong>Our Father</strong>, one <strong>Hail Mary</strong>, and the <strong>Apostles' Creed</strong>. On each large bead, pray: <em>"Eternal Father, I offer You the Body and Blood, Soul and Divinity of Your dearly beloved Son, Our Lord Jesus Christ, in atonement for our sins and those of the whole world."</em> On each small bead: <em>"For the sake of His sorrowful Passion, have mercy on us and on the whole world."</em> Conclude with: <em>"Holy God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world"</em> — said three times.</p>
+<p>The traditional time for this prayer is 3:00 PM — the Hour of Mercy — marking the time of Christ's death. Many parishes offer a communal chaplet at this hour during Adoration.</p>
+  `},
+  {icon:'✝️',title:'Stations of the Cross',body:`
+<p>The Stations of the Cross are 14 moments from Christ's Passion and death, traditionally prayed by moving through a series of images or carvings placed around the walls of a church. The practice originated as a way for people who could not travel to Jerusalem to walk the Via Dolorosa spiritually.</p>
+<p>The 14 stations: <strong>1.</strong> Jesus is condemned to death. <strong>2.</strong> Jesus takes up His cross. <strong>3.</strong> He falls the first time. <strong>4.</strong> He meets His Mother. <strong>5.</strong> Simon of Cyrene helps carry the cross. <strong>6.</strong> Veronica wipes His face. <strong>7.</strong> He falls a second time. <strong>8.</strong> He meets the women of Jerusalem. <strong>9.</strong> He falls a third time. <strong>10.</strong> He is stripped of His garments. <strong>11.</strong> He is nailed to the cross. <strong>12.</strong> He dies on the cross. <strong>13.</strong> He is taken down. <strong>14.</strong> He is laid in the tomb.</p>
+<p>Stations are prayed most often on Fridays during Lent, either privately or as a parish group. They typically take 20–30 minutes. Many parishes hold them at noon or in the early evening. Look for them under the Lent chip filter on the Find tab.</p>
+  `,filter:'lent'},
+  {icon:'⛪',title:'The Sunday Obligation',body:`
+<p>Catholics are obligated to attend Mass on Sundays and Holy Days of Obligation. This isn't a legalistic rule but a recognition that the Sunday Eucharist is the heartbeat of Catholic life — where the community gathers, hears the Word, and receives Christ in the Eucharist.</p>
+<p>The obligation is fulfilled by attending any valid Mass from Saturday evening through Sunday. A <strong>Saturday Vigil Mass</strong> — offered at most parishes in the late afternoon or evening — fully satisfies the Sunday obligation. The Vigil begins after 4:00 PM in most dioceses.</p>
+<p>A <strong>Communion Service</strong> (labeled "no priest" in this app) does not fulfill the Sunday obligation. It is a meaningful prayer service, but it is not a Mass and does not include the Eucharist consecrated by a priest.</p>
+<p><strong>Holy Days of Obligation</strong> in the United States: Christmas (Dec. 25), Mary, Mother of God (Jan. 1), Ascension Thursday (or Sunday, depending on the diocese), Assumption (Aug. 15), All Saints' Day (Nov. 1), and the Immaculate Conception (Dec. 8).</p>
+  `},
+  {icon:'🙏',title:'What is a Novena?',body:`
+<p>A Novena is nine consecutive days of prayer for a specific intention — the name comes from the Latin <em>novem</em>, meaning nine. The practice traces back to the nine days the apostles and Mary prayed together between the Ascension and Pentecost.</p>
+<p>Novenas can be prayed privately at any time, or communally at a parish. Common novenas include the <strong>Novena to the Holy Spirit</strong> (before Pentecost), the <strong>Divine Mercy Novena</strong> (beginning Good Friday), and novenas to specific saints like St. Joseph, St. Anthony, or Our Lady of Guadalupe.</p>
+<p>To begin a novena, simply choose a prayer — many are available in prayer books or online — commit to praying it on nine consecutive days, and bring your intention before God with trust. The power of a novena is less in the number of days and more in the sustained, intentional attention you bring to prayer.</p>
+  `},
+];
+
+// ============================================================
+// FEEDBACK (Formspree)
+// ============================================================
+let _fbType='';
+function selectFbType(btn,val){
+  document.querySelectorAll('#fbTypeGrid .fb-type-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');_fbType=val;
+  document.getElementById('fbType').value=val;
+}
+async function submitFeedback(){
+  const msg=document.getElementById('fbMessage').value.trim();
+  const email=document.getElementById('fbEmail').value.trim();
+  if(!_fbType){document.getElementById('fbTypeGrid').style.outline='2px solid var(--color-error)';return}
+  if(!msg){document.getElementById('fbMessage').style.borderColor='var(--color-error)';return}
+  // REPLACE the URL below with your Formspree endpoint after creating a form at formspree.io
+  const FORMSPREE_URL='https://formspree.io/f/YOUR_FORM_ID';
+  try{
+    await fetch(FORMSPREE_URL,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({type:_fbType,message:msg,email:email||'(not provided)'})});
+  }catch(e){/* still show thanks */}
+  document.getElementById('feedbackFormWrap').style.display='none';
+  document.getElementById('fbThanks').style.display='block';
+}
+
+// ============================================================
 // MORE TAB
 // ============================================================
 function renderMore(){
   const langCount=new Set();allParishes.forEach(p=>p.services.forEach(s=>{if(s.language)langCount.add(s.language)}));
 
-  // Events
+  // Scoped events widget in More tab
+  const upcoming=getUpcomingYC();
+  const favSet=new Set(favorites);
+  const moreWidgetEl=document.getElementById('moreEventsWidget');
+  const moreWidgetList=document.getElementById('moreEventsWidgetList');
+  if(moreWidgetEl&&moreWidgetList&&upcoming.length){
+    const favEvts=upcoming.filter(e=>favSet.has(e.parish_id));
+    const nearEvts=upcoming.filter(e=>{
+      if(favSet.has(e.parish_id))return false;
+      const p=allParishes.find(x=>x.id===e.parish_id);
+      return p&&getDist(p)!==null&&getDist(p)<=10;
+    });
+    const showEvts=[...favEvts,...nearEvts,...upcoming.filter(e=>!favSet.has(e.parish_id)&&!nearEvts.includes(e))].slice(0,5);
+    if(showEvts.length){
+      moreWidgetEl.style.display='block';
+      moreWidgetList.innerHTML=showEvts.map((e,i)=>renderYCCard(e,0,i)).join('');
+      if(upcoming.length>5)moreWidgetList.innerHTML+='<div style="text-align:center;padding:var(--space-2) 0"><button style="font-size:var(--text-sm);font-weight:var(--weight-semibold);color:var(--color-accent-text);padding:var(--space-2) var(--space-4)" onclick="document.querySelector(\'[data-filter=yc]\').click();switchTab(\'panelFind\',document.querySelector(\'[data-tab=panelFind]\'))">See all '+upcoming.length+' YC events →</button></div>';
+    }
+  }
+
+  // Liturgical calendar
+  const lituEl=document.getElementById('liturgicalContent');
+  if(lituEl){
+    const evts=getLiturgicalEvents();
+    if(evts.length){
+      const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      lituEl.innerHTML=evts.map(e=>{
+        const soon=e.daysAway<=7?'<span class="litu-soon">'+(e.daysAway===0?'Today':e.daysAway===1?'Tomorrow':'In '+e.daysAway+' days')+'</span>':'';
+        return '<div class="litu-event">'
+          +'<div class="litu-date-badge"><div class="litu-month">'+months[e.date.getMonth()]+'</div><div class="litu-day">'+e.date.getDate()+'</div></div>'
+          +'<div><div class="litu-name">'+esc(e.name)+'</div><div class="litu-type">'+esc(e.type)+'</div>'+soon+'</div>'
+          +'</div>';
+      }).join('');
+    } else {
+      lituEl.innerHTML='<p style="font-size:var(--text-sm);color:var(--color-text-tertiary)">No upcoming observances in the next few weeks.</p>';
+    }
+  }
+
+  // Devotional guides
+  const devotEl=document.getElementById('devotionalCards');
+  if(devotEl){
+    const chevSvg='<svg class="devot-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>';
+    devotEl.innerHTML=DEVOTIONAL_GUIDES.map(g=>{
+      const findLink=g.filter?'<div class="devot-find-link" onclick="switchTab(\'panelFind\',document.querySelector(\'[data-tab=panelFind]\'));document.querySelector(\'[data-filter='+g.filter+']\')?.click()">Find '+g.title.split(' ').pop()+' near me →</div>':'';
+      return '<details class="devot-card"><summary><span class="devot-icon">'+g.icon+'</span><span class="devot-title">'+esc(g.title)+'</span>'+chevSvg+'</summary>'
+        +'<div class="devot-body">'+g.body+findLink+'</div>'
+        +'</details>';
+    }).join('');
+  }
+
+  // Parish events
   const allEvents=[];
   allParishes.forEach(p=>{
     (p.special_events||[]).forEach(e=>{
@@ -1469,7 +1870,6 @@ function renderMore(){
       e.preventDefault();
       document.getElementById('moreEventsSection').scrollIntoView({behavior:'smooth'});
     };
-    // Store events for calendar export
     const shown=allEvents.slice(0,10);
     window._moreEvents=shown;
     document.getElementById('moreEventsList').innerHTML=shown.map((e,idx)=>{
@@ -1477,22 +1877,25 @@ function renderMore(){
       const dist=p?getDist(p):null;
       const distBadge=dist!==null?'<span style="font-size:var(--text-xs);color:var(--color-text-tertiary);margin-left:var(--space-1)">· '+fmtDist(dist)+'</span>':'';
       return '<div style="padding:var(--space-3) 0;border-bottom:1px solid var(--color-border-light);display:flex;align-items:flex-start;gap:var(--space-3)">'
-      +'<div style="flex:1;min-width:0">'
-      +'<div style="font-size:var(--text-base);font-weight:var(--weight-semibold);color:var(--color-text-primary)">'+esc(e.title)+'</div>'
-      +'<div style="font-size:var(--text-sm);color:var(--color-text-secondary)">'+esc(e.parishName)+distBadge+'</div>'
-      +'<div style="font-size:var(--text-xs);color:var(--color-text-tertiary);margin-top:2px">'
-      +(e.day?esc((DAY_NAMES[e.day]||e.day)):'')+' '+(e.time?fmt12(e.time):'')
-      +(e.frequency&&e.frequency!=='one_time'?' · '+esc(e.frequency):'')
-      +'</div>'
-      +(e.notes?'<div style="font-size:var(--text-xs);color:var(--color-text-tertiary);font-style:italic;margin-top:2px">'+esc(e.notes)+'</div>':'')
-      +'</div>'
-      +(e.time?'<button onclick="addMoreEventToCal('+idx+')" style="background:none;border:1.5px solid var(--color-border);border-radius:var(--radius-sm);padding:6px;min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--color-text-tertiary);flex-shrink:0" aria-label="Add to calendar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="18" height="18"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="12" y1="14" x2="12" y2="18"/><line x1="10" y1="16" x2="14" y2="16"/></svg></button>':'')
-      +'</div>';
+        +'<div style="flex:1;min-width:0">'
+        +'<div style="font-size:var(--text-base);font-weight:var(--weight-semibold);color:var(--color-text-primary)">'+esc(e.title)+'</div>'
+        +'<div style="font-size:var(--text-sm);color:var(--color-text-secondary)">'+esc(e.parishName)+distBadge+'</div>'
+        +'<div style="font-size:var(--text-xs);color:var(--color-text-tertiary);margin-top:2px">'
+        +(e.day?esc((DAY_NAMES[e.day]||e.day)):'')+' '+(e.time?fmt12(e.time):'')
+        +(e.frequency&&e.frequency!=='one_time'?' · '+esc(e.frequency):'')
+        +'</div>'
+        +(e.notes?'<div style="font-size:var(--text-xs);color:var(--color-text-tertiary);font-style:italic;margin-top:2px">'+esc(e.notes)+'</div>':'')
+        +'</div>'
+        +(e.time?'<button onclick="addMoreEventToCal('+idx+')" style="background:none;border:1.5px solid var(--color-border);border-radius:var(--radius-sm);padding:6px;min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--color-text-tertiary);flex-shrink:0" aria-label="Add to calendar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="18" height="18"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="12" y1="14" x2="12" y2="18"/><line x1="10" y1="16" x2="14" y2="16"/></svg></button>':'')
+        +'</div>';
     }).join('')+(allEvents.length>10?'<div style="padding:var(--space-3);font-size:var(--text-sm);color:var(--color-text-tertiary)">And '+(allEvents.length-10)+' more events across the diocese.</div>':'');
   }
 
   // Footer
   document.getElementById('moreFooter').innerHTML='MassFinder v2.0<br>Data source: <a href="https://diospringfield.org" target="_blank" rel="noopener">Diocese of Springfield, MA</a><br>'+langCount.size+' languages · 4 counties · Last updated Feb 2026';
+
+  // Trigger readings fetch async
+  fetchReadings();
 }
 
 // Chips
@@ -1592,7 +1995,11 @@ function esc(s){const d=document.createElement('div');d.textContent=s||'';return
 async function init(){
   loadFav();
   try{
-    const r=await fetch('parish_data.json'),data=await r.json();
+    const controller=new AbortController();
+    const timeout=setTimeout(()=>controller.abort(),8000);
+    const r=await fetch('parish_data.json',{signal:controller.signal});
+    clearTimeout(timeout);
+    const data=await r.json();
     allParishes=(data.parishes||[]).filter(p=>p.status==='active');
     ycEvents=(data.yc_events||[]).sort((a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time));
     // Show Lent chip if currently in Lent season
@@ -1604,7 +2011,11 @@ async function init(){
     updateSortLabel();checkLoc();filterParishes();renderCards();
     // Deep link: #parish_001 opens that church's detail
     if(location.hash){const id=location.hash.slice(1);if(allParishes.find(p=>p.id===id))setTimeout(()=>openDetail(id),400)}
-  }catch(err){console.error(err);document.getElementById('cardList').innerHTML='<div class="no-results"><h3>Unable to load churches</h3><p>Please check your connection and try refreshing.</p></div>'}
+  }catch(err){
+    const isTimeout=err.name==='AbortError';
+    document.getElementById('cardList').innerHTML='<div class="no-results"><h3>'+(isTimeout?'Connection timed out':'Unable to load churches')+'</h3><p>'+(isTimeout?'Check your signal and try again.':'Please check your connection and try refreshing.')+'</p><button onclick="init()" style="margin-top:var(--space-4);padding:var(--space-3) var(--space-6);border-radius:var(--radius-md);background:var(--color-primary);color:white;font-size:var(--text-sm);font-weight:var(--weight-semibold);min-height:44px">Try Again</button></div>';
+    console.error(err);
+  }
 }
 init();
 </script>
