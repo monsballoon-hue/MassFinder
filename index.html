@@ -1304,6 +1304,7 @@ function renderSched(svcs,locL,ml,sectionTypes){
     if(dayLabel)meta+='<div class="schedule-location" style="font-weight:var(--weight-medium)">'+esc(dayLabel)+'</div>';
     if(loc)meta+='<span class="schedule-loc-badge">'+esc(loc)+'</span>';
     if(showTypeLabel)meta+='<div class="schedule-location">'+esc(tl)+'</div>';
+    if(s.type==='communion_service')meta+='<div class="schedule-note" style="font-style:italic;color:var(--color-text-tertiary)">(Communion Service — not a Mass)</div>';
     if(note)meta+='<div class="schedule-note">'+esc(note)+'</div>';
     if(merged)meta+='<div class="schedule-note">'+esc(merged)+'</div>';
     if(s.times_vary)meta+='<div class="schedule-note">Times may vary — check bulletin</div>';
@@ -2055,7 +2056,16 @@ async function init(){
     const r=await fetch('parish_data.json',{signal:controller.signal});
     clearTimeout(timeout);
     const data=await r.json();
-    allParishes=(data.parishes||[]).filter(p=>p.status==='active');
+    allParishes=(data.parishes||[]).filter(p=>p.status==='active'&&(!p.validation||p.validation.status!=='excluded'));
+    // Filter out inactive/not-yet-active services
+    const today = new Date().toISOString().slice(0, 10);
+    allParishes.forEach(p => {
+      p.services = (p.services || []).filter(s => {
+        if (s.status === 'inactive' && s.end_date && s.end_date <= today) return false;
+        if (s.effective_date && s.effective_date > today) return false;
+        return true;
+      });
+    });
     ycEvents=(data.yc_events||[]).sort((a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time));
     // Show Lent chip if currently in Lent season
     const lentChip=document.getElementById('lentChip');
