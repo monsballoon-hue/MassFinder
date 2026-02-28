@@ -180,9 +180,9 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .no-results p { font-size: var(--text-sm); color: var(--color-text-tertiary); }
 
 /* DETAIL PANEL */
-.detail-backdrop { position: fixed; inset: 0; z-index: 200; background: rgba(26,30,38,0.4); opacity: 0; pointer-events: none; transition: opacity 0.3s var(--ease-out); }
+.detail-backdrop { position: fixed; inset: 0; z-index: 1000; background: rgba(26,30,38,0.4); opacity: 0; pointer-events: none; transition: opacity 0.3s var(--ease-out); }
 .detail-backdrop.open { opacity: 1; pointer-events: auto; }
-.detail-panel { position: fixed; bottom: 0; left: 0; right: 0; z-index: 201; background: var(--color-surface); border-radius: var(--radius-lg) var(--radius-lg) 0 0; max-height: 92vh; max-height: 92dvh; overflow-y: auto; -webkit-overflow-scrolling: touch; transform: translateY(100%); transition: transform 0.35s var(--ease-out); box-shadow: var(--shadow-elevated); overscroll-behavior: contain; }
+.detail-panel { position: fixed; bottom: 0; left: 0; right: 0; z-index: 1001; background: var(--color-surface); border-radius: var(--radius-lg) var(--radius-lg) 0 0; max-height: 92vh; max-height: 92dvh; overflow-y: auto; -webkit-overflow-scrolling: touch; transform: translateY(100%); transition: transform 0.35s var(--ease-out); box-shadow: var(--shadow-elevated); overscroll-behavior: contain; }
 .detail-panel.open { transform: translateY(0); }
 @media (min-width: 768px) { .detail-panel { left: 50%; right: auto; width: 100%; max-width: var(--max-width); transform: translate(-50%, 100%); } .detail-panel.open { transform: translate(-50%, 0); } }
 .detail-handle { display: flex; justify-content: center; padding: var(--space-3) 0 var(--space-1); position: sticky; top: 0; background: var(--color-surface); z-index: 2; border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
@@ -256,7 +256,7 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .detail-verified-footer { margin-top: var(--space-4); padding-top: var(--space-3); border-top: 1px solid var(--color-border-light); font-size: var(--text-xs); color: var(--color-text-tertiary); }
 
 /* MORE FILTERS OVERLAY */
-.filters-overlay { position: fixed; inset: 0; z-index: 300; background: var(--color-surface); transform: translateY(100%); transition: transform 0.35s var(--ease-out); overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.filters-overlay { position: fixed; inset: 0; z-index: 1100; background: var(--color-surface); transform: translateY(100%); transition: transform 0.35s var(--ease-out); overflow-y: auto; -webkit-overflow-scrolling: touch; }
 .filters-overlay.open { transform: translateY(0); }
 .filters-header { display: flex; align-items: center; justify-content: space-between; padding: var(--space-4) var(--space-5); border-bottom: 1px solid var(--color-border-light); position: sticky; top: 0; background: var(--color-surface); z-index: 2; }
 .filters-header h2 { font-family: var(--font-display); font-size: var(--text-xl); font-weight: var(--weight-semibold); }
@@ -308,6 +308,8 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
   .parish-card { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
 }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+.skip-link { position: absolute; top: -100%; left: 0; padding: 8px 16px; background: var(--color-primary); color: white; z-index: 999; font-size: var(--text-sm); font-weight: var(--weight-semibold); text-decoration: none; border-radius: 0 0 var(--radius-sm) 0; }
+.skip-link:focus { position: fixed; top: 0; left: 0; outline: 2px solid var(--color-accent); outline-offset: 2px; }
 
 /* MAP TAB */
 #mapContainer { width: 100%; height: calc(100vh - 64px - 56px); height: calc(100dvh - 64px - 56px); }
@@ -380,7 +382,7 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 </style>
 </head>
 <body>
-<a href="#panelFind" class="sr-only" style="position:absolute;top:0;left:0;padding:8px 16px;background:var(--color-primary);color:white;z-index:999;clip:auto;width:auto;height:auto;margin:0" onfocus="this.style.position='fixed'" onblur="this.style.position='absolute'">Skip to content</a>
+<a href="#panelFind" class="skip-link">Skip to content</a>
 
 <header class="top-header"><div class="top-header-inner"><div class="header-logo">
   <div class="header-logo-cross"><svg viewBox="0 0 16 16" fill="none"><rect x="6.5" y="1" width="3" height="14" rx="1" fill="#B8963F"/><rect x="1" y="5.5" width="14" height="3" rx="1" fill="#B8963F"/></svg></div>
@@ -487,7 +489,7 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
   <div id="detailContent"></div>
 </div>
 
-<div id="filtersOverlay" class="filters-overlay">
+<div id="filtersOverlay" class="filters-overlay" role="dialog" aria-modal="true" aria-label="Filter options">
   <div class="filters-header">
     <h2>Filters</h2>
     <button class="filters-close" onclick="closeMoreFilters()" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
@@ -787,11 +789,20 @@ function openDetail(id){
   document.body.style.overflow='hidden';
   document.getElementById('detailPanel').scrollTop=0;
   window._lastFocused=document.activeElement;
-  history.replaceState(null,'','#'+id);
+  history.pushState({detail:id},'','#'+id);
   setTimeout(()=>{const cb=document.querySelector('.detail-action-btn[aria-label="Close"]');if(cb)cb.focus()},350);
 }
 
-function closeDetail(){document.getElementById('detailBackdrop').classList.remove('open');document.getElementById('detailPanel').classList.remove('open');document.body.style.overflow='';if(window._lastFocused)window._lastFocused.focus();if(location.hash)history.replaceState(null,'',location.pathname+location.search)}
+function closeDetail(fromPopstate){
+  document.getElementById('detailBackdrop').classList.remove('open');
+  document.getElementById('detailPanel').classList.remove('open');
+  document.body.style.overflow='';
+  if(window._lastFocused)window._lastFocused.focus();
+  if(!fromPopstate&&location.hash)history.back();
+}
+window.addEventListener('popstate',function(){
+  if(document.getElementById('detailPanel').classList.contains('open'))closeDetail(true);
+});
 function toggleAcc(btn){const exp=btn.getAttribute('aria-expanded')==='true';btn.setAttribute('aria-expanded',!exp);btn.nextElementSibling.classList.toggle('open',!exp)}
 function verifyOk(ok){document.getElementById('verifyPrompt').style.display='none';document.getElementById('verifyThanks').style.display='block'}
 
