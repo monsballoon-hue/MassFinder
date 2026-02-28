@@ -1339,8 +1339,8 @@ function renderMore(){
       document.getElementById('moreEventsSection').scrollIntoView({behavior:'smooth'});
     };
     // Store events for calendar export
-    window._moreEvents=shown;
     const shown=allEvents.slice(0,10);
+    window._moreEvents=shown;
     document.getElementById('moreEventsList').innerHTML=shown.map((e,idx)=>{
       const p=allParishes.find(x=>x.id===e.parishId);
       const dist=p?getDist(p):null;
@@ -1358,7 +1358,6 @@ function renderMore(){
       +(e.time?'<button onclick="addMoreEventToCal('+idx+')" style="background:none;border:1.5px solid var(--color-border);border-radius:var(--radius-sm);padding:6px;min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--color-text-tertiary);flex-shrink:0" aria-label="Add to calendar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="18" height="18"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="12" y1="14" x2="12" y2="18"/><line x1="10" y1="16" x2="14" y2="16"/></svg></button>':'')
       +'</div>';
     }).join('')+(allEvents.length>10?'<div style="padding:var(--space-3);font-size:var(--text-sm);color:var(--color-text-tertiary)">And '+(allEvents.length-10)+' more events across the diocese.</div>':'');
-    window._moreEvents=shown;
   }
 
   // Footer
