@@ -77,7 +77,7 @@ button { font-family: inherit; font-size: inherit; cursor: pointer; border: none
 input { font-family: inherit; font-size: inherit; border: none; outline: none; background: none; color: inherit; -webkit-tap-highlight-color: transparent; }
 
 /* HEADER */
-.top-header { background: var(--color-surface); border-bottom: 1px solid var(--color-border-light); position: sticky; top: 0; z-index: 90; }
+.top-header { background: var(--color-surface); border-bottom: 1px solid var(--color-border-light); position: sticky; top: 0; z-index: 90; cursor: pointer; }
 .top-header-inner { max-width: var(--max-width); margin: 0 auto; padding: var(--space-3) var(--space-4); display: flex; align-items: center; gap: var(--space-2); }
 .header-logo { display: flex; align-items: center; gap: var(--space-2); }
 .header-logo-cross { width: 28px; height: 28px; background: var(--color-primary); border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
@@ -96,6 +96,9 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .search-clear.visible { display: flex; }
 
 /* CHIPS */
+.chip-bar-wrap { position: relative; overflow: hidden; }
+.chip-bar-wrap::after { content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 40px; background: linear-gradient(to right, transparent, var(--color-bg)); pointer-events: none; z-index: 1; transition: opacity 0.2s; }
+.chip-bar-wrap.scrolled::after { opacity: 0; }
 .chip-bar { max-width: var(--max-width); margin: 0 auto; padding: var(--space-3) 0 var(--space-2); overflow-x: auto; display: flex; gap: var(--space-2); scrollbar-width: none; -webkit-overflow-scrolling: touch; }
 .chip-bar::-webkit-scrollbar { display: none; }
 .chip-bar::before, .chip-bar::after { content: ''; flex-shrink: 0; width: var(--space-4); }
@@ -178,7 +181,7 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .yc-date { font-size: var(--text-base); font-weight: var(--weight-semibold); color: var(--color-primary); }
 .yc-time { font-size: var(--text-sm); color: var(--color-text-secondary); font-weight: var(--weight-medium); }
 .yc-social-tag { display: inline-flex; align-items: center; gap: 4px; font-size: var(--text-xs); font-weight: var(--weight-medium); color: #0F766E; background: #E0F7F5; padding: 3px 8px; border-radius: var(--radius-full); margin-top: var(--space-2); }
-.yc-section-header { max-width: var(--max-width); margin: 0 auto; padding: var(--space-4) var(--space-4) var(--space-2); display: flex; align-items: center; gap: var(--space-2); }
+.yc-section-header { max-width: var(--max-width); margin: 0 auto; padding: var(--space-4) var(--space-4) var(--space-2); display: flex; align-items: center; gap: var(--space-2); border: none; }
 .yc-section-title { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 700; color: var(--color-text-primary); }
 .yc-section-count { font-size: var(--text-xs); color: var(--color-accent-text); font-weight: var(--weight-semibold); background: var(--color-accent-pale); padding: 2px 8px; border-radius: var(--radius-full); }
 .no-results h3 { font-family: var(--font-display); font-size: var(--text-xl); font-weight: var(--weight-semibold); color: var(--color-text-secondary); margin-bottom: var(--space-2); }
@@ -258,11 +261,18 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .verify-btn.no { background: var(--color-surface-hover); color: var(--color-text-secondary); }
 .verify-btn.no:hover { background: var(--color-border-light); }
 .verify-thanks { font-size: var(--text-sm); color: var(--color-verified); font-weight: var(--weight-medium); display: none; padding: var(--space-4) 0; text-align: center; }
+.corr-form-label { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-text-primary); margin-bottom: var(--space-2); margin-top: var(--space-4); display: block; }
+.corr-pills { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.corr-pill { padding: var(--space-2) var(--space-3); border-radius: var(--radius-full); font-size: var(--text-sm); font-weight: var(--weight-medium); border: 1.5px solid var(--color-border); background: var(--color-surface); color: var(--color-text-secondary); min-height: 44px; display: inline-flex; align-items: center; cursor: pointer; transition: all var(--transition-fast); }
+.corr-pill:hover { border-color: var(--color-primary); color: var(--color-primary); }
+.corr-pill.selected { background: var(--color-primary); color: white; border-color: var(--color-primary); }
+.corr-input { width: 100%; font-family: inherit; font-size: var(--text-sm); padding: var(--space-3); border: 1.5px solid var(--color-border); border-radius: var(--radius-sm); resize: vertical; background: var(--color-surface); color: var(--color-text-primary); margin-top: var(--space-2); box-sizing: border-box; }
 .detail-verified-footer { margin-top: var(--space-4); padding-top: var(--space-3); border-top: 1px solid var(--color-border-light); font-size: var(--text-xs); color: var(--color-text-tertiary); }
 
 /* MORE FILTERS OVERLAY */
 .filters-overlay { position: fixed; inset: 0; z-index: 1100; background: var(--color-surface); transform: translateY(100%); transition: transform 0.35s var(--ease-out); overflow-y: auto; -webkit-overflow-scrolling: touch; }
 .filters-overlay.open { transform: translateY(0); }
+@media(min-width:769px){ .filters-overlay { inset: 10vh auto auto 50%; transform: translateX(-50%) translateY(30px); width: min(560px, 90vw); max-height: 80vh; border-radius: var(--radius-lg); box-shadow: var(--shadow-elevated); opacity: 0; transition: transform 0.3s var(--ease-out), opacity 0.3s var(--ease-out); } .filters-overlay.open { transform: translateX(-50%) translateY(0); opacity: 1; } }
 .filters-header { display: flex; align-items: center; justify-content: space-between; padding: var(--space-4) var(--space-5); border-bottom: 1px solid var(--color-border-light); position: sticky; top: 0; background: var(--color-surface); z-index: 2; }
 .filters-header h2 { font-family: var(--font-display); font-size: var(--text-xl); font-weight: var(--weight-semibold); }
 .filters-close { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--color-text-secondary); }
@@ -317,7 +327,8 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .skip-link:focus { position: fixed; top: 0; left: 0; outline: 2px solid var(--color-accent); outline-offset: 2px; }
 
 /* MAP TAB */
-#mapContainer { width: 100%; height: calc(100vh - 64px - 56px); height: calc(100dvh - 64px - 56px); }
+#panelMap { padding: var(--space-2); }
+#mapContainer { width: 100%; height: calc(100vh - 64px - 56px - 16px); height: calc(100dvh - 64px - 56px - 16px); border-radius: var(--radius-md); overflow: hidden; }
 .leaflet-container { background: var(--color-bg); font-family: var(--font-body); }
 .map-cluster {
   background: rgba(44,62,90,0.15); border-radius: 50%;
@@ -402,6 +413,7 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
     <button id="searchClear" class="search-clear" aria-label="Clear search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div></div>
 
+  <div class="chip-bar-wrap">
   <div class="chip-bar" role="toolbar" aria-label="Quick filters">
     <button class="chip active" data-filter="all">All</button>
     <button class="chip" data-filter="today">Today</button>
@@ -412,6 +424,7 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
     <button class="chip" data-filter="spanish">Spanish</button>
     <button class="chip yc-chip" data-filter="yc">YC Events</button>
     <button class="chip more-filters" id="moreFiltersBtn" onclick="openMoreFilters()">More Filters</button>
+  </div>
   </div>
 
   <div id="activeFilters" class="active-filters"></div>
@@ -468,10 +481,20 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
         <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
       </button>
       <div id="moreCorrectionForm" style="display:none;padding:var(--space-4) 0">
-        <input id="moreCorrChurch" type="text" placeholder="Church name" style="width:100%;font-family:inherit;font-size:var(--text-sm);padding:var(--space-3);border:1.5px solid var(--color-border);border-radius:var(--radius-sm);background:var(--color-surface);color:var(--color-text-primary)">
-        <textarea id="moreCorrMessage" rows="3" placeholder="What needs updating?" style="width:100%;font-family:inherit;font-size:var(--text-sm);padding:var(--space-3);border:1.5px solid var(--color-border);border-radius:var(--radius-sm);margin-top:var(--space-2);resize:vertical;background:var(--color-surface);color:var(--color-text-primary)"></textarea>
-        <input id="moreCorrEmail" type="email" placeholder="Your email (optional)" style="width:100%;font-family:inherit;font-size:var(--text-sm);padding:var(--space-3);border:1.5px solid var(--color-border);border-radius:var(--radius-sm);margin-top:var(--space-2);background:var(--color-surface);color:var(--color-text-primary)">
-        <button onclick="submitMoreCorrection()" style="margin-top:var(--space-3);width:100%;padding:var(--space-3);border-radius:var(--radius-md);background:var(--color-primary);color:white;font-size:var(--text-sm);font-weight:var(--weight-semibold);min-height:44px">Submit</button>
+        <label class="corr-form-label" style="margin-top:0">Church name</label>
+        <input id="moreCorrChurch" type="text" placeholder="e.g. St. Michael Parish, Springfield" class="corr-input" style="resize:none">
+        <label class="corr-form-label">What's wrong?</label>
+        <div class="corr-pills" id="moreCorrPills">
+          <button class="corr-pill" onclick="selectMoreCorrPill(this,'Wrong time')">Wrong time</button>
+          <button class="corr-pill" onclick="selectMoreCorrPill(this,'Mass cancelled or moved')">Mass cancelled or moved</button>
+          <button class="corr-pill" onclick="selectMoreCorrPill(this,'Missing a service')">Missing a service</button>
+          <button class="corr-pill" onclick="selectMoreCorrPill(this,'Other')">Other</button>
+        </div>
+        <input type="hidden" id="moreCorrCategory" value="">
+        <label class="corr-form-label">Details</label>
+        <textarea id="moreCorrMessage" class="corr-input" rows="2" placeholder="Select a category above first…"></textarea>
+        <input id="moreCorrEmail" type="email" class="corr-input" placeholder="Your email (optional, for follow-up)" style="resize:none;margin-top:var(--space-2)">
+        <button onclick="submitMoreCorrection()" style="margin-top:var(--space-3);width:100%;padding:var(--space-3);border-radius:var(--radius-md);background:var(--color-primary);color:white;font-size:var(--text-sm);font-weight:var(--weight-semibold);min-height:44px">Submit Correction</button>
         <div id="moreCorrThanks" style="display:none;text-align:center;padding:var(--space-3);font-size:var(--text-sm);color:var(--color-verified);font-weight:var(--weight-medium)">Thank you! We'll review your correction.</div>
       </div>
       <a class="more-link-row" id="moreEventsLink" href="#" style="display:none">
@@ -529,12 +552,12 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
 <script>
 let allParishes=[],filteredParishes=[],userLat=null,userLng=null,currentSort='name',currentFilter='all',searchQuery='',favorites=[],ycEvents=[];
-let advancedFilters={types:[],days:[],languages:[],county:[]},tempAdvanced={types:[],days:[],languages:[],county:[]};
+let advancedFilters={types:[],days:[],languages:[]},tempAdvanced={types:[],days:[],languages:[]};
 const DAY_ORDER=['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
 const DAY_NAMES={sunday:'Sunday',monday:'Monday',tuesday:'Tuesday',wednesday:'Wednesday',thursday:'Thursday',friday:'Friday',saturday:'Saturday'};
 const LANG_NAMES={en:'English',es:'Spanish',pl:'Polish',pt:'Portuguese',la:'Latin',fr:'French',vi:'Vietnamese',asl:'ASL'};
-const SVC={sunday_mass:'Sunday Mass',daily_mass:'Daily Mass',confession:'Confession',adoration:'Adoration',perpetual_adoration:'Perpetual Adoration',holy_hour:'Holy Hour',communion_service:'Communion Service',rosary:'Rosary',stations_of_cross:'Stations of the Cross',divine_mercy:'Divine Mercy',divine_mercy_chaplet:'Divine Mercy Chaplet',miraculous_medal:'Miraculous Medal',novena:'Novena',benediction:'Benediction',devotion:'Devotion',devotional:'Devotion',vespers:'Vespers',anointing_of_sick:'Anointing of the Sick',anointing:'Anointing of the Sick',holy_thursday_mass:'Holy Thursday Mass',good_friday_service:'Good Friday Service',easter_vigil_mass:'Easter Vigil Mass',bible_study:'Bible Study',gorzkie_zale:'Gorzkie Żale',mens_group:"Men's Group",social_event:'Social Event'};
-const SERVICE_CATEGORIES={'Weekend Masses':['sunday_mass'],'Weekday Masses':['daily_mass','communion_service'],'Sacraments':['confession','anointing_of_sick','anointing'],'Eucharistic Devotion':['adoration','perpetual_adoration','holy_hour','benediction'],'Prayer & Devotion':['rosary','stations_of_cross','divine_mercy','divine_mercy_chaplet','miraculous_medal','novena','devotion','devotional','vespers'],'Holy Week':['holy_thursday_mass','good_friday_service','easter_vigil_mass']};
+const SVC={sunday_mass:'Sunday Mass',daily_mass:'Daily Mass',confession:'Confession',adoration:'Adoration',perpetual_adoration:'Perpetual Adoration',holy_hour:'Holy Hour',communion_service:'Communion Service',rosary:'Rosary',stations_of_cross:'Stations of the Cross',divine_mercy:'Divine Mercy',miraculous_medal:'Miraculous Medal',novena:'Novena',devotion:'Devotion',vespers:'Vespers',anointing_of_sick:'Anointing of the Sick',holy_thursday_mass:'Holy Thursday Mass',good_friday_service:'Good Friday Service',easter_vigil_mass:'Easter Vigil Mass',bible_study:'Bible Study',gorzkie_zale:'Gorzkie Żale',mens_group:"Men's Group",social_event:'Social Event'};
+const SERVICE_CATEGORIES={'Mass':['sunday_mass','daily_mass','communion_service'],'Sacraments':['confession','anointing_of_sick'],'Adoration':['adoration','perpetual_adoration','holy_hour'],'Prayer & Devotion':['rosary','stations_of_cross','divine_mercy','miraculous_medal','novena','devotion','vespers','gorzkie_zale'],'Holy Week':['holy_thursday_mass','good_friday_service','easter_vigil_mass']};
 
 // Favorites
 function loadFav(){try{favorites=JSON.parse(localStorage.getItem('mf_fav')||'[]')}catch{favorites=[]}}
@@ -589,16 +612,16 @@ function fmtDist(mi){if(mi===null)return'';if(mi<0.1)return'Nearby';return mi<10
 function matchSearch(p,q){if(!q)return true;const f=[p.name,p.town,p.county,...(p.locations||[]).map(l=>l.name),...(p.locations||[]).map(l=>l.city),...(p.services||[]).map(s=>s.notes||''),...(p.services||[]).map(s=>LANG_NAMES[s.language]||''),...(p.staff||[])].join(' ').toLowerCase();return q.toLowerCase().split(/\s+/).every(w=>f.includes(w))}
 
 // Advanced filters
-function hasAdv(){return advancedFilters.types.length||advancedFilters.days.length||advancedFilters.languages.length||advancedFilters.county.length}
-function matchAdv(p){if(!hasAdv())return true;const af=advancedFilters;if(af.county.length&&!af.county.includes(p.county))return false;if(af.types.length){const pt=new Set(p.services.map(s=>s.type));if(!af.types.some(t=>pt.has(t)))return false}if(af.days.length){const pd=new Set(p.services.map(s=>s.day));if(!af.days.some(d=>pd.has(d)))return false}if(af.languages.length){const pl=new Set(p.services.map(s=>s.language));if(!af.languages.some(l=>pl.has(l)))return false}return true}
-function renderPills(){const el=document.getElementById('activeFilters');if(!hasAdv()){el.innerHTML='';return}let pills=[];advancedFilters.types.forEach(t=>pills.push({l:SVC[t]||t,k:'types',v:t}));advancedFilters.days.forEach(d=>pills.push({l:DAY_NAMES[d]||d,k:'days',v:d}));advancedFilters.languages.forEach(l=>pills.push({l:LANG_NAMES[l]||l,k:'languages',v:l}));advancedFilters.county.forEach(c=>pills.push({l:c+' County',k:'county',v:c}));el.innerHTML=pills.map(p=>'<span class="filter-pill">'+esc(p.l)+'<button onclick="removeAdv(\''+p.k+"','"+p.v+"')\" aria-label=\"Remove\">×</button></span>").join('')}
+function hasAdv(){return advancedFilters.types.length||advancedFilters.days.length||advancedFilters.languages.length}
+function matchAdv(p){if(!hasAdv())return true;const af=advancedFilters;if(af.types.length){const pt=new Set(p.services.map(s=>s.type));if(!af.types.some(t=>pt.has(t)))return false}if(af.days.length){const pd=new Set(p.services.map(s=>s.day));if(!af.days.some(d=>pd.has(d)))return false}if(af.languages.length){const pl=new Set(p.services.map(s=>s.language));if(!af.languages.some(l=>pl.has(l)))return false}return true}
+function renderPills(){const el=document.getElementById('activeFilters');if(!hasAdv()){el.innerHTML='';return}let pills=[];advancedFilters.types.forEach(t=>pills.push({l:SVC[t]||t,k:'types',v:t}));advancedFilters.days.forEach(d=>pills.push({l:DAY_NAMES[d]||d,k:'days',v:d}));advancedFilters.languages.forEach(l=>pills.push({l:LANG_NAMES[l]||l,k:'languages',v:l}));el.innerHTML=pills.map(p=>'<span class="filter-pill">'+esc(p.l)+'<button onclick="removeAdv(\''+p.k+"','"+p.v+"')\" aria-label=\"Remove\">×</button></span>").join('')}
 function removeAdv(k,v){advancedFilters[k]=advancedFilters[k].filter(x=>x!==v);renderPills();updateMFChip();filterParishes();renderCards()}
-function updateMFChip(){const btn=document.getElementById('moreFiltersBtn');const c=advancedFilters.types.length+advancedFilters.days.length+advancedFilters.languages.length+advancedFilters.county.length;btn.innerHTML=c>0?'Filters <span class="chip-count">'+c+'</span>':'More Filters';btn.classList.toggle('active',c>0)}
+function updateMFChip(){const btn=document.getElementById('moreFiltersBtn');const c=advancedFilters.types.length+advancedFilters.days.length+advancedFilters.languages.length;btn.innerHTML=c>0?'Filters <span class="chip-count">'+c+'</span>':'More Filters';btn.classList.toggle('active',c>0)}
 
 // More Filters overlay
 function openMoreFilters(){tempAdvanced=JSON.parse(JSON.stringify(advancedFilters));renderFiltersBody();document.getElementById('filtersOverlay').classList.add('open');document.body.style.overflow='hidden';trapFocus(document.getElementById('filtersOverlay'))}
 function closeMoreFilters(){document.getElementById('filtersOverlay').classList.remove('open');document.body.style.overflow='';releaseFocus()}
-function clearAdvancedFilters(){tempAdvanced={types:[],days:[],languages:[],county:[]};renderFiltersBody()}
+function clearAdvancedFilters(){tempAdvanced={types:[],days:[],languages:[]};renderFiltersBody()}
 function applyAdvancedFilters(){advancedFilters=JSON.parse(JSON.stringify(tempAdvanced));closeMoreFilters();renderPills();updateMFChip();filterParishes();renderCards()}
 function toggleTemp(k,v){if(tempAdvanced[k].includes(v))tempAdvanced[k]=tempAdvanced[k].filter(x=>x!==v);else tempAdvanced[k].push(v);renderFiltersBody()}
 function renderFiltersBody(){
@@ -613,10 +636,6 @@ function renderFiltersBody(){
   html+='</div></div>';
   const langs=new Set();allParishes.forEach(p=>p.services.forEach(s=>{if(s.language&&s.language!=='en')langs.add(s.language)}));
   if(langs.size){html+='<div class="filter-group"><div class="filter-group-title">Language</div><div class="filter-group-grid">';for(const l of langs){const ch=tempAdvanced.languages.includes(l);html+='<button class="filter-checkbox'+(ch?' checked':'')+'" onclick="toggleTemp(\'languages\',\''+l+'\')">'+(LANG_NAMES[l]||l)+'</button>'}html+='</div></div>'}
-  const counties=[...new Set(allParishes.map(p=>p.county))].sort();
-  html+='<div class="filter-group"><div class="filter-group-title">County</div><div class="filter-group-grid">';
-  for(const c of counties){const ch=tempAdvanced.county.includes(c);html+='<button class="filter-checkbox'+(ch?' checked':'')+'" onclick="toggleTemp(\'county\',\''+c+'\')">'+esc(c)+'</button>'}
-  html+='</div></div>';
   body.innerHTML=html;
 }
 
@@ -629,7 +648,10 @@ function filterParishes(){
 }
 function sortParishes(){
   if(currentSort==='proximity'&&userLat!==null)filteredParishes.sort((a,b)=>(a.distance??9999)-(b.distance??9999));
-  else if(currentSort==='next_service')filteredParishes.sort((a,b)=>(a.next?.minutesUntil??99999)-(b.next?.minutesUntil??99999));
+  else if(currentSort==='next_service')filteredParishes.sort((a,b)=>{
+    if(userLat!==null){const aClose=(a.distance??9999)<=15,bClose=(b.distance??9999)<=15;if(aClose!==bClose)return aClose?-1:1;}
+    return (a.next?.minutesUntil??99999)-(b.next?.minutesUntil??99999);
+  });
   else filteredParishes.sort((a,b)=>a.parish.name.localeCompare(b.parish.name));
 }
 function toggleSort(){const m=userLat!==null?['name','proximity','next_service']:['name','next_service'];currentSort=m[(m.indexOf(currentSort)+1)%m.length];updateSortLabel();filterParishes();renderCards()}
@@ -802,8 +824,8 @@ function openDetail(id){
   const secs=[
     {k:'mass',t:'Mass Schedule',ic:'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5',types:['sunday_mass','daily_mass','communion_service']},
     {k:'conf',t:'Confession',ic:'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',types:['confession']},
-    {k:'ador',t:'Adoration & Holy Hour',ic:'M12 3v18m-6-6l6 6 6-6',types:['adoration','perpetual_adoration','holy_hour','benediction']},
-    {k:'devot',t:'Prayer & Devotion',ic:'M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15z',types:['rosary','stations_of_cross','divine_mercy','divine_mercy_chaplet','miraculous_medal','novena','devotion','devotional','vespers','gorzkie_zale']},
+    {k:'ador',t:'Adoration & Holy Hour',ic:'M12 3v18m-6-6l6 6 6-6',types:['adoration','perpetual_adoration','holy_hour']},
+    {k:'devot',t:'Prayer & Devotion',ic:'M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15z',types:['rosary','stations_of_cross','divine_mercy','miraculous_medal','novena','devotion','vespers','gorzkie_zale']},
     {k:'hw',t:'Holy Week',ic:'M12 2v20M2 12h20',types:['holy_thursday_mass','good_friday_service','easter_vigil_mass']},
   ];
 
@@ -828,10 +850,19 @@ function openDetail(id){
 
   // Verify prompt + correction form + footer
   const vp='<div class="verify-prompt" id="verifyPrompt"><p>Were these times accurate when you last visited?</p><div class="verify-prompt-btns"><button class="verify-btn yes" onclick="verifyOk(true)">✓ Yes, looks right</button><button class="verify-btn no" onclick="showCorrectionForm()">Not quite</button></div></div>'
-    +'<div class="correction-form" id="correctionForm" style="display:none"><p style="font-size:var(--text-sm);font-weight:var(--weight-semibold);color:var(--color-text-primary);margin-bottom:var(--space-3)">Help us fix it</p>'
+    +'<div class="correction-form" id="correctionForm" style="display:none">'
+    +'<label class="corr-form-label">What\'s wrong?</label>'
+    +'<div class="corr-pills" id="corrPills">'
+    +'<button class="corr-pill" onclick="selectCorrPill(this,\'Wrong time\')">Wrong time</button>'
+    +'<button class="corr-pill" onclick="selectCorrPill(this,\'Mass cancelled or moved\')">Mass cancelled or moved</button>'
+    +'<button class="corr-pill" onclick="selectCorrPill(this,\'Missing a service\')">Missing a service</button>'
+    +'<button class="corr-pill" onclick="selectCorrPill(this,\'Other\')">Other</button>'
+    +'</div>'
+    +'<input type="hidden" id="corrCategory" value="">'
     +'<input type="hidden" id="corrChurch" value="'+esc(p.name)+'">'
-    +'<textarea id="corrMessage" rows="3" placeholder="What needs updating? (e.g. Mass moved to 9 AM, confession no longer offered on Wednesdays…)" style="width:100%;font-family:inherit;font-size:var(--text-sm);padding:var(--space-3);border:1.5px solid var(--color-border);border-radius:var(--radius-sm);resize:vertical;background:var(--color-surface);color:var(--color-text-primary)"></textarea>'
-    +'<input id="corrEmail" type="email" placeholder="Your email (optional, for follow-up)" style="width:100%;font-family:inherit;font-size:var(--text-sm);padding:var(--space-3);border:1.5px solid var(--color-border);border-radius:var(--radius-sm);margin-top:var(--space-2);background:var(--color-surface);color:var(--color-text-primary)">'
+    +'<label class="corr-form-label">Details</label>'
+    +'<textarea id="corrMessage" class="corr-input" rows="2" placeholder="Select a category above first…"></textarea>'
+    +'<input id="corrEmail" type="email" class="corr-input" placeholder="Your email (optional, for follow-up)" style="resize:none;margin-top:var(--space-2)">'
     +'<button onclick="submitCorrection()" style="margin-top:var(--space-3);width:100%;padding:var(--space-3);border-radius:var(--radius-md);background:var(--color-primary);color:white;font-size:var(--text-sm);font-weight:var(--weight-semibold);min-height:44px">Submit Correction</button>'
     +'</div>'
     +'<div class="verify-thanks" id="verifyThanks" style="display:none">Thank you for helping keep MassFinder accurate! God bless.</div>';
@@ -868,27 +899,33 @@ window.addEventListener('popstate',function(){
 function toggleAcc(btn){const exp=btn.getAttribute('aria-expanded')==='true';btn.setAttribute('aria-expanded',!exp);btn.nextElementSibling.classList.toggle('open',!exp)}
 function verifyOk(ok){document.getElementById('verifyPrompt').style.display='none';document.getElementById('verifyThanks').style.display='block'}
 function showCorrectionForm(){document.getElementById('verifyPrompt').style.display='none';document.getElementById('correctionForm').style.display='block'}
+const CORR_PLACEHOLDERS={'Wrong time':'Which service, and what\'s the correct time?','Mass cancelled or moved':'Which Mass, and where did it move to?','Missing a service':'What service is missing? (e.g., Saturday 4 PM Confession)','Other':'Tell us what needs updating'};
+function selectCorrPill(btn,val){document.querySelectorAll('#corrPills .corr-pill').forEach(p=>p.classList.remove('selected'));btn.classList.add('selected');document.getElementById('corrCategory').value=val;document.getElementById('corrMessage').placeholder=CORR_PLACEHOLDERS[val]||'Tell us what needs updating';}
 function submitCorrection(){
   const church=document.getElementById('corrChurch').value;
+  const category=document.getElementById('corrCategory').value;
   const msg=document.getElementById('corrMessage').value.trim();
   const email=document.getElementById('corrEmail').value.trim();
+  if(!category){document.getElementById('corrPills').style.outline='2px solid var(--color-error)';return}
   if(!msg){document.getElementById('corrMessage').style.borderColor='var(--color-error)';return}
-  // POST to form endpoint — replace URL with your Formspree/Formsubmit/Web3Forms endpoint
   const FORM_URL='https://formsubmit.co/ajax/massfinder.corrections@gmail.com';
-  fetch(FORM_URL,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({church:church,message:msg,email:email||'(not provided)',_subject:'MassFinder Correction: '+church})})
+  fetch(FORM_URL,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({church:church,category:category,message:msg,email:email||'(not provided)',_subject:'MassFinder Correction ['+category+']: '+church})})
   .then(()=>{document.getElementById('correctionForm').style.display='none';document.getElementById('verifyThanks').style.display='block'})
   .catch(()=>{document.getElementById('correctionForm').style.display='none';document.getElementById('verifyThanks').style.display='block'})
 }
 function showMoreCorrection(){const f=document.getElementById('moreCorrectionForm');f.style.display=f.style.display==='none'?'block':'none'}
+function selectMoreCorrPill(btn,val){document.querySelectorAll('#moreCorrPills .corr-pill').forEach(p=>p.classList.remove('selected'));btn.classList.add('selected');document.getElementById('moreCorrCategory').value=val;document.getElementById('moreCorrMessage').placeholder=CORR_PLACEHOLDERS[val]||'Tell us what needs updating';}
 function submitMoreCorrection(){
   const church=document.getElementById('moreCorrChurch').value.trim();
+  const category=document.getElementById('moreCorrCategory').value;
   const msg=document.getElementById('moreCorrMessage').value.trim();
   const email=document.getElementById('moreCorrEmail').value.trim();
+  if(!category){document.getElementById('moreCorrPills').style.outline='2px solid var(--color-error)';return}
   if(!msg){document.getElementById('moreCorrMessage').style.borderColor='var(--color-error)';return}
   const FORM_URL='https://formsubmit.co/ajax/massfinder.corrections@gmail.com';
-  fetch(FORM_URL,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({church:church||'(general)',message:msg,email:email||'(not provided)',_subject:'MassFinder Correction: '+(church||'General')})})
-  .then(()=>{document.getElementById('moreCorrectionForm').innerHTML='<div style="text-align:center;padding:var(--space-3);font-size:var(--text-sm);color:var(--color-verified);font-weight:var(--weight-medium)">Thank you! We\'ll review your correction.</div>'})
-  .catch(()=>{document.getElementById('moreCorrectionForm').innerHTML='<div style="text-align:center;padding:var(--space-3);font-size:var(--text-sm);color:var(--color-verified);font-weight:var(--weight-medium)">Thank you! We\'ll review your correction.</div>'})
+  fetch(FORM_URL,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({church:church||'(general)',category:category,message:msg,email:email||'(not provided)',_subject:'MassFinder Correction ['+category+']: '+(church||'General')})})
+  .then(()=>{document.getElementById('moreCorrThanks').style.display='block';document.getElementById('moreCorrectionForm').querySelectorAll('input,textarea,button:not(#moreCorrThanks)').forEach(el=>el.style.display='none')})
+  .catch(()=>{document.getElementById('moreCorrThanks').style.display='block'})
 }
 function addMoreEventToCal(idx){
   const e=(window._moreEvents||[])[idx];if(!e)return;
@@ -950,12 +987,14 @@ function renderSched(svcs,locL,ml,sectionTypes){
     const days=grp.svcs.map(s=>s.day);
     const uniq=[...new Set(days)].sort((a,b)=>WEEKDAYS.indexOf(a)-WEEKDAYS.indexOf(b));
     const meaningfulNotes=grp.svcs.filter(s=>{const n=cleanNote(s);return n&&n.length>0});
-    // Collapse if 3+ weekdays with no more than 1 meaningful note across them
-    if(uniq.length>=3&&meaningfulNotes.length<=1){
+    const uniqueNoteTexts=[...new Set(meaningfulNotes.map(s=>cleanNote(s)).filter(Boolean))];
+    // Collapse if 3+ weekdays with 0-1 meaningful notes, OR all notes are identical
+    const shouldCollapse=uniq.length>=3&&(meaningfulNotes.length<=1||uniqueNoteTexts.length===1);
+    if(shouldCollapse){
       const label=makeRangeLabel(uniq);
       const rep=grp.svcs[0];
-      const noteHolder=meaningfulNotes[0];
-      collapsed.push({label:label,svc:rep,extraNote:noteHolder?cleanNote(noteHolder):''});
+      const sharedNote=uniqueNoteTexts.length===1?uniqueNoteTexts[0]:(meaningfulNotes[0]?cleanNote(meaningfulNotes[0]):'');
+      collapsed.push({label:label,svc:rep,extraNote:sharedNote});
     } else {
       uncollapsed.push(...grp.svcs);
     }
@@ -1367,13 +1406,35 @@ function renderMore(){
 // Chips
 document.querySelectorAll('.chip[data-filter]').forEach(chip=>{chip.addEventListener('click',()=>{document.querySelectorAll('.chip[data-filter]').forEach(c=>c.classList.remove('active'));chip.classList.add('active');currentFilter=chip.dataset.filter;if(['today','weekend'].includes(currentFilter)){currentSort='next_service';updateSortLabel()}filterParishes();renderCards()})});
 
+// Chip bar scroll affordance — hide fade once user has discovered scrolling
+(function(){const wrap=document.querySelector('.chip-bar-wrap'),bar=document.querySelector('.chip-bar');if(bar)bar.addEventListener('scroll',function(){wrap.classList.toggle('scrolled',bar.scrollLeft>8)},{passive:true})})();
+
 // Search
 const sI=document.getElementById('searchInput'),sC=document.getElementById('searchClear');let sT;
 sI.addEventListener('input',()=>{clearTimeout(sT);searchQuery=sI.value.trim();sC.classList.toggle('visible',searchQuery.length>0);sT=setTimeout(()=>{filterParishes();renderCards()},200)});
 sC.addEventListener('click',()=>{sI.value='';searchQuery='';sC.classList.remove('visible');filterParishes();renderCards();sI.focus()});
 
 // Geolocation
-function requestLocation(){if(!navigator.geolocation)return;navigator.geolocation.getCurrentPosition(pos=>{userLat=pos.coords.latitude;userLng=pos.coords.longitude;document.getElementById('locationPrompt').classList.add('hidden');currentSort='proximity';updateSortLabel();filterParishes();renderCards()},()=>document.getElementById('locationPrompt').classList.add('hidden'),{enableHighAccuracy:false,timeout:8000})}
+function requestLocation(){
+  if(!navigator.geolocation)return;
+  var btn=document.querySelector('.location-prompt-inner button');
+  if(btn)btn.textContent='Locating…';
+  navigator.geolocation.getCurrentPosition(
+    function(pos){
+      userLat=pos.coords.latitude;userLng=pos.coords.longitude;
+      document.getElementById('locationPrompt').classList.add('hidden');
+      currentSort='proximity';updateSortLabel();filterParishes();renderCards();
+    },
+    function(err){
+      var msg='Could not get location.';
+      if(err.code===1)msg='Location access denied. Enable in your browser settings.';
+      if(btn)btn.textContent='Enable';
+      var p=document.querySelector('.location-prompt-inner p');
+      if(p)p.textContent=msg;
+    },
+    {enableHighAccuracy:true,timeout:10000,maximumAge:300000}
+  );
+}
 function checkLoc(){if(!navigator.geolocation){document.getElementById('locationPrompt').classList.add('hidden');return}if(navigator.permissions){navigator.permissions.query({name:'geolocation'}).then(r=>{if(r.state==='granted')requestLocation();else if(r.state==='prompt')document.getElementById('locationPrompt').classList.remove('hidden');else document.getElementById('locationPrompt').classList.add('hidden')}).catch(()=>document.getElementById('locationPrompt').classList.remove('hidden'))}else document.getElementById('locationPrompt').classList.remove('hidden')}
 
 // Focus trap for modals (B5)
@@ -1415,6 +1476,17 @@ function releaseFocus(){if(_focusTrapHandler){document.removeEventListener('keyd
   const obs=new MutationObserver(updateTabIndex);
   chips().forEach(c=>obs.observe(c,{attributes:true,attributeFilter:['class']}));
 })();
+
+// Header tap → scroll to top (iOS convention)
+document.querySelector('.top-header').addEventListener('click',function(e){
+  // Don't interfere if user clicked a child interactive element
+  if(e.target.closest('button,a,input'))return;
+  const detail=document.getElementById('detailPanel');
+  if(detail.classList.contains('open')){detail.scrollTo({top:0,behavior:'smooth'});return;}
+  const activePanel=document.querySelector('.tab-panel.active');
+  if(activePanel&&activePanel.id==='panelFind'){document.getElementById('panelFind').scrollTo({top:0,behavior:'smooth'});window.scrollTo({top:0,behavior:'smooth'});}
+  else if(activePanel){activePanel.scrollTo({top:0,behavior:'smooth'});}
+});
 
 // Keyboard
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(document.getElementById('filtersOverlay').classList.contains('open'))closeMoreFilters();else if(document.getElementById('detailPanel').classList.contains('open'))closeDetail()}});
