@@ -99,6 +99,7 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .chip-bar-wrap { position: relative; }
 .chip-bar-wrap::after { content: ''; position: absolute; top: 0; right: 0; width: 48px; height: 100%; background: linear-gradient(to right, transparent, var(--color-bg)); pointer-events: none; transition: opacity 0.2s; }
 .chip-bar-wrap.scrolled::after { opacity: 0; }
+.chip-bar { max-width: var(--max-width); margin: 0 auto; padding: var(--space-3) 0 var(--space-2); overflow-x: auto; display: flex; gap: var(--space-2); scrollbar-width: none; -webkit-overflow-scrolling: touch; }
 .chip-bar::-webkit-scrollbar { display: none; }
 .chip-bar::before, .chip-bar::after { content: ''; flex-shrink: 0; width: var(--space-4); }
 .chip { flex-shrink: 0; height: 44px; padding: 0 var(--space-4); border-radius: var(--radius-full); font-size: var(--text-sm); font-weight: var(--weight-medium); line-height: 44px; white-space: nowrap; background: var(--color-surface); color: var(--color-text-secondary); border: 1.5px solid var(--color-border); transition: all var(--transition-fast); user-select: none; }
