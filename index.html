@@ -1711,6 +1711,7 @@ function fetchReadings(){
     +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="16" height="16"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>'
     +'Read full readings at USCCB</a>';
 
+  const _dbg=(...a)=>console.log('[Universalis]',...a);
   let _resolved=false;
 
   function cleanup(){
@@ -1721,12 +1722,12 @@ function fetchReadings(){
     if(s)s.remove();
   }
 
-  // Render helper — shared between JSONP and proxy paths
-  function renderReadings(dayName,readings){
-    if(_resolved)return;
+  function renderReadings(dayName,readings,source){
+    _dbg('renderReadings — source:',source,'dayName:',dayName,'readings count:',readings.length);
+    if(_resolved){_dbg('already resolved, skipping');return;}
     _resolved=true;
     cleanup();
-    if(!readings.length&&!dayName){el.innerHTML=usccbLink;return;}
+    if(!readings.length&&!dayName){_dbg('empty — falling back to USCCB link');el.innerHTML=usccbLink;return;}
     let html='';
     if(dayName)html+='<div class="reading-day-name">'+esc(String(dayName))+'</div>';
     html+=readings.map(r=>
@@ -1737,16 +1738,12 @@ function fetchReadings(){
     ).join('');
     html+=usccbLink;
     el.innerHTML=html;
+    _dbg('render complete');
   }
 
-  // Helper: extract a field from the Universalis data object.
-  // Universalis JSONP may use flat dot-keys ("Mass_G.heading"), nested objects
-  // (data.Mass_G.heading), or plain string values (data.Mass_G === "string").
   function uGet(data,slot,field){
-    // flat dot-key: data["Mass_G.heading"]
     const flat=data[slot+'.'+field];
     if(flat&&typeof flat==='string')return flat;
-    // nested object: data["Mass_G"].heading
     const nested=data[slot];
     if(nested&&typeof nested==='object')return nested[field]||'';
     return '';
@@ -1754,52 +1751,61 @@ function fetchReadings(){
 
   // TIER 1: Universalis JSONP
   window.universalisCallback=function(data){
-    if(_resolved)return;
+    _dbg('JSONP callback fired');
+    _dbg('data keys:',Object.keys(data));
+    // Log each key and its type/value so we can see the real structure
+    Object.keys(data).slice(0,30).forEach(k=>{
+      const v=data[k];
+      _dbg('  key='+k+' type='+typeof v+(typeof v==='object'?(' subkeys='+JSON.stringify(Object.keys(v||{}))):(': '+String(v).slice(0,80))));
+    });
+    if(_resolved){_dbg('already resolved, ignoring callback');return;}
     try{
-      // Day name: try several known key variants
       const dayName=
         (typeof data['Mass_dayname']==='string'?data['Mass_dayname']:'')
         ||(data['Mass_dayname']&&data['Mass_dayname'].text)||'';
-
       const slots=['Mass_1','Mass_P','Mass_2','Mass_G'];
       const readings=slots
         .map(k=>({heading:uGet(data,k,'heading'),ref:uGet(data,k,'subheading')||uGet(data,k,'ref')}))
         .filter(r=>r.heading);
-
-      renderReadings(dayName,readings);
-    }catch(e){renderReadings('',[])}
+      _dbg('parsed dayName:',dayName,'readings:',readings);
+      renderReadings(dayName,readings,'JSONP');
+    }catch(e){_dbg('JSONP parse exception:',e.message);renderReadings('',[],'JSONP-error');}
   };
 
   const script=document.createElement('script');
   script.id='universalis-jsonp';
   script.src='https://universalis.com/US/'+yyyymmdd+'/Mass.js';
-  script.onerror=()=>{if(!_resolved)tryProxy();};
+  _dbg('injecting JSONP script:',script.src);
+  script.onload=()=>_dbg('Mass.js onload fired (callback may still be pending)');
+  script.onerror=(e)=>{_dbg('Mass.js onerror:',e.type||e);if(!_resolved)tryProxy();};
   document.head.appendChild(script);
 
-  // TIER 2: If JSONP hasn't fired after 6s, try the JSON API via CORS proxy
+  // TIER 2: CORS proxy fallback
   function tryProxy(){
+    _dbg('entering tryProxy');
     if(_resolved)return;
     const proxyUrl='https://api.allorigins.win/raw?url='+encodeURIComponent('https://universalis.com/US/'+yyyymmdd+'/Mass.json');
+    _dbg('fetching proxy URL:',proxyUrl);
     fetch(proxyUrl,{signal:AbortSignal.timeout(6000)})
-      .then(r=>{if(!r.ok)throw new Error('proxy '+r.status);return r.json();})
+      .then(r=>{_dbg('proxy response:',r.status,r.ok);if(!r.ok)throw new Error('proxy HTTP '+r.status);return r.json();})
       .then(data=>{
+        _dbg('proxy JSON keys:',Object.keys(data));
         if(_resolved)return;
-        // REST API returns nested objects: data.Mass_1.heading etc.
         const dayName=data['Mass_dayname']||(data.Mass&&data.Mass.dayname)||'';
         const slots=['Mass_1','Mass_P','Mass_2','Mass_G'];
         const readings=slots
           .map(k=>({heading:(data[k]&&data[k].heading)||'',ref:(data[k]&&(data[k].subheading||data[k].ref))||''}))
           .filter(r=>r.heading);
-        renderReadings(dayName,readings);
+        _dbg('proxy parsed dayName:',dayName,'readings:',readings);
+        renderReadings(dayName,readings,'proxy');
       })
-      .catch(()=>{if(!_resolved){_resolved=true;cleanup();el.innerHTML=usccbLink;}});
+      .catch(e=>{_dbg('proxy error:',e.message);if(!_resolved){_resolved=true;cleanup();el.innerHTML=usccbLink;}});
   }
 
-  window._univFallbackTimeout=setTimeout(()=>{if(!_resolved)tryProxy();},6000);
+  window._univFallbackTimeout=setTimeout(()=>{_dbg('6s timer fired — JSONP callback never called');if(!_resolved)tryProxy();},6000);
 
-  // Hard timeout — give up entirely after 14s
   window._univTimeout=setTimeout(()=>{
-    if(!_resolved){_resolved=true;cleanup();el.innerHTML=usccbLink;}
+    if(!_resolved){_dbg('14s hard timeout');_resolved=true;cleanup();el.innerHTML=usccbLink;}
   },14000);
 }
 
