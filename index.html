@@ -96,10 +96,9 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .search-clear.visible { display: flex; }
 
 /* CHIPS */
-.chip-bar-wrap { position: relative; z-index: 1; max-width: var(--max-width); margin: 0 auto; }
-.chip-bar-wrap::after { content: ''; position: absolute; top: 0; right: 0; width: 48px; height: 100%; background: linear-gradient(to right, transparent, var(--color-bg)); pointer-events: none; z-index: 2; transition: opacity 0.2s; }
-.chip-bar-wrap.scrolled::after { opacity: 0; }
-.chip-bar { padding: var(--space-3) 0 var(--space-2); overflow-x: auto; display: flex; gap: var(--space-2); scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.chip-bar-wrap { position: relative; }
+.chip-bar { max-width: var(--max-width); margin: 0 auto; padding: var(--space-3) 0 var(--space-2); overflow-x: auto; display: flex; gap: var(--space-2); scrollbar-width: none; -webkit-overflow-scrolling: touch; -webkit-mask-image: linear-gradient(to right, black 88%, transparent 100%); mask-image: linear-gradient(to right, black 88%, transparent 100%); transition: mask-image 0.2s; }
+.chip-bar.scrolled { -webkit-mask-image: none; mask-image: none; }
 .chip-bar::-webkit-scrollbar { display: none; }
 .chip-bar::before, .chip-bar::after { content: ''; flex-shrink: 0; width: var(--space-4); }
 .chip { flex-shrink: 0; height: 44px; padding: 0 var(--space-4); border-radius: var(--radius-full); font-size: var(--text-sm); font-weight: var(--weight-medium); line-height: 44px; white-space: nowrap; background: var(--color-surface); color: var(--color-text-secondary); border: 1.5px solid var(--color-border); transition: all var(--transition-fast); user-select: none; }
@@ -273,7 +272,7 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 /* MORE FILTERS OVERLAY */
 .filters-overlay { position: fixed; inset: 0; z-index: 1100; background: var(--color-surface); transform: translateY(100%); transition: transform 0.35s var(--ease-out); overflow-y: auto; -webkit-overflow-scrolling: touch; }
 .filters-overlay.open { transform: translateY(0); }
-@media(min-width:769px){ .filters-overlay { inset: 10vh auto auto 50%; transform: translateX(-50%) translateY(30px); width: min(560px, 90vw); max-height: 80vh; border-radius: var(--radius-lg); box-shadow: var(--shadow-elevated); opacity: 0; transition: transform 0.3s var(--ease-out), opacity 0.3s var(--ease-out); } .filters-overlay.open { transform: translateX(-50%) translateY(0); opacity: 1; } }
+@media(min-width:769px){ .filters-overlay { inset: 10vh auto auto 50%; transform: translateX(-50%) translateY(30px); width: min(560px, 90vw); max-height: 80vh; border-radius: var(--radius-lg); box-shadow: var(--shadow-elevated); opacity: 0; pointer-events: none; transition: transform 0.3s var(--ease-out), opacity 0.3s var(--ease-out); } .filters-overlay.open { transform: translateX(-50%) translateY(0); opacity: 1; pointer-events: auto; } }
 .filters-header { display: flex; align-items: center; justify-content: space-between; padding: var(--space-4) var(--space-5); border-bottom: 1px solid var(--color-border-light); position: sticky; top: 0; background: var(--color-surface); z-index: 2; }
 .filters-header h2 { font-family: var(--font-display); font-size: var(--text-xl); font-weight: var(--weight-semibold); }
 .filters-close { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--color-text-secondary); }
@@ -1426,8 +1425,8 @@ function renderMore(){
 // Chips
 document.querySelectorAll('.chip[data-filter]').forEach(chip=>{chip.addEventListener('click',()=>{document.querySelectorAll('.chip[data-filter]').forEach(c=>c.classList.remove('active'));chip.classList.add('active');currentFilter=chip.dataset.filter;if(['today','weekend'].includes(currentFilter)){currentSort='next_service';updateSortLabel()}filterParishes();renderCards()})});
 
-// Chip bar scroll affordance — remove fade once user has discovered scrolling
-(function(){const bar=document.querySelector('.chip-bar'),wrap=document.querySelector('.chip-bar-wrap');if(bar&&wrap)bar.addEventListener('scroll',function(){wrap.classList.toggle('scrolled',bar.scrollLeft>8)},{passive:true})})();
+// Chip bar scroll affordance — remove mask fade once user has discovered scrolling
+(function(){const bar=document.querySelector('.chip-bar');if(bar)bar.addEventListener('scroll',function(){bar.classList.toggle('scrolled',bar.scrollLeft>8)},{passive:true})})();
 
 // Search
 const sI=document.getElementById('searchInput'),sC=document.getElementById('searchClear');let sT;
