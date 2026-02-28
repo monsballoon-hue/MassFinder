@@ -1749,61 +1749,58 @@ function fetchReadings(){
     return '';
   }
 
-  // TIER 1: Universalis JSONP
-  window.universalisCallback=function(data){
-    _dbg('JSONP callback fired');
-    _dbg('data keys:',Object.keys(data));
-    // Log each key and its type/value so we can see the real structure
-    Object.keys(data).slice(0,30).forEach(k=>{
-      const v=data[k];
-      _dbg('  key='+k+' type='+typeof v+(typeof v==='object'?(' subkeys='+JSON.stringify(Object.keys(v||{}))):(': '+String(v).slice(0,80))));
-    });
-    if(_resolved){_dbg('already resolved, ignoring callback');return;}
-    try{
-      const dayName=
-        (typeof data['Mass_dayname']==='string'?data['Mass_dayname']:'')
-        ||(data['Mass_dayname']&&data['Mass_dayname'].text)||'';
-      const slots=['Mass_1','Mass_P','Mass_2','Mass_G'];
-      const readings=slots
-        .map(k=>({heading:uGet(data,k,'heading'),ref:uGet(data,k,'subheading')||uGet(data,k,'ref')}))
-        .filter(r=>r.heading);
-      _dbg('parsed dayName:',dayName,'readings:',readings);
-      renderReadings(dayName,readings,'JSONP');
-    }catch(e){_dbg('JSONP parse exception:',e.message);renderReadings('',[],'JSONP-error');}
-  };
+  // Universalis Mass.json URL — fetch via CORS proxy (direct fetch blocked by CORS)
+  // We try two proxies in sequence; if the response isn't JSON we move on.
+  const massJsonUrl='https://universalis.com/US/'+yyyymmdd+'/Mass.json';
 
-  const script=document.createElement('script');
-  script.id='universalis-jsonp';
-  script.src='https://universalis.com/US/'+yyyymmdd+'/Mass.js';
-  _dbg('injecting JSONP script:',script.src);
-  script.onload=()=>_dbg('Mass.js onload fired (callback may still be pending)');
-  script.onerror=(e)=>{_dbg('Mass.js onerror:',e.type||e);if(!_resolved)tryProxy();};
-  document.head.appendChild(script);
-
-  // TIER 2: CORS proxy fallback
-  function tryProxy(){
-    _dbg('entering tryProxy');
-    if(_resolved)return;
-    const proxyUrl='https://api.allorigins.win/raw?url='+encodeURIComponent('https://universalis.com/US/'+yyyymmdd+'/Mass.json');
-    _dbg('fetching proxy URL:',proxyUrl);
-    fetch(proxyUrl,{signal:AbortSignal.timeout(6000)})
-      .then(r=>{_dbg('proxy response:',r.status,r.ok);if(!r.ok)throw new Error('proxy HTTP '+r.status);return r.json();})
-      .then(data=>{
-        _dbg('proxy JSON keys:',Object.keys(data));
-        if(_resolved)return;
-        const dayName=data['Mass_dayname']||(data.Mass&&data.Mass.dayname)||'';
-        const slots=['Mass_1','Mass_P','Mass_2','Mass_G'];
-        const readings=slots
-          .map(k=>({heading:(data[k]&&data[k].heading)||'',ref:(data[k]&&(data[k].subheading||data[k].ref))||''}))
-          .filter(r=>r.heading);
-        _dbg('proxy parsed dayName:',dayName,'readings:',readings);
-        renderReadings(dayName,readings,'proxy');
-      })
-      .catch(e=>{_dbg('proxy error:',e.message);if(!_resolved){_resolved=true;cleanup();el.innerHTML=usccbLink;}});
+  function parseUniversalisData(data){
+    const dayName=
+      (typeof data['Mass_dayname']==='string'?data['Mass_dayname']:'')
+      ||(data['Mass_dayname']&&data['Mass_dayname'].text)
+      ||(data.Mass&&data.Mass.dayname)||'';
+    const slots=['Mass_1','Mass_P','Mass_2','Mass_G'];
+    const readings=slots
+      .map(k=>({heading:uGet(data,k,'heading'),ref:uGet(data,k,'subheading')||uGet(data,k,'ref')}))
+      .filter(r=>r.heading);
+    return {dayName,readings};
   }
 
-  window._univFallbackTimeout=setTimeout(()=>{_dbg('6s timer fired — JSONP callback never called');if(!_resolved)tryProxy();},6000);
+  async function tryFetch(proxyUrl,label){
+    _dbg('trying',label,proxyUrl);
+    const r=await fetch(proxyUrl,{signal:AbortSignal.timeout(8000)});
+    _dbg(label,'response:',r.status,r.ok);
+    if(!r.ok)throw new Error(label+' HTTP '+r.status);
+    const text=await r.text();
+    _dbg(label,'response text (first 200):',text.slice(0,200));
+    if(text.trimStart().startsWith('<'))throw new Error(label+' returned HTML, not JSON');
+    const data=JSON.parse(text);
+    _dbg(label,'JSON keys:',Object.keys(data));
+    return data;
+  }
 
+  async function tryProxies(){
+    if(_resolved)return;
+    const proxies=[
+      ['https://corsproxy.io/?url='+encodeURIComponent(massJsonUrl),'corsproxy.io'],
+      ['https://api.allorigins.win/raw?url='+encodeURIComponent(massJsonUrl),'allorigins'],
+    ];
+    for(const [url,label] of proxies){
+      if(_resolved)return;
+      try{
+        const data=await tryFetch(url,label);
+        if(_resolved)return;
+        const {dayName,readings}=parseUniversalisData(data);
+        _dbg(label,'parsed — dayName:',dayName,'readings:',readings);
+        renderReadings(dayName,readings,label);
+        return;
+      }catch(e){_dbg(label,'failed:',e.message);}
+    }
+    if(!_resolved){_dbg('all proxies failed');_resolved=true;cleanup();el.innerHTML=usccbLink;}
+  }
+
+  tryProxies();
+
+  // Safety timeout
   window._univTimeout=setTimeout(()=>{
     if(!_resolved){_dbg('14s hard timeout');_resolved=true;cleanup();el.innerHTML=usccbLink;}
   },14000);
