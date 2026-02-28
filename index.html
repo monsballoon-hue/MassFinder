@@ -1082,8 +1082,8 @@ function submitCorrection(){
   const email=document.getElementById('corrEmail').value.trim();
   if(!category){document.getElementById('corrPills').style.outline='2px solid var(--color-error)';return}
   if(!msg){document.getElementById('corrMessage').style.borderColor='var(--color-error)';return}
-  const FORM_URL='https://formsubmit.co/ajax/massfinder.corrections@gmail.com';
-  fetch(FORM_URL,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({church:church,category:category,message:msg,email:email||'(not provided)',_subject:'MassFinder Correction ['+category+']: '+church})})
+  const WEB3FORMS_KEY='3d503d58-e668-4ef8-81ff-70ad5ec3ecf6';
+  fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({access_key:WEB3FORMS_KEY,subject:'MassFinder Correction ['+category+']: '+church,church:church,category:category,message:msg,email:email||'(not provided)',from_name:'MassFinder Correction'})})
   .then(()=>{document.getElementById('correctionForm').style.display='none';document.getElementById('verifyThanks').style.display='block'})
   .catch(()=>{document.getElementById('correctionForm').style.display='none';document.getElementById('verifyThanks').style.display='block'})
 }
@@ -1096,8 +1096,8 @@ function submitMoreCorrection(){
   const email=document.getElementById('moreCorrEmail').value.trim();
   if(!category){document.getElementById('moreCorrPills').style.outline='2px solid var(--color-error)';return}
   if(!msg){document.getElementById('moreCorrMessage').style.borderColor='var(--color-error)';return}
-  const FORM_URL='https://formsubmit.co/ajax/massfinder.corrections@gmail.com';
-  fetch(FORM_URL,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({church:church||'(general)',category:category,message:msg,email:email||'(not provided)',_subject:'MassFinder Correction ['+category+']: '+(church||'General')})})
+  const WEB3FORMS_KEY='3d503d58-e668-4ef8-81ff-70ad5ec3ecf6';
+  fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({access_key:WEB3FORMS_KEY,subject:'MassFinder Correction ['+category+']: '+(church||'General'),church:church||'(general)',category:category,message:msg,email:email||'(not provided)',from_name:'MassFinder Correction'})})
   .then(()=>{document.getElementById('moreCorrThanks').style.display='block';document.getElementById('moreCorrectionForm').querySelectorAll('input,textarea,button:not(#moreCorrThanks)').forEach(el=>el.style.display='none')})
   .catch(()=>{document.getElementById('moreCorrThanks').style.display='block'})
 }
@@ -1697,56 +1697,67 @@ function getLiturgicalEvents(){
 }
 
 // ============================================================
-// DAILY READINGS (Universalis API)
+// DAILY READINGS (Universalis JSONP — official embed method, no CORS issues)
+// Universalis documents this approach at universalis.com/n-jsonp-technical.htm
+// Script injection bypasses CORS entirely; universalisCallback receives the data object.
 // ============================================================
-async function fetchReadings(){
+function fetchReadings(){
   const el=document.getElementById('readingsContent');
   if(!el)return;
   const now=getNow();
   const yyyymmdd=now.getFullYear()+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0');
   const usccbUrl='https://bible.usccb.org/bible/readings/'+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0')+now.getFullYear().toString().slice(2)+'.cfm';
+  const usccbLink='<a class="reading-usccb" href="'+usccbUrl+'" target="_blank" rel="noopener">'
+    +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="16" height="16"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>'
+    +'Read full readings at USCCB</a>';
 
-  try{
-    const resp=await fetch('https://universalis.com/US/'+yyyymmdd+'/Mass.json',{signal:AbortSignal.timeout(6000)});
-    if(!resp.ok)throw new Error('status '+resp.status);
-    const data=await resp.json();
-
-    // Extract day name
-    const dayName=data.day||(data.Mass&&data.Mass.dayname)||'';
-
-    // Extract readings — Universalis returns them as numbered properties or an array
-    let readings=[];
-    const src=data.Readings||data.Mass?.Readings||data.Mass?.readings||[];
-    if(Array.isArray(src)){
-      readings=src.filter(r=>r.heading||r.subheading||r.ref);
-    } else if(typeof src==='object'){
-      readings=Object.values(src).filter(r=>r&&(r.heading||r.subheading));
-    }
-
-    if(!readings.length&&!dayName)throw new Error('no usable data');
-
-    let html='';
-    if(dayName)html+='<div class="reading-day-name">'+esc(dayName)+'</div>';
-    if(readings.length){
-      html+=readings.map(r=>{
-        const heading=r.heading||'';
-        const ref=r.subheading||r.ref||'';
-        return '<div class="reading-entry">'
-          +(heading?'<div class="reading-heading">'+esc(heading)+'</div>':'')
-          +(ref?'<div class="reading-ref">'+esc(ref)+'</div>':'')
-          +'</div>';
-      }).join('');
-    }
-    html+='<a class="reading-usccb" href="'+usccbUrl+'" target="_blank" rel="noopener">'
-      +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="16" height="16"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>'
-      +'Read full readings at USCCB</a>';
-    el.innerHTML=html;
-  } catch(e){
-    // Fallback: show USCCB link only
-    el.innerHTML='<a class="reading-usccb" href="'+usccbUrl+'" target="_blank" rel="noopener">'
-      +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="16" height="16"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>'
-      +"Read today's readings at USCCB.org</a>";
+  function cleanup(){
+    clearTimeout(window._univTimeout);
+    delete window.universalisCallback;
+    const s=document.getElementById('universalis-jsonp');
+    if(s)s.remove();
   }
+
+  // Timeout fallback — if script doesn't load or callback never fires within 8s
+  window._univTimeout=setTimeout(()=>{
+    cleanup();
+    el.innerHTML=usccbLink;
+  },8000);
+
+  // Universalis calls this function with the readings data object
+  window.universalisCallback=function(data){
+    cleanup();
+    try{
+      // Day/feast name
+      const dayName=(data['Mass_dayname']&&(data['Mass_dayname'].text||data['Mass_dayname']))||'';
+
+      // Reading slots: 1=First Reading, P=Psalm, 2=Second Reading (Sundays), G=Gospel
+      const slots=['Mass_1','Mass_P','Mass_2','Mass_G'];
+      const readings=slots
+        .filter(k=>data[k]&&(data[k].heading||data[k].subheading))
+        .map(k=>({heading:data[k].heading||'',ref:data[k].subheading||''}));
+
+      if(!readings.length&&!dayName){el.innerHTML=usccbLink;return;}
+
+      let html='';
+      if(dayName)html+='<div class="reading-day-name">'+esc(String(dayName))+'</div>';
+      html+=readings.map(r=>
+        '<div class="reading-entry">'
+        +(r.heading?'<div class="reading-heading">'+esc(r.heading)+'</div>':'')
+        +(r.ref?'<div class="reading-ref">'+esc(r.ref)+'</div>':'')
+        +'</div>'
+      ).join('');
+      html+=usccbLink;
+      el.innerHTML=html;
+    }catch(e){el.innerHTML=usccbLink;}
+  };
+
+  // Inject the JSONP script — Universalis serves Mass.js which calls universalisCallback(data)
+  const script=document.createElement('script');
+  script.id='universalis-jsonp';
+  script.src='https://universalis.com/US/'+yyyymmdd+'/Mass.js';
+  script.onerror=()=>{cleanup();el.innerHTML=usccbLink;};
+  document.head.appendChild(script);
 }
 
 // ============================================================
