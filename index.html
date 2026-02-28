@@ -8,7 +8,11 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="MassFinder">
 <meta name="theme-color" content="#F8F7F4">
-<meta name="description" content="Find Mass, Confession, Adoration and more across Western Massachusetts">
+<meta name="description" content="Find Mass, Confession, Adoration and more across Western New England">
+<meta property="og:title" content="MassFinder — Catholic Services Directory">
+<meta property="og:description" content="Find Mass, Confession, Adoration and more across Western New England">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
 <link rel="manifest" href="manifest.json">
 <title>MassFinder — Catholic Services Directory</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -505,7 +509,7 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 
 <header class="top-header"><div class="top-header-inner"><div class="header-logo">
   <div class="header-logo-cross"><svg viewBox="0 0 16 16" fill="none"><rect x="6.5" y="1" width="3" height="14" rx="1" fill="#B8963F"/><rect x="1" y="5.5" width="14" height="3" rx="1" fill="#B8963F"/></svg></div>
-  <div><div class="header-logo-text">MassFinder</div><div class="header-logo-region">Western Massachusetts</div></div>
+  <div><div class="header-logo-text">MassFinder</div><div class="header-logo-region">Western New England</div></div>
 </div></div></header>
 
 <main id="panelFind" class="tab-panel active" role="tabpanel">
@@ -630,7 +634,7 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
     <!-- ABOUT + CORRECTION -->
     <div class="more-section">
       <h2 class="more-section-title">About MassFinder</h2>
-      <p>MassFinder helps Catholics across Western Massachusetts find Mass times, Confession, Adoration, and other services at churches in the Diocese of Springfield. Flagging an error when you spot one keeps the data accurate for everyone.</p>
+      <p>MassFinder helps Catholics across Western New England find Mass times, Confession, Adoration, and other services at churches near them. Flagging an error when you spot one keeps the data accurate for everyone.</p>
       <div class="more-links-inline">
         <a class="more-link-pill" href="https://diospringfield.org" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
@@ -1948,7 +1952,7 @@ function renderMore(){
   }
 
   // Footer
-  document.getElementById('moreFooter').innerHTML='MassFinder v2.0<br>Data source: <a href="https://diospringfield.org" target="_blank" rel="noopener">Diocese of Springfield, MA</a><br>'+langCount.size+' languages · 4 counties · Last updated Feb 2026';
+  document.getElementById('moreFooter').innerHTML='MassFinder v2.0<br>'+allParishes.length+' churches · '+langCount.size+' languages · 4 states';
 
   // Trigger readings fetch async
   fetchReadings();
