@@ -731,19 +731,27 @@ function openDetail(id){
   if(p.established)bg+='<span class="detail-badge county">Est. '+esc(p.established)+'</span>';
   if(dist!==null)bg+='<span class="detail-badge county">'+fmtDist(dist)+' away</span>';
 
-  // Contact
+  // Contact — bulletin/website logic
+  const bulletinUrl=ct.bulletin_url||'';
+  const thirdActionUrl=bulletinUrl||ct.website||'';
+  const thirdActionLabel=bulletinUrl?'Bulletin':'Website';
+  const thirdActionIcon=bulletinUrl
+    ?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>'
+    :'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>';
+
   let chtml='<div class="detail-contact">';
   if(loc0)chtml+='<div class="contact-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><a href="'+mapUrl+'" target="_blank" rel="noopener">'+esc(loc0.address||(loc0.city+', '+loc0.state))+'</a></div>';
   if(ct.phone)chtml+='<div class="contact-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><a href="tel:'+ct.phone+'">'+esc(ct.phone)+'</a></div>';
-  if(ct.website)chtml+='<div class="contact-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><a href="'+esc(ct.website)+'" target="_blank" rel="noopener">'+esc(domain)+'</a></div>';
+  // Show website as text link ONLY when bulletin URL takes the button (so website isn't lost)
+  if(bulletinUrl&&ct.website)chtml+='<div class="contact-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><a href="'+esc(ct.website)+'" target="_blank" rel="noopener">'+esc(domain)+'</a></div>';
   if(ct.office_hours)chtml+='<div class="contact-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>'+esc(ct.office_hours)+'</span></div>';
   chtml+='</div>';
 
-  // Quick actions
+  // Quick actions: Call, Directions, Bulletin (or Website)
   let qa='<div class="detail-quick-actions">';
   if(ct.phone)qa+='<a class="quick-action" href="tel:'+ct.phone+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>Call</span></a>';
   if(mapUrl)qa+='<a class="quick-action" href="'+mapUrl+'" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg><span>Directions</span></a>';
-  if(ct.website)qa+='<a class="quick-action" href="'+esc(ct.website)+'" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><span>Website</span></a>';
+  if(thirdActionUrl)qa+='<a class="quick-action" href="'+esc(thirdActionUrl)+'" target="_blank" rel="noopener">'+thirdActionIcon+'<span>'+thirdActionLabel+'</span></a>';
   qa+='</div>';
 
   // Location lookup
@@ -809,36 +817,221 @@ window.addEventListener('popstate',function(){
 function toggleAcc(btn){const exp=btn.getAttribute('aria-expanded')==='true';btn.setAttribute('aria-expanded',!exp);btn.nextElementSibling.classList.toggle('open',!exp)}
 function verifyOk(ok){document.getElementById('verifyPrompt').style.display='none';document.getElementById('verifyThanks').style.display='block'}
 
-// Render schedule by day
+// Render schedule by day — with smart collapsing
 function renderSched(svcs,locL,ml){
   const dayGrp={},appt=[];
-  for(const s of svcs){if(!s.day||s.day==='null'||!s.time){appt.push(s);continue}if(!dayGrp[s.day])dayGrp[s.day]=[];dayGrp[s.day].push(s)}
+  const WEEKDAYS=['monday','tuesday','wednesday','thursday','friday'];
   const specLabels={weekday:'Weekdays',daily:'Daily',first_friday:'First Friday',first_saturday:'First Saturday',first_sunday:'First Sunday',first_thursday:'First Thursday',holyday:'Holy Days',holyday_eve:'Holy Day Eve',Holy_Thursday:'Holy Thursday',Good_Friday:'Good Friday',Easter_Vigil:'Easter Vigil',civil_holiday:'Civil Holidays'};
+
+  // Separate seasonal/Easter services from regular
+  const seasonal=[],regular=[];
+  for(const s of svcs){
+    if(!s.day||s.day==='null'||!s.time){appt.push(s);continue}
+    const n=(s.notes||'').toLowerCase();
+    const isEaster=n.includes('easter sunday')||n.includes('easter vigil');
+    if(isEaster&&['sunday_mass','daily_mass'].includes(s.type))seasonal.push(s);
+    else regular.push(s);
+  }
+
+  // Build a fingerprint for collapsing: time+location+language+type+rite
+  function svcKey(s){const rite=s.rite==='tridentine'?'tridentine':'';return s.time+'|'+(s.location_id||'')+'|'+(s.language||'en')+'|'+s.type+'|'+rite}
+
+  // Group regular weekday services by fingerprint to detect Mon-Fri patterns
+  const wkMap={};
+  const nonWeekday=[];
+  for(const s of regular){
+    if(WEEKDAYS.includes(s.day)){
+      const k=svcKey(s);
+      if(!wkMap[k])wkMap[k]={svcs:[],days:[]};
+      wkMap[k].svcs.push(s);
+      if(!wkMap[k].days.includes(s.day))wkMap[k].days.push(s);
+    } else {
+      nonWeekday.push(s);
+    }
+  }
+
+  // For each weekday group, decide if it should be collapsed
+  const collapsed=[];  // {label, svcs:[representative]}
+  const uncollapsed=[]; // individual services that stay day-by-day
+  for(const k of Object.keys(wkMap)){
+    const grp=wkMap[k];
+    const days=grp.svcs.map(s=>s.day);
+    const uniq=[...new Set(days)].sort((a,b)=>WEEKDAYS.indexOf(a)-WEEKDAYS.indexOf(b));
+    // Only collapse if 3+ consecutive weekdays at same time/loc/lang with no meaningful note differences
+    const meaningfulNotes=grp.svcs.filter(s=>cleanNote(s)&&cleanNote(s).length>0);
+    if(uniq.length>=3&&meaningfulNotes.length<=1){
+      // Build label like "Mon – Fri" or "Mon – Thu"
+      const label=makeRangeLabel(uniq);
+      // Use first service as representative, attach the range label
+      const rep=grp.svcs[0];
+      // If one service has a meaningful note, keep it
+      const noteHolder=meaningfulNotes[0];
+      collapsed.push({label:label,svc:rep,extraNote:noteHolder?cleanNote(noteHolder):''});
+    } else {
+      uncollapsed.push(...grp.svcs);
+    }
+  }
+
+  // Build final day groups: Sunday, collapsed weekday rows, remaining individual days, special days
+  // Non-weekday services go into day groups as before
+  for(const s of uncollapsed){
+    if(!dayGrp[s.day])dayGrp[s.day]=[];
+    dayGrp[s.day].push(s);
+  }
+  for(const s of nonWeekday){
+    if(!dayGrp[s.day])dayGrp[s.day]=[];
+    dayGrp[s.day].push(s);
+  }
+
   const allKeys=Object.keys(dayGrp);
   const week=allKeys.filter(d=>DAY_ORDER.includes(d)).sort((a,b)=>DAY_ORDER.indexOf(a)-DAY_ORDER.indexOf(b));
   const other=allKeys.filter(d=>!DAY_ORDER.includes(d));
   let html='';
-  for(const day of[...week,...other]){
-    const ss=dayGrp[day].sort((a,b)=>(toMin(a.time)||0)-(toMin(b.time)||0));
-    const label=DAY_NAMES[day]||specLabels[day]||day.replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
-    html+='<div class="schedule-day"><div class="schedule-day-label">'+esc(label)+'</div>';
-    for(const s of ss){
-      const tStr=s.end_time?fmt12(s.time)+' – '+fmt12(s.end_time):fmt12(s.time);
-      const lb=s.language&&s.language!=='en'?'<span class="schedule-lang-badge">'+(LANG_NAMES[s.language]||s.language)+'</span>':'';
-      const rb=s.rite==='tridentine'?'<span class="schedule-lang-badge">TLM</span>':'';
-      const loc=ml&&s.location_id&&locL[s.location_id]?locL[s.location_id]:'';
-      const tl=SVC[s.type]||s.type;
-      html+='<div class="schedule-row"><div class="schedule-time">'+tStr+lb+rb+'</div><div class="schedule-meta">'
-        +(loc?'<div class="schedule-location">'+esc(loc)+'</div>':'')
-        +(!['sunday_mass','daily_mass'].includes(s.type)?'<div class="schedule-location">'+esc(tl)+'</div>':'')
-        +(s.notes?'<div class="schedule-note">'+esc(s.notes)+'</div>':'')
-        +(s.times_vary?'<div class="schedule-note">Times may vary — check bulletin</div>':'')
-        +'</div></div>';
+
+  // Render Sunday first if present
+  if(dayGrp['sunday']){
+    html+=renderDayGroup('sunday','Sunday',dayGrp['sunday'],locL,ml);
+  }
+
+  // Render collapsed weekday rows
+  if(collapsed.length){
+    collapsed.sort((a,b)=>(toMin(a.svc.time)||0)-(toMin(b.svc.time)||0));
+    html+='<div class="schedule-day"><div class="schedule-day-label">Weekdays</div>';
+    for(const c of collapsed){
+      html+=renderRow(c.svc,locL,ml,c.label,c.extraNote);
     }
     html+='</div>';
   }
+
+  // Render remaining individual weekdays (ones that didn't collapse)
+  for(const day of week){
+    if(day==='sunday')continue; // already rendered
+    html+=renderDayGroup(day,DAY_NAMES[day]||day,dayGrp[day],locL,ml);
+  }
+
+  // Render special days
+  for(const day of other){
+    const label=specLabels[day]||day.replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+    html+=renderDayGroup(day,label,dayGrp[day],locL,ml);
+  }
+
+  // Render seasonal Easter note if any
+  if(seasonal.length){
+    html+='<div class="schedule-day"><div class="schedule-day-label" style="color:var(--color-accent-text)">Easter Sunday</div>';
+    // Group by time, show compact
+    const byTime={};
+    for(const s of seasonal){
+      const k=s.time;
+      if(!byTime[k])byTime[k]=[];
+      byTime[k].push(s);
+    }
+    for(const t of Object.keys(byTime).sort((a,b)=>(toMin(a)||0)-(toMin(b)||0))){
+      const ss=byTime[t];
+      const rep=ss[0];
+      const langs=ss.filter(s=>s.language&&s.language!=='en').map(s=>s.language);
+      const lb=langs.map(l=>'<span class="schedule-lang-badge">'+(LANG_NAMES[l]||l)+'</span>').join('');
+      const rb=ss.some(s=>s.rite==='tridentine')?'<span class="schedule-lang-badge">TLM</span>':'';
+      html+='<div class="schedule-row"><div class="schedule-time">'+fmt12(rep.time)+lb+rb+'</div><div class="schedule-meta"></div></div>';
+    }
+    html+='</div>';
+  }
+
   if(appt.length)html+='<div class="schedule-appt">By appointment — call the parish office</div>';
   return html;
+
+  // === Helper: render a day group ===
+  function renderDayGroup(day,label,ss,locL,ml){
+    if(!ss||!ss.length)return'';
+    ss.sort((a,b)=>(toMin(a.time)||0)-(toMin(b.time)||0));
+    // Deduplicate same-time entries (merge seasonal variants into notes)
+    const merged=mergeSameTime(ss);
+    let h='<div class="schedule-day"><div class="schedule-day-label">'+esc(label)+'</div>';
+    for(const s of merged){
+      h+=renderRow(s,locL,ml);
+    }
+    return h+'</div>';
+  }
+
+  // === Helper: merge same-time services within a day ===
+  function mergeSameTime(ss){
+    const out=[];
+    const seen={};
+    for(const s of ss){
+      const k=s.time+'|'+(s.location_id||'')+'|'+(s.language||'en')+'|'+(s.rite||'');
+      if(seen[k]){
+        // Merge notes if the duplicate has a unique meaningful note
+        const existing=seen[k];
+        const newNote=cleanNote(s);
+        const existingNote=cleanNote(existing);
+        if(newNote&&newNote!==existingNote){
+          existing._mergedNotes=(existing._mergedNotes||[]);
+          existing._mergedNotes.push(newNote);
+        }
+      } else {
+        seen[k]=s;
+        out.push(s);
+      }
+    }
+    return out;
+  }
+
+  // === Helper: render a single schedule row ===
+  function renderRow(s,locL,ml,dayLabel,extraNote){
+    const tStr=s.end_time?fmt12(s.time)+' – '+fmt12(s.end_time):fmt12(s.time);
+    const lb=s.language&&s.language!=='en'?'<span class="schedule-lang-badge">'+(LANG_NAMES[s.language]||s.language)+'</span>':'';
+    const rb=s.rite==='tridentine'?'<span class="schedule-lang-badge">TLM</span>':'';
+    const loc=ml&&s.location_id&&locL[s.location_id]?locL[s.location_id]:'';
+    const tl=SVC[s.type]||s.type;
+    const note=extraNote||cleanNote(s)||'';
+    const merged=(s._mergedNotes||[]).filter(n=>n).join('; ');
+
+    let meta='';
+    if(dayLabel)meta+='<div class="schedule-location" style="font-weight:var(--weight-medium)">'+esc(dayLabel)+'</div>';
+    if(loc)meta+='<div class="schedule-location">'+esc(loc)+'</div>';
+    if(!['sunday_mass','daily_mass'].includes(s.type))meta+='<div class="schedule-location">'+esc(tl)+'</div>';
+    if(note)meta+='<div class="schedule-note">'+esc(note)+'</div>';
+    if(merged)meta+='<div class="schedule-note">'+esc(merged)+'</div>';
+    if(s.times_vary)meta+='<div class="schedule-note">Times may vary — check bulletin</div>';
+
+    return '<div class="schedule-row"><div class="schedule-time">'+tStr+lb+rb+'</div><div class="schedule-meta">'+meta+'</div></div>';
+  }
+
+  // === Helper: clean redundant notes ===
+  function cleanNote(s){
+    let n=(s.notes||'').trim();
+    if(!n)return'';
+    const nl=n.toLowerCase();
+    // Suppress "Vigil Mass" on Saturday sunday_mass (exact match)
+    if(s.day==='saturday'&&s.type==='sunday_mass'&&/^vigil\s*mass$/i.test(n))return'';
+    // Suppress "Vigil Mass — Location" on Saturday when location is shown separately
+    if(s.day==='saturday'&&s.type==='sunday_mass'&&/^vigil\s*mass\s*[—–-]\s*.+/i.test(n)&&ml)return'';
+    // Suppress notes that just restate the type name
+    const typeName=(SVC[s.type]||'').toLowerCase();
+    if(typeName&&nl===typeName)return'';
+    // Suppress "Traditional Latin Mass (TLM)" when language is already Latin
+    if(s.language==='la'&&/^traditional\s+latin\s+mass\s*(\(tlm\))?$/i.test(n))return'';
+    // Suppress "Polish Mass" variants when language is already Polish
+    if(s.language==='pl'&&/^polish\s+mass/i.test(n))return'';
+    // Suppress "Communion Service" note when type is communion_service
+    if(s.type==='communion_service'&&/^communion\s+service$/i.test(n))return'';
+    // Strip "language: xx" raw data leaks from notes
+    n=n.replace(/\s*\(language:\s*\w+\)\s*/gi,'').trim();
+    // Strip notes that start with "Last Sunday of month: Mass in Polish" when Polish badge handles it
+    if(s.language==='en'&&/^last\s+sunday\s+of\s+month:\s*mass\s+in\s+polish/i.test(n))return'';
+    return n;
+  }
+
+  // === Helper: make range label like "Mon – Fri" or "Mon – Thu" ===
+  function makeRangeLabel(days){
+    const abbr={monday:'Mon',tuesday:'Tue',wednesday:'Wed',thursday:'Thu',friday:'Fri'};
+    if(days.length===5)return'Mon – Fri';
+    // Check if consecutive
+    const indices=days.map(d=>WEEKDAYS.indexOf(d)).sort((a,b)=>a-b);
+    let consecutive=true;
+    for(let i=1;i<indices.length;i++){if(indices[i]!==indices[i-1]+1){consecutive=false;break}}
+    if(consecutive&&days.length>=3)return abbr[WEEKDAYS[indices[0]]]+' – '+abbr[WEEKDAYS[indices[indices.length-1]]];
+    return days.map(d=>abbr[d]||d).join(', ');
+  }
 }
 
 // Tabs
