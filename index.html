@@ -13,6 +13,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.css">
 <style>
 :root {
   --color-primary: #2C3E5A;
@@ -286,6 +289,75 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
   .parish-card { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
 }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+
+/* MAP TAB */
+#mapContainer { width: 100%; height: calc(100vh - 64px - 56px); height: calc(100dvh - 64px - 56px); }
+.leaflet-container { background: var(--color-bg); font-family: var(--font-body); }
+.map-cluster {
+  background: rgba(44,62,90,0.15); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.map-cluster div {
+  background: var(--color-primary); color: var(--color-text-inverse);
+  border-radius: 50%; text-align: center; font-size: 13px; font-weight: var(--weight-semibold);
+  display: flex; align-items: center; justify-content: center;
+}
+.map-popup { padding: 0; }
+.map-popup .leaflet-popup-content-wrapper { border-radius: var(--radius-md); box-shadow: var(--shadow-card); padding: 0; }
+.map-popup .leaflet-popup-content { margin: 0; width: 260px !important; }
+.map-popup .leaflet-popup-tip { border-top-color: var(--color-surface); }
+.popup-card { padding: var(--space-4); cursor: pointer; }
+.popup-card:hover { background: var(--color-surface-hover); }
+.popup-name { font-size: var(--text-base); font-weight: var(--weight-semibold); color: var(--color-text-primary); line-height: 1.3; margin-bottom: 2px; }
+.popup-town { font-size: var(--text-xs); color: var(--color-text-secondary); margin-bottom: var(--space-2); }
+.popup-next { display: flex; align-items: baseline; gap: var(--space-2); }
+.popup-time { font-size: var(--text-xl); font-weight: var(--weight-semibold); color: var(--color-primary); }
+.popup-label { font-size: var(--text-xs); color: var(--color-text-secondary); font-weight: var(--weight-medium); }
+.popup-day { font-size: var(--text-xs); color: var(--color-text-tertiary); margin-top: 2px; }
+.popup-dist { font-size: var(--text-xs); color: var(--color-text-tertiary); margin-top: var(--space-1); }
+.map-locate-btn {
+  width: 40px; height: 40px; background: var(--color-surface); border: 2px solid rgba(0,0,0,0.15);
+  border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center;
+  cursor: pointer; box-shadow: var(--shadow-card);
+}
+.map-locate-btn:hover { background: var(--color-surface-hover); }
+.map-locate-btn svg { width: 20px; height: 20px; color: var(--color-primary); }
+
+/* SAVED TAB */
+.saved-content { max-width: var(--max-width); margin: 0 auto; padding: var(--space-4); }
+.saved-header { padding: var(--space-2) 0 var(--space-4); }
+.saved-header h2 { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 700; color: var(--color-text-primary); }
+.saved-header p { font-size: var(--text-sm); color: var(--color-text-tertiary); margin-top: var(--space-1); }
+.saved-list { display: flex; flex-direction: column; gap: var(--space-3); }
+.saved-empty { text-align: center; padding: var(--space-12) 0; }
+.saved-empty-icon { width: 56px; height: 56px; margin: 0 auto var(--space-4); border-radius: 50%; background: var(--color-surface-hover); display: flex; align-items: center; justify-content: center; }
+.saved-empty-icon svg { width: 28px; height: 28px; color: var(--color-text-tertiary); }
+.saved-empty h3 { font-family: var(--font-display); font-size: var(--text-xl); font-weight: var(--weight-semibold); color: var(--color-text-secondary); margin-bottom: var(--space-2); }
+.saved-empty p { font-size: var(--text-sm); color: var(--color-text-tertiary); line-height: 1.5; }
+
+/* MORE TAB */
+.more-content { max-width: var(--max-width); margin: 0 auto; padding: var(--space-4) var(--space-4) var(--space-12); }
+.more-section { padding: var(--space-5) 0; border-bottom: 1px solid var(--color-border-light); }
+.more-section:last-child { border-bottom: none; }
+.more-section-title { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 700; color: var(--color-text-primary); margin-bottom: var(--space-3); }
+.more-section p { font-size: var(--text-sm); color: var(--color-text-secondary); line-height: 1.6; margin-bottom: var(--space-3); }
+.more-section p:last-child { margin-bottom: 0; }
+.stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-3); margin-bottom: var(--space-3); }
+.stat-card { background: var(--color-surface); border-radius: var(--radius-md); padding: var(--space-4); text-align: center; box-shadow: var(--shadow-card); }
+.stat-value { font-size: var(--text-3xl); font-weight: var(--weight-semibold); color: var(--color-primary); line-height: 1.2; }
+.stat-label { font-size: var(--text-xs); color: var(--color-text-tertiary); font-weight: var(--weight-medium); margin-top: var(--space-1); }
+.county-list { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-3); }
+.county-chip { font-size: var(--text-sm); font-weight: var(--weight-medium); padding: var(--space-2) var(--space-3); border-radius: var(--radius-full); background: var(--color-surface); color: var(--color-text-secondary); border: 1px solid var(--color-border); }
+.more-link-row {
+  display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) 0;
+  font-size: var(--text-base); color: var(--color-text-primary); font-weight: var(--weight-medium);
+  cursor: pointer; transition: color var(--transition-fast);
+}
+.more-link-row:hover { color: var(--color-info); }
+.more-link-row svg { width: 22px; height: 22px; color: var(--color-primary-muted); flex-shrink: 0; }
+.more-link-row .arrow { margin-left: auto; width: 18px; height: 18px; color: var(--color-text-tertiary); }
+.more-footer { text-align: center; padding: var(--space-6) 0 var(--space-4); font-size: var(--text-xs); color: var(--color-text-tertiary); line-height: 1.6; }
+.more-footer a { color: var(--color-info); }
 </style>
 </head>
 <body>
@@ -332,20 +404,61 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
   <div id="cardList" class="card-list" role="list"></div>
 </main>
 
-<div id="panelMap" class="tab-panel" role="tabpanel"><div class="stub-panel">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
-  <h2>Map View</h2><p>Interactive map coming in Phase 4.</p>
-</div></div>
+<div id="panelMap" class="tab-panel" role="tabpanel">
+  <div id="mapContainer"></div>
+</div>
 
-<div id="panelSaved" class="tab-panel" role="tabpanel"><div class="stub-panel">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-  <h2>Saved Parishes</h2><p>Your favorited parishes will appear here. Coming in Phase 4.</p>
-</div></div>
+<div id="panelSaved" class="tab-panel" role="tabpanel">
+  <div class="saved-content">
+    <div class="saved-header">
+      <h2>Saved Parishes</h2>
+      <p id="savedSubtitle">Your favorited parishes</p>
+    </div>
+    <div id="savedList" class="saved-list"></div>
+  </div>
+</div>
 
-<div id="panelMore" class="tab-panel" role="tabpanel"><div class="stub-panel">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-  <h2>More</h2><p>Settings, about, YC events, and submit corrections. Coming in Phase 4.</p>
-</div></div>
+<div id="panelMore" class="tab-panel" role="tabpanel">
+  <div class="more-content">
+    <div class="more-section">
+      <h2 class="more-section-title">About MassFinder</h2>
+      <p>MassFinder helps Catholics across Western Massachusetts find Mass times, Confession, Adoration, and other services at parishes in the Diocese of Springfield.</p>
+      <p>All service times are sourced from parish bulletins and verified periodically. If you notice an error, please use the "Submit a Correction" link below.</p>
+    </div>
+
+    <div class="more-section">
+      <h2 class="more-section-title">Directory Stats</h2>
+      <div id="moreStats" class="stat-grid"></div>
+      <div id="moreCounties" class="county-list"></div>
+    </div>
+
+    <div class="more-section">
+      <h2 class="more-section-title">Links</h2>
+      <a class="more-link-row" href="https://diospringfield.org" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Diocese of Springfield
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+      <a class="more-link-row" href="mailto:massfinder@example.com?subject=MassFinder%20Correction" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        Submit a Correction
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+      <a class="more-link-row" id="moreEventsLink" href="#" style="display:none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Upcoming Events
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+    </div>
+
+    <div class="more-section" id="moreEventsSection" style="display:none">
+      <h2 class="more-section-title">Upcoming Events</h2>
+      <div id="moreEventsList"></div>
+    </div>
+
+    <div class="more-footer" id="moreFooter"></div>
+  </div>
+</div>
 
 <div id="detailBackdrop" class="detail-backdrop" onclick="closeDetail()"></div>
 <div id="detailPanel" class="detail-panel" role="dialog" aria-label="Parish details">
@@ -376,6 +489,8 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg><span>More</span></button>
 </div></nav>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
 <script>
 let allParishes=[],filteredParishes=[],userLat=null,userLng=null,currentSort='name',currentFilter='all',searchQuery='',favorites=[];
 let advancedFilters={types:[],days:[],languages:[],county:[]},tempAdvanced={types:[],days:[],languages:[],county:[]};
@@ -633,7 +748,218 @@ function renderSched(svcs,locL,ml){
 }
 
 // Tabs
-function switchTab(id,btn){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab-item').forEach(t=>{t.classList.remove('active');t.setAttribute('aria-selected','false')});document.getElementById(id).classList.add('active');btn.classList.add('active');btn.setAttribute('aria-selected','true')}
+let mapInitialized=false;
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-item').forEach(t=>{t.classList.remove('active');t.setAttribute('aria-selected','false')});
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');btn.setAttribute('aria-selected','true');
+  if(id==='panelMap'&&!mapInitialized){initMap();mapInitialized=true}
+  if(id==='panelMap'&&mapInitialized&&window._map){setTimeout(()=>window._map.invalidateSize(),100)}
+  if(id==='panelSaved')renderSaved();
+  if(id==='panelMore'&&!document.getElementById('moreStats').innerHTML)renderMore();
+}
+
+// ============================================================
+// MAP TAB
+// ============================================================
+function createPinIcon(isHighlighted){
+  const color=isHighlighted?'#B8963F':'#2C3E5A';
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 42" width="30" height="42">
+    <path d="M15 0C6.7 0 0 6.7 0 15c0 10.5 15 27 15 27s15-16.5 15-27C30 6.7 23.3 0 15 0z" fill="${color}"/>
+    <circle cx="15" cy="14" r="6" fill="white" opacity="0.9"/>
+    <rect x="13.5" y="9" width="3" height="10" rx="1" fill="${color}"/>
+    <rect x="10" y="12.5" width="10" height="3" rx="1" fill="${color}"/>
+  </svg>`;
+  return L.divIcon({
+    html:svg, className:'', iconSize:[30,42], iconAnchor:[15,42], popupAnchor:[0,-38]
+  });
+}
+
+function initMap(){
+  if(!window.L)return;
+  const map=L.map('mapContainer',{
+    center:[42.38,-72.78], zoom:9,
+    zoomControl:true, attributionControl:true
+  });
+  window._map=map;
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    maxZoom:18
+  }).addTo(map);
+
+  // Custom cluster icons
+  const cluster=L.markerClusterGroup({
+    maxClusterRadius:45,
+    iconCreateFunction:function(c){
+      const count=c.getChildCount();
+      let size=36;if(count>10)size=42;if(count>25)size=50;
+      return L.divIcon({
+        html:'<div style="width:'+size+'px;height:'+size+'px;">'+count+'</div>',
+        className:'map-cluster',
+        iconSize:[size+12,size+12]
+      });
+    }
+  });
+
+  const defaultIcon=createPinIcon(false);
+  const bounds=[];
+
+  for(const p of allParishes){
+    for(const loc of (p.locations||[])){
+      if(!loc.lat||!loc.lng)continue;
+      const marker=L.marker([loc.lat,loc.lng],{icon:defaultIcon});
+      const next=getNext(p,'all');
+      const dist=getDist(p);
+
+      let popupHtml='<div class="popup-card" onclick="closeMapPopup();openDetail(\''+p.id+'\')">';
+      popupHtml+='<div class="popup-name">'+esc(p.name)+'</div>';
+      popupHtml+='<div class="popup-town">'+esc(p.town)+', '+esc(p.county)+' County</div>';
+      if(next){
+        popupHtml+='<div class="popup-next"><span class="popup-time">'+next.timeFormatted+'</span>';
+        popupHtml+='<span class="popup-label">'+(SVC[next.service.type]||next.service.type)+'</span></div>';
+        popupHtml+='<div class="popup-day">'+next.dayLabel+'</div>';
+      }
+      if(dist!==null){popupHtml+='<div class="popup-dist">'+fmtDist(dist)+' away</div>'}
+      popupHtml+='</div>';
+
+      marker.bindPopup(popupHtml,{className:'map-popup',closeButton:false,minWidth:240,maxWidth:280});
+
+      // Show different icon if multi-location
+      if((p.locations||[]).length>1&&loc!==p.locations[0]){
+        // keep default, skip adding to bounds for secondary locs
+      }
+
+      cluster.addLayer(marker);
+      bounds.push([loc.lat,loc.lng]);
+    }
+  }
+
+  map.addLayer(cluster);
+  if(bounds.length)map.fitBounds(bounds,{padding:[30,30],maxZoom:12});
+
+  // User location marker
+  if(userLat!==null){
+    L.circleMarker([userLat,userLng],{
+      radius:8,fillColor:'#3478C6',fillOpacity:1,
+      color:'white',weight:3,opacity:1
+    }).addTo(map).bindPopup('Your location');
+  }
+
+  // Locate control
+  const LocateControl=L.Control.extend({
+    options:{position:'topright'},
+    onAdd:function(){
+      const btn=L.DomUtil.create('div','map-locate-btn');
+      btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2"/><circle cx="12" cy="12" r="8"/></svg>';
+      btn.title='My location';
+      L.DomEvent.on(btn,'click',function(e){
+        L.DomEvent.stopPropagation(e);
+        if(userLat!==null){map.setView([userLat,userLng],13)}
+        else{requestLocation();setTimeout(()=>{if(userLat!==null)map.setView([userLat,userLng],13)},2000)}
+      });
+      return btn;
+    }
+  });
+  map.addControl(new LocateControl());
+}
+
+function closeMapPopup(){if(window._map)window._map.closePopup()}
+
+// ============================================================
+// SAVED TAB
+// ============================================================
+function renderSaved(){
+  const el=document.getElementById('savedList');
+  const sub=document.getElementById('savedSubtitle');
+  const favParishes=allParishes.filter(p=>isFav(p.id));
+
+  sub.textContent=favParishes.length?favParishes.length+' saved parish'+(favParishes.length!==1?'es':''):'Tap the heart on any parish to save it';
+
+  if(!favParishes.length){
+    el.innerHTML='<div class="saved-empty">'
+      +'<div class="saved-empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>'
+      +'<h3>No saved parishes yet</h3>'
+      +'<p>Tap the heart icon on any parish card<br>to save it for quick access here.</p></div>';
+    return;
+  }
+
+  const checkSvg='<svg class="card-verified" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>';
+
+  el.innerHTML=favParishes.map(p=>{
+    const next=getNext(p,'all');
+    const dist=getDist(p);
+    const tag=getTag(p,next);
+    const ver=isVer(p);
+
+    let nh;
+    if(next){nh='<div class="card-next-service"><span class="card-next-time">'+next.timeFormatted+'</span><span class="card-next-label">'+esc(SVC[next.service.type]||next.service.type)+'</span>'+(next.isSoon?'<span class="card-soon-badge"><span class="pulse-dot"></span>Soon</span>':'')+'</div><div class="card-next-day">'+next.dayLabel+'</div>'}
+    else{nh='<div class="card-next-service"><span class="card-next-label" style="color:var(--color-text-tertiary)">Check bulletin for times</span></div>'}
+
+    return '<article class="parish-card" role="listitem" onclick="openDetail(\''+p.id+'\')">'
+      +'<div class="card-top"><div class="card-name-row"><h3 class="card-name">'+esc(p.name)+'</h3>'+(ver?checkSvg:'')+'</div>'
+      +'<div class="card-right">'+(dist!==null?'<span class="card-distance">'+fmtDist(dist)+'</span>':'')
+      +'<button class="card-fav is-fav" onclick="toggleFav(\''+p.id+"',event);renderSaved()\" aria-label=\"Remove from favorites\"><svg viewBox=\"0 0 24 24\" fill=\"currentColor\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z\"/></svg></button>"
+      +'</div></div><div class="card-town">'+esc(p.town)+', '+esc(p.county)+' County</div>'+nh
+      +(tag?'<div class="card-tags"><span class="card-tag '+tag.c+'">'+tag.t+'</span></div>':'')
+      +'</article>';
+  }).join('');
+}
+
+// ============================================================
+// MORE TAB
+// ============================================================
+function renderMore(){
+  // Stats
+  const totalServices=allParishes.reduce((sum,p)=>sum+p.services.length,0);
+  const confessionParishes=allParishes.filter(p=>p.services.some(s=>s.type==='confession'&&s.time)).length;
+  const adorationParishes=allParishes.filter(p=>p.services.some(s=>['adoration','perpetual_adoration'].includes(s.type))).length;
+  const langCount=new Set();allParishes.forEach(p=>p.services.forEach(s=>{if(s.language)langCount.add(s.language)}));
+
+  document.getElementById('moreStats').innerHTML=
+    '<div class="stat-card"><div class="stat-value">'+allParishes.length+'</div><div class="stat-label">Active Parishes</div></div>'
+    +'<div class="stat-card"><div class="stat-value">'+totalServices+'</div><div class="stat-label">Service Listings</div></div>'
+    +'<div class="stat-card"><div class="stat-value">'+confessionParishes+'</div><div class="stat-label">Offer Confession</div></div>'
+    +'<div class="stat-card"><div class="stat-value">'+adorationParishes+'</div><div class="stat-label">Offer Adoration</div></div>';
+
+  // Counties
+  const counties={};allParishes.forEach(p=>{counties[p.county]=(counties[p.county]||0)+1});
+  document.getElementById('moreCounties').innerHTML=Object.entries(counties).sort((a,b)=>b[1]-a[1])
+    .map(([c,n])=>'<span class="county-chip">'+esc(c)+' ('+n+')</span>').join('');
+
+  // Events
+  const allEvents=[];
+  allParishes.forEach(p=>{
+    (p.special_events||[]).forEach(e=>{
+      allEvents.push({...e,parishName:p.name,parishId:p.id});
+    });
+  });
+  if(allEvents.length){
+    document.getElementById('moreEventsSection').style.display='block';
+    document.getElementById('moreEventsLink').style.display='flex';
+    document.getElementById('moreEventsLink').onclick=function(e){
+      e.preventDefault();
+      document.getElementById('moreEventsSection').scrollIntoView({behavior:'smooth'});
+    };
+    // Show first 10 events
+    const shown=allEvents.slice(0,10);
+    document.getElementById('moreEventsList').innerHTML=shown.map(e=>
+      '<div style="padding:var(--space-3) 0;border-bottom:1px solid var(--color-border-light)">'
+      +'<div style="font-size:var(--text-base);font-weight:var(--weight-semibold);color:var(--color-text-primary)">'+esc(e.title)+'</div>'
+      +'<div style="font-size:var(--text-sm);color:var(--color-text-secondary)">'+esc(e.parishName)+'</div>'
+      +'<div style="font-size:var(--text-xs);color:var(--color-text-tertiary);margin-top:2px">'
+      +(e.day?esc((DAY_NAMES[e.day]||e.day)):'')+' '+(e.time?fmt12(e.time):'')
+      +(e.frequency&&e.frequency!=='one_time'?' · '+esc(e.frequency):'')
+      +'</div>'
+      +(e.notes?'<div style="font-size:var(--text-xs);color:var(--color-text-tertiary);font-style:italic;margin-top:2px">'+esc(e.notes)+'</div>':'')
+      +'</div>'
+    ).join('')+(allEvents.length>10?'<div style="padding:var(--space-3);font-size:var(--text-sm);color:var(--color-text-tertiary)">And '+(allEvents.length-10)+' more events across the diocese.</div>':'');
+  }
+
+  // Footer
+  document.getElementById('moreFooter').innerHTML='MassFinder v2.0<br>Data source: <a href="https://diospringfield.org" target="_blank" rel="noopener">Diocese of Springfield, MA</a><br>'+langCount.size+' languages · 4 counties · Last updated Feb 2026';
+}
 
 // Chips
 document.querySelectorAll('.chip[data-filter]').forEach(chip=>{chip.addEventListener('click',()=>{document.querySelectorAll('.chip[data-filter]').forEach(c=>c.classList.remove('active'));chip.classList.add('active');currentFilter=chip.dataset.filter;if(['today','weekend'].includes(currentFilter)){currentSort='next_service';updateSortLabel()}filterParishes();renderCards()})});
