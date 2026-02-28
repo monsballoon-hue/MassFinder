@@ -552,7 +552,13 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 
   <div id="sparseMsg" class="sparse-msg" style="display:none"><div class="sparse-msg-inner">Fewer services on weekdays — <button onclick="document.querySelector('[data-filter=weekend]').click()">try This Weekend</button> for Sunday Mass times.</div></div>
   <div id="eventsWidget" class="events-widget-wrap"></div>
-  <div id="cardList" class="card-list" role="list" aria-label="Churches"></div>
+  <div id="cardList" class="card-list" role="list" aria-label="Churches">
+    <div class="loading-placeholder" style="display:flex;flex-direction:column;gap:var(--space-3)">
+      <div style="background:var(--color-surface);border-radius:var(--radius-md);padding:var(--space-5);box-shadow:var(--shadow-card);height:130px;animation:pulse 1.5s ease-in-out infinite"></div>
+      <div style="background:var(--color-surface);border-radius:var(--radius-md);padding:var(--space-5);box-shadow:var(--shadow-card);height:130px;animation:pulse 1.5s ease-in-out infinite;animation-delay:0.1s"></div>
+      <div style="background:var(--color-surface);border-radius:var(--radius-md);padding:var(--space-5);box-shadow:var(--shadow-card);height:130px;animation:pulse 1.5s ease-in-out infinite;animation-delay:0.2s"></div>
+    </div>
+  </div>
 </main>
 
 <div id="panelMap" class="tab-panel" role="tabpanel">
@@ -998,7 +1004,20 @@ function openDetail(id){
   if(ct.phone)qa+='<a class="quick-action" href="tel:'+ct.phone+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>Call</span></a>';
   if(mapUrl)qa+='<a class="quick-action" href="'+mapUrl+'" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg><span>Directions</span></a>';
   if(thirdActionUrl)qa+='<a class="quick-action" href="'+esc(thirdActionUrl)+'" target="_blank" rel="noopener">'+thirdActionIcon+'<span>'+thirdActionLabel+'</span></a>';
+  // Share button (Web Share API)
+  if(navigator.share){
+    qa+='<button class="quick-action" onclick="shareParish(\''+esc(p.name)+'\',\''+p.id+'\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg><span>Share</span></button>';
+  }
   qa+='</div>';
+
+  // Visitation data
+  let visitHtml='';
+  if(p.visitation&&p.visitation.hours_note){
+    visitHtml='<div style="margin:var(--space-3) 0;padding:var(--space-3) var(--space-4);background:var(--color-verified-bg);border-radius:var(--radius-md);display:flex;align-items:flex-start;gap:var(--space-3)">'
+      +'<span style="font-size:1.1em;line-height:1">🕊</span>'
+      +'<div><div style="font-size:var(--text-sm);font-weight:var(--weight-semibold);color:var(--color-verified)">Open for Prayer</div>'
+      +'<div style="font-size:var(--text-sm);color:var(--color-text-secondary);margin-top:2px">'+esc(p.visitation.hours_note)+'</div></div></div>';
+  }
 
   // Location lookup
   const locL={};(p.locations||[]).forEach(l=>{locL[l.id]=l.short_name||l.name});
@@ -1061,7 +1080,7 @@ function openDetail(id){
     +'<div class="detail-actions"><button class="detail-action-btn fav-btn'+(fav?' fav-active':'')+'" data-id="'+p.id+'" onclick="toggleFav(\''+p.id+'\')" aria-label="Favorite"><svg viewBox="0 0 24 24" fill="'+(fav?'currentColor':'none')+'" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>'
     +'<button class="detail-action-btn" onclick="closeDetail()" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>'
     +'</div></div><div class="detail-town">'+esc(p.town)+', Massachusetts</div><div class="detail-badges">'+bg+'</div></div>'
-    +'<div class="detail-body">'+chtml+qa+mlNote+secHtml+vp+footer+'</div>';
+    +'<div class="detail-body">'+chtml+qa+visitHtml+mlNote+secHtml+vp+footer+'</div>';
 
   document.getElementById('detailBackdrop').classList.add('open');
   document.getElementById('detailPanel').classList.add('open');
@@ -1080,6 +1099,13 @@ function closeDetail(){
   releaseFocus();
   if(window._lastFocused)window._lastFocused.focus();
   history.replaceState(null,'',location.pathname+location.search);
+}
+function shareParish(name,id){
+  navigator.share({
+    title:name+' — MassFinder',
+    text:'Mass times and services at '+name,
+    url:location.origin+location.pathname+'#'+id
+  }).catch(()=>{});
 }
 function toggleAcc(btn){const exp=btn.getAttribute('aria-expanded')==='true';btn.setAttribute('aria-expanded',!exp);btn.nextElementSibling.classList.toggle('open',!exp)}
 function verifyOk(ok){document.getElementById('verifyPrompt').style.display='none';document.getElementById('verifyThanks').style.display='block'}
@@ -1312,6 +1338,21 @@ function renderSched(svcs,locL,ml,sectionTypes){
     if(note)meta+='<div class="schedule-note">'+esc(note)+'</div>';
     if(merged)meta+='<div class="schedule-note">'+esc(merged)+'</div>';
     if(s.times_vary)meta+='<div class="schedule-note">Times may vary — check bulletin</div>';
+
+    // Show recurrence info if present
+    if(s.recurrence){
+      const r=s.recurrence;
+      const ordinal={1:'1st',2:'2nd',3:'3rd',4:'4th','last':'Last'};
+      let recLabel='';
+      if(r.type==='nth'&&r.week){
+        recLabel=(ordinal[r.week]||r.week)+' '+(DAY_NAMES[s.day]||s.day)+' of the month';
+      } else if(r.type==='nth'&&r.weeks){
+        recLabel=r.weeks.map(w=>ordinal[w]||w).join(' & ')+' '+(DAY_NAMES[s.day]||s.day);
+      } else if(r.type==='last_sunday_of_month'){
+        recLabel='Last Sunday of the month';
+      }
+      if(recLabel)meta+='<div class="schedule-note" style="font-weight:var(--weight-medium);color:var(--color-accent-text)">'+esc(recLabel)+'</div>';
+    }
 
     return '<div class="schedule-row"><div class="schedule-time">'+tStr+lb+rb+'</div><div class="schedule-meta">'+meta+'</div></div>';
   }
