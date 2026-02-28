@@ -1740,7 +1740,7 @@ async function fetchReadings(){
     html+=sections.map((s,i)=>{
       const id='reading-entry-'+i;
       const hasText=s.text&&s.text.length>0;
-      return '<div class="reading-entry" id="'+id+'" '+(hasText?'onclick="toggleReading(''+id+'')"':'')+'>'
+      return '<div class="reading-entry" id="'+id+'" '+(hasText?'onclick="toggleReading(\''+id+'\')"':'')+'>'
         +'<div class="reading-entry-header">'
         +'<div>'
         +'<div class="reading-heading">'+esc(s.heading)+'</div>'
