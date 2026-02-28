@@ -4,31 +4,30 @@
     "source": "Diocese of Springfield, MA - Online Directory",
     "extracted_date": "2026-02-19",
     "total_parishes": 98,
-    "total_services": 1448,
+    "total_services": 1465,
     "service_types_found": {
-      "sunday_mass": 364,
       "daily_mass": 507,
-      "adoration": 114,
-      "communion_service": 12,
-      "confession": 208,
-      "rosary": 71,
+      "sunday_mass": 364,
+      "confession": 212,
+      "adoration": 117,
+      "stations_of_cross": 74,
+      "rosary": 72,
       "divine_mercy": 23,
-      "stations_of_cross": 66,
-      "holy_thursday_mass": 8,
-      "good_friday_service": 9,
-      "easter_vigil_mass": 7,
       "devotion": 21,
-      "holy_hour": 8,
-      "anointing_of_sick": 4,
+      "communion_service": 12,
       "miraculous_medal": 11,
+      "holy_hour": 10,
+      "good_friday_service": 9,
+      "holy_thursday_mass": 8,
+      "easter_vigil_mass": 7,
+      "vespers": 5,
+      "anointing_of_sick": 4,
       "novena": 4,
       "bible_study": 1,
       "perpetual_adoration": 1,
-      "vespers": 5,
       "gorzkie_zale": 1,
       "mens_group": 1,
-      "social_event": 1,
-      "benediction": 1
+      "social_event": 1
     },
     "notes": [
       "PDF hyperlinks shifted by one entry - display text used as URL source",
@@ -76,7 +75,8 @@
       "CT": 12,
       "VT": 4,
       "NH": 2
-    }
+    },
+    "total_locations": 130
   },
   "parishes": [
     {
@@ -475,16 +475,51 @@
         },
         {
           "type": "adoration",
-          "day": "tuesday_friday",
-          "notes": "Following Daily Mass, Tue–Fri during Lent",
+          "day": "tuesday",
+          "notes": "Following Daily Mass",
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
           },
-          "id": "parish_001-ador-tf-lent",
+          "id": "parish_001-ador-tue-lent",
           "end_time": null,
-          "language": "en",
-          "stub": true
+          "language": "en"
+        },
+        {
+          "type": "adoration",
+          "day": "wednesday",
+          "notes": "Following Daily Mass",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "id": "parish_001-ador-wed-lent",
+          "end_time": null,
+          "language": "en"
+        },
+        {
+          "type": "adoration",
+          "day": "thursday",
+          "notes": "Following Daily Mass",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "id": "parish_001-ador-thu-lent",
+          "end_time": null,
+          "language": "en"
+        },
+        {
+          "type": "adoration",
+          "day": "friday",
+          "notes": "Following Daily Mass",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "id": "parish_001-ador-fri-lent",
+          "end_time": null,
+          "language": "en"
         },
         {
           "type": "divine_mercy",
@@ -1355,7 +1390,7 @@
           "day": "friday",
           "time": "12:15",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-brigid-church-amherst",
           "language": "en",
           "notes": "At Newman Center (111 Thatcher Rd.)",
           "seasonal": {
@@ -1509,7 +1544,7 @@
           "day": "monday",
           "time": "08:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-brigid-church-amherst",
           "language": "en",
           "notes": null,
           "seasonal": {
@@ -1524,7 +1559,7 @@
           "day": "tuesday",
           "time": "08:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-brigid-church-amherst",
           "language": "en",
           "notes": null,
           "seasonal": {
@@ -1539,7 +1574,7 @@
           "day": "wednesday",
           "time": "08:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-brigid-church-amherst",
           "language": "en",
           "notes": null,
           "seasonal": {
@@ -1554,7 +1589,7 @@
           "day": "thursday",
           "time": "08:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-brigid-church-amherst",
           "language": "en",
           "notes": null,
           "seasonal": {
@@ -1569,7 +1604,7 @@
           "day": "saturday",
           "time": "16:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-brigid-church-amherst",
           "language": "en",
           "notes": "Vigil Mass",
           "seasonal": {
@@ -1584,7 +1619,7 @@
           "day": "sunday",
           "time": "08:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-brigid-church-amherst",
           "language": "en",
           "notes": null,
           "seasonal": {
@@ -1599,7 +1634,7 @@
           "day": "sunday",
           "time": "12:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-brigid-church-amherst",
           "language": "es",
           "notes": null,
           "seasonal": {
@@ -1614,7 +1649,7 @@
           "day": "saturday",
           "time": "15:30",
           "end_time": "16:00",
-          "location_id": null,
+          "location_id": "st-brigid-church-amherst",
           "language": "en",
           "notes": null,
           "seasonal": {
@@ -1629,7 +1664,7 @@
           "day": "thursday",
           "time": "08:30",
           "end_time": "17:00",
-          "location_id": null,
+          "location_id": "st-brigid-church-amherst",
           "language": "en",
           "notes": null,
           "seasonal": {
@@ -1644,7 +1679,7 @@
           "day": "thursday",
           "time": "15:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-brigid-church-amherst",
           "language": "en",
           "notes": "Within Thursday adoration block",
           "seasonal": {
@@ -1659,7 +1694,7 @@
           "day": "thursday",
           "time": "17:00",
           "end_time": "18:00",
-          "location_id": null,
+          "location_id": "st-brigid-church-amherst",
           "language": "es",
           "notes": "Hora Santa — Ends with Benediction",
           "seasonal": {
@@ -1674,7 +1709,7 @@
           "day": "friday",
           "time": "18:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-brigid-church-amherst",
           "language": "en",
           "notes": "bilingual, led by Dcn. Adalberto",
           "seasonal": {
@@ -2093,7 +2128,7 @@
           "day": "saturday",
           "time": "16:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-francis-church-belchertown",
           "language": "en",
           "notes": "Vigil Mass",
           "seasonal": {
@@ -2108,7 +2143,7 @@
           "day": "sunday",
           "time": "08:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-francis-church-belchertown",
           "language": "en",
           "notes": null,
           "seasonal": {
@@ -2123,7 +2158,7 @@
           "day": "sunday",
           "time": "10:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-francis-church-belchertown",
           "language": "en",
           "notes": null,
           "seasonal": {
@@ -2138,7 +2173,7 @@
           "day": "monday",
           "time": "08:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-francis-church-belchertown",
           "language": "en",
           "notes": null,
           "seasonal": {
@@ -2153,7 +2188,7 @@
           "day": "tuesday",
           "time": "08:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-francis-church-belchertown",
           "language": "en",
           "notes": null,
           "seasonal": {
@@ -2168,7 +2203,7 @@
           "day": "wednesday",
           "time": "08:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-francis-church-belchertown",
           "language": "en",
           "notes": null,
           "seasonal": {
@@ -2183,7 +2218,7 @@
           "day": "thursday",
           "time": "08:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-francis-church-belchertown",
           "language": "en",
           "notes": null,
           "seasonal": {
@@ -2198,7 +2233,7 @@
           "day": "tuesday",
           "time": "08:30",
           "end_time": "20:00",
-          "location_id": null,
+          "location_id": "st-francis-church-belchertown",
           "language": "en",
           "notes": "Ends with Benediction",
           "seasonal": {
@@ -2213,7 +2248,7 @@
           "day": "thursday",
           "time": "08:30",
           "end_time": "20:00",
-          "location_id": null,
+          "location_id": "st-francis-church-belchertown",
           "language": "en",
           "notes": null,
           "seasonal": {
@@ -2228,7 +2263,7 @@
           "day": "first_sunday",
           "time": "11:40",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-francis-church-belchertown",
           "language": "en",
           "notes": null,
           "seasonal": {
@@ -2243,7 +2278,7 @@
           "day": "wednesday",
           "time": "16:30",
           "end_time": "18:15",
-          "location_id": null,
+          "location_id": "st-francis-church-belchertown",
           "language": "en",
           "notes": "Wednesdays of Lent",
           "seasonal": {
@@ -2258,7 +2293,7 @@
           "day": "wednesday",
           "time": "17:45",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-francis-church-belchertown",
           "language": "en",
           "notes": "Wednesdays of Lent (~5:45pm)",
           "seasonal": {
@@ -2273,7 +2308,7 @@
           "day": "wednesday",
           "time": "18:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-francis-church-belchertown",
           "language": "en",
           "notes": "In addition to 8am Mass",
           "seasonal": {
@@ -2288,7 +2323,7 @@
           "day": "friday",
           "time": "12:00",
           "end_time": "15:00",
-          "location_id": null,
+          "location_id": "st-francis-church-belchertown",
           "language": "en",
           "notes": "Fridays of Lent, main church",
           "seasonal": {
@@ -2303,7 +2338,7 @@
           "day": "friday",
           "time": "12:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-francis-church-belchertown",
           "language": "en",
           "notes": "~12:00 PM within adoration block",
           "seasonal": {
@@ -2318,7 +2353,7 @@
           "day": "friday",
           "time": "14:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-francis-church-belchertown",
           "language": "en",
           "notes": "~2:30pm, followed by Divine Praises",
           "seasonal": {
@@ -3194,7 +3229,8 @@
       },
       "county": "Hampden",
       "clergy": [],
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_012",
@@ -3662,7 +3698,7 @@
           "day": "saturday",
           "time": "16:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": "Vigil Mass",
           "seasonal": {
@@ -3677,7 +3713,7 @@
           "day": "sunday",
           "time": "07:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": null,
           "seasonal": {
@@ -3692,7 +3728,7 @@
           "day": "sunday",
           "time": "09:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "pl",
           "notes": null,
           "seasonal": {
@@ -3707,7 +3743,7 @@
           "day": "sunday",
           "time": "11:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": null,
           "seasonal": {
@@ -3722,7 +3758,7 @@
           "day": "monday",
           "time": "06:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": null,
           "seasonal": {
@@ -3737,7 +3773,7 @@
           "day": "monday",
           "time": "12:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": null,
           "seasonal": {
@@ -3752,7 +3788,7 @@
           "day": "tuesday",
           "time": "06:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": null,
           "seasonal": {
@@ -3767,7 +3803,7 @@
           "day": "tuesday",
           "time": "12:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": null,
           "seasonal": {
@@ -3782,7 +3818,7 @@
           "day": "wednesday",
           "time": "06:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": null,
           "seasonal": {
@@ -3797,7 +3833,7 @@
           "day": "wednesday",
           "time": "08:45",
           "end_time": null,
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": "School Mass",
           "seasonal": {
@@ -3812,7 +3848,7 @@
           "day": "wednesday",
           "time": "12:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": null,
           "seasonal": {
@@ -3827,7 +3863,7 @@
           "day": "thursday",
           "time": "06:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": null,
           "seasonal": {
@@ -3842,7 +3878,7 @@
           "day": "thursday",
           "time": "12:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": null,
           "seasonal": {
@@ -3857,7 +3893,7 @@
           "day": "friday",
           "time": "06:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": null,
           "seasonal": {
@@ -3872,7 +3908,7 @@
           "day": "friday",
           "time": "12:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": null,
           "seasonal": {
@@ -3887,7 +3923,7 @@
           "day": "saturday",
           "time": "07:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": null,
           "seasonal": {
@@ -3902,7 +3938,7 @@
           "day": "wednesday",
           "time": "19:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "pl",
           "notes": null,
           "seasonal": {
@@ -3917,7 +3953,7 @@
           "day": "first_friday",
           "time": "19:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "pl",
           "notes": "1st Friday",
           "seasonal": {
@@ -3932,7 +3968,7 @@
           "day": "weekday",
           "time": "07:00",
           "end_time": "12:00",
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": "Mon–Fri",
           "seasonal": {
@@ -3947,7 +3983,7 @@
           "day": "first_friday",
           "time": "06:45",
           "end_time": "19:00",
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": "After 6:30 AM Mass until 7:00 PM",
           "seasonal": {
@@ -3962,7 +3998,7 @@
           "day": "first_saturday",
           "time": "07:30",
           "end_time": "11:00",
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": null,
           "seasonal": {
@@ -3977,7 +4013,7 @@
           "day": "weekday",
           "time": "07:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": "Mon–Fri",
           "seasonal": {
@@ -3992,7 +4028,7 @@
           "day": "weekday",
           "time": "08:15",
           "end_time": null,
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": "Mon–Fri",
           "seasonal": {
@@ -4007,7 +4043,7 @@
           "day": "weekday",
           "time": "11:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": "Mon–Fri",
           "seasonal": {
@@ -4022,7 +4058,7 @@
           "day": "monday",
           "time": "18:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": "Morning Star Family Rosary — every Monday 6 PM",
           "seasonal": {
@@ -4037,7 +4073,7 @@
           "day": "sunday",
           "time": "12:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": "Divine Mercy — after 11:00 AM Mass",
           "seasonal": {
@@ -4056,7 +4092,7 @@
           "day": "sunday",
           "time": "15:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": "2nd Sunday of the month; Our Lady of Czestochowa — 2nd Sunday 3:00 PM",
           "seasonal": {
@@ -4075,7 +4111,7 @@
           "day": "sunday",
           "time": null,
           "end_time": null,
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": "After Saturday Vigil and all Sunday Masses",
           "seasonal": {
@@ -4094,7 +4130,7 @@
           "day": "weekday",
           "time": "07:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": "After 6:30 AM Mass Mon–Fri",
           "seasonal": {
@@ -4109,7 +4145,7 @@
           "day": "weekday",
           "time": "10:45",
           "end_time": "11:45",
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": "Mon–Fri",
           "seasonal": {
@@ -4124,7 +4160,7 @@
           "day": "saturday",
           "time": "07:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": "After 7:00 AM Saturday Mass",
           "seasonal": {
@@ -4139,7 +4175,7 @@
           "day": "saturday",
           "time": "09:00",
           "end_time": "10:00",
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": null,
           "seasonal": {
@@ -4154,7 +4190,7 @@
           "day": "saturday",
           "time": "15:00",
           "end_time": "15:55",
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": null,
           "seasonal": {
@@ -4169,7 +4205,7 @@
           "day": "friday",
           "time": "13:15",
           "end_time": null,
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": "With school children",
           "seasonal": {
@@ -4184,7 +4220,7 @@
           "day": "friday",
           "time": "19:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": "Evening",
           "seasonal": {
@@ -4201,7 +4237,8 @@
       "county": "Hampden",
       "clergy": [],
       "bulletin_url": "https://church-bulletin.org/?id=996",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_016",
@@ -6025,6 +6062,70 @@
             "season": "lent"
           },
           "source": "manual_verification_2026-02"
+        },
+        {
+          "id": "parish_020-hh-2026-03-18",
+          "type": "holy_hour",
+          "day": null,
+          "time": "18:45",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Lenten Holy Hour",
+          "date": "2026-03-18",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_020-conf-2026-03-18",
+          "type": "confession",
+          "day": null,
+          "time": "17:30",
+          "end_time": "19:00",
+          "location_id": null,
+          "language": "en",
+          "notes": "Lenten confession with Fr. Michael",
+          "date": "2026-03-18",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_020-conf-2026-03-25",
+          "type": "confession",
+          "day": null,
+          "time": "17:30",
+          "end_time": "19:00",
+          "location_id": null,
+          "language": "en",
+          "notes": "Lenten confession with Fr. Michael",
+          "date": "2026-03-25",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_020-conf-2026-04-01",
+          "type": "confession",
+          "day": null,
+          "time": "17:30",
+          "end_time": "19:00",
+          "location_id": null,
+          "language": "en",
+          "notes": "Lenten confession with Fr. Michael",
+          "date": "2026-04-01",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
         }
       ],
       "validation": {
@@ -6045,56 +6146,7 @@
         }
       ],
       "bulletin_url": "https://www.ihmparishgranby.org/bulletins",
-      "special_events": [
-        {
-          "id": "parish_020-evt-holyhour-20260318",
-          "type": "holy_hour",
-          "date": "2026-03-18",
-          "time": "18:45",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": "Lenten Holy Hour",
-          "source": "bulletin_2026-02",
-          "validated": true
-        },
-        {
-          "id": "parish_020-evt-conf-20260318",
-          "type": "confession",
-          "date": "2026-03-18",
-          "time": "17:30",
-          "end_time": "19:00",
-          "location_id": null,
-          "language": "en",
-          "notes": "Lenten confession with Fr. Michael",
-          "source": "bulletin_2026-02",
-          "validated": true
-        },
-        {
-          "id": "parish_020-evt-conf-20260325",
-          "type": "confession",
-          "date": "2026-03-25",
-          "time": "17:30",
-          "end_time": "19:00",
-          "location_id": null,
-          "language": "en",
-          "notes": "Lenten confession with Fr. Michael",
-          "source": "bulletin_2026-02",
-          "validated": true
-        },
-        {
-          "id": "parish_020-evt-conf-20260401",
-          "type": "confession",
-          "date": "2026-04-01",
-          "time": "17:30",
-          "end_time": "19:00",
-          "location_id": null,
-          "language": "en",
-          "notes": "Lenten confession with Fr. Michael",
-          "source": "bulletin_2026-02",
-          "validated": true
-        }
-      ],
+      "special_events": [],
       "is_accessible": null
     },
     {
@@ -6708,7 +6760,8 @@
         }
       ],
       "bulletin_url": "https://www.blessedtrinitygreenfield.org/bulletins",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_023",
@@ -7030,7 +7083,8 @@
         "hours_note": "Dawn to dusk (until 6:00 PM); closed Wednesdays",
         "source": "manual_verification_2026-02"
       },
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_024",
@@ -7244,7 +7298,8 @@
         }
       ],
       "bulletin_url": "https://www.stmaryshampden.org/bulletins",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_025",
@@ -7427,7 +7482,8 @@
         }
       ],
       "bulletin_url": "https://www.ourladyofgrace.faith/bulletins",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_026",
@@ -7594,7 +7650,8 @@
       "county": "Hampshire",
       "clergy": [],
       "bulletin_url": "https://parishesonline.com/organization/our-lady-of-the-hills-parish",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_027",
@@ -7822,7 +7879,8 @@
       "county": "Hampden",
       "clergy": [],
       "bulletin_url": "https://parishesonline.com/organization/blessed-sacrament-parish-01040",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_028",
@@ -8175,7 +8233,8 @@
       "county": "Hampden",
       "clergy": [],
       "bulletin_url": "https://ourladyofthecross.com/news/bulletin",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_029",
@@ -8481,7 +8540,8 @@
       "county": "Hampden",
       "clergy": [],
       "bulletin_url": "https://parishesonline.com/organization/st-jerome-parish-1040",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_030",
@@ -8492,7 +8552,7 @@
       "established": "2009",
       "is_mission": false,
       "mission_of": null,
-      "status": "active",
+      "status": "excluded",
       "locations": [
         {
           "id": "st-teresa-of-calcutta-church-housatonic",
@@ -8597,7 +8657,8 @@
       },
       "county": "Berkshire",
       "clergy": [],
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_031",
@@ -8888,7 +8949,8 @@
       "county": "Hampden",
       "clergy": [],
       "bulletin_url": "https://parishesonline.com/organization/immaculate-conception-church-01151",
-      "is_accessible": true
+      "is_accessible": true,
+      "special_events": []
     },
     {
       "id": "parish_032",
@@ -9092,7 +9154,8 @@
       "county": "Berkshire",
       "clergy": [],
       "bulletin_url": "https://www.stmarylos.com/publications",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_033",
@@ -9747,7 +9810,8 @@
         }
       ],
       "bulletin_url": "https://www.stmarylong.org/bulletin",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_036",
@@ -10129,7 +10193,8 @@
       "county": "Hampden",
       "clergy": [],
       "bulletin_url": "https://parishesonline.com/organization/christ-the-king-church-01056",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_037",
@@ -10369,7 +10434,8 @@
         }
       ],
       "bulletin_url": "https://church-bulletin.org/?id=928",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_038",
@@ -10630,7 +10696,8 @@
       "county": "Hampden",
       "clergy": [],
       "bulletin_url": "https://sponsors.bonventure.net/?page=1680",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_039",
@@ -11455,7 +11522,8 @@
       "county": "Hampshire",
       "clergy": [],
       "bulletin_url": "https://parishesonline.com/organization/st-elizabeth-ann-seton-01060",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_043",
@@ -11621,7 +11689,8 @@
       },
       "county": "Franklin",
       "clergy": [],
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_044",
@@ -12170,7 +12239,8 @@
         }
       ],
       "bulletin_url": "https://church-bulletin.org/?id=925",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_047",
@@ -12435,7 +12505,8 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/sacred-heart-church-01201",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_048",
@@ -13119,7 +13190,8 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/st-josephs-church-01201",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_050",
@@ -13469,7 +13541,8 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/st-marks-church-01201",
-      "is_accessible": true
+      "is_accessible": true,
+      "special_events": []
     },
     {
       "id": "parish_051",
@@ -13644,7 +13717,8 @@
         }
       ],
       "bulletin_url": "https://church-bulletin.org/?id=939",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_052",
@@ -14156,7 +14230,8 @@
         }
       ],
       "bulletin_url": "https://www.stjosephparishma.com/bulletin",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_054",
@@ -14438,7 +14513,8 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/holy-family-roman-catholic-parish-01373",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_055",
@@ -14735,7 +14811,8 @@
         }
       ],
       "bulletin_url": "https://saintpatrick.cc/bulletin.html",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_056",
@@ -14999,7 +15076,8 @@
         }
       ],
       "bulletin_url": "https://www.sttheresaparish.org/bulletins",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_057",
@@ -15189,7 +15267,8 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/our-lady-of-the-lake-parish-family",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_058",
@@ -15406,7 +15485,8 @@
       },
       "county": "Hampden",
       "clergy": [],
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_059",
@@ -15606,7 +15686,8 @@
       },
       "county": "Hampden",
       "clergy": [],
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_060",
@@ -15929,7 +16010,8 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/holy-cross-church-1118",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_061",
@@ -16255,7 +16337,8 @@
           "name": "Rev. Yerick Mendez"
         }
       ],
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_062",
@@ -16519,7 +16602,8 @@
         }
       ],
       "bulletin_url": "https://www.mmohspringfield.org/bulletins",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_063",
@@ -16763,7 +16847,8 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/our-lady-of-mount-carmel-church-01105",
-      "is_accessible": true
+      "is_accessible": true,
+      "special_events": []
     },
     {
       "id": "parish_064",
@@ -17033,7 +17118,8 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/sacred-heart-church-01104",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_065",
@@ -17265,7 +17351,8 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/sacred-heart-church-01104",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_066",
@@ -17570,7 +17657,8 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/st-catherine-of-siena-parish-01129",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_067",
@@ -17872,7 +17960,8 @@
         }
       ],
       "bulletin_url": "https://stmichaelscathedralspfld.org/bulletins/",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_068",
@@ -18049,7 +18138,8 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/st-patrick-church-1118",
-      "is_accessible": true
+      "is_accessible": true,
+      "special_events": []
     },
     {
       "id": "parish_069",
@@ -18267,7 +18357,8 @@
           "name": "Khanh Tran"
         }
       ],
-      "is_accessible": true
+      "is_accessible": true,
+      "special_events": []
     },
     {
       "id": "parish_071",
@@ -18537,6 +18628,38 @@
           "source": "manual_verification_2026-02",
           "location_id": "divine-mercy-church-three-rivers",
           "end_time": null
+        },
+        {
+          "id": "parish_071-ros-2026-03-02",
+          "type": "rosary",
+          "day": null,
+          "time": "16:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Rosary for World Peace",
+          "date": "2026-03-02",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_071-conf-2026-03-07",
+          "type": "confession",
+          "day": null,
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "First Saturday Confessions",
+          "date": "2026-03-07",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
         }
       ],
       "validation": {
@@ -18557,35 +18680,11 @@
       "bulletin_url": "https://parishesonline.com/organization/divine-mercy-parish-01080",
       "special_events": [
         {
-          "id": "parish_071-evt-rosary-mar2",
-          "type": "rosary",
-          "date": "2026-03-02",
-          "time": "16:00",
-          "notes": "Rosary for World Peace",
-          "category": "one_time",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          }
-        },
-        {
           "id": "parish_071-evt-firstfri-mar6",
           "type": "special_mass",
           "date": "2026-03-06",
           "time": "08:00",
           "notes": "First Friday: Confessions, Stations of the Cross, Mass",
-          "category": "one_time",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          }
-        },
-        {
-          "id": "parish_071-evt-firstsat-mar7",
-          "type": "confession",
-          "date": "2026-03-07",
-          "time": "08:00",
-          "notes": "First Saturday Confessions",
           "category": "one_time",
           "seasonal": {
             "is_seasonal": true,
@@ -18965,7 +19064,8 @@
         }
       ],
       "bulletin_url": "https://chroniclesofczestochowa.wordpress.com/category/weekly-bulletins/",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_073",
@@ -19166,7 +19266,8 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/our-lady-of-peace-church-01376",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_074",
@@ -19290,6 +19391,54 @@
           "source": "bulletin_2026-02",
           "location_id": "all-saints-church-ware",
           "end_time": null
+        },
+        {
+          "id": "parish_074-stcr-2026-02-20",
+          "type": "stations_of_cross",
+          "day": null,
+          "time": "18:30",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "date": "2026-02-20",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_074-stcr-2026-02-27",
+          "type": "stations_of_cross",
+          "day": null,
+          "time": "18:30",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "date": "2026-02-27",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_074-stcr-2026-03-06",
+          "type": "stations_of_cross",
+          "day": null,
+          "time": "18:30",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "date": "2026-03-06",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
         }
       ],
       "validation": {
@@ -19312,41 +19461,7 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/all-saints-and-st-mary-churches",
-      "special_events": [
-        {
-          "id": "parish_074-stat-feb20",
-          "type": "stations_of_cross",
-          "date": "2026-02-20",
-          "time": "18:30",
-          "category": "one_time",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          }
-        },
-        {
-          "id": "parish_074-stat-feb27",
-          "type": "stations_of_cross",
-          "date": "2026-02-27",
-          "time": "18:30",
-          "category": "one_time",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          }
-        },
-        {
-          "id": "parish_074-stat-mar6",
-          "type": "stations_of_cross",
-          "date": "2026-03-06",
-          "time": "18:30",
-          "category": "one_time",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          }
-        }
-      ],
+      "special_events": [],
       "is_accessible": null
     },
     {
@@ -19487,6 +19602,54 @@
           "time_is_inferred": true,
           "location_id": "st-mary-church-ware",
           "end_time": null
+        },
+        {
+          "id": "parish_075-stcr-2026-03-13",
+          "type": "stations_of_cross",
+          "day": null,
+          "time": "18:30",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "date": "2026-03-13",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_075-stcr-2026-03-20",
+          "type": "stations_of_cross",
+          "day": null,
+          "time": "18:30",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "date": "2026-03-20",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_075-stcr-2026-03-27",
+          "type": "stations_of_cross",
+          "day": null,
+          "time": "18:30",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "date": "2026-03-27",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
         }
       ],
       "validation": {
@@ -19508,41 +19671,7 @@
           "name": "Rev. Fr. Joel Philip"
         }
       ],
-      "special_events": [
-        {
-          "id": "parish_075-stat-mar13",
-          "type": "stations_of_cross",
-          "date": "2026-03-13",
-          "time": "18:30",
-          "category": "one_time",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          }
-        },
-        {
-          "id": "parish_075-stat-mar20",
-          "type": "stations_of_cross",
-          "date": "2026-03-20",
-          "time": "18:30",
-          "category": "one_time",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          }
-        },
-        {
-          "id": "parish_075-stat-mar27",
-          "type": "stations_of_cross",
-          "date": "2026-03-27",
-          "time": "18:30",
-          "category": "one_time",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          }
-        }
-      ],
+      "special_events": [],
       "bulletin_url": "https://parishesonline.com/organization/all-saints-and-st-mary-churches",
       "is_accessible": null
     },
@@ -19854,6 +19983,22 @@
           },
           "source": "bulletin_2026-02",
           "location_id": "st-thomas-the-apostle-church-west-springfield"
+        },
+        {
+          "id": "parish_076-stcr-2026-04-03",
+          "type": "stations_of_cross",
+          "day": null,
+          "time": "15:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Good Friday Stations of the Cross",
+          "date": "2026-04-03",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
         }
       ],
       "validation": {
@@ -19876,20 +20021,7 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/st-thomas-the-apostle-parish-01089",
-      "special_events": [
-        {
-          "id": "parish_076-evt-goodfri",
-          "type": "stations_of_cross",
-          "date": "2026-04-03",
-          "time": "15:00",
-          "notes": "Good Friday Stations of the Cross",
-          "category": "one_time",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          }
-        }
-      ],
+      "special_events": [],
       "is_accessible": null
     },
     {
@@ -20746,7 +20878,8 @@
         }
       ],
       "bulletin_url": "https://stmarysofwestfield.com/",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "parish_080",
@@ -21159,7 +21292,8 @@
       "county": "Hampden",
       "clergy": [],
       "bulletin_url": "https://sponsors.bonventure.net/?page=1826",
-      "is_accessible": true
+      "is_accessible": true,
+      "special_events": []
     },
     {
       "id": "parish_083",
@@ -21372,7 +21506,8 @@
       "county": "Berkshire",
       "clergy": [],
       "bulletin_url": "https://www.williamstowncatholics.org/bulletins",
-      "is_accessible": null
+      "is_accessible": null,
+      "special_events": []
     },
     {
       "id": "shrine_001",
@@ -21678,6 +21813,22 @@
             "season": "year_round"
           },
           "source": "shrine_website"
+        },
+        {
+          "id": "shrine_001-stcr-2026-02-20",
+          "type": "stations_of_cross",
+          "day": null,
+          "time": "15:30",
+          "end_time": "16:15",
+          "location_id": "divine-mercy-shrine-stockbridge",
+          "language": "en",
+          "notes": null,
+          "date": "2026-02-20",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
         }
       ],
       "special_events": [
@@ -21692,27 +21843,6 @@
           "notes": "Veneration of 9 unique and rarely seen relics of the Passion of Our Lord — St. Faustina Center",
           "source": "shrine_website",
           "validated": true
-        },
-        {
-          "id": "shrine_001-evt-wotc",
-          "type": "stations_of_cross",
-          "date": "2026-02-20",
-          "time": "15:30",
-          "end_time": "16:15",
-          "location_id": "divine-mercy-shrine-stockbridge",
-          "language": "en",
-          "notes": "St. Faustina's Way of the Cross — every Fri, Sat & Sun during Lent (Feb 20 – Apr 3), after 2 PM Mass & Chaplet",
-          "recurrence": {
-            "type": "seasonal",
-            "season": "lent",
-            "days": [
-              "friday",
-              "saturday",
-              "sunday"
-            ]
-          },
-          "source": "shrine_website",
-          "validated": true
         }
       ],
       "visitation": null,
@@ -21722,7 +21852,7 @@
       "is_accessible": null
     },
     {
-      "id": "parish_fake_001",
+      "id": "parish_103",
       "name": "St. Catherine of Siena Parish",
       "town": "Westfield",
       "state": "MA",
@@ -22022,7 +22152,7 @@
       "is_accessible": true
     },
     {
-      "id": "parish_fake_002",
+      "id": "parish_104",
       "name": "Immaculate Heart of Mary Parish",
       "town": "Westfield",
       "state": "MA",
@@ -22234,7 +22364,7 @@
       "is_accessible": true
     },
     {
-      "id": "parish_fake_003",
+      "id": "parish_105",
       "name": "St. Brendan the Navigator Parish",
       "town": "Southampton",
       "state": "MA",
@@ -22402,7 +22532,7 @@
       "is_accessible": true
     },
     {
-      "id": "parish_fake_004",
+      "id": "parish_106",
       "name": "Our Lady of Mount Carmel Parish",
       "town": "Easthampton",
       "state": "MA",
@@ -22614,7 +22744,7 @@
       "is_accessible": true
     },
     {
-      "id": "parish_fake_005",
+      "id": "parish_107",
       "name": "Sacred Heart of Jesus Parish",
       "town": "Granville",
       "state": "MA",
@@ -25471,13 +25601,13 @@
         },
         {
           "id": "parish_093-bened-1fri-1445",
-          "type": "benediction",
+          "type": "holy_hour",
           "day": "first_friday",
           "time": "14:45",
           "end_time": null,
           "location_id": null,
           "language": "en",
-          "notes": null,
+          "notes": "Benediction",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
