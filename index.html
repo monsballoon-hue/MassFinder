@@ -96,10 +96,9 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .search-clear.visible { display: flex; }
 
 /* CHIPS */
-.chip-bar-wrap { position: relative; overflow: hidden; }
-.chip-bar-wrap::after { content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 40px; background: linear-gradient(to right, transparent, var(--color-bg)); pointer-events: none; z-index: 1; transition: opacity 0.2s; }
-.chip-bar-wrap.scrolled::after { opacity: 0; }
-.chip-bar { max-width: var(--max-width); margin: 0 auto; padding: var(--space-3) 0 var(--space-2); overflow-x: auto; display: flex; gap: var(--space-2); scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.chip-bar-wrap { position: relative; }
+.chip-bar { max-width: var(--max-width); margin: 0 auto; padding: var(--space-3) 0 var(--space-2); overflow-x: auto; display: flex; gap: var(--space-2); scrollbar-width: none; -webkit-overflow-scrolling: touch; -webkit-mask-image: linear-gradient(to right, black 88%, transparent 100%); mask-image: linear-gradient(to right, black 88%, transparent 100%); transition: mask-image 0.2s; }
+.chip-bar.scrolled { -webkit-mask-image: none; mask-image: none; }
 .chip-bar::-webkit-scrollbar { display: none; }
 .chip-bar::before, .chip-bar::after { content: ''; flex-shrink: 0; width: var(--space-4); }
 .chip { flex-shrink: 0; height: 44px; padding: 0 var(--space-4); border-radius: var(--radius-full); font-size: var(--text-sm); font-weight: var(--weight-medium); line-height: 44px; white-space: nowrap; background: var(--color-surface); color: var(--color-text-secondary); border: 1.5px solid var(--color-border); transition: all var(--transition-fast); user-select: none; }
@@ -327,8 +326,8 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .skip-link:focus { position: fixed; top: 0; left: 0; outline: 2px solid var(--color-accent); outline-offset: 2px; }
 
 /* MAP TAB */
-#panelMap { padding: var(--space-2); }
-#mapContainer { width: 100%; height: calc(100vh - 64px - 56px - 16px); height: calc(100dvh - 64px - 56px - 16px); border-radius: var(--radius-md); overflow: hidden; }
+#panelMap { padding: var(--space-2); box-sizing: border-box; }
+#mapContainer { width: 100%; height: 65vh; height: 65dvh; border-radius: var(--radius-md); overflow: hidden; }
 .leaflet-container { background: var(--color-bg); font-family: var(--font-body); }
 .map-cluster {
   background: rgba(44,62,90,0.15); border-radius: 50%;
@@ -394,6 +393,10 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .more-link-row:hover { color: var(--color-info); }
 .more-link-row svg { width: 22px; height: 22px; color: var(--color-primary-muted); flex-shrink: 0; }
 .more-link-row .arrow { margin-left: auto; width: 18px; height: 18px; color: var(--color-text-tertiary); }
+.more-links-inline { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-4); }
+.more-link-pill { display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-3); background: var(--color-surface-hover); border: 1.5px solid var(--color-border); border-radius: var(--radius-full); font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--color-text-primary); cursor: pointer; text-decoration: none; transition: all var(--transition-fast); min-height: 44px; }
+.more-link-pill:hover { border-color: var(--color-primary); color: var(--color-primary); }
+.more-link-pill svg { width: 16px; height: 16px; flex-shrink: 0; }
 .more-footer { text-align: center; padding: var(--space-6) 0 var(--space-4); font-size: var(--text-xs); color: var(--color-text-tertiary); line-height: 1.6; }
 .more-footer a { color: var(--color-info); }
 </style>
@@ -464,22 +467,21 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
   <div class="more-content">
     <div class="more-section">
       <h2 class="more-section-title">About MassFinder</h2>
-      <p>MassFinder helps Catholics across Western Massachusetts find Mass times, Confession, Adoration, and other services at churches in the Diocese of Springfield.</p>
-      <p>All service times are sourced from church bulletins and verified periodically. If you notice an error, please use the "Submit a Correction" link below.</p>
-    </div>
-
-    <div class="more-section">
-      <h2 class="more-section-title">Links</h2>
-      <a class="more-link-row" href="https://diospringfield.org" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-        Diocese of Springfield
-        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
-      </a>
-      <button class="more-link-row" onclick="showMoreCorrection()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-        Submit a Correction
-        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
-      </button>
+      <p>MassFinder helps Catholics across Western Massachusetts find Mass times, Confession, Adoration, and other services at churches in the Diocese of Springfield. Flagging an error when you spot one keeps the data accurate for everyone in the community.</p>
+      <div class="more-links-inline">
+        <a class="more-link-pill" href="https://diospringfield.org" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          Diocese
+        </a>
+        <button class="more-link-pill" onclick="showMoreCorrection()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Submit a Correction
+        </button>
+        <a class="more-link-pill" id="moreEventsLink" href="#" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Upcoming Events
+        </a>
+      </div>
       <div id="moreCorrectionForm" style="display:none;padding:var(--space-4) 0">
         <label class="corr-form-label" style="margin-top:0">Church name</label>
         <input id="moreCorrChurch" type="text" placeholder="e.g. St. Michael Parish, Springfield" class="corr-input" style="resize:none">
@@ -497,17 +499,6 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
         <button onclick="submitMoreCorrection()" style="margin-top:var(--space-3);width:100%;padding:var(--space-3);border-radius:var(--radius-md);background:var(--color-primary);color:white;font-size:var(--text-sm);font-weight:var(--weight-semibold);min-height:44px">Submit Correction</button>
         <div id="moreCorrThanks" style="display:none;text-align:center;padding:var(--space-3);font-size:var(--text-sm);color:var(--color-verified);font-weight:var(--weight-medium)">Thank you! We'll review your correction.</div>
       </div>
-      <a class="more-link-row" id="moreEventsLink" href="#" style="display:none">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        Upcoming Events
-        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
-      </a>
-    </div>
-
-    <div class="more-section">
-      <h2 class="more-section-title">Directory Stats</h2>
-      <div id="moreStats" class="stat-grid"></div>
-      <div id="moreCounties" class="county-list"></div>
     </div>
 
     <div class="more-section" id="moreEventsSection" style="display:none">
@@ -880,22 +871,19 @@ function openDetail(id){
   document.body.style.overflow='hidden';
   document.getElementById('detailPanel').scrollTop=0;
   window._lastFocused=document.activeElement;
-  history.pushState({detail:id},'','#'+id);
+  history.replaceState(null,'','#'+id);
   trapFocus(document.getElementById('detailPanel'));
   setTimeout(()=>{const cb=document.querySelector('.detail-action-btn[aria-label="Close"]');if(cb)cb.focus()},350);
 }
 
-function closeDetail(fromPopstate){
+function closeDetail(){
   document.getElementById('detailBackdrop').classList.remove('open');
   document.getElementById('detailPanel').classList.remove('open');
   document.body.style.overflow='';
   releaseFocus();
   if(window._lastFocused)window._lastFocused.focus();
-  if(!fromPopstate&&location.hash)history.back();
+  history.replaceState(null,'',location.pathname+location.search);
 }
-window.addEventListener('popstate',function(){
-  if(document.getElementById('detailPanel').classList.contains('open'))closeDetail(true);
-});
 function toggleAcc(btn){const exp=btn.getAttribute('aria-expanded')==='true';btn.setAttribute('aria-expanded',!exp);btn.nextElementSibling.classList.toggle('open',!exp)}
 function verifyOk(ok){document.getElementById('verifyPrompt').style.display='none';document.getElementById('verifyThanks').style.display='block'}
 function showCorrectionForm(){document.getElementById('verifyPrompt').style.display='none';document.getElementById('correctionForm').style.display='block'}
@@ -1179,7 +1167,7 @@ function switchTab(id,btn){
   if(id==='panelMap'&&!mapInitialized){initMap();mapInitialized=true}
   if(id==='panelMap'&&mapInitialized&&window._map){setTimeout(()=>window._map.invalidateSize(),100)}
   if(id==='panelSaved')renderSaved();
-  if(id==='panelMore'&&!document.getElementById('moreStats').innerHTML)renderMore();
+  if(id==='panelMore'&&!window._moreRendered){renderMore();window._moreRendered=true}
 }
 
 // ============================================================
@@ -1346,22 +1334,7 @@ function renderSaved(){
 // MORE TAB
 // ============================================================
 function renderMore(){
-  // Stats
-  const totalServices=allParishes.reduce((sum,p)=>sum+p.services.length,0);
-  const confessionParishes=allParishes.filter(p=>p.services.some(s=>s.type==='confession'&&s.time)).length;
-  const adorationParishes=allParishes.filter(p=>p.services.some(s=>['adoration','perpetual_adoration'].includes(s.type))).length;
   const langCount=new Set();allParishes.forEach(p=>p.services.forEach(s=>{if(s.language)langCount.add(s.language)}));
-
-  document.getElementById('moreStats').innerHTML=
-    '<div class="stat-card"><div class="stat-value">'+allParishes.length+'</div><div class="stat-label">Churches</div></div>'
-    +'<div class="stat-card"><div class="stat-value">'+totalServices+'</div><div class="stat-label">Service Listings</div></div>'
-    +'<div class="stat-card"><div class="stat-value">'+confessionParishes+'</div><div class="stat-label">Offer Confession</div></div>'
-    +'<div class="stat-card"><div class="stat-value">'+adorationParishes+'</div><div class="stat-label">Offer Adoration</div></div>';
-
-  // Counties
-  const counties={};allParishes.forEach(p=>{counties[p.county]=(counties[p.county]||0)+1});
-  document.getElementById('moreCounties').innerHTML=Object.entries(counties).sort((a,b)=>b[1]-a[1])
-    .map(([c,n])=>'<span class="county-chip">'+esc(c)+' ('+n+')</span>').join('');
 
   // Events
   const allEvents=[];
@@ -1406,8 +1379,8 @@ function renderMore(){
 // Chips
 document.querySelectorAll('.chip[data-filter]').forEach(chip=>{chip.addEventListener('click',()=>{document.querySelectorAll('.chip[data-filter]').forEach(c=>c.classList.remove('active'));chip.classList.add('active');currentFilter=chip.dataset.filter;if(['today','weekend'].includes(currentFilter)){currentSort='next_service';updateSortLabel()}filterParishes();renderCards()})});
 
-// Chip bar scroll affordance — hide fade once user has discovered scrolling
-(function(){const wrap=document.querySelector('.chip-bar-wrap'),bar=document.querySelector('.chip-bar');if(bar)bar.addEventListener('scroll',function(){wrap.classList.toggle('scrolled',bar.scrollLeft>8)},{passive:true})})();
+// Chip bar scroll affordance — remove mask fade once user has discovered scrolling
+(function(){const bar=document.querySelector('.chip-bar');if(bar)bar.addEventListener('scroll',function(){bar.classList.toggle('scrolled',bar.scrollLeft>8)},{passive:true})})();
 
 // Search
 const sI=document.getElementById('searchInput'),sC=document.getElementById('searchClear');let sT;
