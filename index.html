@@ -374,6 +374,7 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
   display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) 0;
   font-size: var(--text-base); color: var(--color-text-primary); font-weight: var(--weight-medium);
   cursor: pointer; transition: color var(--transition-fast);
+  background: none; border: none; text-align: left; width: 100%; text-decoration: none;
 }
 .more-link-row:hover { color: var(--color-info); }
 .more-link-row svg { width: 22px; height: 22px; color: var(--color-primary-muted); flex-shrink: 0; }
@@ -463,11 +464,18 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
         Diocese of Springfield
         <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
       </a>
-      <a class="more-link-row" href="mailto:massfinder@example.com?subject=MassFinder%20Correction" target="_blank">
+      <button class="more-link-row" onclick="showMoreCorrection()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
         Submit a Correction
         <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
-      </a>
+      </button>
+      <div id="moreCorrectionForm" style="display:none;padding:var(--space-4) 0">
+        <input id="moreCorrChurch" type="text" placeholder="Church name" style="width:100%;font-family:inherit;font-size:var(--text-sm);padding:var(--space-3);border:1.5px solid var(--color-border);border-radius:var(--radius-sm);background:var(--color-surface);color:var(--color-text-primary)">
+        <textarea id="moreCorrMessage" rows="3" placeholder="What needs updating?" style="width:100%;font-family:inherit;font-size:var(--text-sm);padding:var(--space-3);border:1.5px solid var(--color-border);border-radius:var(--radius-sm);margin-top:var(--space-2);resize:vertical;background:var(--color-surface);color:var(--color-text-primary)"></textarea>
+        <input id="moreCorrEmail" type="email" placeholder="Your email (optional)" style="width:100%;font-family:inherit;font-size:var(--text-sm);padding:var(--space-3);border:1.5px solid var(--color-border);border-radius:var(--radius-sm);margin-top:var(--space-2);background:var(--color-surface);color:var(--color-text-primary)">
+        <button onclick="submitMoreCorrection()" style="margin-top:var(--space-3);width:100%;padding:var(--space-3);border-radius:var(--radius-md);background:var(--color-primary);color:white;font-size:var(--text-sm);font-weight:var(--weight-semibold);min-height:44px">Submit</button>
+        <div id="moreCorrThanks" style="display:none;text-align:center;padding:var(--space-3);font-size:var(--text-sm);color:var(--color-verified);font-weight:var(--weight-medium)">Thank you! We'll review your correction.</div>
+      </div>
       <a class="more-link-row" id="moreEventsLink" href="#" style="display:none">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         Upcoming Events
@@ -771,19 +779,30 @@ function openDetail(id){
   for(const sec of secs){
     const svcs=p.services.filter(s=>sec.types.includes(s.type));
     if(!svcs.length)continue;
+    // Count only services with times for badge (no-time = by appointment, shouldn't inflate count)
+    // But if ALL are no-time (e.g. Holy Week TBD), show total so badge isn't 0
+    const timedCount=svcs.filter(s=>s.time).length;
+    const badgeCount=timedCount>0?timedCount:svcs.length;
     const isFirst=sec.k==='mass';
     secHtml+='<div class="detail-section"><button class="accordion-header" aria-expanded="'+isFirst+'" onclick="toggleAcc(this)">'
       +'<div class="accordion-header-left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="'+sec.ic+'"/></svg>'
-      +'<span class="accordion-title">'+sec.t+'</span><span class="accordion-count">'+svcs.length+'</span></div>'
+      +'<span class="accordion-title">'+sec.t+'</span><span class="accordion-count">'+badgeCount+'</span></div>'
       +'<svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>'
-      +'</button><div class="accordion-body'+(isFirst?' open':'')+'"><div class="accordion-body-inner">'+renderSched(svcs,locL,ml)+'</div></div></div>';
+      +'</button><div class="accordion-body'+(isFirst?' open':'')+'"><div class="accordion-body-inner">'+renderSched(svcs,locL,ml,sec.types)+'</div></div></div>';
   }
 
   // Multi-loc note
   let mlNote='';if(ml)mlNote='<div style="padding:var(--space-4) 0 0;font-size:var(--text-xs);color:var(--color-text-tertiary)"><strong>Worship sites:</strong> '+p.locations.map(l=>esc(l.short_name||l.name)).join(' · ')+'</div>';
 
-  // Verify prompt + footer
-  const vp='<div class="verify-prompt" id="verifyPrompt"><p>Were these times accurate when you last visited?</p><div class="verify-prompt-btns"><button class="verify-btn yes" onclick="verifyOk(true)">✓ Yes, looks right</button><button class="verify-btn no" onclick="verifyOk(false)">Not quite</button></div></div><div class="verify-thanks" id="verifyThanks">Thank you for helping keep MassFinder accurate! God bless.</div>';
+  // Verify prompt + correction form + footer
+  const vp='<div class="verify-prompt" id="verifyPrompt"><p>Were these times accurate when you last visited?</p><div class="verify-prompt-btns"><button class="verify-btn yes" onclick="verifyOk(true)">✓ Yes, looks right</button><button class="verify-btn no" onclick="showCorrectionForm()">Not quite</button></div></div>'
+    +'<div class="correction-form" id="correctionForm" style="display:none"><p style="font-size:var(--text-sm);font-weight:var(--weight-semibold);color:var(--color-text-primary);margin-bottom:var(--space-3)">Help us fix it</p>'
+    +'<input type="hidden" id="corrChurch" value="'+esc(p.name)+'">'
+    +'<textarea id="corrMessage" rows="3" placeholder="What needs updating? (e.g. Mass moved to 9 AM, confession no longer offered on Wednesdays…)" style="width:100%;font-family:inherit;font-size:var(--text-sm);padding:var(--space-3);border:1.5px solid var(--color-border);border-radius:var(--radius-sm);resize:vertical;background:var(--color-surface);color:var(--color-text-primary)"></textarea>'
+    +'<input id="corrEmail" type="email" placeholder="Your email (optional, for follow-up)" style="width:100%;font-family:inherit;font-size:var(--text-sm);padding:var(--space-3);border:1.5px solid var(--color-border);border-radius:var(--radius-sm);margin-top:var(--space-2);background:var(--color-surface);color:var(--color-text-primary)">'
+    +'<button onclick="submitCorrection()" style="margin-top:var(--space-3);width:100%;padding:var(--space-3);border-radius:var(--radius-md);background:var(--color-primary);color:white;font-size:var(--text-sm);font-weight:var(--weight-semibold);min-height:44px">Submit Correction</button>'
+    +'</div>'
+    +'<div class="verify-thanks" id="verifyThanks" style="display:none">Thank you for helping keep MassFinder accurate! God bless.</div>';
   let footer='';if(v.last_checked)footer='<div class="detail-verified-footer">Last checked: '+esc(v.last_checked)+(v.bulletin_date?' · Bulletin: '+esc(v.bulletin_date):'')+(v.source?'<br>Source: '+esc(v.source):'')+'</div>';
 
   document.getElementById('detailContent').innerHTML=
@@ -816,12 +835,38 @@ window.addEventListener('popstate',function(){
 });
 function toggleAcc(btn){const exp=btn.getAttribute('aria-expanded')==='true';btn.setAttribute('aria-expanded',!exp);btn.nextElementSibling.classList.toggle('open',!exp)}
 function verifyOk(ok){document.getElementById('verifyPrompt').style.display='none';document.getElementById('verifyThanks').style.display='block'}
+function showCorrectionForm(){document.getElementById('verifyPrompt').style.display='none';document.getElementById('correctionForm').style.display='block'}
+function submitCorrection(){
+  const church=document.getElementById('corrChurch').value;
+  const msg=document.getElementById('corrMessage').value.trim();
+  const email=document.getElementById('corrEmail').value.trim();
+  if(!msg){document.getElementById('corrMessage').style.borderColor='var(--color-error)';return}
+  // POST to form endpoint — replace URL with your Formspree/Formsubmit/Web3Forms endpoint
+  const FORM_URL='https://formsubmit.co/ajax/massfinder.corrections@gmail.com';
+  fetch(FORM_URL,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({church:church,message:msg,email:email||'(not provided)',_subject:'MassFinder Correction: '+church})})
+  .then(()=>{document.getElementById('correctionForm').style.display='none';document.getElementById('verifyThanks').style.display='block'})
+  .catch(()=>{document.getElementById('correctionForm').style.display='none';document.getElementById('verifyThanks').style.display='block'})
+}
+function showMoreCorrection(){const f=document.getElementById('moreCorrectionForm');f.style.display=f.style.display==='none'?'block':'none'}
+function submitMoreCorrection(){
+  const church=document.getElementById('moreCorrChurch').value.trim();
+  const msg=document.getElementById('moreCorrMessage').value.trim();
+  const email=document.getElementById('moreCorrEmail').value.trim();
+  if(!msg){document.getElementById('moreCorrMessage').style.borderColor='var(--color-error)';return}
+  const FORM_URL='https://formsubmit.co/ajax/massfinder.corrections@gmail.com';
+  fetch(FORM_URL,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({church:church||'(general)',message:msg,email:email||'(not provided)',_subject:'MassFinder Correction: '+(church||'General')})})
+  .then(()=>{document.getElementById('moreCorrectionForm').innerHTML='<div style="text-align:center;padding:var(--space-3);font-size:var(--text-sm);color:var(--color-verified);font-weight:var(--weight-medium)">Thank you! We\'ll review your correction.</div>'})
+  .catch(()=>{document.getElementById('moreCorrectionForm').innerHTML='<div style="text-align:center;padding:var(--space-3);font-size:var(--text-sm);color:var(--color-verified);font-weight:var(--weight-medium)">Thank you! We\'ll review your correction.</div>'})
+}
 
 // Render schedule by day — with smart collapsing
-function renderSched(svcs,locL,ml){
+function renderSched(svcs,locL,ml,sectionTypes){
   const dayGrp={},appt=[];
   const WEEKDAYS=['monday','tuesday','wednesday','thursday','friday'];
   const specLabels={weekday:'Weekdays',daily:'Daily',first_friday:'First Friday',first_saturday:'First Saturday',first_sunday:'First Sunday',first_thursday:'First Thursday',holyday:'Holy Days',holyday_eve:'Holy Day Eve',Holy_Thursday:'Holy Thursday',Good_Friday:'Good Friday',Easter_Vigil:'Easter Vigil',civil_holiday:'Civil Holidays'};
+  // Determine if we should suppress type labels (when section has only 1 type or all types are the same category)
+  const secTypes=sectionTypes||[];
+  const isSingleTypeSection=secTypes.length===1;
 
   // Separate seasonal/Easter services from regular
   const seasonal=[],regular=[];
@@ -834,7 +879,7 @@ function renderSched(svcs,locL,ml){
   }
 
   // Build a fingerprint for collapsing: time+location+language+type+rite
-  function svcKey(s){const rite=s.rite==='tridentine'?'tridentine':'';return s.time+'|'+(s.location_id||'')+'|'+(s.language||'en')+'|'+s.type+'|'+rite}
+  function svcKey(s){const rite=s.rite==='tridentine'?'tridentine':'';return s.time+'|'+(s.end_time||'')+'|'+(s.location_id||'')+'|'+(s.language||'en')+'|'+s.type+'|'+rite}
 
   // Group regular weekday services by fingerprint to detect Mon-Fri patterns
   const wkMap={};
@@ -842,29 +887,25 @@ function renderSched(svcs,locL,ml){
   for(const s of regular){
     if(WEEKDAYS.includes(s.day)){
       const k=svcKey(s);
-      if(!wkMap[k])wkMap[k]={svcs:[],days:[]};
+      if(!wkMap[k])wkMap[k]={svcs:[]};
       wkMap[k].svcs.push(s);
-      if(!wkMap[k].days.includes(s.day))wkMap[k].days.push(s);
     } else {
       nonWeekday.push(s);
     }
   }
 
   // For each weekday group, decide if it should be collapsed
-  const collapsed=[];  // {label, svcs:[representative]}
-  const uncollapsed=[]; // individual services that stay day-by-day
+  const collapsed=[];
+  const uncollapsed=[];
   for(const k of Object.keys(wkMap)){
     const grp=wkMap[k];
     const days=grp.svcs.map(s=>s.day);
     const uniq=[...new Set(days)].sort((a,b)=>WEEKDAYS.indexOf(a)-WEEKDAYS.indexOf(b));
-    // Only collapse if 3+ consecutive weekdays at same time/loc/lang with no meaningful note differences
-    const meaningfulNotes=grp.svcs.filter(s=>cleanNote(s)&&cleanNote(s).length>0);
+    const meaningfulNotes=grp.svcs.filter(s=>{const n=cleanNote(s);return n&&n.length>0});
+    // Collapse if 3+ weekdays with no more than 1 meaningful note across them
     if(uniq.length>=3&&meaningfulNotes.length<=1){
-      // Build label like "Mon – Fri" or "Mon – Thu"
       const label=makeRangeLabel(uniq);
-      // Use first service as representative, attach the range label
       const rep=grp.svcs[0];
-      // If one service has a meaningful note, keep it
       const noteHolder=meaningfulNotes[0];
       collapsed.push({label:label,svc:rep,extraNote:noteHolder?cleanNote(noteHolder):''});
     } else {
@@ -872,8 +913,7 @@ function renderSched(svcs,locL,ml){
     }
   }
 
-  // Build final day groups: Sunday, collapsed weekday rows, remaining individual days, special days
-  // Non-weekday services go into day groups as before
+  // Build day groups for uncollapsed + non-weekday
   for(const s of uncollapsed){
     if(!dayGrp[s.day])dayGrp[s.day]=[];
     dayGrp[s.day].push(s);
@@ -888,12 +928,12 @@ function renderSched(svcs,locL,ml){
   const other=allKeys.filter(d=>!DAY_ORDER.includes(d));
   let html='';
 
-  // Render Sunday first if present
+  // B3 FIX: Render order — Sunday, then Weekdays collapsed, then Saturday, then remaining individual weekdays, then special days
   if(dayGrp['sunday']){
     html+=renderDayGroup('sunday','Sunday',dayGrp['sunday'],locL,ml);
   }
 
-  // Render collapsed weekday rows
+  // Collapsed weekday rows right after Sunday
   if(collapsed.length){
     collapsed.sort((a,b)=>(toMin(a.svc.time)||0)-(toMin(b.svc.time)||0));
     html+='<div class="schedule-day"><div class="schedule-day-label">Weekdays</div>';
@@ -903,22 +943,26 @@ function renderSched(svcs,locL,ml){
     html+='</div>';
   }
 
-  // Render remaining individual weekdays (ones that didn't collapse)
+  // Individual uncollapsed weekdays (Mon-Fri that didn't collapse), in day order
   for(const day of week){
-    if(day==='sunday')continue; // already rendered
-    html+=renderDayGroup(day,DAY_NAMES[day]||day,dayGrp[day],locL,ml);
+    if(day==='sunday'||day==='saturday')continue;
+    if(dayGrp[day])html+=renderDayGroup(day,DAY_NAMES[day]||day,dayGrp[day],locL,ml);
   }
 
-  // Render special days
+  // Saturday
+  if(dayGrp['saturday']){
+    html+=renderDayGroup('saturday','Saturday',dayGrp['saturday'],locL,ml);
+  }
+
+  // Special days (first_friday, holyday, etc.)
   for(const day of other){
     const label=specLabels[day]||day.replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
     html+=renderDayGroup(day,label,dayGrp[day],locL,ml);
   }
 
-  // Render seasonal Easter note if any
+  // Easter seasonal section
   if(seasonal.length){
     html+='<div class="schedule-day"><div class="schedule-day-label" style="color:var(--color-accent-text)">Easter Sunday</div>';
-    // Group by time, show compact
     const byTime={};
     for(const s of seasonal){
       const k=s.time;
@@ -943,7 +987,6 @@ function renderSched(svcs,locL,ml){
   function renderDayGroup(day,label,ss,locL,ml){
     if(!ss||!ss.length)return'';
     ss.sort((a,b)=>(toMin(a.time)||0)-(toMin(b.time)||0));
-    // Deduplicate same-time entries (merge seasonal variants into notes)
     const merged=mergeSameTime(ss);
     let h='<div class="schedule-day"><div class="schedule-day-label">'+esc(label)+'</div>';
     for(const s of merged){
@@ -957,9 +1000,9 @@ function renderSched(svcs,locL,ml){
     const out=[];
     const seen={};
     for(const s of ss){
-      const k=s.time+'|'+(s.location_id||'')+'|'+(s.language||'en')+'|'+(s.rite||'');
+      const rite=s.rite==='tridentine'?'tridentine':'';
+      const k=s.time+'|'+(s.location_id||'')+'|'+(s.language||'en')+'|'+rite;
       if(seen[k]){
-        // Merge notes if the duplicate has a unique meaningful note
         const existing=seen[k];
         const newNote=cleanNote(s);
         const existingNote=cleanNote(existing);
@@ -985,10 +1028,14 @@ function renderSched(svcs,locL,ml){
     const note=extraNote||cleanNote(s)||'';
     const merged=(s._mergedNotes||[]).filter(n=>n).join('; ');
 
+    // B2 FIX: Suppress type label when it matches the accordion section
+    // Show type label only when it adds info (e.g. "Communion Service" in the Mass section, or mixed-type sections)
+    const showTypeLabel=!isSingleTypeSection&&!['sunday_mass','daily_mass'].includes(s.type);
+
     let meta='';
     if(dayLabel)meta+='<div class="schedule-location" style="font-weight:var(--weight-medium)">'+esc(dayLabel)+'</div>';
     if(loc)meta+='<div class="schedule-location">'+esc(loc)+'</div>';
-    if(!['sunday_mass','daily_mass'].includes(s.type))meta+='<div class="schedule-location">'+esc(tl)+'</div>';
+    if(showTypeLabel)meta+='<div class="schedule-location">'+esc(tl)+'</div>';
     if(note)meta+='<div class="schedule-note">'+esc(note)+'</div>';
     if(merged)meta+='<div class="schedule-note">'+esc(merged)+'</div>';
     if(s.times_vary)meta+='<div class="schedule-note">Times may vary — check bulletin</div>';
@@ -1001,8 +1048,8 @@ function renderSched(svcs,locL,ml){
     let n=(s.notes||'').trim();
     if(!n)return'';
     const nl=n.toLowerCase();
-    // Suppress "Vigil Mass" on Saturday sunday_mass (exact match)
-    if(s.day==='saturday'&&s.type==='sunday_mass'&&/^vigil\s*mass$/i.test(n))return'';
+    // B4 FIX: Suppress "Vigil Mass" or just "Vigil" on Saturday sunday_mass
+    if(s.day==='saturday'&&s.type==='sunday_mass'&&/^vigil(\s*mass)?$/i.test(n))return'';
     // Suppress "Vigil Mass — Location" on Saturday when location is shown separately
     if(s.day==='saturday'&&s.type==='sunday_mass'&&/^vigil\s*mass\s*[—–-]\s*.+/i.test(n)&&ml)return'';
     // Suppress notes that just restate the type name
@@ -1018,6 +1065,8 @@ function renderSched(svcs,locL,ml){
     n=n.replace(/\s*\(language:\s*\w+\)\s*/gi,'').trim();
     // Strip notes that start with "Last Sunday of month: Mass in Polish" when Polish badge handles it
     if(s.language==='en'&&/^last\s+sunday\s+of\s+month:\s*mass\s+in\s+polish/i.test(n))return'';
+    // B5 FIX: Strip redundant "— English" suffix from notes (English is default)
+    n=n.replace(/\s*[—–-]\s*English\s*$/i,'').trim();
     return n;
   }
 
@@ -1025,7 +1074,6 @@ function renderSched(svcs,locL,ml){
   function makeRangeLabel(days){
     const abbr={monday:'Mon',tuesday:'Tue',wednesday:'Wed',thursday:'Thu',friday:'Fri'};
     if(days.length===5)return'Mon – Fri';
-    // Check if consecutive
     const indices=days.map(d=>WEEKDAYS.indexOf(d)).sort((a,b)=>a-b);
     let consecutive=true;
     for(let i=1;i<indices.length;i++){if(indices[i]!==indices[i-1]+1){consecutive=false;break}}
