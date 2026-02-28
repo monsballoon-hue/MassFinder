@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%232C3E5A'/%3E%3Crect x='40' y='10' width='20' height='80' rx='4' fill='%23B8963F'/%3E%3Crect x='14' y='30' width='72' height='20' rx='4' fill='%23B8963F'/%3E%3C/svg%3E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="MassFinder">
+<meta name="theme-color" content="#F8F7F4">
+<meta name="description" content="Find Mass, Confession, Adoration and more across Western Massachusetts">
+<link rel="manifest" href="manifest.json">
+<title>MassFinder — Catholic Services Directory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.css">
+<style>
+:root {
+  --color-primary: #2C3E5A;
+  --color-primary-light: #3D5278;
+  --color-primary-muted: #6B7A94;
+  --color-accent: #B8963F;
+  --color-accent-light: #D4B05C;
+  --color-accent-pale: #F5EDD8;
+  --color-bg: #F8F7F4;
+  --color-surface: #FFFFFF;
+  --color-surface-hover: #F5F3EF;
+  --color-text-primary: #1A1E26;
+  --color-text-secondary: #5C6370;
+  --color-text-tertiary: #747981;
+  --color-text-inverse: #FFFFFF;
+  --color-verified: #4A7C59;
+  --color-verified-bg: #EDF5F0;
+  --color-warning: #D97706;
+  --color-warning-bg: #FEF5E7;
+  --color-error: #B91C1C;
+  --color-info: #3478C6;
+  --color-info-bg: #EFF6FF;
+  --color-border: #E5E2DC;
+  --color-border-light: #EFECE7;
+  --color-fav: #E11D48;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --text-xs: 0.8125rem; --text-sm: 0.9375rem; --text-base: 1.0625rem;
+  --text-lg: 1.125rem; --text-xl: 1.25rem; --text-2xl: 1.5rem; --text-3xl: 1.75rem;
+  --weight-regular: 400; --weight-medium: 500; --weight-semibold: 600;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-12: 48px;
+  --max-width: 680px;
+  --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px; --radius-full: 999px;
+  --shadow-card: 0 1px 3px rgba(26,30,38,0.06), 0 4px 12px rgba(26,30,38,0.04);
+  --shadow-card-hover: 0 2px 8px rgba(26,30,38,0.08), 0 8px 24px rgba(26,30,38,0.06);
+  --shadow-elevated: 0 4px 16px rgba(26,30,38,0.10), 0 12px 40px rgba(26,30,38,0.08);
+  --shadow-tab-bar: 0 -1px 0 rgba(0,0,0,0.06), 0 -4px 16px rgba(0,0,0,0.04);
+  --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-fast: 150ms var(--ease-out);
+  --transition-base: 250ms var(--ease-out);
+  --tab-bar-height: 64px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: var(--font-body); font-size: var(--text-base);
+  font-weight: var(--weight-regular); line-height: 1.6;
+  color: var(--color-text-primary); background: var(--color-bg);
+  min-height: 100vh; min-height: 100dvh; overflow-x: hidden;
+  padding-bottom: calc(var(--tab-bar-height) + var(--safe-bottom) + var(--space-4));
+}
+a { color: var(--color-info); text-decoration: none; }
+a:hover { text-decoration: underline; }
+button { font-family: inherit; font-size: inherit; cursor: pointer; border: none; background: none; color: inherit; -webkit-tap-highlight-color: transparent; }
+input { font-family: inherit; font-size: inherit; border: none; outline: none; background: none; color: inherit; -webkit-tap-highlight-color: transparent; }
+
+/* HEADER */
+.top-header { background: var(--color-surface); border-bottom: 1px solid var(--color-border-light); position: sticky; top: 0; z-index: 90; }
+.top-header-inner { max-width: var(--max-width); margin: 0 auto; padding: var(--space-3) var(--space-4); display: flex; align-items: center; gap: var(--space-2); }
+.header-logo { display: flex; align-items: center; gap: var(--space-2); }
+.header-logo-cross { width: 28px; height: 28px; background: var(--color-primary); border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.header-logo-cross svg { width: 16px; height: 16px; }
+.header-logo-text { font-family: var(--font-display); font-size: var(--text-lg); font-weight: var(--weight-semibold); color: var(--color-primary); line-height: 1.2; }
+.header-logo-region { font-size: var(--text-xs); color: var(--color-text-tertiary); }
+
+/* SEARCH */
+.search-section { max-width: var(--max-width); margin: 0 auto; padding: var(--space-4) var(--space-4) 0; }
+.search-bar { display: flex; align-items: center; background: var(--color-surface); border: 1.5px solid var(--color-border); border-radius: var(--radius-md); padding: 0 var(--space-4); height: 48px; transition: border-color var(--transition-fast), box-shadow var(--transition-fast); gap: var(--space-2); }
+.search-bar:focus-within { border-color: var(--color-primary-muted); box-shadow: 0 0 0 3px rgba(44,62,90,0.08); }
+.search-bar svg { width: 20px; height: 20px; color: var(--color-text-tertiary); flex-shrink: 0; }
+.search-bar input { flex: 1; height: 100%; font-size: var(--text-base); }
+.search-bar input::placeholder { color: var(--color-text-tertiary); }
+.search-clear { width: 28px; height: 28px; border-radius: var(--radius-full); display: none; align-items: center; justify-content: center; color: var(--color-text-tertiary); }
+.search-clear.visible { display: flex; }
+
+/* CHIPS */
+.chip-bar { max-width: var(--max-width); margin: 0 auto; padding: var(--space-3) 0 var(--space-2); overflow-x: auto; display: flex; gap: var(--space-2); scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.chip-bar::-webkit-scrollbar { display: none; }
+.chip-bar::before, .chip-bar::after { content: ''; flex-shrink: 0; width: var(--space-4); }
+.chip { flex-shrink: 0; height: 38px; padding: 0 var(--space-4); border-radius: var(--radius-full); font-size: var(--text-sm); font-weight: var(--weight-medium); line-height: 38px; white-space: nowrap; background: var(--color-surface); color: var(--color-text-secondary); border: 1.5px solid var(--color-border); transition: all var(--transition-fast); user-select: none; }
+.chip:hover { background: var(--color-surface-hover); border-color: var(--color-text-tertiary); }
+.chip:active { transform: scale(0.97); }
+.chip.active { background: var(--color-primary); color: var(--color-text-inverse); border-color: var(--color-primary); }
+.chip.more-filters { border-style: dashed; }
+.chip .chip-count { display: inline-flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.25); border-radius: var(--radius-full); font-size: 11px; min-width: 18px; height: 18px; padding: 0 5px; margin-left: 4px; }
+
+/* ACTIVE FILTER PILLS */
+.active-filters { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--space-4); display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.active-filters:empty { display: none; }
+.filter-pill { display: inline-flex; align-items: center; gap: 4px; font-size: var(--text-xs); font-weight: var(--weight-medium); color: var(--color-primary); background: var(--color-info-bg); padding: 4px 8px 4px 10px; border-radius: var(--radius-full); }
+.filter-pill button { width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--color-primary-muted); font-size: 14px; }
+.filter-pill button:hover { background: rgba(44,62,90,0.1); }
+
+/* RESULTS */
+.results-info { max-width: var(--max-width); margin: 0 auto; padding: var(--space-2) var(--space-4) var(--space-1); display: flex; align-items: center; justify-content: space-between; }
+.results-count { font-size: var(--text-xs); color: var(--color-text-tertiary); font-weight: var(--weight-medium); }
+.results-sort { font-size: var(--text-xs); color: var(--color-text-tertiary); font-weight: var(--weight-medium); display: flex; align-items: center; gap: var(--space-1); padding: var(--space-1) var(--space-2); border-radius: var(--radius-sm); }
+.results-sort:hover { background: var(--color-surface-hover); }
+.results-sort svg { width: 14px; height: 14px; }
+
+/* LOCATION PROMPT */
+.location-prompt { max-width: var(--max-width); margin: var(--space-3) auto var(--space-2); padding: 0 var(--space-4); }
+.location-prompt-inner { display: flex; align-items: center; gap: var(--space-3); background: var(--color-info-bg); border-radius: var(--radius-md); padding: var(--space-3) var(--space-4); }
+.location-prompt-inner svg { width: 20px; height: 20px; color: var(--color-info); flex-shrink: 0; }
+.location-prompt-inner p { font-size: var(--text-sm); color: var(--color-text-secondary); flex: 1; line-height: 1.4; }
+.location-prompt-inner button { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-info); white-space: nowrap; padding: var(--space-1) var(--space-3); border-radius: var(--radius-sm); }
+.location-prompt.hidden { display: none; }
+
+/* CARDS */
+.card-list { max-width: var(--max-width); margin: 0 auto; padding: var(--space-2) var(--space-4); display: flex; flex-direction: column; gap: var(--space-3); }
+.parish-card { background: var(--color-surface); border-radius: var(--radius-md); padding: var(--space-5); box-shadow: var(--shadow-card); cursor: pointer; transition: box-shadow var(--transition-base), transform var(--transition-fast); position: relative; display: flex; flex-direction: column; gap: var(--space-2); }
+.parish-card:hover { box-shadow: var(--shadow-card-hover); }
+.parish-card:active { transform: scale(0.995); }
+.card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-2); }
+.card-name-row { display: flex; align-items: center; gap: 6px; flex: 1; min-width: 0; }
+.card-name { font-size: var(--text-lg); font-weight: var(--weight-semibold); color: var(--color-text-primary); line-height: 1.3; }
+.card-verified { color: var(--color-verified); flex-shrink: 0; width: 16px; height: 16px; }
+.card-right { display: flex; align-items: center; gap: var(--space-2); flex-shrink: 0; }
+.card-distance { font-size: var(--text-xs); color: var(--color-text-tertiary); font-weight: var(--weight-medium); white-space: nowrap; }
+.card-fav { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--color-text-tertiary); transition: all var(--transition-fast); margin: -4px -4px -4px 0; }
+.card-fav:hover { background: var(--color-surface-hover); color: var(--color-fav); }
+.card-fav.is-fav { color: var(--color-fav); }
+.card-fav svg { width: 18px; height: 18px; }
+.card-town { font-size: var(--text-sm); color: var(--color-text-secondary); line-height: 1.3; }
+.card-next-service { display: flex; align-items: baseline; gap: var(--space-2); margin-top: var(--space-1); flex-wrap: wrap; }
+.card-next-time { font-size: var(--text-2xl); font-weight: var(--weight-semibold); color: var(--color-primary); line-height: 1.15; letter-spacing: -0.02em; }
+.card-next-label { font-size: var(--text-sm); color: var(--color-text-secondary); font-weight: var(--weight-medium); }
+.card-next-day { font-size: var(--text-sm); color: var(--color-text-tertiary); margin-top: -2px; }
+.card-soon-badge { display: inline-flex; align-items: center; gap: var(--space-1); font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--color-accent); background: var(--color-accent-pale); padding: 2px var(--space-2); border-radius: var(--radius-full); }
+.card-soon-badge .pulse-dot { width: 6px; height: 6px; background: var(--color-accent); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+.card-tags { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-1); }
+.card-tag { font-size: var(--text-xs); font-weight: var(--weight-medium); padding: 3px var(--space-2); border-radius: var(--radius-full); }
+.card-tag.confession { color: #6B21A8; background: #F3E8FF; }
+.card-tag.adoration { color: #B45309; background: #FEF3C7; }
+.card-tag.latin { color: #9F1239; background: #FFE4E6; }
+.card-tag.spanish { color: #0F766E; background: #E0F7F5; }
+.card-tag.language { color: #1E40AF; background: #DBEAFE; }
+.no-results { text-align: center; padding: var(--space-12) var(--space-4); }
+
+/* YC EVENT CARDS (inline in Find + dedicated section) */
+.yc-chip { border-color: var(--color-accent); color: var(--color-accent); border-style: solid; }
+.yc-chip.active { background: var(--color-accent); color: white; border-color: var(--color-accent); }
+.yc-card { background: linear-gradient(135deg, #FBF8F1 0%, #F5EDD8 100%); border-left: 4px solid var(--color-accent); border-radius: var(--radius-md); padding: var(--space-5); box-shadow: var(--shadow-card); cursor: pointer; transition: box-shadow var(--transition-base), transform var(--transition-fast); }
+.yc-card:hover { box-shadow: var(--shadow-card-hover); }
+.yc-card:active { transform: scale(0.995); }
+.yc-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: var(--weight-semibold); color: var(--color-accent); background: rgba(184,150,63,0.15); padding: 3px 10px; border-radius: var(--radius-full); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: var(--space-2); }
+.yc-badge svg { width: 13px; height: 13px; }
+.yc-title { font-size: var(--text-lg); font-weight: var(--weight-semibold); color: var(--color-text-primary); line-height: 1.3; margin-bottom: 2px; }
+.yc-church { font-size: var(--text-sm); color: var(--color-text-secondary); margin-bottom: var(--space-2); }
+.yc-datetime { display: flex; align-items: baseline; gap: var(--space-2); flex-wrap: wrap; }
+.yc-date { font-size: var(--text-base); font-weight: var(--weight-semibold); color: var(--color-primary); }
+.yc-time { font-size: var(--text-sm); color: var(--color-text-secondary); font-weight: var(--weight-medium); }
+.yc-social-tag { display: inline-flex; align-items: center; gap: 4px; font-size: var(--text-xs); font-weight: var(--weight-medium); color: #0F766E; background: #E0F7F5; padding: 3px 8px; border-radius: var(--radius-full); margin-top: var(--space-2); }
+.yc-section-header { max-width: var(--max-width); margin: 0 auto; padding: var(--space-4) var(--space-4) var(--space-2); display: flex; align-items: center; gap: var(--space-2); }
+.yc-section-title { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 700; color: var(--color-text-primary); }
+.yc-section-count { font-size: var(--text-xs); color: var(--color-accent); font-weight: var(--weight-semibold); background: var(--color-accent-pale); padding: 2px 8px; border-radius: var(--radius-full); }
+.no-results h3 { font-family: var(--font-display); font-size: var(--text-xl); font-weight: var(--weight-semibold); color: var(--color-text-secondary); margin-bottom: var(--space-2); }
+.no-results p { font-size: var(--text-sm); color: var(--color-text-tertiary); }
+
+/* DETAIL PANEL */
+.detail-backdrop { position: fixed; inset: 0; z-index: 200; background: rgba(26,30,38,0.4); opacity: 0; pointer-events: none; transition: opacity 0.3s var(--ease-out); }
+.detail-backdrop.open { opacity: 1; pointer-events: auto; }
+.detail-panel { position: fixed; bottom: 0; left: 0; right: 0; z-index: 201; background: var(--color-surface); border-radius: var(--radius-lg) var(--radius-lg) 0 0; max-height: 92vh; max-height: 92dvh; overflow-y: auto; -webkit-overflow-scrolling: touch; transform: translateY(100%); transition: transform 0.35s var(--ease-out); box-shadow: var(--shadow-elevated); overscroll-behavior: contain; }
+.detail-panel.open { transform: translateY(0); }
+@media (min-width: 768px) { .detail-panel { left: 50%; right: auto; width: 100%; max-width: var(--max-width); transform: translate(-50%, 100%); } .detail-panel.open { transform: translate(-50%, 0); } }
+.detail-handle { display: flex; justify-content: center; padding: var(--space-3) 0 var(--space-1); position: sticky; top: 0; background: var(--color-surface); z-index: 2; border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+.detail-handle-bar { width: 36px; height: 4px; background: var(--color-border); border-radius: 2px; }
+.detail-header { padding: var(--space-2) var(--space-5) var(--space-4); }
+.detail-header-top { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-3); }
+.detail-name { font-family: var(--font-display); font-size: var(--text-3xl); font-weight: 700; color: var(--color-text-primary); line-height: 1.2; flex: 1; }
+.detail-actions { display: flex; gap: var(--space-2); flex-shrink: 0; }
+.detail-action-btn { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--color-text-secondary); transition: all var(--transition-fast); }
+.detail-action-btn:hover { background: var(--color-surface-hover); }
+.detail-action-btn.fav-active { color: var(--color-fav); }
+.detail-action-btn svg { width: 22px; height: 22px; }
+.detail-town { font-size: var(--text-sm); color: var(--color-text-secondary); margin-top: var(--space-1); }
+.detail-badges { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-3); }
+.detail-badge { display: inline-flex; align-items: center; gap: 4px; font-size: var(--text-xs); font-weight: var(--weight-medium); padding: 4px 10px; border-radius: var(--radius-full); }
+.detail-badge.verified { color: var(--color-verified); background: var(--color-verified-bg); }
+.detail-badge.county { color: var(--color-text-secondary); background: var(--color-surface-hover); }
+.detail-badge.unverified { color: var(--color-warning); background: var(--color-warning-bg); }
+.detail-badge svg { width: 14px; height: 14px; }
+.detail-body { padding: 0 var(--space-5) var(--space-8); }
+
+/* Contact & Actions */
+.detail-contact { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-5) 0; border-bottom: 1px solid var(--color-border-light); }
+.contact-row { display: flex; align-items: center; gap: var(--space-3); }
+.contact-row svg { width: 20px; height: 20px; color: var(--color-text-tertiary); flex-shrink: 0; }
+.contact-row a, .contact-row span { font-size: var(--text-sm); }
+.contact-row a { color: var(--color-info); }
+.contact-row span { color: var(--color-text-secondary); }
+.detail-quick-actions { display: flex; gap: var(--space-3); padding: var(--space-4) 0; border-bottom: 1px solid var(--color-border-light); }
+.quick-action { flex: 1; display: flex; flex-direction: column; align-items: center; gap: var(--space-1); padding: var(--space-3); border-radius: var(--radius-md); background: var(--color-bg); transition: background var(--transition-fast); text-decoration: none; min-height: 44px; }
+.quick-action:hover { background: var(--color-surface-hover); text-decoration: none; }
+.quick-action svg { width: 22px; height: 22px; color: var(--color-primary); }
+.quick-action span { font-size: var(--text-xs); font-weight: var(--weight-medium); color: var(--color-text-secondary); }
+
+/* Accordions */
+.detail-section { border-bottom: 1px solid var(--color-border-light); }
+.detail-section:last-of-type { border-bottom: none; }
+.accordion-header { display: flex; align-items: center; justify-content: space-between; padding: var(--space-4) 0; width: 100%; text-align: left; min-height: 48px; }
+.accordion-header-left { display: flex; align-items: center; gap: var(--space-3); }
+.accordion-header-left svg { width: 20px; height: 20px; color: var(--color-primary-muted); flex-shrink: 0; }
+.accordion-title { font-size: var(--text-base); font-weight: var(--weight-semibold); }
+.accordion-count { font-size: var(--text-xs); color: var(--color-text-tertiary); font-weight: var(--weight-medium); background: var(--color-bg); padding: 2px 8px; border-radius: var(--radius-full); margin-left: var(--space-2); }
+.accordion-chevron { width: 20px; height: 20px; color: var(--color-text-tertiary); transition: transform 0.25s var(--ease-out); flex-shrink: 0; }
+.accordion-header[aria-expanded="true"] .accordion-chevron { transform: rotate(180deg); }
+.accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.35s var(--ease-out); }
+.accordion-body.open { max-height: 2000px; }
+.accordion-body-inner { padding-bottom: var(--space-4); }
+
+/* Schedule rows */
+.schedule-day { margin-bottom: var(--space-3); }
+.schedule-day:last-child { margin-bottom: 0; }
+.schedule-day-label { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-text-primary); margin-bottom: var(--space-1); padding-bottom: var(--space-1); border-bottom: 1px solid var(--color-border-light); }
+.schedule-row { display: flex; align-items: flex-start; gap: var(--space-3); padding: var(--space-2) 0; }
+.schedule-time { font-size: var(--text-base); font-weight: var(--weight-semibold); color: var(--color-primary); min-width: 90px; flex-shrink: 0; }
+.schedule-meta { flex: 1; }
+.schedule-location { font-size: var(--text-sm); color: var(--color-text-secondary); }
+.schedule-note { font-size: var(--text-xs); color: var(--color-text-tertiary); font-style: italic; margin-top: 2px; }
+.schedule-lang-badge { display: inline-block; font-size: 11px; font-weight: var(--weight-medium); padding: 1px 6px; border-radius: var(--radius-full); color: #1E40AF; background: #DBEAFE; margin-left: var(--space-2); }
+.schedule-appt { font-size: var(--text-sm); color: var(--color-text-tertiary); font-style: italic; padding: var(--space-2) 0; }
+
+/* Verify prompt */
+.verify-prompt { margin-top: var(--space-6); padding: var(--space-4); background: var(--color-bg); border-radius: var(--radius-md); text-align: center; }
+.verify-prompt p { font-size: var(--text-sm); color: var(--color-text-secondary); margin-bottom: var(--space-3); }
+.verify-prompt-btns { display: flex; gap: var(--space-3); justify-content: center; }
+.verify-btn { display: inline-flex; align-items: center; gap: var(--space-1); padding: var(--space-2) var(--space-4); border-radius: var(--radius-full); font-size: var(--text-sm); font-weight: var(--weight-semibold); min-height: 44px; transition: all var(--transition-fast); }
+.verify-btn.yes { background: var(--color-verified-bg); color: var(--color-verified); }
+.verify-btn.yes:hover { background: #D4EDDA; }
+.verify-btn.no { background: var(--color-surface-hover); color: var(--color-text-secondary); }
+.verify-btn.no:hover { background: var(--color-border-light); }
+.verify-thanks { font-size: var(--text-sm); color: var(--color-verified); font-weight: var(--weight-medium); display: none; padding: var(--space-4) 0; text-align: center; }
+.detail-verified-footer { margin-top: var(--space-4); padding-top: var(--space-3); border-top: 1px solid var(--color-border-light); font-size: var(--text-xs); color: var(--color-text-tertiary); }
+
+/* MORE FILTERS OVERLAY */
+.filters-overlay { position: fixed; inset: 0; z-index: 300; background: var(--color-surface); transform: translateY(100%); transition: transform 0.35s var(--ease-out); overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.filters-overlay.open { transform: translateY(0); }
+.filters-header { display: flex; align-items: center; justify-content: space-between; padding: var(--space-4) var(--space-5); border-bottom: 1px solid var(--color-border-light); position: sticky; top: 0; background: var(--color-surface); z-index: 2; }
+.filters-header h2 { font-family: var(--font-display); font-size: var(--text-xl); font-weight: var(--weight-semibold); }
+.filters-close { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--color-text-secondary); }
+.filters-close:hover { background: var(--color-surface-hover); }
+.filters-close svg { width: 24px; height: 24px; }
+.filters-body { padding: var(--space-4) var(--space-5) var(--space-12); }
+.filter-group { margin-bottom: var(--space-6); }
+.filter-group-title { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-3); }
+.filter-group-grid { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.filter-checkbox { display: flex; align-items: center; padding: var(--space-2) var(--space-3); border: 1.5px solid var(--color-border); border-radius: var(--radius-sm); font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--color-text-secondary); min-height: 44px; cursor: pointer; transition: all var(--transition-fast); user-select: none; }
+.filter-checkbox:hover { border-color: var(--color-text-tertiary); }
+.filter-checkbox.checked { background: var(--color-primary); color: var(--color-text-inverse); border-color: var(--color-primary); }
+.filters-footer { position: sticky; bottom: 0; padding: var(--space-4) var(--space-5); background: var(--color-surface); border-top: 1px solid var(--color-border-light); display: flex; gap: var(--space-3); }
+.filters-footer button { flex: 1; padding: var(--space-3); border-radius: var(--radius-md); font-size: var(--text-base); font-weight: var(--weight-semibold); min-height: 48px; }
+.btn-clear { background: var(--color-bg); color: var(--color-text-secondary); }
+.btn-apply { background: var(--color-primary); color: var(--color-text-inverse); }
+
+/* TAB BAR */
+.tab-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 100; background: var(--color-surface); box-shadow: var(--shadow-tab-bar); padding-bottom: var(--safe-bottom); border-top: 1px solid var(--color-border-light); }
+.tab-bar-inner { display: flex; justify-content: space-around; max-width: var(--max-width); margin: 0 auto; height: var(--tab-bar-height); }
+.tab-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; color: var(--color-text-tertiary); transition: color var(--transition-fast); min-width: 44px; min-height: 44px; padding: var(--space-2) 0; }
+.tab-item:hover { color: var(--color-text-secondary); }
+.tab-item.active { color: var(--color-primary); }
+.tab-item svg { width: 24px; height: 24px; }
+.tab-item span { font-size: 11px; font-weight: var(--weight-medium); }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.stub-panel { max-width: var(--max-width); margin: 0 auto; padding: var(--space-12) var(--space-4); text-align: center; color: var(--color-text-tertiary); }
+.stub-panel svg { width: 48px; height: 48px; margin-bottom: var(--space-4); opacity: 0.4; }
+.stub-panel h2 { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: var(--weight-semibold); color: var(--color-text-secondary); margin-bottom: var(--space-2); }
+.stub-panel p { font-size: var(--text-sm); }
+
+/* ANIMATION */
+@media (prefers-reduced-motion: no-preference) {
+  .parish-card { animation: cardEnter 0.35s var(--ease-out) both; }
+  @keyframes cardEnter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+}
+
+/* RESPONSIVE */
+@media (min-width: 768px) {
+  .parish-card { padding: var(--space-6); }
+  .detail-body { padding: 0 var(--space-8) var(--space-8); }
+  .detail-header { padding: var(--space-2) var(--space-8) var(--space-4); }
+}
+@media print {
+  .top-header, .tab-bar, .search-section, .chip-bar, .results-info, .location-prompt, .detail-backdrop, .active-filters { display: none !important; }
+  body { padding-bottom: 0; }
+  .parish-card { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+}
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+
+/* MAP TAB */
+#mapContainer { width: 100%; height: calc(100vh - 64px - 56px); height: calc(100dvh - 64px - 56px); }
+.leaflet-container { background: var(--color-bg); font-family: var(--font-body); }
+.map-cluster {
+  background: rgba(44,62,90,0.15); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.map-cluster div {
+  background: var(--color-primary); color: var(--color-text-inverse);
+  border-radius: 50%; text-align: center; font-size: 13px; font-weight: var(--weight-semibold);
+  display: flex; align-items: center; justify-content: center;
+}
+.map-popup { padding: 0; }
+.map-popup .leaflet-popup-content-wrapper { border-radius: var(--radius-md); box-shadow: var(--shadow-card); padding: 0; }
+.map-popup .leaflet-popup-content { margin: 0; width: 260px !important; }
+.map-popup .leaflet-popup-tip { border-top-color: var(--color-surface); }
+.popup-card { padding: var(--space-4); cursor: pointer; }
+.popup-card:hover { background: var(--color-surface-hover); }
+.popup-name { font-size: var(--text-base); font-weight: var(--weight-semibold); color: var(--color-text-primary); line-height: 1.3; margin-bottom: 2px; }
+.popup-town { font-size: var(--text-xs); color: var(--color-text-secondary); margin-bottom: var(--space-2); }
+.popup-next { display: flex; align-items: baseline; gap: var(--space-2); }
+.popup-time { font-size: var(--text-xl); font-weight: var(--weight-semibold); color: var(--color-primary); }
+.popup-label { font-size: var(--text-xs); color: var(--color-text-secondary); font-weight: var(--weight-medium); }
+.popup-day { font-size: var(--text-xs); color: var(--color-text-tertiary); margin-top: 2px; }
+.popup-dist { font-size: var(--text-xs); color: var(--color-text-tertiary); margin-top: var(--space-1); }
+.map-locate-btn {
+  width: 40px; height: 40px; background: var(--color-surface); border: 2px solid rgba(0,0,0,0.15);
+  border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center;
+  cursor: pointer; box-shadow: var(--shadow-card);
+}
+.map-locate-btn:hover { background: var(--color-surface-hover); }
+.map-locate-btn svg { width: 20px; height: 20px; color: var(--color-primary); }
+
+/* SAVED TAB */
+.saved-content { max-width: var(--max-width); margin: 0 auto; padding: var(--space-4); }
+.saved-header { padding: var(--space-2) 0 var(--space-4); }
+.saved-header h2 { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 700; color: var(--color-text-primary); }
+.saved-header p { font-size: var(--text-sm); color: var(--color-text-tertiary); margin-top: var(--space-1); }
+.saved-list { display: flex; flex-direction: column; gap: var(--space-3); }
+.saved-empty { text-align: center; padding: var(--space-12) 0; }
+.saved-empty-icon { width: 56px; height: 56px; margin: 0 auto var(--space-4); border-radius: 50%; background: var(--color-surface-hover); display: flex; align-items: center; justify-content: center; }
+.saved-empty-icon svg { width: 28px; height: 28px; color: var(--color-text-tertiary); }
+.saved-empty h3 { font-family: var(--font-display); font-size: var(--text-xl); font-weight: var(--weight-semibold); color: var(--color-text-secondary); margin-bottom: var(--space-2); }
+.saved-empty p { font-size: var(--text-sm); color: var(--color-text-tertiary); line-height: 1.5; }
+
+/* MORE TAB */
+.more-content { max-width: var(--max-width); margin: 0 auto; padding: var(--space-4) var(--space-4) var(--space-12); }
+.more-section { padding: var(--space-5) 0; border-bottom: 1px solid var(--color-border-light); }
+.more-section:last-child { border-bottom: none; }
+.more-section-title { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 700; color: var(--color-text-primary); margin-bottom: var(--space-3); }
+.more-section p { font-size: var(--text-sm); color: var(--color-text-secondary); line-height: 1.6; margin-bottom: var(--space-3); }
+.more-section p:last-child { margin-bottom: 0; }
+.stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-3); margin-bottom: var(--space-3); }
+.stat-card { background: var(--color-surface); border-radius: var(--radius-md); padding: var(--space-4); text-align: center; box-shadow: var(--shadow-card); }
+.stat-value { font-size: var(--text-3xl); font-weight: var(--weight-semibold); color: var(--color-primary); line-height: 1.2; }
+.stat-label { font-size: var(--text-xs); color: var(--color-text-tertiary); font-weight: var(--weight-medium); margin-top: var(--space-1); }
+.county-list { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-3); }
+.county-chip { font-size: var(--text-sm); font-weight: var(--weight-medium); padding: var(--space-2) var(--space-3); border-radius: var(--radius-full); background: var(--color-surface); color: var(--color-text-secondary); border: 1px solid var(--color-border); }
+.more-link-row {
+  display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) 0;
+  font-size: var(--text-base); color: var(--color-text-primary); font-weight: var(--weight-medium);
+  cursor: pointer; transition: color var(--transition-fast);
+}
+.more-link-row:hover { color: var(--color-info); }
+.more-link-row svg { width: 22px; height: 22px; color: var(--color-primary-muted); flex-shrink: 0; }
+.more-link-row .arrow { margin-left: auto; width: 18px; height: 18px; color: var(--color-text-tertiary); }
+.more-footer { text-align: center; padding: var(--space-6) 0 var(--space-4); font-size: var(--text-xs); color: var(--color-text-tertiary); line-height: 1.6; }
+.more-footer a { color: var(--color-info); }
+</style>
+</head>
+<body>
+<a href="#panelFind" class="sr-only" style="position:absolute;top:0;left:0;padding:8px 16px;background:var(--color-primary);color:white;z-index:999;clip:auto;width:auto;height:auto;margin:0" onfocus="this.style.position='fixed'" onblur="this.style.position='absolute'">Skip to content</a>
+
+<header class="top-header"><div class="top-header-inner"><div class="header-logo">
+  <div class="header-logo-cross"><svg viewBox="0 0 16 16" fill="none"><rect x="6.5" y="1" width="3" height="14" rx="1" fill="#B8963F"/><rect x="1" y="5.5" width="14" height="3" rx="1" fill="#B8963F"/></svg></div>
+  <div><div class="header-logo-text">MassFinder</div><div class="header-logo-region">Western Massachusetts</div></div>
+</div></div></header>
+
+<main id="panelFind" class="tab-panel active" role="tabpanel">
+  <div class="search-section"><div class="search-bar" role="search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input id="searchInput" type="text" placeholder="Search churches, cities, or services…" aria-label="Search churches">
+    <button id="searchClear" class="search-clear" aria-label="Clear search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  </div></div>
+
+  <div class="chip-bar" role="toolbar" aria-label="Quick filters">
+    <button class="chip active" data-filter="all">All</button>
+    <button class="chip" data-filter="today">Today</button>
+    <button class="chip" data-filter="weekend">This Weekend</button>
+    <button class="chip" data-filter="confession">Confession</button>
+    <button class="chip" data-filter="adoration">Adoration</button>
+    <button class="chip" data-filter="latin">Latin</button>
+    <button class="chip" data-filter="spanish">Spanish</button>
+    <button class="chip yc-chip" data-filter="yc">YC Events</button>
+    <button class="chip more-filters" id="moreFiltersBtn" onclick="openMoreFilters()">More Filters</button>
+  </div>
+
+  <div id="activeFilters" class="active-filters"></div>
+
+  <div id="locationPrompt" class="location-prompt hidden"><div class="location-prompt-inner">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+    <p>Enable location to see distances and sort by proximity.</p>
+    <button onclick="requestLocation()">Enable</button>
+  </div></div>
+
+  <div class="results-info">
+    <span id="resultsCount" class="results-count"></span>
+    <button class="results-sort" onclick="toggleSort()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 5h10M11 9h7M11 13h4M3 17l3 3 3-3M6 18V4"/></svg>
+      <span id="sortLabel">By name</span>
+    </button>
+  </div>
+
+  <div id="cardList" class="card-list" role="list" aria-label="Churches"></div>
+</main>
+
+<div id="panelMap" class="tab-panel" role="tabpanel">
+  <div id="mapContainer"></div>
+</div>
+
+<div id="panelSaved" class="tab-panel" role="tabpanel">
+  <div class="saved-content">
+    <div class="saved-header">
+      <h2>Saved Churches</h2>
+      <p id="savedSubtitle">Your favorited churches</p>
+    </div>
+    <div id="savedList" class="saved-list"></div>
+  </div>
+</div>
+
+<div id="panelMore" class="tab-panel" role="tabpanel">
+  <div class="more-content">
+    <div class="more-section">
+      <h2 class="more-section-title">About MassFinder</h2>
+      <p>MassFinder helps Catholics across Western Massachusetts find Mass times, Confession, Adoration, and other services at churches in the Diocese of Springfield.</p>
+      <p>All service times are sourced from church bulletins and verified periodically. If you notice an error, please use the "Submit a Correction" link below.</p>
+    </div>
+
+    <div class="more-section">
+      <h2 class="more-section-title">Directory Stats</h2>
+      <div id="moreStats" class="stat-grid"></div>
+      <div id="moreCounties" class="county-list"></div>
+    </div>
+
+    <div class="more-section">
+      <h2 class="more-section-title">Links</h2>
+      <a class="more-link-row" href="https://diospringfield.org" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Diocese of Springfield
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+      <a class="more-link-row" href="mailto:massfinder@example.com?subject=MassFinder%20Correction" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        Submit a Correction
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+      <a class="more-link-row" id="moreEventsLink" href="#" style="display:none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Upcoming Events
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+    </div>
+
+    <div class="more-section" id="moreEventsSection" style="display:none">
+      <h2 class="more-section-title">Upcoming Events</h2>
+      <div id="moreEventsList"></div>
+    </div>
+
+    <div class="more-footer" id="moreFooter"></div>
+  </div>
+</div>
+
+<div id="detailBackdrop" class="detail-backdrop" onclick="closeDetail()"></div>
+<div id="detailPanel" class="detail-panel" role="dialog" aria-modal="true" aria-label="Church details">
+  <div class="detail-handle" onclick="closeDetail()"><div class="detail-handle-bar"></div></div>
+  <div id="detailContent"></div>
+</div>
+
+<div id="filtersOverlay" class="filters-overlay">
+  <div class="filters-header">
+    <h2>Filters</h2>
+    <button class="filters-close" onclick="closeMoreFilters()" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  </div>
+  <div class="filters-body" id="filtersBody"></div>
+  <div class="filters-footer">
+    <button class="btn-clear" onclick="clearAdvancedFilters()">Clear All</button>
+    <button class="btn-apply" onclick="applyAdvancedFilters()">Apply Filters</button>
+  </div>
+</div>
+
+<nav class="tab-bar" role="tablist"><div class="tab-bar-inner">
+  <button class="tab-item active" data-tab="panelFind" role="tab" aria-selected="true" onclick="switchTab('panelFind',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Find</span></button>
+  <button class="tab-item" data-tab="panelMap" role="tab" aria-selected="false" onclick="switchTab('panelMap',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg><span>Map</span></button>
+  <button class="tab-item" data-tab="panelSaved" role="tab" aria-selected="false" onclick="switchTab('panelSaved',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span>Saved</span></button>
+  <button class="tab-item" data-tab="panelMore" role="tab" aria-selected="false" onclick="switchTab('panelMore',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg><span>More</span></button>
+</div></nav>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
+<script>
+let allParishes=[],filteredParishes=[],userLat=null,userLng=null,currentSort='name',currentFilter='all',searchQuery='',favorites=[],ycEvents=[];
+let advancedFilters={types:[],days:[],languages:[],county:[]},tempAdvanced={types:[],days:[],languages:[],county:[]};
+const DAY_ORDER=['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
+const DAY_NAMES={sunday:'Sunday',monday:'Monday',tuesday:'Tuesday',wednesday:'Wednesday',thursday:'Thursday',friday:'Friday',saturday:'Saturday'};
+const LANG_NAMES={en:'English',es:'Spanish',pl:'Polish',pt:'Portuguese',la:'Latin',fr:'French',vi:'Vietnamese',asl:'ASL'};
+const SVC={sunday_mass:'Sunday Mass',daily_mass:'Daily Mass',confession:'Confession',adoration:'Adoration',perpetual_adoration:'Perpetual Adoration',holy_hour:'Holy Hour',communion_service:'Communion Service',rosary:'Rosary',stations_of_cross:'Stations of the Cross',divine_mercy:'Divine Mercy',divine_mercy_chaplet:'Divine Mercy Chaplet',miraculous_medal:'Miraculous Medal',novena:'Novena',benediction:'Benediction',devotion:'Devotion',devotional:'Devotion',vespers:'Vespers',anointing_of_sick:'Anointing of the Sick',anointing:'Anointing of the Sick',holy_thursday_mass:'Holy Thursday Mass',good_friday_service:'Good Friday Service',easter_vigil_mass:'Easter Vigil Mass',bible_study:'Bible Study',gorzkie_zale:'Gorzkie Żale',mens_group:"Men's Group",social_event:'Social Event'};
+const SERVICE_CATEGORIES={'Weekend Masses':['sunday_mass'],'Weekday Masses':['daily_mass','communion_service'],'Sacraments':['confession','anointing_of_sick','anointing'],'Eucharistic Devotion':['adoration','perpetual_adoration','holy_hour','benediction'],'Prayer & Devotion':['rosary','stations_of_cross','divine_mercy','divine_mercy_chaplet','miraculous_medal','novena','devotion','devotional','vespers'],'Holy Week':['holy_thursday_mass','good_friday_service','easter_vigil_mass']};
+
+// Favorites
+function loadFav(){try{favorites=JSON.parse(localStorage.getItem('mf_fav')||'[]')}catch{favorites=[]}}
+function saveFav(){try{localStorage.setItem('mf_fav',JSON.stringify(favorites))}catch{}}
+function isFav(id){return favorites.includes(id)}
+function toggleFav(id,ev){if(ev){ev.stopPropagation();ev.preventDefault()}if(isFav(id))favorites=favorites.filter(f=>f!==id);else favorites.push(id);saveFav();renderCards();const db=document.querySelector('.detail-action-btn.fav-btn');if(db&&db.dataset.id===id){db.classList.toggle('fav-active',isFav(id));db.querySelector('svg').setAttribute('fill',isFav(id)?'currentColor':'none')}}
+
+// Time
+function getNow(){return new Date()}
+function fmt12(t){if(!t)return'';const[h,m]=t.split(':').map(Number);const ap=h>=12?'PM':'AM',h12=h===0?12:h>12?h-12:h;return m===0?h12+' '+ap:h12+':'+String(m).padStart(2,'0')+' '+ap}
+function toMin(t){if(!t)return null;const[h,m]=t.split(':').map(Number);return h*60+m}
+function getNext(parish,filter){
+  const now=getNow(),curMin=now.getHours()*60+now.getMinutes(),curDI=now.getDay();
+  let svcs=parish.services.filter(s=>{
+    if(!s.time||!s.day)return false;
+    if(s.seasonal&&s.seasonal.is_seasonal)return false;
+    if(!DAY_ORDER.includes(s.day)&&s.day!=='weekday'&&s.day!=='daily')return false;
+    if(filter==='confession')return s.type==='confession';
+    if(filter==='adoration')return['adoration','perpetual_adoration','holy_hour'].includes(s.type);
+    if(filter==='latin')return s.language==='la'||s.rite==='tridentine';
+    if(filter==='spanish')return s.language==='es';
+    return true;
+  });
+  if(!svcs.length)return null;
+  let cands=[];
+  for(const s of svcs){
+    let days=[];
+    if(s.day==='weekday')days=[1,2,3,4,5];
+    else if(s.day==='daily')days=[0,1,2,3,4,5,6];
+    else{const di=DAY_ORDER.indexOf(s.day);if(di>=0)days=[di]}
+    const sm=toMin(s.time);if(sm===null)continue;
+    for(const di of days){
+      let du=di-curDI;if(du<0)du+=7;
+      if(du===0&&sm<=curMin-30)du=7;
+      if(filter==='today'&&du!==0)continue;
+      if(filter==='weekend'&&![0,6].includes(di))continue;
+      cands.push({service:s,daysUntil:du,dayIdx:di,totalMin:du*1440+(du===0?sm-curMin:sm)});
+    }
+  }
+  if(!cands.length)return null;
+  cands.sort((a,b)=>a.totalMin-b.totalMin);
+  const best=cands[0];
+  return{service:best.service,dayLabel:best.daysUntil===0?'Today':best.daysUntil===1?'Tomorrow':DAY_NAMES[DAY_ORDER[best.dayIdx]]||'',minutesUntil:best.totalMin,isSoon:best.totalMin<=60&&best.totalMin>=-30,timeFormatted:fmt12(best.service.time)};
+}
+
+// Distance
+function hav(a1,o1,a2,o2){const R=3959,dA=(a2-a1)*Math.PI/180,dO=(o2-o1)*Math.PI/180;const a=Math.sin(dA/2)**2+Math.cos(a1*Math.PI/180)*Math.cos(a2*Math.PI/180)*Math.sin(dO/2)**2;return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a))}
+function getDist(p){if(userLat===null)return null;const l=p.locations&&p.locations[0];if(!l||!l.lat||!l.lng)return null;return hav(userLat,userLng,l.lat,l.lng)}
+function fmtDist(mi){if(mi===null)return'';if(mi<0.1)return'Nearby';return mi<10?mi.toFixed(1)+' mi':Math.round(mi)+' mi'}
+
+// Search
+function matchSearch(p,q){if(!q)return true;const f=[p.name,p.town,p.county,...(p.locations||[]).map(l=>l.name),...(p.locations||[]).map(l=>l.city),...(p.services||[]).map(s=>s.notes||''),...(p.services||[]).map(s=>LANG_NAMES[s.language]||''),...(p.staff||[])].join(' ').toLowerCase();return q.toLowerCase().split(/\s+/).every(w=>f.includes(w))}
+
+// Advanced filters
+function hasAdv(){return advancedFilters.types.length||advancedFilters.days.length||advancedFilters.languages.length||advancedFilters.county.length}
+function matchAdv(p){if(!hasAdv())return true;const af=advancedFilters;if(af.county.length&&!af.county.includes(p.county))return false;if(af.types.length){const pt=new Set(p.services.map(s=>s.type));if(!af.types.some(t=>pt.has(t)))return false}if(af.days.length){const pd=new Set(p.services.map(s=>s.day));if(!af.days.some(d=>pd.has(d)))return false}if(af.languages.length){const pl=new Set(p.services.map(s=>s.language));if(!af.languages.some(l=>pl.has(l)))return false}return true}
+function renderPills(){const el=document.getElementById('activeFilters');if(!hasAdv()){el.innerHTML='';return}let pills=[];advancedFilters.types.forEach(t=>pills.push({l:SVC[t]||t,k:'types',v:t}));advancedFilters.days.forEach(d=>pills.push({l:DAY_NAMES[d]||d,k:'days',v:d}));advancedFilters.languages.forEach(l=>pills.push({l:LANG_NAMES[l]||l,k:'languages',v:l}));advancedFilters.county.forEach(c=>pills.push({l:c+' County',k:'county',v:c}));el.innerHTML=pills.map(p=>'<span class="filter-pill">'+esc(p.l)+'<button onclick="removeAdv(\''+p.k+"','"+p.v+"')\" aria-label=\"Remove\">×</button></span>").join('')}
+function removeAdv(k,v){advancedFilters[k]=advancedFilters[k].filter(x=>x!==v);renderPills();updateMFChip();filterParishes();renderCards()}
+function updateMFChip(){const btn=document.getElementById('moreFiltersBtn');const c=advancedFilters.types.length+advancedFilters.days.length+advancedFilters.languages.length+advancedFilters.county.length;btn.innerHTML=c>0?'Filters <span class="chip-count">'+c+'</span>':'More Filters';btn.classList.toggle('active',c>0)}
+
+// More Filters overlay
+function openMoreFilters(){tempAdvanced=JSON.parse(JSON.stringify(advancedFilters));renderFiltersBody();document.getElementById('filtersOverlay').classList.add('open');document.body.style.overflow='hidden'}
+function closeMoreFilters(){document.getElementById('filtersOverlay').classList.remove('open');document.body.style.overflow=''}
+function clearAdvancedFilters(){tempAdvanced={types:[],days:[],languages:[],county:[]};renderFiltersBody()}
+function applyAdvancedFilters(){advancedFilters=JSON.parse(JSON.stringify(tempAdvanced));closeMoreFilters();renderPills();updateMFChip();filterParishes();renderCards()}
+function toggleTemp(k,v){if(tempAdvanced[k].includes(v))tempAdvanced[k]=tempAdvanced[k].filter(x=>x!==v);else tempAdvanced[k].push(v);renderFiltersBody()}
+function renderFiltersBody(){
+  const body=document.getElementById('filtersBody');let html='';
+  for(const[cat,types]of Object.entries(SERVICE_CATEGORIES)){
+    html+='<div class="filter-group"><div class="filter-group-title">'+esc(cat)+'</div><div class="filter-group-grid">';
+    for(const t of types){const ch=tempAdvanced.types.includes(t);html+='<button class="filter-checkbox'+(ch?' checked':'')+'" onclick="toggleTemp(\'types\',\''+t+'\')">'+esc(SVC[t]||t)+'</button>'}
+    html+='</div></div>';
+  }
+  html+='<div class="filter-group"><div class="filter-group-title">Day</div><div class="filter-group-grid">';
+  for(const d of DAY_ORDER){const ch=tempAdvanced.days.includes(d);html+='<button class="filter-checkbox'+(ch?' checked':'')+'" onclick="toggleTemp(\'days\',\''+d+'\')">'+DAY_NAMES[d]+'</button>'}
+  html+='</div></div>';
+  const langs=new Set();allParishes.forEach(p=>p.services.forEach(s=>{if(s.language&&s.language!=='en')langs.add(s.language)}));
+  if(langs.size){html+='<div class="filter-group"><div class="filter-group-title">Language</div><div class="filter-group-grid">';for(const l of langs){const ch=tempAdvanced.languages.includes(l);html+='<button class="filter-checkbox'+(ch?' checked':'')+'" onclick="toggleTemp(\'languages\',\''+l+'\')">'+(LANG_NAMES[l]||l)+'</button>'}html+='</div></div>'}
+  const counties=[...new Set(allParishes.map(p=>p.county))].sort();
+  html+='<div class="filter-group"><div class="filter-group-title">County</div><div class="filter-group-grid">';
+  for(const c of counties){const ch=tempAdvanced.county.includes(c);html+='<button class="filter-checkbox'+(ch?' checked':'')+'" onclick="toggleTemp(\'county\',\''+c+'\')">'+esc(c)+'</button>'}
+  html+='</div></div>';
+  body.innerHTML=html;
+}
+
+// Filter + Sort
+function filterParishes(){
+  filteredParishes=allParishes.map(p=>({parish:p,next:getNext(p,currentFilter),distance:getDist(p)}))
+    .filter(item=>{if(!matchSearch(item.parish,searchQuery))return false;if(!matchAdv(item.parish))return false;
+    if(['confession','adoration','latin','spanish','today','weekend'].includes(currentFilter))return item.next!==null;return true});
+  sortParishes();
+}
+function sortParishes(){
+  if(currentSort==='proximity'&&userLat!==null)filteredParishes.sort((a,b)=>(a.distance??9999)-(b.distance??9999));
+  else if(currentSort==='next_service')filteredParishes.sort((a,b)=>(a.next?.minutesUntil??99999)-(b.next?.minutesUntil??99999));
+  else filteredParishes.sort((a,b)=>a.parish.name.localeCompare(b.parish.name));
+}
+function toggleSort(){const m=userLat!==null?['name','proximity','next_service']:['name','next_service'];currentSort=m[(m.indexOf(currentSort)+1)%m.length];updateSortLabel();filterParishes();renderCards()}
+function updateSortLabel(){document.getElementById('sortLabel').textContent={name:'By name',proximity:'By distance',next_service:'By next service'}[currentSort]||'By name'}
+
+// Tag helper
+function getTag(p,next){
+  const s=next?.service;
+  if(s?.type==='confession')return{t:'Confession',c:'confession'};
+  if(s&&['adoration','perpetual_adoration','holy_hour'].includes(s.type))return{t:'Adoration',c:'adoration'};
+  if(s?.language==='la'||s?.rite==='tridentine')return{t:'Latin Mass',c:'latin'};
+  if(s?.language==='es')return{t:'Misa en Español',c:'spanish'};
+  if(p.services.some(x=>x.language==='la'||x.rite==='tridentine'))return{t:'Latin Mass available',c:'latin'};
+  if(p.services.some(x=>x.language==='es'))return{t:'Spanish Mass available',c:'spanish'};
+  if(p.services.some(x=>x.type==='confession'&&x.time))return{t:'Confession available',c:'confession'};
+  if(p.services.some(x=>['adoration','perpetual_adoration'].includes(x.type)))return{t:'Adoration available',c:'adoration'};
+  const ol=p.services.find(x=>x.language&&x.language!=='en');
+  if(ol)return{t:(LANG_NAMES[ol.language]||'Other')+' Mass available',c:'language'};
+  return null;
+}
+
+function isVer(p){const v=p.validation;return v&&(v.status==='verified'||v.status==='manually_verified')}
+
+// YC Events
+function getUpcomingYC(){
+  const today=getNow().toISOString().slice(0,10);
+  return ycEvents.filter(e=>e.date>=today);
+}
+function resolveYC(e){
+  const p=allParishes.find(x=>x.id===e.parish_id)||{};
+  let locName='';
+  for(const l of(p.locations||[])){if(l.id===e.location_id){locName=l.short_name||l.name;break}}
+  return{...e,parishName:p.name||'',town:p.town||'',county:p.county||'',locName};
+}
+function fmtYCDate(d){
+  const dt=new Date(d+'T12:00:00');
+  const today=new Date();today.setHours(12,0,0,0);
+  const diff=Math.round((dt-today)/(1000*60*60*24));
+  if(diff===0)return'Today';if(diff===1)return'Tomorrow';
+  const opts={weekday:'short',month:'short',day:'numeric'};
+  return dt.toLocaleDateString('en-US',opts);
+}
+function renderYCCard(e,delay){
+  const r=resolveYC(e);
+  const timeStr=fmt12(e.time)+(e.end_time?' – '+fmt12(e.end_time):'');
+  return '<article class="yc-card" role="listitem" style="animation-delay:'+(delay||0)+'ms" onclick="openDetail(\''+e.parish_id+'\')">'
+    +'<div class="yc-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Young &amp; Catholic</div>'
+    +'<div class="yc-title">'+esc(e.title)+'</div>'
+    +'<div class="yc-church">'+esc(r.locName||r.parishName)+', '+esc(r.town)+'</div>'
+    +'<div class="yc-datetime"><span class="yc-date">'+fmtYCDate(e.date)+'</span><span class="yc-time">'+timeStr+'</span></div>'
+    +(e.social?'<div class="yc-social-tag">✦ Social gathering included</div>':'')
+    +(e.notes?'<div style="font-size:var(--text-xs);color:var(--color-text-tertiary);font-style:italic;margin-top:var(--space-1)">'+esc(e.notes)+'</div>':'')
+    +'</article>';
+}
+
+function renderCards(){
+  const el=document.getElementById('cardList'),total=allParishes.length,shown=filteredParishes.length;
+  const upcoming=getUpcomingYC();
+
+  // YC filter mode — show only YC events
+  if(currentFilter==='yc'){
+    document.getElementById('resultsCount').textContent=upcoming.length+' upcoming YC event'+(upcoming.length!==1?'s':'');
+    if(!upcoming.length){el.innerHTML='<div class="no-results"><h3>No upcoming YC events</h3><p>Check back soon for new Young &amp; Catholic events.</p></div>';return}
+    el.innerHTML='<div class="yc-section-header"><span class="yc-section-title">Young &amp; Catholic</span><span class="yc-section-count">'+upcoming.length+' upcoming</span></div>'
+      +upcoming.map((e,i)=>renderYCCard(e,i*25)).join('');
+    return;
+  }
+
+  // Normal mode
+  document.getElementById('resultsCount').textContent=shown===total?total+' churches':'Showing '+shown+' of '+total+' churches';
+  if(!shown&&!upcoming.length){el.innerHTML='<div class="no-results"><h3>No churches found</h3><p>Try adjusting your search or filters.</p></div>';return}
+
+  const checkSvg='<svg class="card-verified" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>';
+  let cards=filteredParishes.map((item,i)=>{
+    const p=item.parish,next=item.next,dist=item.distance,tag=getTag(p,next),ver=isVer(p),fav=isFav(p.id),d=Math.min(i*25,250);
+    let nh;if(next){nh='<div class="card-next-service"><span class="card-next-time">'+next.timeFormatted+'</span><span class="card-next-label">'+esc(SVC[next.service.type]||next.service.type)+'</span>'+(next.isSoon?'<span class="card-soon-badge"><span class="pulse-dot"></span>Soon</span>':'')+'</div><div class="card-next-day">'+next.dayLabel+'</div>'}
+    else{nh='<div class="card-next-service"><span class="card-next-label" style="color:var(--color-text-tertiary)">Check bulletin for times</span></div>'}
+    return '<article class="parish-card" role="listitem" style="animation-delay:'+d+'ms" onclick="openDetail(\''+p.id+'\')">'
+      +'<div class="card-top"><div class="card-name-row"><h3 class="card-name">'+esc(p.name)+'</h3>'+(ver?checkSvg:'')+'</div>'
+      +'<div class="card-right">'+(dist!==null?'<span class="card-distance">'+fmtDist(dist)+'</span>':'')
+      +'<button class="card-fav'+(fav?' is-fav':'')+'" onclick="toggleFav(\''+p.id+"',event)\" aria-label=\"Favorite\"><svg viewBox=\"0 0 24 24\" fill=\""+(fav?'currentColor':'none')+"\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z\"/></svg></button>"
+      +'</div></div><div class="card-town">'+esc(p.town)+', '+esc(p.county)+' County</div>'+nh
+      +(tag?'<div class="card-tags"><span class="card-tag '+tag.c+'">'+tag.t+'</span></div>':'')
+      +'</article>';
+  });
+
+  // Inject YC events inline: show next 2 upcoming after card 3, then 1 more after card 10
+  if(upcoming.length&&currentFilter==='all'){
+    const ycSlice=upcoming.slice(0,3);
+    const ycHeader='<div class="yc-section-header"><span class="yc-section-title">Young &amp; Catholic</span><span class="yc-section-count">'+upcoming.length+' upcoming</span></div>';
+    const ycCards=ycSlice.map((e,i)=>renderYCCard(e,0)).join('');
+    const viewAll=upcoming.length>3?'<div style="text-align:center;padding:var(--space-2) 0"><button style="font-size:var(--text-sm);font-weight:var(--weight-semibold);color:var(--color-accent);padding:var(--space-2) var(--space-4)" onclick="document.querySelector(\'[data-filter=yc]\').click()">See all '+upcoming.length+' YC events →</button></div>':'';
+    const insertIdx=Math.min(3,cards.length);
+    cards.splice(insertIdx,0,ycHeader+ycCards+viewAll);
+  }
+
+  el.innerHTML=cards.join('');
+}
+
+// Detail Panel
+function openDetail(id){
+  const p=allParishes.find(x=>x.id===id);if(!p)return;
+  const fav=isFav(p.id),ver=isVer(p),v=p.validation||{},loc0=p.locations&&p.locations[0],dist=getDist(p),ct=p.contact||{};
+  const mapUrl=loc0?'https://maps.google.com/?q='+encodeURIComponent(loc0.address||loc0.name):'';
+  const domain=ct.website?ct.website.replace(/^https?:\/\//,'').replace(/\/.*/,''):'';
+
+  // Badges
+  let bg='';
+  bg+=ver?'<span class="detail-badge verified"><svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>Verified</span>':'<span class="detail-badge unverified">Unverified</span>';
+  bg+='<span class="detail-badge county">'+esc(p.county)+' County</span>';
+  if(p.established)bg+='<span class="detail-badge county">Est. '+esc(p.established)+'</span>';
+  if(dist!==null)bg+='<span class="detail-badge county">'+fmtDist(dist)+' away</span>';
+
+  // Contact
+  let chtml='<div class="detail-contact">';
+  if(loc0)chtml+='<div class="contact-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><a href="'+mapUrl+'" target="_blank" rel="noopener">'+esc(loc0.address||(loc0.city+', '+loc0.state))+'</a></div>';
+  if(ct.phone)chtml+='<div class="contact-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><a href="tel:'+ct.phone+'">'+esc(ct.phone)+'</a></div>';
+  if(ct.website)chtml+='<div class="contact-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><a href="'+esc(ct.website)+'" target="_blank" rel="noopener">'+esc(domain)+'</a></div>';
+  if(ct.office_hours)chtml+='<div class="contact-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>'+esc(ct.office_hours)+'</span></div>';
+  chtml+='</div>';
+
+  // Quick actions
+  let qa='<div class="detail-quick-actions">';
+  if(ct.phone)qa+='<a class="quick-action" href="tel:'+ct.phone+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>Call</span></a>';
+  if(mapUrl)qa+='<a class="quick-action" href="'+mapUrl+'" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg><span>Directions</span></a>';
+  if(ct.website)qa+='<a class="quick-action" href="'+esc(ct.website)+'" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><span>Website</span></a>';
+  qa+='</div>';
+
+  // Location lookup
+  const locL={};(p.locations||[]).forEach(l=>{locL[l.id]=l.short_name||l.name});
+  const ml=(p.locations||[]).length>1;
+
+  // Accordion sections
+  const secs=[
+    {k:'mass',t:'Mass Schedule',ic:'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5',types:['sunday_mass','daily_mass','communion_service']},
+    {k:'conf',t:'Confession',ic:'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',types:['confession']},
+    {k:'ador',t:'Adoration & Holy Hour',ic:'M12 3v18m-6-6l6 6 6-6',types:['adoration','perpetual_adoration','holy_hour','benediction']},
+    {k:'devot',t:'Prayer & Devotion',ic:'M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15z',types:['rosary','stations_of_cross','divine_mercy','divine_mercy_chaplet','miraculous_medal','novena','devotion','devotional','vespers','gorzkie_zale']},
+    {k:'hw',t:'Holy Week',ic:'M12 2v20M2 12h20',types:['holy_thursday_mass','good_friday_service','easter_vigil_mass']},
+  ];
+
+  let secHtml='';
+  for(const sec of secs){
+    const svcs=p.services.filter(s=>sec.types.includes(s.type));
+    if(!svcs.length)continue;
+    const isFirst=sec.k==='mass';
+    secHtml+='<div class="detail-section"><button class="accordion-header" aria-expanded="'+isFirst+'" onclick="toggleAcc(this)">'
+      +'<div class="accordion-header-left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="'+sec.ic+'"/></svg>'
+      +'<span class="accordion-title">'+sec.t+'</span><span class="accordion-count">'+svcs.length+'</span></div>'
+      +'<svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>'
+      +'</button><div class="accordion-body'+(isFirst?' open':'')+'"><div class="accordion-body-inner">'+renderSched(svcs,locL,ml)+'</div></div></div>';
+  }
+
+  // Multi-loc note
+  let mlNote='';if(ml)mlNote='<div style="padding:var(--space-4) 0 0;font-size:var(--text-xs);color:var(--color-text-tertiary)"><strong>Worship sites:</strong> '+p.locations.map(l=>esc(l.short_name||l.name)).join(' · ')+'</div>';
+
+  // Verify prompt + footer
+  const vp='<div class="verify-prompt" id="verifyPrompt"><p>Were these times accurate when you last visited?</p><div class="verify-prompt-btns"><button class="verify-btn yes" onclick="verifyOk(true)">✓ Yes, looks right</button><button class="verify-btn no" onclick="verifyOk(false)">Not quite</button></div></div><div class="verify-thanks" id="verifyThanks">Thank you for helping keep MassFinder accurate! God bless.</div>';
+  let footer='';if(v.last_checked)footer='<div class="detail-verified-footer">Last checked: '+esc(v.last_checked)+(v.bulletin_date?' · Bulletin: '+esc(v.bulletin_date):'')+(v.source?'<br>Source: '+esc(v.source):'')+'</div>';
+
+  document.getElementById('detailContent').innerHTML=
+    '<div class="detail-header"><div class="detail-header-top"><h2 class="detail-name">'+esc(p.name)+'</h2>'
+    +'<div class="detail-actions"><button class="detail-action-btn fav-btn'+(fav?' fav-active':'')+'" data-id="'+p.id+'" onclick="toggleFav(\''+p.id+'\')" aria-label="Favorite"><svg viewBox="0 0 24 24" fill="'+(fav?'currentColor':'none')+'" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>'
+    +'<button class="detail-action-btn" onclick="closeDetail()" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>'
+    +'</div></div><div class="detail-town">'+esc(p.town)+', Massachusetts</div><div class="detail-badges">'+bg+'</div></div>'
+    +'<div class="detail-body">'+chtml+qa+mlNote+secHtml+vp+footer+'</div>';
+
+  document.getElementById('detailBackdrop').classList.add('open');
+  document.getElementById('detailPanel').classList.add('open');
+  document.body.style.overflow='hidden';
+  document.getElementById('detailPanel').scrollTop=0;
+  window._lastFocused=document.activeElement;
+  history.replaceState(null,'','#'+id);
+  setTimeout(()=>{const cb=document.querySelector('.detail-action-btn[aria-label="Close"]');if(cb)cb.focus()},350);
+}
+
+function closeDetail(){document.getElementById('detailBackdrop').classList.remove('open');document.getElementById('detailPanel').classList.remove('open');document.body.style.overflow='';if(window._lastFocused)window._lastFocused.focus();if(location.hash)history.replaceState(null,'',location.pathname+location.search)}
+function toggleAcc(btn){const exp=btn.getAttribute('aria-expanded')==='true';btn.setAttribute('aria-expanded',!exp);btn.nextElementSibling.classList.toggle('open',!exp)}
+function verifyOk(ok){document.getElementById('verifyPrompt').style.display='none';document.getElementById('verifyThanks').style.display='block'}
+
+// Render schedule by day
+function renderSched(svcs,locL,ml){
+  const dayGrp={},appt=[];
+  for(const s of svcs){if(!s.day||s.day==='null'||!s.time){appt.push(s);continue}if(!dayGrp[s.day])dayGrp[s.day]=[];dayGrp[s.day].push(s)}
+  const specLabels={weekday:'Weekdays',daily:'Daily',first_friday:'First Friday',first_saturday:'First Saturday',first_sunday:'First Sunday',first_thursday:'First Thursday',holyday:'Holy Days',holyday_eve:'Holy Day Eve',Holy_Thursday:'Holy Thursday',Good_Friday:'Good Friday',Easter_Vigil:'Easter Vigil',civil_holiday:'Civil Holidays'};
+  const allKeys=Object.keys(dayGrp);
+  const week=allKeys.filter(d=>DAY_ORDER.includes(d)).sort((a,b)=>DAY_ORDER.indexOf(a)-DAY_ORDER.indexOf(b));
+  const other=allKeys.filter(d=>!DAY_ORDER.includes(d));
+  let html='';
+  for(const day of[...week,...other]){
+    const ss=dayGrp[day].sort((a,b)=>(toMin(a.time)||0)-(toMin(b.time)||0));
+    const label=DAY_NAMES[day]||specLabels[day]||day.replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+    html+='<div class="schedule-day"><div class="schedule-day-label">'+esc(label)+'</div>';
+    for(const s of ss){
+      const tStr=s.end_time?fmt12(s.time)+' – '+fmt12(s.end_time):fmt12(s.time);
+      const lb=s.language&&s.language!=='en'?'<span class="schedule-lang-badge">'+(LANG_NAMES[s.language]||s.language)+'</span>':'';
+      const rb=s.rite==='tridentine'?'<span class="schedule-lang-badge">TLM</span>':'';
+      const loc=ml&&s.location_id&&locL[s.location_id]?locL[s.location_id]:'';
+      const tl=SVC[s.type]||s.type;
+      html+='<div class="schedule-row"><div class="schedule-time">'+tStr+lb+rb+'</div><div class="schedule-meta">'
+        +(loc?'<div class="schedule-location">'+esc(loc)+'</div>':'')
+        +(!['sunday_mass','daily_mass'].includes(s.type)?'<div class="schedule-location">'+esc(tl)+'</div>':'')
+        +(s.notes?'<div class="schedule-note">'+esc(s.notes)+'</div>':'')
+        +(s.times_vary?'<div class="schedule-note">Times may vary — check bulletin</div>':'')
+        +'</div></div>';
+    }
+    html+='</div>';
+  }
+  if(appt.length)html+='<div class="schedule-appt">By appointment — call the parish office</div>';
+  return html;
+}
+
+// Tabs
+let mapInitialized=false;
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-item').forEach(t=>{t.classList.remove('active');t.setAttribute('aria-selected','false')});
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');btn.setAttribute('aria-selected','true');
+  if(id==='panelMap'&&!mapInitialized){initMap();mapInitialized=true}
+  if(id==='panelMap'&&mapInitialized&&window._map){setTimeout(()=>window._map.invalidateSize(),100)}
+  if(id==='panelSaved')renderSaved();
+  if(id==='panelMore'&&!document.getElementById('moreStats').innerHTML)renderMore();
+}
+
+// ============================================================
+// MAP TAB
+// ============================================================
+function createPinIcon(isHighlighted){
+  const color=isHighlighted?'#B8963F':'#2C3E5A';
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 42" width="30" height="42">
+    <path d="M15 0C6.7 0 0 6.7 0 15c0 10.5 15 27 15 27s15-16.5 15-27C30 6.7 23.3 0 15 0z" fill="${color}"/>
+    <circle cx="15" cy="14" r="6" fill="white" opacity="0.9"/>
+    <rect x="13.5" y="9" width="3" height="10" rx="1" fill="${color}"/>
+    <rect x="10" y="12.5" width="10" height="3" rx="1" fill="${color}"/>
+  </svg>`;
+  return L.divIcon({
+    html:svg, className:'', iconSize:[30,42], iconAnchor:[15,42], popupAnchor:[0,-38]
+  });
+}
+
+function initMap(){
+  if(!window.L)return;
+  const map=L.map('mapContainer',{
+    center:[42.38,-72.78], zoom:9,
+    zoomControl:true, attributionControl:true
+  });
+  window._map=map;
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    maxZoom:18
+  }).addTo(map);
+
+  // Custom cluster icons
+  const cluster=L.markerClusterGroup({
+    maxClusterRadius:45,
+    iconCreateFunction:function(c){
+      const count=c.getChildCount();
+      let size=36;if(count>10)size=42;if(count>25)size=50;
+      return L.divIcon({
+        html:'<div style="width:'+size+'px;height:'+size+'px;">'+count+'</div>',
+        className:'map-cluster',
+        iconSize:[size+12,size+12]
+      });
+    }
+  });
+
+  const defaultIcon=createPinIcon(false);
+  const bounds=[];
+
+  for(const p of allParishes){
+    for(const loc of (p.locations||[])){
+      if(!loc.lat||!loc.lng)continue;
+      const marker=L.marker([loc.lat,loc.lng],{icon:defaultIcon});
+      const next=getNext(p,'all');
+      const dist=getDist(p);
+
+      let popupHtml='<div class="popup-card" onclick="closeMapPopup();openDetail(\''+p.id+'\')">';
+      popupHtml+='<div class="popup-name">'+esc(p.name)+'</div>';
+      popupHtml+='<div class="popup-town">'+esc(p.town)+', '+esc(p.county)+' County</div>';
+      if(next){
+        popupHtml+='<div class="popup-next"><span class="popup-time">'+next.timeFormatted+'</span>';
+        popupHtml+='<span class="popup-label">'+(SVC[next.service.type]||next.service.type)+'</span></div>';
+        popupHtml+='<div class="popup-day">'+next.dayLabel+'</div>';
+      }
+      if(dist!==null){popupHtml+='<div class="popup-dist">'+fmtDist(dist)+' away</div>'}
+      popupHtml+='</div>';
+
+      marker.bindPopup(popupHtml,{className:'map-popup',closeButton:false,minWidth:240,maxWidth:280});
+
+      // Show different icon if multi-location
+      if((p.locations||[]).length>1&&loc!==p.locations[0]){
+        // keep default, skip adding to bounds for secondary locs
+      }
+
+      cluster.addLayer(marker);
+      bounds.push([loc.lat,loc.lng]);
+    }
+  }
+
+  map.addLayer(cluster);
+  if(bounds.length)map.fitBounds(bounds,{padding:[30,30],maxZoom:12});
+
+  // User location marker
+  if(userLat!==null){
+    L.circleMarker([userLat,userLng],{
+      radius:8,fillColor:'#3478C6',fillOpacity:1,
+      color:'white',weight:3,opacity:1
+    }).addTo(map).bindPopup('Your location');
+  }
+
+  // Locate control
+  const LocateControl=L.Control.extend({
+    options:{position:'topright'},
+    onAdd:function(){
+      const btn=L.DomUtil.create('div','map-locate-btn');
+      btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2"/><circle cx="12" cy="12" r="8"/></svg>';
+      btn.title='My location';
+      L.DomEvent.on(btn,'click',function(e){
+        L.DomEvent.stopPropagation(e);
+        if(userLat!==null){map.setView([userLat,userLng],13)}
+        else{requestLocation();setTimeout(()=>{if(userLat!==null)map.setView([userLat,userLng],13)},2000)}
+      });
+      return btn;
+    }
+  });
+  map.addControl(new LocateControl());
+}
+
+function closeMapPopup(){if(window._map)window._map.closePopup()}
+
+// ============================================================
+// SAVED TAB
+// ============================================================
+function renderSaved(){
+  const el=document.getElementById('savedList');
+  const sub=document.getElementById('savedSubtitle');
+  const favParishes=allParishes.filter(p=>isFav(p.id));
+  const favIds=new Set(favParishes.map(p=>p.id));
+
+  // YC events at saved churches
+  const upcoming=getUpcomingYC().filter(e=>favIds.has(e.parish_id));
+
+  sub.textContent=favParishes.length?favParishes.length+' saved church'+(favParishes.length!==1?'es':''):'Tap the heart on any church to save it';
+
+  if(!favParishes.length){
+    el.innerHTML='<div class="saved-empty">'
+      +'<div class="saved-empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>'
+      +'<h3>No saved churches yet</h3>'
+      +'<p>Tap the heart icon on any church card<br>to save it for quick access here.</p></div>';
+    return;
+  }
+
+  const checkSvg='<svg class="card-verified" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>';
+
+  let html='';
+
+  // YC events at saved churches (shown first)
+  if(upcoming.length){
+    html+='<div class="yc-section-header"><span class="yc-section-title">Coming up at your churches</span><span class="yc-section-count">'+upcoming.length+'</span></div>';
+    html+=upcoming.slice(0,4).map(e=>renderYCCard(e,0)).join('');
+    if(upcoming.length>4)html+='<div style="text-align:center;padding:var(--space-2) 0"><button style="font-size:var(--text-sm);font-weight:var(--weight-semibold);color:var(--color-accent);padding:var(--space-2) var(--space-4)" onclick="document.querySelector(\'[data-filter=yc]\').click();switchTab(\'panelFind\',document.querySelector(\'[data-tab=panelFind]\'))">See all YC events →</button></div>';
+    html+='<div style="height:var(--space-4)"></div>';
+  }
+
+  html+=favParishes.map(p=>{
+    const next=getNext(p,'all');
+    const dist=getDist(p);
+    const tag=getTag(p,next);
+    const ver=isVer(p);
+    let nh;
+    if(next){nh='<div class="card-next-service"><span class="card-next-time">'+next.timeFormatted+'</span><span class="card-next-label">'+esc(SVC[next.service.type]||next.service.type)+'</span>'+(next.isSoon?'<span class="card-soon-badge"><span class="pulse-dot"></span>Soon</span>':'')+'</div><div class="card-next-day">'+next.dayLabel+'</div>'}
+    else{nh='<div class="card-next-service"><span class="card-next-label" style="color:var(--color-text-tertiary)">Check bulletin for times</span></div>'}
+    return '<article class="parish-card" role="listitem" onclick="openDetail(\''+p.id+'\')">'
+      +'<div class="card-top"><div class="card-name-row"><h3 class="card-name">'+esc(p.name)+'</h3>'+(ver?checkSvg:'')+'</div>'
+      +'<div class="card-right">'+(dist!==null?'<span class="card-distance">'+fmtDist(dist)+'</span>':'')
+      +'<button class="card-fav is-fav" onclick="toggleFav(\''+p.id+"',event);renderSaved()\" aria-label=\"Remove from favorites\"><svg viewBox=\"0 0 24 24\" fill=\"currentColor\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z\"/></svg></button>"
+      +'</div></div><div class="card-town">'+esc(p.town)+', '+esc(p.county)+' County</div>'+nh
+      +(tag?'<div class="card-tags"><span class="card-tag '+tag.c+'">'+tag.t+'</span></div>':'')
+      +'</article>';
+  }).join('');
+  el.innerHTML=html;
+}
+
+// ============================================================
+// MORE TAB
+// ============================================================
+function renderMore(){
+  // Stats
+  const totalServices=allParishes.reduce((sum,p)=>sum+p.services.length,0);
+  const confessionParishes=allParishes.filter(p=>p.services.some(s=>s.type==='confession'&&s.time)).length;
+  const adorationParishes=allParishes.filter(p=>p.services.some(s=>['adoration','perpetual_adoration'].includes(s.type))).length;
+  const langCount=new Set();allParishes.forEach(p=>p.services.forEach(s=>{if(s.language)langCount.add(s.language)}));
+
+  document.getElementById('moreStats').innerHTML=
+    '<div class="stat-card"><div class="stat-value">'+allParishes.length+'</div><div class="stat-label">Churches</div></div>'
+    +'<div class="stat-card"><div class="stat-value">'+totalServices+'</div><div class="stat-label">Service Listings</div></div>'
+    +'<div class="stat-card"><div class="stat-value">'+confessionParishes+'</div><div class="stat-label">Offer Confession</div></div>'
+    +'<div class="stat-card"><div class="stat-value">'+adorationParishes+'</div><div class="stat-label">Offer Adoration</div></div>';
+
+  // Counties
+  const counties={};allParishes.forEach(p=>{counties[p.county]=(counties[p.county]||0)+1});
+  document.getElementById('moreCounties').innerHTML=Object.entries(counties).sort((a,b)=>b[1]-a[1])
+    .map(([c,n])=>'<span class="county-chip">'+esc(c)+' ('+n+')</span>').join('');
+
+  // Events
+  const allEvents=[];
+  allParishes.forEach(p=>{
+    (p.special_events||[]).forEach(e=>{
+      allEvents.push({...e,parishName:p.name,parishId:p.id});
+    });
+  });
+  if(allEvents.length){
+    document.getElementById('moreEventsSection').style.display='block';
+    document.getElementById('moreEventsLink').style.display='flex';
+    document.getElementById('moreEventsLink').onclick=function(e){
+      e.preventDefault();
+      document.getElementById('moreEventsSection').scrollIntoView({behavior:'smooth'});
+    };
+    // Show first 10 events
+    const shown=allEvents.slice(0,10);
+    document.getElementById('moreEventsList').innerHTML=shown.map(e=>
+      '<div style="padding:var(--space-3) 0;border-bottom:1px solid var(--color-border-light)">'
+      +'<div style="font-size:var(--text-base);font-weight:var(--weight-semibold);color:var(--color-text-primary)">'+esc(e.title)+'</div>'
+      +'<div style="font-size:var(--text-sm);color:var(--color-text-secondary)">'+esc(e.parishName)+'</div>'
+      +'<div style="font-size:var(--text-xs);color:var(--color-text-tertiary);margin-top:2px">'
+      +(e.day?esc((DAY_NAMES[e.day]||e.day)):'')+' '+(e.time?fmt12(e.time):'')
+      +(e.frequency&&e.frequency!=='one_time'?' · '+esc(e.frequency):'')
+      +'</div>'
+      +(e.notes?'<div style="font-size:var(--text-xs);color:var(--color-text-tertiary);font-style:italic;margin-top:2px">'+esc(e.notes)+'</div>':'')
+      +'</div>'
+    ).join('')+(allEvents.length>10?'<div style="padding:var(--space-3);font-size:var(--text-sm);color:var(--color-text-tertiary)">And '+(allEvents.length-10)+' more events across the diocese.</div>':'');
+  }
+
+  // Footer
+  document.getElementById('moreFooter').innerHTML='MassFinder v2.0<br>Data source: <a href="https://diospringfield.org" target="_blank" rel="noopener">Diocese of Springfield, MA</a><br>'+langCount.size+' languages · 4 counties · Last updated Feb 2026';
+}
+
+// Chips
+document.querySelectorAll('.chip[data-filter]').forEach(chip=>{chip.addEventListener('click',()=>{document.querySelectorAll('.chip[data-filter]').forEach(c=>c.classList.remove('active'));chip.classList.add('active');currentFilter=chip.dataset.filter;if(['today','weekend'].includes(currentFilter)){currentSort='next_service';updateSortLabel()}filterParishes();renderCards()})});
+
+// Search
+const sI=document.getElementById('searchInput'),sC=document.getElementById('searchClear');let sT;
+sI.addEventListener('input',()=>{clearTimeout(sT);searchQuery=sI.value.trim();sC.classList.toggle('visible',searchQuery.length>0);sT=setTimeout(()=>{filterParishes();renderCards()},200)});
+sC.addEventListener('click',()=>{sI.value='';searchQuery='';sC.classList.remove('visible');filterParishes();renderCards();sI.focus()});
+
+// Geolocation
+function requestLocation(){if(!navigator.geolocation)return;navigator.geolocation.getCurrentPosition(pos=>{userLat=pos.coords.latitude;userLng=pos.coords.longitude;document.getElementById('locationPrompt').classList.add('hidden');currentSort='proximity';updateSortLabel();filterParishes();renderCards()},()=>document.getElementById('locationPrompt').classList.add('hidden'),{enableHighAccuracy:false,timeout:8000})}
+function checkLoc(){if(!navigator.geolocation){document.getElementById('locationPrompt').classList.add('hidden');return}if(navigator.permissions){navigator.permissions.query({name:'geolocation'}).then(r=>{if(r.state==='granted')requestLocation();else if(r.state==='prompt')document.getElementById('locationPrompt').classList.remove('hidden');else document.getElementById('locationPrompt').classList.add('hidden')}).catch(()=>document.getElementById('locationPrompt').classList.remove('hidden'))}else document.getElementById('locationPrompt').classList.remove('hidden')}
+
+// Keyboard
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(document.getElementById('filtersOverlay').classList.contains('open'))closeMoreFilters();else if(document.getElementById('detailPanel').classList.contains('open'))closeDetail()}});
+
+// Smart defaults
+function smartDefault(){const n=getNow(),d=n.getDay(),h=n.getHours();if(d===6&&h>=14)return'weekend';if(d===0&&h<14)return'today';return'all'}
+
+function esc(s){const d=document.createElement('div');d.textContent=s||'';return d.innerHTML}
+
+// Init
+async function init(){
+  loadFav();
+  try{
+    const r=await fetch('parish_data.json'),data=await r.json();
+    allParishes=(data.parishes||[]).filter(p=>p.status==='active');
+    ycEvents=(data.yc_events||[]).sort((a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time));
+    const sm=smartDefault();currentFilter=sm;
+    document.querySelectorAll('.chip[data-filter]').forEach(c=>c.classList.toggle('active',c.dataset.filter===sm));
+    if(['today','weekend'].includes(sm))currentSort='next_service';
+    updateSortLabel();checkLoc();filterParishes();renderCards();
+    // Deep link: #parish_001 opens that church's detail
+    if(location.hash){const id=location.hash.slice(1);if(allParishes.find(p=>p.id===id))setTimeout(()=>openDetail(id),400)}
+  }catch(err){console.error(err);document.getElementById('cardList').innerHTML='<div class="no-results"><h3>Unable to load churches</h3><p>Please check your connection and try refreshing.</p></div>'}
+}
+init();
+</script>
+</body>
+</html>
