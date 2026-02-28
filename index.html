@@ -1697,11 +1697,11 @@ function getLiturgicalEvents(){
 }
 
 // ============================================================
-// DAILY READINGS — two-tier strategy:
-// 1. Universalis JSONP (Mass.js) — officially supported embed, bypasses CORS entirely
-// 2. Fallback: allorigins.win proxy around Mass.json if JSONP never fires within 6s
+// DAILY READINGS — Vercel API (massfinder-readings-api.vercel.app)
+// Scrapes USCCB via catholic-mass-readings Python package with Chrome TLS impersonation.
+// Returns JSON: { title, url, sections: [{heading, ref}] }
 // ============================================================
-function fetchReadings(){
+async function fetchReadings(){
   const el=document.getElementById('readingsContent');
   if(!el)return;
   const now=getNow();
@@ -1711,99 +1711,36 @@ function fetchReadings(){
     +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="16" height="16"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>'
     +'Read full readings at USCCB</a>';
 
-  const _dbg=(...a)=>console.log('[Universalis]',...a);
-  let _resolved=false;
+  try{
+    const resp=await fetch(
+      'https://massfinder-readings-api.vercel.app/api/readings?date='+yyyymmdd,
+      {signal:AbortSignal.timeout(12000)}
+    );
+    if(!resp.ok)throw new Error('API '+resp.status);
+    const data=await resp.json();
 
-  function cleanup(){
-    clearTimeout(window._univTimeout);
-    clearTimeout(window._univFallbackTimeout);
-    delete window.universalisCallback;
-    const s=document.getElementById('universalis-jsonp');
-    if(s)s.remove();
-  }
+    if(!data.sections||!data.sections.length)throw new Error('no sections');
 
-  function renderReadings(dayName,readings,source){
-    _dbg('renderReadings — source:',source,'dayName:',dayName,'readings count:',readings.length);
-    if(_resolved){_dbg('already resolved, skipping');return;}
-    _resolved=true;
-    cleanup();
-    if(!readings.length&&!dayName){_dbg('empty — falling back to USCCB link');el.innerHTML=usccbLink;return;}
+    // Filter out "Verse Before the Gospel" — it's not a reading, just the Alleluia verse ref
+    const sections=data.sections.filter(s=>
+      !s.heading.toLowerCase().includes('verse before')&&
+      !s.heading.toLowerCase().includes('alleluia')&&
+      !s.heading.toLowerCase().includes('sequence')
+    );
+
     let html='';
-    if(dayName)html+='<div class="reading-day-name">'+esc(String(dayName))+'</div>';
-    html+=readings.map(r=>
+    if(data.title)html+='<div class="reading-day-name">'+esc(data.title)+'</div>';
+    html+=sections.map(s=>
       '<div class="reading-entry">'
-      +(r.heading?'<div class="reading-heading">'+esc(r.heading)+'</div>':'')
-      +(r.ref?'<div class="reading-ref">'+esc(r.ref)+'</div>':'')
+      +'<div class="reading-heading">'+esc(s.heading)+'</div>'
+      +(s.ref?'<div class="reading-ref">'+esc(s.ref)+'</div>':'')
       +'</div>'
     ).join('');
     html+=usccbLink;
     el.innerHTML=html;
-    _dbg('render complete');
+  }catch(e){
+    el.innerHTML=usccbLink;
   }
-
-  function uGet(data,slot,field){
-    const flat=data[slot+'.'+field];
-    if(flat&&typeof flat==='string')return flat;
-    const nested=data[slot];
-    if(nested&&typeof nested==='object')return nested[field]||'';
-    return '';
-  }
-
-  // Universalis Mass.json URL — fetch via CORS proxy (direct fetch blocked by CORS)
-  // We try two proxies in sequence; if the response isn't JSON we move on.
-  const massJsonUrl='https://universalis.com/US/'+yyyymmdd+'/Mass.json';
-
-  function parseUniversalisData(data){
-    const dayName=
-      (typeof data['Mass_dayname']==='string'?data['Mass_dayname']:'')
-      ||(data['Mass_dayname']&&data['Mass_dayname'].text)
-      ||(data.Mass&&data.Mass.dayname)||'';
-    const slots=['Mass_1','Mass_P','Mass_2','Mass_G'];
-    const readings=slots
-      .map(k=>({heading:uGet(data,k,'heading'),ref:uGet(data,k,'subheading')||uGet(data,k,'ref')}))
-      .filter(r=>r.heading);
-    return {dayName,readings};
-  }
-
-  async function tryFetch(proxyUrl,label){
-    _dbg('trying',label,proxyUrl);
-    const r=await fetch(proxyUrl,{signal:AbortSignal.timeout(8000)});
-    _dbg(label,'response:',r.status,r.ok);
-    if(!r.ok)throw new Error(label+' HTTP '+r.status);
-    const text=await r.text();
-    _dbg(label,'response text (first 200):',text.slice(0,200));
-    if(text.trimStart().startsWith('<'))throw new Error(label+' returned HTML, not JSON');
-    const data=JSON.parse(text);
-    _dbg(label,'JSON keys:',Object.keys(data));
-    return data;
-  }
-
-  async function tryProxies(){
-    if(_resolved)return;
-    const proxies=[
-      ['https://corsproxy.io/?url='+encodeURIComponent(massJsonUrl),'corsproxy.io'],
-      ['https://api.allorigins.win/raw?url='+encodeURIComponent(massJsonUrl),'allorigins'],
-    ];
-    for(const [url,label] of proxies){
-      if(_resolved)return;
-      try{
-        const data=await tryFetch(url,label);
-        if(_resolved)return;
-        const {dayName,readings}=parseUniversalisData(data);
-        _dbg(label,'parsed — dayName:',dayName,'readings:',readings);
-        renderReadings(dayName,readings,label);
-        return;
-      }catch(e){_dbg(label,'failed:',e.message);}
-    }
-    if(!_resolved){_dbg('all proxies failed');_resolved=true;cleanup();el.innerHTML=usccbLink;}
-  }
-
-  tryProxies();
-
-  // Safety timeout
-  window._univTimeout=setTimeout(()=>{
-    if(!_resolved){_dbg('14s hard timeout');_resolved=true;cleanup();el.innerHTML=usccbLink;}
-  },14000);
 }
 
 // ============================================================
