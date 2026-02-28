@@ -304,7 +304,7 @@
           "end_time": null,
           "location_id": "st-stanislaus-church-adams",
           "language": "en",
-          "notes": "Chaplet of Divine Mercy",
+          "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
@@ -479,7 +479,7 @@
           "day": "friday",
           "time": "15:00",
           "location_id": "st-stanislaus-church-adams",
-          "notes": "Chaplet of Divine Mercy",
+          "notes": null,
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
@@ -765,7 +765,7 @@
           "end_time": null,
           "location_id": null,
           "language": "en",
-          "notes": "Stations of the Cross — Fridays during Lent",
+          "notes": null,
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
@@ -1454,7 +1454,7 @@
           "end_time": null,
           "location_id": "st-brigid-church-amherst",
           "language": "en",
-          "notes": "Chaplet of Divine Mercy",
+          "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
@@ -1634,7 +1634,7 @@
           "end_time": null,
           "location_id": null,
           "language": "en",
-          "notes": "Chaplet of Divine Mercy within Thursday adoration block",
+          "notes": "Within Thursday adoration block",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
@@ -2053,7 +2053,7 @@
           "end_time": null,
           "location_id": "st-francis-church-belchertown",
           "language": "en",
-          "notes": "Stations of the Cross — begins approx. 12 PM during Adoration",
+          "notes": "Begins approx. 12 PM during Adoration",
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
@@ -2068,7 +2068,7 @@
           "end_time": null,
           "location_id": "st-francis-church-belchertown",
           "language": "en",
-          "notes": "Chaplet of Divine Mercy — during Lenten Adoration, approx. 2:30 PM; closes with Divine Praises",
+          "notes": "During Lenten Adoration, approx. 2:30 PM; closes with Divine Praises",
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
@@ -2476,7 +2476,7 @@
           "end_time": null,
           "location_id": null,
           "language": "en",
-          "notes": "Stations of the Cross — Fridays during Lent",
+          "notes": null,
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
@@ -2876,7 +2876,7 @@
           "end_time": null,
           "location_id": null,
           "language": "en",
-          "notes": "Stations of the Cross — Fridays during Lent",
+          "notes": null,
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
@@ -3518,7 +3518,7 @@
           "end_time": null,
           "location_id": null,
           "language": "en",
-          "notes": "Fridays of Lent",
+          "notes": null,
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
@@ -3907,7 +3907,7 @@
           "end_time": null,
           "location_id": null,
           "language": "pl",
-          "notes": "Polish Mass — 1st Friday",
+          "notes": "1st Friday",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
@@ -4159,7 +4159,7 @@
           "end_time": null,
           "location_id": null,
           "language": "en",
-          "notes": "Stations of the Cross — with school children",
+          "notes": "With school children",
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
@@ -4174,7 +4174,7 @@
           "end_time": null,
           "location_id": null,
           "language": "en",
-          "notes": "Stations of the Cross — evening",
+          "notes": "Evening",
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
@@ -4725,7 +4725,7 @@
           "location_id": "our-lady-of-the-valley-church-easthampton",
           "language": "pl",
           "rite": null,
-          "notes": "Polish Mass — last Sunday of the month only",
+          "notes": "Last Sunday of the month only",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
@@ -5364,7 +5364,7 @@
           "end_time": "19:30",
           "location_id": "st-michael-church-east-longmeadow",
           "language": "en",
-          "notes": "Stations of the Cross — Mondays during Lent 6:00-7:30 PM",
+          "notes": null,
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
@@ -5665,7 +5665,7 @@
           "end_time": null,
           "location_id": "sacredheart-church-feedinghills",
           "language": "en",
-          "notes": "Stations of the Cross immediately following 9:00 AM Mass — Fridays during Lent",
+          "notes": "Immediately following 9:00 AM Mass",
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
@@ -5680,7 +5680,7 @@
           "end_time": "11:00",
           "location_id": "sacredheart-office-feedinghills",
           "language": "en",
-          "notes": "Bible Study — Wednesdays during Lent, Parish Center 9 AM - 11 AM",
+          "notes": "Parish Center, 9 AM–11 AM",
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
@@ -5992,7 +5992,7 @@
           "end_time": null,
           "location_id": null,
           "language": "en",
-          "notes": "Holy Hour — March 18 only",
+          "notes": "March 18 only",
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
@@ -6947,7 +6947,7 @@
           "end_time": "15:00",
           "location_id": "most-holy-redeemer-church-hadley",
           "language": "en",
-          "notes": "Adoration after 1 PM Mass until 3 PM",
+          "notes": "After 1 PM Mass until 3 PM",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
@@ -6962,7 +6962,7 @@
           "end_time": null,
           "location_id": "most-holy-redeemer-church-hadley",
           "language": "en",
-          "notes": "Miraculous Medal devotion during Monday morning Mass",
+          "notes": "During Monday morning Mass",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
@@ -9269,7 +9269,7 @@
           "end_time": null,
           "location_id": "st-ann-family-center-lenox",
           "language": "en",
-          "notes": "Communion Service — St. Ann Family Center",
+          "notes": "St. Ann Family Center",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
@@ -9659,7 +9659,7 @@
           "end_time": "12:00",
           "location_id": null,
           "language": "en",
-          "notes": "Eucharistic Adoration",
+          "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
@@ -10770,7 +10770,7 @@
           "end_time": null,
           "location_id": null,
           "language": "en",
-          "notes": "Stations of the Cross — Fridays during Lent",
+          "notes": null,
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
@@ -10977,7 +10977,7 @@
           "end_time": null,
           "location_id": "st-elizabeth-of-hungary-church-north-adams",
           "language": "en",
-          "notes": "Communion Service — not Mass",
+          "notes": "Not a Mass",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
@@ -11396,7 +11396,7 @@
           "end_time": null,
           "location_id": "seas-church-northampton",
           "language": "en",
-          "notes": "Stations of the Cross — Fridays during Lent",
+          "notes": null,
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
@@ -11411,7 +11411,7 @@
           "end_time": null,
           "location_id": "seas-church-northampton",
           "language": "en",
-          "notes": "Holy Hour — follows Stations of the Cross",
+          "notes": "Follows Stations of the Cross",
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
@@ -11853,7 +11853,7 @@
           "end_time": null,
           "location_id": "st-mary-church-orange",
           "language": "en",
-          "notes": "Stations of the Cross + Exposition of the Blessed Sacrament",
+          "notes": "With Exposition of the Blessed Sacrament",
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
@@ -11868,7 +11868,7 @@
           "end_time": null,
           "location_id": "st-mary-church-orange",
           "language": "en",
-          "notes": "Exposition of the Blessed Sacrament — follows Stations of the Cross",
+          "notes": "Follows Stations of the Cross",
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
@@ -12325,7 +12325,7 @@
           "end_time": null,
           "location_id": "sacred-heart-church-pittsfield",
           "language": "en",
-          "notes": "Communion Service — not a Mass",
+          "notes": "Not a Mass",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
@@ -12400,7 +12400,7 @@
           "end_time": null,
           "location_id": "sacred-heart-church-pittsfield",
           "language": "en",
-          "notes": "Stations of the Cross — Fridays during Lent",
+          "notes": null,
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
@@ -12756,7 +12756,7 @@
           "end_time": null,
           "location_id": null,
           "language": "en",
-          "notes": "Stations of the Cross in the Church — Fridays during Lent",
+          "notes": "In the church",
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
@@ -13014,7 +13014,7 @@
           "end_time": null,
           "location_id": "st-joseph-church-pittsfield",
           "language": "en",
-          "notes": "Sunday Vespers",
+          "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round",
@@ -13065,7 +13065,7 @@
           "end_time": null,
           "location_id": "st-joseph-church-pittsfield",
           "language": "en",
-          "notes": "Holy Hour — Monday through Friday",
+          "notes": "Monday through Friday",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
@@ -13374,7 +13374,7 @@
           "end_time": "19:00",
           "location_id": null,
           "language": "en",
-          "notes": "Holy Hour — Thursday evenings during Lent",
+          "notes": "Thursday evenings during Lent",
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
@@ -13420,7 +13420,7 @@
           "end_time": null,
           "location_id": null,
           "language": "es",
-          "notes": "Spanish Stations of the Cross — Fridays during Lent",
+          "notes": null,
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
@@ -13609,7 +13609,7 @@
           "end_time": null,
           "location_id": null,
           "language": "en",
-          "notes": "Stations of the Cross followed by Communion Service — Fridays during Lent",
+          "notes": "Followed by Communion Service",
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
@@ -14564,7 +14564,7 @@
           "end_time": null,
           "location_id": null,
           "language": "en",
-          "notes": "Communion Service (not Mass)",
+          "notes": "Not a Mass",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
@@ -14699,7 +14699,7 @@
           "end_time": null,
           "location_id": null,
           "language": "en",
-          "notes": "Stations of the Cross — Fridays during Lent",
+          "notes": null,
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
@@ -15376,7 +15376,7 @@
           "end_time": "16:00",
           "location_id": "all-souls-church-springfield",
           "language": "es",
-          "notes": "Confession available in Spanish",
+          "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round",
@@ -15576,7 +15576,7 @@
           "end_time": "16:00",
           "location_id": "blessed-sacrament-church-springfield",
           "language": "es",
-          "notes": "Confession available in Spanish",
+          "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round",
@@ -15815,7 +15815,7 @@
           "end_time": null,
           "location_id": "holy-cross-church-springfield",
           "language": "en",
-          "notes": "Daily Rosary",
+          "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round",
@@ -15849,7 +15849,7 @@
           "end_time": null,
           "location_id": "holy-cross-church-springfield",
           "language": "en",
-          "notes": "Chaplet of Divine Mercy",
+          "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round",
@@ -16142,7 +16142,7 @@
           "end_time": null,
           "location_id": null,
           "language": "es",
-          "notes": "Spanish",
+          "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
@@ -17204,7 +17204,7 @@
           "end_time": "15:45",
           "location_id": "sacred-heart-church-springfield",
           "language": "es",
-          "notes": "Confession available in Spanish",
+          "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round",
@@ -17221,7 +17221,7 @@
           "end_time": "17:30",
           "location_id": "sacred-heart-church-springfield",
           "language": "es",
-          "notes": "Confession available in Spanish",
+          "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round",
@@ -18886,7 +18886,7 @@
           "day": "friday",
           "time": "19:00",
           "language": "es",
-          "notes": "Spanish Stations of the Cross",
+          "notes": null,
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
@@ -19821,7 +19821,7 @@
           "time": "19:30",
           "end_time": "20:00",
           "language": "en",
-          "notes": "Adoration and Benediction after Stations of the Cross",
+          "notes": "With Benediction after Stations of the Cross",
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
@@ -20052,7 +20052,7 @@
           "day": "sunday",
           "time": "08:00",
           "language": "pl",
-          "notes": "Polish Rosary before 8:30 AM Mass",
+          "notes": "Before 8:30 AM Mass",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
@@ -20082,7 +20082,7 @@
           "day": "friday",
           "time": "18:30",
           "language": "pl",
-          "notes": "Polish Stations of the Cross",
+          "notes": null,
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
@@ -20349,7 +20349,7 @@
           "day": "saturday",
           "time": "08:00",
           "language": "en",
-          "notes": "Miraculous Medal Novena after Saturday Mass",
+          "notes": "After Saturday Mass",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
@@ -20835,7 +20835,7 @@
           "time": "08:00",
           "end_time": "19:00",
           "language": "en",
-          "notes": "Eucharistic Adoration all day",
+          "notes": "All day",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
@@ -21072,7 +21072,7 @@
           "end_time": null,
           "location_id": null,
           "language": "en",
-          "notes": "Holy Hour",
+          "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
@@ -21626,7 +21626,7 @@
           "end_time": "15:30",
           "location_id": "divine-mercy-shrine-stockbridge",
           "language": "en",
-          "notes": "Chaplet of Divine Mercy",
+          "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
@@ -21935,7 +21935,7 @@
           "end_time": "18:00",
           "location_id": "st-catherine-westfield",
           "language": "en",
-          "notes": "Exposition of the Blessed Sacrament",
+          "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
