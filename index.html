@@ -97,8 +97,8 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 
 /* CHIPS */
 .chip-bar-wrap { position: relative; }
-.chip-bar { max-width: var(--max-width); margin: 0 auto; padding: var(--space-3) 0 var(--space-2); overflow-x: auto; display: flex; gap: var(--space-2); scrollbar-width: none; -webkit-overflow-scrolling: touch; -webkit-mask-image: linear-gradient(to right, black 88%, transparent 100%); mask-image: linear-gradient(to right, black 88%, transparent 100%); transition: mask-image 0.2s; }
-.chip-bar.scrolled { -webkit-mask-image: none; mask-image: none; }
+.chip-bar-wrap::after { content: ''; position: absolute; top: 0; right: 0; width: 48px; height: 100%; background: linear-gradient(to right, transparent, var(--color-bg)); pointer-events: none; transition: opacity 0.2s; }
+.chip-bar-wrap.scrolled::after { opacity: 0; }
 .chip-bar::-webkit-scrollbar { display: none; }
 .chip-bar::before, .chip-bar::after { content: ''; flex-shrink: 0; width: var(--space-4); }
 .chip { flex-shrink: 0; height: 44px; padding: 0 var(--space-4); border-radius: var(--radius-full); font-size: var(--text-sm); font-weight: var(--weight-medium); line-height: 44px; white-space: nowrap; background: var(--color-surface); color: var(--color-text-secondary); border: 1.5px solid var(--color-border); transition: all var(--transition-fast); user-select: none; }
@@ -1428,7 +1428,7 @@ function renderMore(){
 document.querySelectorAll('.chip[data-filter]').forEach(chip=>{chip.addEventListener('click',()=>{document.querySelectorAll('.chip[data-filter]').forEach(c=>c.classList.remove('active'));chip.classList.add('active');currentFilter=chip.dataset.filter;if(['today','weekend'].includes(currentFilter)){currentSort='next_service';updateSortLabel()}filterParishes();renderCards()})});
 
 // Chip bar scroll affordance — remove mask fade once user has discovered scrolling
-(function(){const bar=document.querySelector('.chip-bar');if(bar)bar.addEventListener('scroll',function(){bar.classList.toggle('scrolled',bar.scrollLeft>8)},{passive:true})})();
+(function(){const bar=document.querySelector('.chip-bar');const wrap=document.querySelector('.chip-bar-wrap');if(bar)bar.addEventListener('scroll',function(){wrap.classList.toggle('scrolled',bar.scrollLeft>8)},{passive:true})})();
 
 // Search
 const sI=document.getElementById('searchInput'),sC=document.getElementById('searchClear');let sT;
