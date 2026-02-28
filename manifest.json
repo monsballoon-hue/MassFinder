@@ -1,18 +1,21 @@
 {
   "name": "MassFinder — Catholic Services Directory",
   "short_name": "MassFinder",
-  "description": "Find Mass, Confession, Adoration and more across Western Massachusetts",
-  "start_url": "./index.html",
+  "description": "Find Mass, Confession, Adoration and more across Western New England",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#F8F7F4",
   "theme_color": "#F8F7F4",
-  "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%232C3E5A'/%3E%3Crect x='40' y='10' width='20' height='80' rx='4' fill='%23B8963F'/%3E%3Crect x='14' y='30' width='72' height='20' rx='4' fill='%23B8963F'/%3E%3C/svg%3E",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any"
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ]
 }
