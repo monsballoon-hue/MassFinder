@@ -435,6 +435,13 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .reading-usccb { display: inline-flex; align-items: center; gap: var(--space-2); margin-top: var(--space-4); padding: var(--space-3) var(--space-4); background: var(--color-info-bg); border-radius: var(--radius-md); font-size: var(--text-sm); color: var(--color-info); font-weight: var(--weight-medium); text-decoration: none; }
 .reading-usccb:hover { text-decoration: none; background: #dbeafe; }
 .reading-loading { font-size: var(--text-sm); color: var(--color-text-tertiary); font-style: italic; }
+.reading-entry { cursor: pointer; user-select: none; }
+.reading-entry-header { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); }
+.reading-expand-icon { flex-shrink: 0; color: var(--color-text-tertiary); transition: transform 0.2s ease; }
+.reading-entry.expanded .reading-expand-icon { transform: rotate(180deg); }
+.reading-text { display: none; font-size: var(--text-sm); color: var(--color-text-secondary); line-height: 1.7; margin-top: var(--space-3); padding-top: var(--space-3); border-top: 1px solid var(--color-border-light); white-space: pre-wrap; }
+.reading-entry.expanded .reading-text { display: block; }
+.reading-entry:not(.expanded):hover .reading-ref { color: var(--color-accent-text); }
 
 /* LITURGICAL CALENDAR */
 .litu-event { display: flex; align-items: flex-start; gap: var(--space-4); padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border-light); }
@@ -1699,7 +1706,7 @@ function getLiturgicalEvents(){
 // ============================================================
 // DAILY READINGS — Vercel API (massfinder-readings-api.vercel.app)
 // Scrapes USCCB via catholic-mass-readings Python package with Chrome TLS impersonation.
-// Returns JSON: { title, url, sections: [{heading, ref}] }
+// Returns JSON: { title, url, sections: [{heading, ref, text}] }
 // ============================================================
 async function fetchReadings(){
   const el=document.getElementById('readingsContent');
@@ -1718,30 +1725,44 @@ async function fetchReadings(){
     );
     if(!resp.ok)throw new Error('API '+resp.status);
     const data=await resp.json();
-
     if(!data.sections||!data.sections.length)throw new Error('no sections');
 
-    // Filter out "Verse Before the Gospel" — it's not a reading, just the Alleluia verse ref
-    const sections=data.sections.filter(s=>
-      !s.heading.toLowerCase().includes('verse before')&&
-      !s.heading.toLowerCase().includes('alleluia')&&
-      !s.heading.toLowerCase().includes('sequence')
-    );
+    // Filter out Verse Before the Gospel / Alleluia / Sequence
+    const sections=data.sections.filter(s=>{
+      const h=s.heading.toLowerCase();
+      return !h.includes('verse before')&&!h.includes('alleluia')&&!h.includes('sequence');
+    });
+
+    const chevron='<svg class="reading-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" width="16" height="16"><polyline points="6 9 12 15 18 9"/></svg>';
 
     let html='';
     if(data.title)html+='<div class="reading-day-name">'+esc(data.title)+'</div>';
-    html+=sections.map(s=>
-      '<div class="reading-entry">'
-      +'<div class="reading-heading">'+esc(s.heading)+'</div>'
-      +(s.ref?'<div class="reading-ref">'+esc(s.ref)+'</div>':'')
-      +'</div>'
-    ).join('');
+    html+=sections.map((s,i)=>{
+      const id='reading-entry-'+i;
+      const hasText=s.text&&s.text.length>0;
+      return '<div class="reading-entry" id="'+id+'" '+(hasText?'onclick="toggleReading(''+id+'')"':'')+'>'
+        +'<div class="reading-entry-header">'
+        +'<div>'
+        +'<div class="reading-heading">'+esc(s.heading)+'</div>'
+        +(s.ref?'<div class="reading-ref">'+esc(s.ref)+'</div>':'')
+        +'</div>'
+        +(hasText?chevron:'')
+        +'</div>'
+        +(hasText?'<div class="reading-text">'+esc(s.text)+'</div>':'')
+        +'</div>';
+    }).join('');
     html+=usccbLink;
     el.innerHTML=html;
   }catch(e){
     el.innerHTML=usccbLink;
   }
 }
+
+function toggleReading(id){
+  const el=document.getElementById(id);
+  if(el)el.classList.toggle('expanded');
+}
+
 
 // ============================================================
 // DEVOTIONAL CONTENT
