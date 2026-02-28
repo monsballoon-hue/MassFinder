@@ -247,6 +247,7 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .schedule-meta { flex: 1; }
 .schedule-location { font-size: var(--text-sm); color: var(--color-text-secondary); }
 .schedule-note { font-size: var(--text-xs); color: var(--color-text-tertiary); font-style: italic; margin-top: 2px; }
+.schedule-not-mass { font-size: var(--text-xs); color: var(--color-text-tertiary); font-style: italic; margin-top: 2px; }
 .schedule-lang-badge { display: inline-block; font-size: 11px; font-weight: var(--weight-medium); padding: 1px 6px; border-radius: var(--radius-full); color: #1E40AF; background: #DBEAFE; margin-left: var(--space-2); }
 .schedule-appt { font-size: var(--text-sm); color: var(--color-text-tertiary); font-style: italic; padding: var(--space-2) 0; }
 
@@ -547,8 +548,8 @@ let advancedFilters={types:[],days:[],languages:[]},tempAdvanced={types:[],days:
 const DAY_ORDER=['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
 const DAY_NAMES={sunday:'Sunday',monday:'Monday',tuesday:'Tuesday',wednesday:'Wednesday',thursday:'Thursday',friday:'Friday',saturday:'Saturday'};
 const LANG_NAMES={en:'English',es:'Spanish',pl:'Polish',pt:'Portuguese',la:'Latin',fr:'French',vi:'Vietnamese',asl:'ASL'};
-const SVC={sunday_mass:'Sunday Mass',daily_mass:'Daily Mass',confession:'Confession',adoration:'Adoration',perpetual_adoration:'Perpetual Adoration',holy_hour:'Holy Hour',communion_service:'Communion Service',rosary:'Rosary',stations_of_cross:'Stations of the Cross',divine_mercy:'Divine Mercy',miraculous_medal:'Miraculous Medal',novena:'Novena',devotion:'Devotion',vespers:'Vespers',anointing_of_sick:'Anointing of the Sick',holy_thursday_mass:'Holy Thursday Mass',good_friday_service:'Good Friday Service',easter_vigil_mass:'Easter Vigil Mass',bible_study:'Bible Study',gorzkie_zale:'Gorzkie Żale',mens_group:"Men's Group",social_event:'Social Event'};
-const SERVICE_CATEGORIES={'Mass':['sunday_mass','daily_mass','communion_service'],'Sacraments':['confession','anointing_of_sick'],'Adoration':['adoration','perpetual_adoration','holy_hour'],'Prayer & Devotion':['rosary','stations_of_cross','divine_mercy','miraculous_medal','novena','devotion','vespers','gorzkie_zale'],'Holy Week':['holy_thursday_mass','good_friday_service','easter_vigil_mass']};
+const SVC={sunday_mass:'Sunday Mass',daily_mass:'Daily Mass',confession:'Confession',adoration:'Adoration',perpetual_adoration:'Perpetual Adoration',holy_hour:'Holy Hour',communion_service:'Communion Service',rosary:'Rosary',stations_of_cross:'Stations of the Cross',divine_mercy:'Divine Mercy Chaplet',miraculous_medal:'Miraculous Medal',novena:'Novena',devotion:'Devotion',vespers:'Vespers',anointing_of_sick:'Anointing of the Sick',holy_thursday_mass:"Mass of the Lord's Supper",good_friday_service:'Celebration of the Passion',easter_vigil_mass:'Easter Vigil',bible_study:'Bible Study',gorzkie_zale:'Gorzkie Żale',mens_group:"Men's Group",social_event:'Social Event'};
+const SERVICE_CATEGORIES={'Mass':['sunday_mass','daily_mass','communion_service'],'Sacraments':['confession','anointing_of_sick'],'Adoration':['adoration','perpetual_adoration','holy_hour'],'Prayer & Devotion':['rosary','stations_of_cross','divine_mercy','miraculous_medal','novena','devotion','vespers','gorzkie_zale','bible_study','mens_group','social_event'],'Holy Week':['holy_thursday_mass','good_friday_service','easter_vigil_mass']};
 
 // Favorites
 function loadFav(){try{favorites=JSON.parse(localStorage.getItem('mf_fav')||'[]')}catch{favorites=[]}}
@@ -814,9 +815,9 @@ function openDetail(id){
   // Accordion sections
   const secs=[
     {k:'mass',t:'Mass Schedule',ic:'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5',types:['sunday_mass','daily_mass','communion_service']},
-    {k:'conf',t:'Confession',ic:'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',types:['confession']},
+    {k:'conf',t:'Sacraments',ic:'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',types:['confession','anointing_of_sick']},
     {k:'ador',t:'Adoration & Holy Hour',ic:'M12 3v18m-6-6l6 6 6-6',types:['adoration','perpetual_adoration','holy_hour']},
-    {k:'devot',t:'Prayer & Devotion',ic:'M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15z',types:['rosary','stations_of_cross','divine_mercy','miraculous_medal','novena','devotion','vespers','gorzkie_zale']},
+    {k:'devot',t:'Prayer & Devotion',ic:'M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15z',types:['rosary','stations_of_cross','divine_mercy','miraculous_medal','novena','devotion','vespers','gorzkie_zale','bible_study','mens_group','social_event']},
     {k:'hw',t:'Holy Week',ic:'M12 2v20M2 12h20',types:['holy_thursday_mass','good_friday_service','easter_vigil_mass']},
   ];
 
@@ -1113,6 +1114,7 @@ function renderSched(svcs,locL,ml,sectionTypes){
     if(showTypeLabel)meta+='<div class="schedule-location">'+esc(tl)+'</div>';
     if(note)meta+='<div class="schedule-note">'+esc(note)+'</div>';
     if(merged)meta+='<div class="schedule-note">'+esc(merged)+'</div>';
+    if(s.type==='communion_service')meta+='<div class="schedule-not-mass">Not a Mass</div>';
     if(s.times_vary)meta+='<div class="schedule-note">Times may vary — check bulletin</div>';
 
     return '<div class="schedule-row"><div class="schedule-time">'+tStr+lb+rb+'</div><div class="schedule-meta">'+meta+'</div></div>';
@@ -1123,6 +1125,7 @@ function renderSched(svcs,locL,ml,sectionTypes){
     let n=(s.notes||'').trim();
     if(!n)return'';
     const nl=n.toLowerCase();
+    const season=(s.seasonal||{}).season||'';
     // B4 FIX: Suppress "Vigil Mass" or just "Vigil" on Saturday sunday_mass
     if(s.day==='saturday'&&s.type==='sunday_mass'&&/^vigil(\s*mass)?$/i.test(n))return'';
     // Suppress "Vigil Mass — Location" on Saturday when location is shown separately
@@ -1142,6 +1145,49 @@ function renderSched(svcs,locL,ml,sectionTypes){
     if(s.language==='en'&&/^last\s+sunday\s+of\s+month:\s*mass\s+in\s+polish/i.test(n))return'';
     // B5 FIX: Strip redundant "— English" suffix from notes (English is default)
     n=n.replace(/\s*[—–-]\s*English\s*$/i,'').trim();
+    // NEW: Strip "Lenten" prefix when season=lent
+    if(season==='lent'){
+      if(/^lenten\s+season$/i.test(n))return'';
+      n=n.replace(/^Lenten\s+/i,'').trim();
+      n=n.replace(/\s*[—–-]\s*(Fridays|Wednesdays|Mondays)\s+(of|during)\s+Lent/gi,'').trim();
+      n=n.replace(/\s*during\s+Lent$/i,'').trim();
+    }
+    // NEW: Strip "Academic year" / "Academic year only" when season=academic_year
+    if(season==='academic_year'){
+      n=n.replace(/\s*[—–-]?\s*Academic\s+year\s+only\.?$/i,'').trim();
+      n=n.replace(/\s*[—–-]?\s*Academic\s+year\.?$/i,'').trim();
+      if(/^academic\s+year(\s+only)?\.?$/i.test(n))return'';
+      if(/^school\s+year\s+schedule$/i.test(n))return'';
+    }
+    // NEW: Strip "First Friday" / "1st Friday" prefix on day=first_friday
+    if(s.day==='first_friday'){
+      if(/^(1st|first)\s+friday\s+(adoration|holy hour|mass|only|of the month)$/i.test(n))return'';
+      n=n.replace(/^(1st|first)\s+friday[s]?:?\s*/i,'').trim();
+    }
+    // NEW: Strip "First Saturday" prefix on day=first_saturday
+    if(s.day==='first_saturday'){
+      if(/^(1st|first)\s+saturday\s+(monthly|mass|only|of (the|every) month|devotional mass)$/i.test(n))return'';
+      n=n.replace(/^(1st|first)\s+saturday:?\s*/i,'').trim();
+    }
+    // NEW: Suppress Holy Day restatements when day=holyday or holyday_eve
+    if(['holyday','holyday_eve'].includes(s.day)){
+      if(/^holy\s+day(\s+of\s+obligation)?(\s+mass)?$/i.test(n))return'';
+      if(/^holyday\s+mass$/i.test(n))return'';
+      if(/^(holy\s+day\s+)?vigil(\s+mass)?$/i.test(n))return'';
+      if(/^eve\s+of\s+holy\s+day(\s+mass)?$/i.test(n))return'';
+      n=n.replace(/^holy\s+day\s+of\s+obligation\s*[—–-]\s*/i,'').trim();
+    }
+    // NEW: Suppress Holy Week type restatements
+    if(s.type==='holy_thursday_mass'&&/^mass\s+of\s+the\s+lord'?s?\s+supper$/i.test(n))return'';
+    if(s.type==='good_friday_service'&&/^(passion\s+of\s+the\s+lord|good\s+friday\s+service|celebration\s+of\s+the\s+passion)$/i.test(n))return'';
+    if(s.type==='easter_vigil_mass'&&/^easter\s+vigil(\s+mass)?$/i.test(n))return'';
+    if(season==='holy_week'&&/^easter\s+sunday(\s+mass)?$/i.test(n))return'';
+    // NEW: Suppress time-of-day restatements when time field is present
+    if(s.time&&/^(evening|morning|noontime)\s+(mass|confessions?)$/i.test(n))return'';
+    if(s.time&&/^(before|extended)\s+(evening\s+)?(confessions?|adoration|mass)$/i.test(n))return'';
+    // Clean up leading/trailing dashes (artifact of prefix stripping)
+    n=n.replace(/^[—–-]\s*/,'').trim();
+    if(!n||n==='—')return'';
     return n;
   }
 
