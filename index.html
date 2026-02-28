@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%232C3E5A'/%3E%3Crect x='40' y='10' width='20' height='80' rx='4' fill='%23B8963F'/%3E%3Crect x='14' y='30' width='72' height='20' rx='4' fill='%23B8963F'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="icon-180.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="MassFinder">
@@ -12,6 +13,7 @@
 <meta property="og:title" content="MassFinder — Catholic Services Directory">
 <meta property="og:description" content="Find Mass, Confession, Adoration and more across Western New England">
 <meta property="og:type" content="website">
+<meta property="og:image" content="icon-512.png">
 <meta name="twitter:card" content="summary">
 <link rel="manifest" href="manifest.json">
 <title>MassFinder — Catholic Services Directory</title>
@@ -2121,6 +2123,10 @@ async function init(){
     updateSortLabel();checkLoc();filterParishes();renderCards();
     // Deep link: #parish_001 opens that church's detail
     if(location.hash){const id=location.hash.slice(1);if(allParishes.find(p=>p.id===id))setTimeout(()=>openDetail(id),400)}
+    // Register service worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(() => {});
+    }
   }catch(err){
     const isTimeout=err.name==='AbortError';
     document.getElementById('cardList').innerHTML='<div class="no-results"><h3>'+(isTimeout?'Connection timed out':'Unable to load churches')+'</h3><p>'+(isTimeout?'Check your signal and try again.':'Please check your connection and try refreshing.')+'</p><button onclick="init()" style="margin-top:var(--space-4);padding:var(--space-3) var(--space-6);border-radius:var(--radius-md);background:var(--color-primary);color:white;font-size:var(--text-sm);font-weight:var(--weight-semibold);min-height:44px">Try Again</button></div>';
