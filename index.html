@@ -112,7 +112,7 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .active-filters { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--space-4); display: flex; flex-wrap: wrap; gap: var(--space-2); }
 .active-filters:empty { display: none; }
 .filter-pill { display: inline-flex; align-items: center; gap: 4px; font-size: var(--text-xs); font-weight: var(--weight-medium); color: var(--color-primary); background: var(--color-info-bg); padding: 4px 8px 4px 10px; border-radius: var(--radius-full); }
-.filter-pill button { width: 44px; height: 44px; margin: -12px -16px -12px -8px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--color-primary-muted); font-size: 14px; }
+.filter-pill button { width: 20px; height: 20px; flex-shrink: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--color-primary-muted); font-size: 14px; line-height: 1; }
 .filter-pill button:hover { background: rgba(44,62,90,0.1); }
 
 /* RESULTS */
@@ -606,8 +606,9 @@ function matchSearch(p,q){if(!q)return true;const f=[p.name,p.town,p.county,...(
 // Advanced filters
 function hasAdv(){return advancedFilters.types.length||advancedFilters.days.length||advancedFilters.languages.length}
 function matchAdv(p){if(!hasAdv())return true;const af=advancedFilters;if(af.types.length){const pt=new Set(p.services.map(s=>s.type));if(!af.types.some(t=>pt.has(t)))return false}if(af.days.length){const pd=new Set(p.services.map(s=>s.day));if(!af.days.some(d=>pd.has(d)))return false}if(af.languages.length){const pl=new Set(p.services.map(s=>s.language));if(!af.languages.some(l=>pl.has(l)))return false}return true}
-function renderPills(){const el=document.getElementById('activeFilters');if(!hasAdv()){el.innerHTML='';return}let pills=[];advancedFilters.types.forEach(t=>pills.push({l:SVC[t]||t,k:'types',v:t}));advancedFilters.days.forEach(d=>pills.push({l:DAY_NAMES[d]||d,k:'days',v:d}));advancedFilters.languages.forEach(l=>pills.push({l:LANG_NAMES[l]||l,k:'languages',v:l}));el.innerHTML=pills.map(p=>'<span class="filter-pill">'+esc(p.l)+'<button onclick="removeAdv(\''+p.k+"','"+p.v+"')\" aria-label=\"Remove\">×</button></span>").join('')}
+function renderPills(){const el=document.getElementById('activeFilters');if(!hasAdv()){el.innerHTML='';return}let pills=[];advancedFilters.types.forEach(t=>pills.push({l:SVC[t]||t,k:'types',v:t}));advancedFilters.days.forEach(d=>pills.push({l:DAY_NAMES[d]||d,k:'days',v:d}));advancedFilters.languages.forEach(l=>pills.push({l:LANG_NAMES[l]||l,k:'languages',v:l}));el.innerHTML=pills.map(p=>`<span class="filter-pill">${esc(p.l)}<button class="pill-remove" data-key="${esc(p.k)}" data-val="${esc(p.v)}" aria-label="Remove ${esc(p.l)} filter">×</button></span>`).join('')}
 function removeAdv(k,v){advancedFilters[k]=advancedFilters[k].filter(x=>x!==v);renderPills();updateMFChip();filterParishes();renderCards()}
+document.getElementById('activeFilters').addEventListener('click',function(e){const btn=e.target.closest('.pill-remove');if(!btn)return;removeAdv(btn.dataset.key,btn.dataset.val);});
 function updateMFChip(){const btn=document.getElementById('moreFiltersBtn');const c=advancedFilters.types.length+advancedFilters.days.length+advancedFilters.languages.length;btn.innerHTML=c>0?'Filters <span class="chip-count">'+c+'</span>':'More Filters';btn.classList.toggle('active',c>0)}
 
 // More Filters overlay
@@ -633,6 +634,7 @@ function renderFiltersBody(){
 
 // Filter + Sort
 function filterParishes(){
+  if(!allParishes.length)return;
   filteredParishes=allParishes.map(p=>({parish:p,next:getNext(p,currentFilter),distance:getDist(p)}))
     .filter(item=>{if(!matchSearch(item.parish,searchQuery))return false;if(!matchAdv(item.parish))return false;
     if(['confession','adoration','latin','spanish','today','weekend'].includes(currentFilter))return item.next!==null;return true});
