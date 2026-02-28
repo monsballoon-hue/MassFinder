@@ -166,6 +166,10 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .yc-card { background: linear-gradient(135deg, #FBF8F1 0%, #F5EDD8 100%); border-left: 4px solid var(--color-accent); border-radius: var(--radius-md); padding: var(--space-5); box-shadow: var(--shadow-card); cursor: pointer; transition: box-shadow var(--transition-base), transform var(--transition-fast); }
 .yc-card:hover { box-shadow: var(--shadow-card-hover); }
 .yc-card:active { transform: scale(0.995); }
+.yc-card-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.yc-cal-btn { background: none; border: 1.5px solid var(--color-accent); border-radius: var(--radius-sm); padding: 6px; min-width: 44px; min-height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--color-accent-text); flex-shrink: 0; transition: background var(--transition-fast); }
+.yc-cal-btn:hover { background: rgba(184,150,63,0.1); }
+.yc-cal-btn svg { width: 20px; height: 20px; }
 .yc-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: var(--weight-semibold); color: var(--color-accent-text); background: rgba(184,150,63,0.15); padding: 3px 10px; border-radius: var(--radius-full); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: var(--space-2); }
 .yc-badge svg { width: 13px; height: 13px; }
 .yc-title { font-size: var(--text-lg); font-weight: var(--weight-semibold); color: var(--color-text-primary); line-height: 1.3; margin-bottom: 2px; }
@@ -452,12 +456,6 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
     </div>
 
     <div class="more-section">
-      <h2 class="more-section-title">Directory Stats</h2>
-      <div id="moreStats" class="stat-grid"></div>
-      <div id="moreCounties" class="county-list"></div>
-    </div>
-
-    <div class="more-section">
       <h2 class="more-section-title">Links</h2>
       <a class="more-link-row" href="https://diospringfield.org" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
@@ -481,6 +479,12 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
         Upcoming Events
         <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
       </a>
+    </div>
+
+    <div class="more-section">
+      <h2 class="more-section-title">Directory Stats</h2>
+      <div id="moreStats" class="stat-grid"></div>
+      <div id="moreCounties" class="county-list"></div>
     </div>
 
     <div class="more-section" id="moreEventsSection" style="display:none">
@@ -650,6 +654,33 @@ function getTag(p,next){
 function isVer(p){const v=p.validation;return v&&(v.status==='verified'||v.status==='manually_verified')}
 
 // YC Events
+function generateICS(title,date,time,endTime,location,description){
+  function pad(n){return String(n).padStart(2,'0')}
+  function toICSDate(dateStr,timeStr){
+    const d=new Date(dateStr+'T'+timeStr);
+    return d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate())+'T'+pad(d.getHours())+pad(d.getMinutes())+'00';
+  }
+  const dtStart=toICSDate(date,time);
+  const dtEnd=endTime?toICSDate(date,endTime):toICSDate(date,time.replace(/(\d{2}):(\d{2})/,(m,h,mi)=>pad((+h+1)%24)+':'+mi));
+  const uid=Date.now()+'@massfinder.app';
+  const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//MassFinder//EN','BEGIN:VEVENT',
+    'DTSTART:'+dtStart,'DTEND:'+dtEnd,'SUMMARY:'+title.replace(/[,;]/g,' '),
+    'LOCATION:'+(location||'').replace(/[,;]/g,' '),
+    'DESCRIPTION:'+(description||'').replace(/\n/g,'\\n').replace(/[,;]/g,' '),
+    'UID:'+uid,'END:VEVENT','END:VCALENDAR'].join('\r\n');
+  const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download=(title.replace(/[^a-zA-Z0-9 ]/g,'').replace(/\s+/g,'_')||'event')+'.ics';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+}
+function addYCToCalendar(idx,ev){
+  if(ev)ev.stopPropagation();
+  const e=getUpcomingYC()[idx];if(!e)return;
+  const r=resolveYC(e);
+  const loc=(r.locName?r.locName+', ':'')+r.parishName+(r.town?', '+r.town:'');
+  const desc=[e.title,r.parishName,e.notes||'','Added from MassFinder'].filter(Boolean).join('\n');
+  generateICS(e.title,e.date,e.time,e.end_time||'',loc,desc);
+}
 function getUpcomingYC(){
   const today=getNow().toISOString().slice(0,10);
   return ycEvents.filter(e=>e.date>=today);
@@ -668,11 +699,12 @@ function fmtYCDate(d){
   const opts={weekday:'short',month:'short',day:'numeric'};
   return dt.toLocaleDateString('en-US',opts);
 }
-function renderYCCard(e,delay){
+function renderYCCard(e,delay,idx){
   const r=resolveYC(e);
   const timeStr=fmt12(e.time)+(e.end_time?' – '+fmt12(e.end_time):'');
+  const calBtn=typeof idx==='number'?'<button class="yc-cal-btn" onclick="addYCToCalendar('+idx+',event)" aria-label="Add to calendar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="12" y1="14" x2="12" y2="18"/><line x1="10" y1="16" x2="14" y2="16"/></svg></button>':'';
   return '<article class="yc-card" role="listitem" style="animation-delay:'+(delay||0)+'ms" onclick="openDetail(\''+e.parish_id+'\')">'
-    +'<div class="yc-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Young &amp; Catholic</div>'
+    +'<div class="yc-card-top"><div class="yc-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Young &amp; Catholic</div>'+calBtn+'</div>'
     +'<div class="yc-title">'+esc(e.title)+'</div>'
     +'<div class="yc-church">'+esc(r.locName||r.parishName)+', '+esc(r.town)+'</div>'
     +'<div class="yc-datetime"><span class="yc-date">'+fmtYCDate(e.date)+'</span><span class="yc-time">'+timeStr+'</span></div>'
@@ -690,7 +722,7 @@ function renderCards(){
     document.getElementById('resultsCount').textContent=upcoming.length+' upcoming YC event'+(upcoming.length!==1?'s':'');
     if(!upcoming.length){el.innerHTML='<div class="no-results"><h3>No upcoming YC events</h3><p>Check back soon for new Young &amp; Catholic events.</p></div>';return}
     el.innerHTML='<div class="yc-section-header"><span class="yc-section-title">Young &amp; Catholic</span><span class="yc-section-count">'+upcoming.length+' upcoming</span></div>'
-      +upcoming.map((e,i)=>renderYCCard(e,i*25)).join('');
+      +upcoming.map((e,i)=>renderYCCard(e,i*25,i)).join('');
     return;
   }
 
@@ -716,7 +748,7 @@ function renderCards(){
   if(upcoming.length&&currentFilter==='all'){
     const ycSlice=upcoming.slice(0,3);
     const ycHeader='<div class="yc-section-header"><span class="yc-section-title">Young &amp; Catholic</span><span class="yc-section-count">'+upcoming.length+' upcoming</span></div>';
-    const ycCards=ycSlice.map((e,i)=>renderYCCard(e,0)).join('');
+    const ycCards=ycSlice.map((e,i)=>renderYCCard(e,0,i)).join('');
     const viewAll=upcoming.length>3?'<div style="text-align:center;padding:var(--space-2) 0"><button style="font-size:var(--text-sm);font-weight:var(--weight-semibold);color:var(--color-accent-text);padding:var(--space-2) var(--space-4)" onclick="document.querySelector(\'[data-filter=yc]\').click()">See all '+upcoming.length+' YC events →</button></div>':'';
     const insertIdx=Math.min(3,cards.length);
     cards.splice(insertIdx,0,ycHeader+ycCards+viewAll);
@@ -857,6 +889,22 @@ function submitMoreCorrection(){
   fetch(FORM_URL,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({church:church||'(general)',message:msg,email:email||'(not provided)',_subject:'MassFinder Correction: '+(church||'General')})})
   .then(()=>{document.getElementById('moreCorrectionForm').innerHTML='<div style="text-align:center;padding:var(--space-3);font-size:var(--text-sm);color:var(--color-verified);font-weight:var(--weight-medium)">Thank you! We\'ll review your correction.</div>'})
   .catch(()=>{document.getElementById('moreCorrectionForm').innerHTML='<div style="text-align:center;padding:var(--space-3);font-size:var(--text-sm);color:var(--color-verified);font-weight:var(--weight-medium)">Thank you! We\'ll review your correction.</div>'})
+}
+function addMoreEventToCal(idx){
+  const e=(window._moreEvents||[])[idx];if(!e)return;
+  // Build a synthetic date — use next occurrence of the day
+  const dayIdx=DAY_ORDER.indexOf(e.day);
+  let dateStr='';
+  if(dayIdx>=0){
+    const now=getNow();const today=now.getDay();
+    let diff=dayIdx-today;if(diff<0)diff+=7;if(diff===0)diff=7;
+    const target=new Date(now);target.setDate(target.getDate()+diff);
+    dateStr=target.toISOString().slice(0,10);
+  } else {
+    dateStr=getNow().toISOString().slice(0,10);
+  }
+  if(!e.time)return;
+  generateICS(e.title,dateStr,e.time,e.end_time||'',e.parishName,(e.notes||'')+'\n'+e.parishName+'\nAdded from MassFinder');
 }
 
 // Render schedule by day — with smart collapsing
@@ -1231,7 +1279,7 @@ function renderSaved(){
   // YC events at saved churches (shown first)
   if(upcoming.length){
     html+='<div class="yc-section-header"><span class="yc-section-title">Coming up at your churches</span><span class="yc-section-count">'+upcoming.length+'</span></div>';
-    html+=upcoming.slice(0,4).map(e=>renderYCCard(e,0)).join('');
+    html+=upcoming.slice(0,4).map((e,i)=>renderYCCard(e,0,i)).join('');
     if(upcoming.length>4)html+='<div style="text-align:center;padding:var(--space-2) 0"><button style="font-size:var(--text-sm);font-weight:var(--weight-semibold);color:var(--color-accent-text);padding:var(--space-2) var(--space-4)" onclick="document.querySelector(\'[data-filter=yc]\').click();switchTab(\'panelFind\',document.querySelector(\'[data-tab=panelFind]\'))">See all YC events →</button></div>';
     html+='<div style="height:var(--space-4)"></div>';
   }
@@ -1290,19 +1338,27 @@ function renderMore(){
       e.preventDefault();
       document.getElementById('moreEventsSection').scrollIntoView({behavior:'smooth'});
     };
-    // Show first 10 events
+    // Store events for calendar export
+    window._moreEvents=shown;
     const shown=allEvents.slice(0,10);
-    document.getElementById('moreEventsList').innerHTML=shown.map(e=>
-      '<div style="padding:var(--space-3) 0;border-bottom:1px solid var(--color-border-light)">'
+    document.getElementById('moreEventsList').innerHTML=shown.map((e,idx)=>{
+      const p=allParishes.find(x=>x.id===e.parishId);
+      const dist=p?getDist(p):null;
+      const distBadge=dist!==null?'<span style="font-size:var(--text-xs);color:var(--color-text-tertiary);margin-left:var(--space-1)">· '+fmtDist(dist)+'</span>':'';
+      return '<div style="padding:var(--space-3) 0;border-bottom:1px solid var(--color-border-light);display:flex;align-items:flex-start;gap:var(--space-3)">'
+      +'<div style="flex:1;min-width:0">'
       +'<div style="font-size:var(--text-base);font-weight:var(--weight-semibold);color:var(--color-text-primary)">'+esc(e.title)+'</div>'
-      +'<div style="font-size:var(--text-sm);color:var(--color-text-secondary)">'+esc(e.parishName)+'</div>'
+      +'<div style="font-size:var(--text-sm);color:var(--color-text-secondary)">'+esc(e.parishName)+distBadge+'</div>'
       +'<div style="font-size:var(--text-xs);color:var(--color-text-tertiary);margin-top:2px">'
       +(e.day?esc((DAY_NAMES[e.day]||e.day)):'')+' '+(e.time?fmt12(e.time):'')
       +(e.frequency&&e.frequency!=='one_time'?' · '+esc(e.frequency):'')
       +'</div>'
       +(e.notes?'<div style="font-size:var(--text-xs);color:var(--color-text-tertiary);font-style:italic;margin-top:2px">'+esc(e.notes)+'</div>':'')
       +'</div>'
-    ).join('')+(allEvents.length>10?'<div style="padding:var(--space-3);font-size:var(--text-sm);color:var(--color-text-tertiary)">And '+(allEvents.length-10)+' more events across the diocese.</div>':'');
+      +(e.time?'<button onclick="addMoreEventToCal('+idx+')" style="background:none;border:1.5px solid var(--color-border);border-radius:var(--radius-sm);padding:6px;min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--color-text-tertiary);flex-shrink:0" aria-label="Add to calendar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="18" height="18"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="12" y1="14" x2="12" y2="18"/><line x1="10" y1="16" x2="14" y2="16"/></svg></button>':'')
+      +'</div>';
+    }).join('')+(allEvents.length>10?'<div style="padding:var(--space-3);font-size:var(--text-sm);color:var(--color-text-tertiary)">And '+(allEvents.length-10)+' more events across the diocese.</div>':'');
+    window._moreEvents=shown;
   }
 
   // Footer
