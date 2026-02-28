@@ -3,35 +3,32 @@
     "schema_version": "v3",
     "source": "Diocese of Springfield, MA - Online Directory",
     "extracted_date": "2026-02-19",
-    "total_parishes": 79,
-    "total_services": 1129,
+    "total_parishes": 98,
+    "total_services": 1448,
     "service_types_found": {
-      "daily_mass": 396,
-      "sunday_mass": 291,
-      "confession": 135,
-      "adoration": 75,
-      "stations_of_cross": 52,
-      "rosary": 40,
-      "devotion": 16,
+      "sunday_mass": 364,
+      "daily_mass": 507,
+      "adoration": 114,
       "communion_service": 12,
-      "divine_mercy": 12,
-      "good_friday_service": 8,
-      "holy_thursday_mass": 7,
-      "miraculous_medal": 7,
-      "easter_vigil_mass": 6,
-      "novena": 5,
-      "holy_hour": 3,
-      "divine_mercy_chaplet": 3,
-      "benediction": 2,
-      "anointing": 2,
-      "anointing_of_sick": 2,
-      "devotional": 2,
-      "vespers": 2,
+      "confession": 208,
+      "rosary": 71,
+      "divine_mercy": 23,
+      "stations_of_cross": 66,
+      "holy_thursday_mass": 8,
+      "good_friday_service": 9,
+      "easter_vigil_mass": 7,
+      "devotion": 21,
+      "holy_hour": 8,
+      "anointing_of_sick": 4,
+      "miraculous_medal": 11,
+      "novena": 4,
       "bible_study": 1,
       "perpetual_adoration": 1,
+      "vespers": 5,
       "gorzkie_zale": 1,
       "mens_group": 1,
-      "social_event": 1
+      "social_event": 1,
+      "benediction": 1
     },
     "notes": [
       "PDF hyperlinks shifted by one entry - display text used as URL source",
@@ -49,22 +46,37 @@
       "validation.status enum: verified | low_confidence | needs_verification | unverified — low_confidence means data exists but source is stale/unreliable; app should display a warning badge and recommended_action"
     ],
     "languages_found": {
-      "es": 21,
-      "pl": 11,
-      "pt": 3,
-      "la": 2,
-      "vi": 2,
-      "af": 1,
-      "fr": 1
+      "en": 1316,
+      "es": 29,
+      "pl": 19,
+      "la": 74,
+      "pt": 6,
+      "fr": 2,
+      "asl": 1,
+      "vi": 1
     },
-    "last_validated": "2026-02-26",
+    "last_validated": "2026-02-28",
     "geocoded": true,
     "counties": [
       "Berkshire",
+      "Cheshire",
       "Franklin",
+      "Hampden",
       "Hampshire",
-      "Hampden"
-    ]
+      "Hartford",
+      "Litchfield",
+      "New Haven",
+      "Sullivan",
+      "Windham",
+      "Windsor",
+      "Worcester"
+    ],
+    "states_covered": {
+      "MA": 80,
+      "CT": 12,
+      "VT": 4,
+      "NH": 2
+    }
   },
   "parishes": [
     {
@@ -22693,6 +22705,6512 @@
         "recommended_action": null
       },
       "is_accessible": false
+    },
+    {
+      "id": "parish_084",
+      "name": "Holy Family Church",
+      "town": "Enfield",
+      "state": "CT",
+      "zip": "06082",
+      "established": null,
+      "is_mission": false,
+      "mission_of": null,
+      "status": "active",
+      "locations": [
+        {
+          "id": "holy-family-church-enfield",
+          "name": "Holy Family Church",
+          "type": "church",
+          "address": "23 Simon Rd, Enfield, CT 06082",
+          "city": "Enfield",
+          "state": "CT",
+          "zip": "06082",
+          "is_accessible": null,
+          "lat": 41.9515,
+          "lng": -72.5595,
+          "short_name": "Holy Family"
+        }
+      ],
+      "contact": {
+        "phone": "860-962-4001",
+        "emails": [
+          "admin@sjjenfield.org"
+        ],
+        "website": "https://sjjenfield.org",
+        "facebook": "https://www.facebook.com/SJJParishEnfieldCT",
+        "instagram": "https://www.instagram.com/SJJParishEnfield",
+        "office_hours": "Mon-Fri 9:00AM-1:00PM"
+      },
+      "clergy": [
+        {
+          "role": "pastor",
+          "name": "Fr. John Golas",
+          "email": "pastor@sjjenfield.org"
+        },
+        {
+          "role": "provisional_priest",
+          "name": "Fr. Mathew Kappalumakkel",
+          "email": "fr.kappalumakkel@sjjenfield.org"
+        },
+        {
+          "role": "provisional_priest",
+          "name": "Fr. Robert Villa",
+          "email": "padrevilla@hotmail.com"
+        },
+        {
+          "role": "provisional_priest",
+          "name": "Fr. C. Kelechi Anyanwu",
+          "email": "fr.anyanwu@aohct.org"
+        },
+        {
+          "role": "deacon",
+          "name": "Dcn. Vincent J. Motto",
+          "email": "deaconvincemotto@sjjenfield.org"
+        },
+        {
+          "role": "deacon",
+          "name": "Dcn. Michael Torres",
+          "email": "dcn.torres@aohct.org"
+        },
+        {
+          "role": "deacon",
+          "name": "Dcn. Paul Robert",
+          "email": "deaconpaulrobert@gmail.com"
+        },
+        {
+          "role": "deacon",
+          "name": "Dcn. James Marco",
+          "email": "jamesmarco60@icloud.com"
+        }
+      ],
+      "services": [
+        {
+          "id": "parish_084-dmass-thu-0900",
+          "type": "daily_mass",
+          "day": "thursday",
+          "time": "09:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_084-dmass-fri-0900",
+          "type": "daily_mass",
+          "day": "friday",
+          "time": "09:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_084-dmass-sat-0830",
+          "type": "daily_mass",
+          "day": "saturday",
+          "time": "08:30",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_084-smass-sat-1630",
+          "type": "sunday_mass",
+          "day": "saturday",
+          "time": "16:30",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Vigil Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_084-smass-sun-0900",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "09:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_084-conf-sat-1530",
+          "type": "confession",
+          "day": "saturday",
+          "time": "15:30",
+          "end_time": "16:00",
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_084-conf-appt",
+          "type": "confession",
+          "day": null,
+          "time": null,
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "By appointment",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_084-divmerc-thu-1430",
+          "type": "divine_mercy",
+          "day": "thursday",
+          "time": "14:30",
+          "end_time": "15:30",
+          "location_id": null,
+          "language": "en",
+          "notes": "Third Thursday of each month; Divine Mercy and Rosary",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        }
+      ],
+      "special_events": [
+        {
+          "id": "parish_084-evt-legion-of-mary",
+          "title": "Legion of Mary",
+          "category": "devotional",
+          "day": "tuesday",
+          "date": null,
+          "time": "14:00",
+          "end_time": null,
+          "frequency": "weekly",
+          "notes": "Room 5",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        }
+      ],
+      "validation": {
+        "status": "needs_verification",
+        "last_checked": "2026-02-27",
+        "source": "bulletin_2026-02",
+        "recommended_action": null
+      },
+      "visitation": null,
+      "bulletin_url": "https://sjjenfield.org/bulletins",
+      "county": "Hartford",
+      "is_accessible": null
+    },
+    {
+      "id": "parish_085",
+      "name": "St. Bernard Church",
+      "town": "Enfield",
+      "state": "CT",
+      "zip": "06082",
+      "established": null,
+      "is_mission": false,
+      "mission_of": null,
+      "status": "active",
+      "locations": [
+        {
+          "id": "st-bernard-church-enfield",
+          "name": "St. Bernard Church",
+          "type": "church",
+          "address": "426 Hazard Ave, Enfield, CT 06082",
+          "city": "Enfield",
+          "state": "CT",
+          "zip": "06082",
+          "is_accessible": null,
+          "lat": 41.9862,
+          "lng": -72.5311,
+          "short_name": "St. Bernard"
+        }
+      ],
+      "contact": {
+        "phone": "860-962-4001",
+        "emails": [
+          "sbadmin@sjjenfield.org"
+        ],
+        "website": "https://sjjenfield.org",
+        "facebook": "https://www.facebook.com/SJJParishEnfieldCT",
+        "instagram": "https://www.instagram.com/SJJParishEnfield",
+        "office_hours": "Mon-Thu 9:00AM-2:00PM, Fri 9:00AM-12:00PM"
+      },
+      "clergy": [
+        {
+          "role": "pastor",
+          "name": "Fr. John Golas",
+          "email": "pastor@sjjenfield.org"
+        },
+        {
+          "role": "provisional_priest",
+          "name": "Fr. Mathew Kappalumakkel",
+          "email": "fr.kappalumakkel@sjjenfield.org"
+        },
+        {
+          "role": "provisional_priest",
+          "name": "Fr. Robert Villa",
+          "email": "padrevilla@hotmail.com"
+        },
+        {
+          "role": "provisional_priest",
+          "name": "Fr. C. Kelechi Anyanwu",
+          "email": "fr.anyanwu@aohct.org"
+        },
+        {
+          "role": "deacon",
+          "name": "Dcn. Vincent J. Motto",
+          "email": "deaconvincemotto@sjjenfield.org"
+        },
+        {
+          "role": "deacon",
+          "name": "Dcn. Michael Torres",
+          "email": "dcn.torres@aohct.org"
+        },
+        {
+          "role": "deacon",
+          "name": "Dcn. Paul Robert",
+          "email": "deaconpaulrobert@gmail.com"
+        },
+        {
+          "role": "deacon",
+          "name": "Dcn. James Marco",
+          "email": "jamesmarco60@icloud.com"
+        }
+      ],
+      "services": [
+        {
+          "id": "parish_085-dmass-mon-0900",
+          "type": "daily_mass",
+          "day": "monday",
+          "time": "09:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_085-dmass-tue-0900",
+          "type": "daily_mass",
+          "day": "tuesday",
+          "time": "09:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_085-dmass-wed-0900",
+          "type": "daily_mass",
+          "day": "wednesday",
+          "time": "09:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_085-smass-sun-0730",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "07:30",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_085-smass-sun-1100",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "11:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_085-conf-mon-1800-lent",
+          "type": "confession",
+          "day": "monday",
+          "time": "18:00",
+          "end_time": "19:00",
+          "location_id": null,
+          "language": "en",
+          "notes": "Lenten Confessions",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_085-stations-fri-1900-lent",
+          "type": "stations_of_cross",
+          "day": "friday",
+          "time": "19:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        }
+      ],
+      "special_events": [],
+      "validation": {
+        "status": "needs_verification",
+        "last_checked": "2026-02-27",
+        "source": "bulletin_2026-02",
+        "recommended_action": null
+      },
+      "visitation": null,
+      "bulletin_url": "https://sjjenfield.org/bulletins",
+      "county": "Hartford",
+      "is_accessible": null
+    },
+    {
+      "id": "parish_086",
+      "name": "St. Patrick Church",
+      "town": "Enfield",
+      "state": "CT",
+      "zip": "06082",
+      "established": null,
+      "is_mission": false,
+      "mission_of": null,
+      "status": "active",
+      "locations": [
+        {
+          "id": "st-patrick-church-enfield",
+          "name": "St. Patrick Church",
+          "type": "church",
+          "address": "64 Pearl St, Enfield, CT 06082",
+          "city": "Enfield",
+          "state": "CT",
+          "zip": "06082",
+          "is_accessible": null,
+          "lat": 41.9967,
+          "lng": -72.5992,
+          "short_name": "St. Patrick's"
+        }
+      ],
+      "contact": {
+        "phone": "860-962-4001",
+        "emails": [
+          "admin@sjjenfield.org"
+        ],
+        "website": "https://sjjenfield.org",
+        "facebook": "https://www.facebook.com/SJJParishEnfieldCT",
+        "instagram": "https://www.instagram.com/SJJParishEnfield",
+        "office_hours": "Mon-Fri 9:00AM-2:00PM"
+      },
+      "clergy": [
+        {
+          "role": "pastor",
+          "name": "Fr. John Golas",
+          "email": "pastor@sjjenfield.org"
+        },
+        {
+          "role": "provisional_priest",
+          "name": "Fr. Mathew Kappalumakkel",
+          "email": "fr.kappalumakkel@sjjenfield.org"
+        },
+        {
+          "role": "provisional_priest",
+          "name": "Fr. Robert Villa",
+          "email": "padrevilla@hotmail.com"
+        },
+        {
+          "role": "provisional_priest",
+          "name": "Fr. C. Kelechi Anyanwu",
+          "email": "fr.anyanwu@aohct.org"
+        },
+        {
+          "role": "deacon",
+          "name": "Dcn. Vincent J. Motto",
+          "email": "deaconvincemotto@sjjenfield.org"
+        },
+        {
+          "role": "deacon",
+          "name": "Dcn. Michael Torres",
+          "email": "dcn.torres@aohct.org"
+        },
+        {
+          "role": "deacon",
+          "name": "Dcn. Paul Robert",
+          "email": "deaconpaulrobert@gmail.com"
+        },
+        {
+          "role": "deacon",
+          "name": "Dcn. James Marco",
+          "email": "jamesmarco60@icloud.com"
+        }
+      ],
+      "services": [
+        {
+          "id": "parish_086-dmass-thu-0800",
+          "type": "daily_mass",
+          "day": "thursday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_086-dmass-fri-0800",
+          "type": "daily_mass",
+          "day": "friday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_086-smass-sat-1600",
+          "type": "sunday_mass",
+          "day": "saturday",
+          "time": "16:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Vigil Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_086-smass-sun-1000",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "10:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_086-conf-sat-1500",
+          "type": "confession",
+          "day": "saturday",
+          "time": "15:00",
+          "end_time": "15:30",
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_086-conf-appt",
+          "type": "confession",
+          "day": null,
+          "time": null,
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "By appointment",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_086-devot-thu-0845",
+          "type": "devotion",
+          "day": "thursday",
+          "time": "08:45",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Devotion to Mother of Perpetual Help; time estimated, follows 8:00AM Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_086-divmerc-1fri-0845",
+          "type": "divine_mercy",
+          "day": "first_friday",
+          "time": "08:45",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Time estimated, follows 8:00AM Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        }
+      ],
+      "special_events": [
+        {
+          "id": "parish_086-evt-coffee-donuts",
+          "title": "Coffee, Donuts & Home Baked Goodies",
+          "category": "fellowship",
+          "day": null,
+          "date": "2026-03-08",
+          "time": "11:00",
+          "end_time": null,
+          "frequency": "one_time",
+          "notes": "Father Weaver Hall; after 10:00AM Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        }
+      ],
+      "validation": {
+        "status": "needs_verification",
+        "last_checked": "2026-02-27",
+        "source": "bulletin_2026-02",
+        "recommended_action": null
+      },
+      "visitation": null,
+      "bulletin_url": "https://sjjenfield.org/bulletins",
+      "county": "Hartford",
+      "is_accessible": null
+    },
+    {
+      "id": "parish_087",
+      "name": "St. Martha Church",
+      "town": "Enfield",
+      "state": "CT",
+      "zip": "06082",
+      "established": null,
+      "is_mission": false,
+      "mission_of": null,
+      "status": "active",
+      "locations": [
+        {
+          "id": "st-martha-church-enfield",
+          "name": "St. Martha Church",
+          "type": "church",
+          "address": "214 Brainard Rd, Enfield, CT 06082",
+          "city": "Enfield",
+          "state": "CT",
+          "zip": "06082",
+          "is_accessible": null,
+          "lat": 42.0197,
+          "lng": -72.5645,
+          "short_name": "St. Martha's"
+        }
+      ],
+      "contact": {
+        "phone": "860-745-5616",
+        "emails": [
+          "admin@sjjenfield.org"
+        ],
+        "website": "https://sjjenfield.org",
+        "facebook": "https://www.facebook.com/SJJParishEnfieldCT",
+        "instagram": "https://www.instagram.com/SJJParishEnfield",
+        "office_hours": "Mon-Fri 9:30AM-12:00PM, 1:30PM-4:30PM"
+      },
+      "clergy": [
+        {
+          "role": "pastor",
+          "name": "Fr. John Golas",
+          "email": "pastor@sjjenfield.org"
+        },
+        {
+          "role": "provisional_priest",
+          "name": "Fr. Mathew Kappalumakkel",
+          "email": "fr.kappalumakkel@sjjenfield.org"
+        },
+        {
+          "role": "provisional_priest",
+          "name": "Fr. Robert Villa",
+          "email": "padrevilla@hotmail.com"
+        },
+        {
+          "role": "provisional_priest",
+          "name": "Fr. C. Kelechi Anyanwu",
+          "email": "fr.anyanwu@aohct.org"
+        },
+        {
+          "role": "deacon",
+          "name": "Dcn. Vincent J. Motto",
+          "email": "deaconvincemotto@sjjenfield.org"
+        },
+        {
+          "role": "deacon",
+          "name": "Dcn. Michael Torres",
+          "email": "dcn.torres@aohct.org"
+        },
+        {
+          "role": "deacon",
+          "name": "Dcn. Paul Robert",
+          "email": "deaconpaulrobert@gmail.com"
+        },
+        {
+          "role": "deacon",
+          "name": "Dcn. James Marco",
+          "email": "jamesmarco60@icloud.com"
+        }
+      ],
+      "services": [
+        {
+          "id": "parish_087-dmass-mon-0800",
+          "type": "daily_mass",
+          "day": "monday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_087-dmass-tue-0800",
+          "type": "daily_mass",
+          "day": "tuesday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_087-dmass-wed-0800",
+          "type": "daily_mass",
+          "day": "wednesday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_087-dmass-wed-1900",
+          "type": "daily_mass",
+          "day": "wednesday",
+          "time": "19:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "la",
+          "notes": "Traditional Latin Mass",
+          "rite": "tridentine",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_087-dmass-1fri-1900",
+          "type": "daily_mass",
+          "day": "first_friday",
+          "time": "19:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "la",
+          "notes": "Traditional Latin Mass",
+          "rite": "tridentine",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_087-dmass-sat-0900",
+          "type": "daily_mass",
+          "day": "saturday",
+          "time": "09:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "la",
+          "notes": "Traditional Latin Mass",
+          "rite": "tridentine",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_087-smass-sat-1600-es",
+          "type": "sunday_mass",
+          "day": "saturday",
+          "time": "16:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "es",
+          "notes": "Vigil Mass; Spanish",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_087-smass-sun-0900",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "09:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_087-smass-sun-1100",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "11:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "la",
+          "notes": "Traditional Latin Mass",
+          "rite": "tridentine",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_087-conf-sat-1430",
+          "type": "confession",
+          "day": "saturday",
+          "time": "14:30",
+          "end_time": "15:30",
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_087-conf-appt",
+          "type": "confession",
+          "day": null,
+          "time": null,
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "By appointment",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_087-ador-mon-0900",
+          "type": "adoration",
+          "day": "monday",
+          "time": "09:00",
+          "end_time": "22:00",
+          "location_id": null,
+          "language": "en",
+          "notes": "Sacred Heart Chapel",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_087-ador-wed-0900",
+          "type": "adoration",
+          "day": "wednesday",
+          "time": "09:00",
+          "end_time": "22:00",
+          "location_id": null,
+          "language": "en",
+          "notes": "Sacred Heart Chapel",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_087-ador-fri-0900",
+          "type": "adoration",
+          "day": "friday",
+          "time": "09:00",
+          "end_time": "22:00",
+          "location_id": null,
+          "language": "en",
+          "notes": "Sacred Heart Chapel",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_087-devot-wed-0845",
+          "type": "devotion",
+          "day": "wednesday",
+          "time": "08:45",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Devotion to St. Joseph; time estimated, follows 8:00AM Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_087-rosary-1sat-0830",
+          "type": "rosary",
+          "day": "first_saturday",
+          "time": "08:30",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Rosary for Our Lady of Fatima",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_087-rosary-mon-0845",
+          "type": "rosary",
+          "day": "monday",
+          "time": "08:45",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Time estimated, follows daily Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_087-rosary-tue-0845",
+          "type": "rosary",
+          "day": "tuesday",
+          "time": "08:45",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Time estimated, follows daily Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_087-rosary-wed-0845",
+          "type": "rosary",
+          "day": "wednesday",
+          "time": "08:45",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Time estimated, follows daily Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        }
+      ],
+      "special_events": [
+        {
+          "id": "parish_087-evt-holy-spirit-prayer",
+          "title": "Our Lady of the Holy Spirit Prayer Group",
+          "category": "devotional",
+          "day": "tuesday",
+          "date": null,
+          "time": "18:00",
+          "end_time": "20:00",
+          "frequency": "weekly",
+          "notes": "St. Nicholas Classroom",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_087-evt-souls-purgatory",
+          "title": "Souls in Purgatory Prayer Group",
+          "category": "devotional",
+          "day": "tuesday",
+          "date": null,
+          "time": "15:45",
+          "end_time": null,
+          "frequency": "weekly",
+          "notes": "Classroom #3",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_087-evt-spanish-charismatic",
+          "title": "Spanish Charismatic Prayer Group",
+          "category": "devotional",
+          "day": "thursday",
+          "date": null,
+          "time": "18:30",
+          "end_time": null,
+          "frequency": "monthly",
+          "language": "es",
+          "notes": "2nd and 4th Thursday; Classroom #2",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        }
+      ],
+      "validation": {
+        "status": "needs_verification",
+        "last_checked": "2026-02-27",
+        "source": "bulletin_2026-02",
+        "recommended_action": null
+      },
+      "visitation": null,
+      "bulletin_url": "https://sjjenfield.org/bulletins",
+      "county": "Hartford",
+      "is_accessible": null
+    },
+    {
+      "id": "parish_088",
+      "name": "Sacred Heart Parish",
+      "town": "Suffield",
+      "state": "CT",
+      "zip": "06078",
+      "established": null,
+      "is_mission": false,
+      "mission_of": null,
+      "status": "active",
+      "locations": [
+        {
+          "id": "sacred-heart-church-suffield",
+          "name": "Sacred Heart Church",
+          "type": "church",
+          "address": "446 Mountain Rd, Suffield, CT 06078",
+          "city": "Suffield",
+          "state": "CT",
+          "zip": "06078",
+          "is_accessible": null,
+          "lat": 41.9837,
+          "lng": -72.6668,
+          "short_name": "Sacred Heart"
+        }
+      ],
+      "contact": {
+        "phone": "860-668-4246",
+        "emails": [
+          "SacredHeartSuffield1@gmail.com"
+        ],
+        "website": "https://www.sacredheartct.com",
+        "facebook": "Sacred Heart, Suffield",
+        "office_hours": "Mon-Thu 8:30AM-2:00PM; closed Friday",
+        "mailing_address": "P.O. Box 626, Suffield, CT 06078"
+      },
+      "clergy": [
+        {
+          "role": "pastor",
+          "name": "Fr. Joseph Keough",
+          "email": "frjfk@aol.com"
+        }
+      ],
+      "services": [
+        {
+          "id": "parish_088-dmass-mon-0800",
+          "type": "daily_mass",
+          "day": "monday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_088-dmass-tue-0800",
+          "type": "daily_mass",
+          "day": "tuesday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_088-dmass-wed-0800",
+          "type": "daily_mass",
+          "day": "wednesday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_088-dmass-fri-0800",
+          "type": "daily_mass",
+          "day": "friday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_088-smass-sat-1600",
+          "type": "sunday_mass",
+          "day": "saturday",
+          "time": "16:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Vigil Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_088-smass-sun-0830",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "08:30",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_088-smass-sun-1030",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "10:30",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_088-conf-sat-1430",
+          "type": "confession",
+          "day": "saturday",
+          "time": "14:30",
+          "end_time": "15:30",
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_088-conf-appt",
+          "type": "confession",
+          "day": null,
+          "time": null,
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "By appointment",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_088-conf-mon-1515-lent",
+          "type": "confession",
+          "day": "monday",
+          "time": "15:15",
+          "end_time": "16:00",
+          "location_id": null,
+          "language": "en",
+          "notes": "Lenten Confessions",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_088-conf-mon-1800-lent",
+          "type": "confession",
+          "day": "monday",
+          "time": "18:00",
+          "end_time": "19:00",
+          "location_id": null,
+          "language": "en",
+          "notes": "Lenten Confessions",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_088-rosary-tue-0730",
+          "type": "rosary",
+          "day": "tuesday",
+          "time": "07:30",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Weekly Morning Rosary",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_088-rosary-1sun-0800",
+          "type": "rosary",
+          "day": "first_sunday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_088-ador-mon-1500",
+          "type": "adoration",
+          "day": "monday",
+          "time": "15:00",
+          "end_time": "16:00",
+          "location_id": null,
+          "language": "en",
+          "notes": "Fall-Spring schedule; summer hours 6:00-7:00PM",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_088-ador-fri-0730",
+          "type": "adoration",
+          "day": "friday",
+          "time": "07:30",
+          "end_time": "08:00",
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        }
+      ],
+      "special_events": [],
+      "validation": {
+        "status": "needs_verification",
+        "last_checked": "2026-02-27",
+        "source": "bulletin_2026-02",
+        "recommended_action": null
+      },
+      "visitation": null,
+      "bulletin_url": "https://www.sacredheartct.com/bulletins/",
+      "county": "Hartford",
+      "is_accessible": null
+    },
+    {
+      "id": "parish_089",
+      "name": "Church of the Annunciation",
+      "town": "Ludlow",
+      "state": "VT",
+      "zip": "05149",
+      "established": null,
+      "is_mission": false,
+      "mission_of": null,
+      "status": "active",
+      "locations": [
+        {
+          "id": "church-of-the-annunciation-ludlow",
+          "name": "Church of the Annunciation",
+          "type": "church",
+          "address": "7 Depot St, Ludlow, VT 05149",
+          "city": "Ludlow",
+          "state": "VT",
+          "zip": "05149",
+          "is_accessible": null,
+          "lat": 43.3982,
+          "lng": -72.7014,
+          "short_name": "Annunciation"
+        }
+      ],
+      "contact": {
+        "phone": "802-228-3451",
+        "emails": [],
+        "website": "https://churchoftheannunicationludlow.vermontcatholic.org/",
+        "office_hours": null
+      },
+      "clergy": [
+        {
+          "role": "pastor",
+          "name": "Fr. Thomas Mosher",
+          "email": null
+        }
+      ],
+      "services": [
+        {
+          "id": "parish_089-dmass-mon-0800",
+          "type": "daily_mass",
+          "day": "monday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_089-dmass-tue-1730",
+          "type": "daily_mass",
+          "day": "tuesday",
+          "time": "17:30",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_089-dmass-wed-0800",
+          "type": "daily_mass",
+          "day": "wednesday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_089-dmass-fri-0800",
+          "type": "daily_mass",
+          "day": "friday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_089-smass-sat-1630",
+          "type": "sunday_mass",
+          "day": "saturday",
+          "time": "16:30",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Vigil Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_089-smass-sun-0900",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "09:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_089-conf-tue-1800",
+          "type": "confession",
+          "day": "tuesday",
+          "time": "18:00",
+          "end_time": "19:00",
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_089-conf-sat-1545",
+          "type": "confession",
+          "day": "saturday",
+          "time": "15:45",
+          "end_time": "16:15",
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_089-ador-tue-1800",
+          "type": "adoration",
+          "day": "tuesday",
+          "time": "18:00",
+          "end_time": "19:00",
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_089-stations-fri-1600-lent",
+          "type": "stations_of_cross",
+          "day": "friday",
+          "time": "16:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Fridays in Lent except Good Friday",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_089-dmass-ashwed-0800",
+          "type": "daily_mass",
+          "day": "wednesday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Ash Wednesday Mass; ashes distributed; Feb 18, 2026",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_089-devot-ashwed-1730",
+          "type": "devotion",
+          "day": "wednesday",
+          "time": "17:30",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Ash Wednesday Scripture Service; ashes distributed; Feb 18, 2026",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_089-htmass-thu-1900-hw",
+          "type": "holy_thursday_mass",
+          "day": "thursday",
+          "time": "19:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Mass of the Lord's Supper",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_089-ador-thu-2000-hw",
+          "type": "adoration",
+          "day": "thursday",
+          "time": "20:00",
+          "end_time": "21:00",
+          "location_id": null,
+          "language": "en",
+          "notes": "Eucharistic Adoration following Holy Thursday Mass",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_089-conf-fri-1400-hw",
+          "type": "confession",
+          "day": "friday",
+          "time": "14:00",
+          "end_time": "14:30",
+          "location_id": null,
+          "language": "en",
+          "notes": "Good Friday Confessions",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_089-gfsvc-fri-1500-hw",
+          "type": "good_friday_service",
+          "day": "friday",
+          "time": "15:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Celebration of the Lord's Passion",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_089-evmass-sat-2000-hw",
+          "type": "easter_vigil_mass",
+          "day": "saturday",
+          "time": "20:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "No 4:30PM Vigil Mass this day",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_089-smass-sun-0900-easter",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "09:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Easter Sunday Mass",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "website_2026-02"
+        }
+      ],
+      "special_events": [],
+      "validation": {
+        "status": "needs_verification",
+        "last_checked": "2026-02-27",
+        "source": "website_2026-02",
+        "recommended_action": null
+      },
+      "visitation": null,
+      "bulletin_url": "https://churchoftheannunicationludlow.vermontcatholic.org/bulletins",
+      "county": "Windsor",
+      "is_accessible": null
+    },
+    {
+      "id": "parish_090",
+      "name": "Holy Family Parish",
+      "town": "Springfield",
+      "state": "VT",
+      "zip": "05156",
+      "established": null,
+      "is_mission": false,
+      "mission_of": null,
+      "status": "active",
+      "locations": [
+        {
+          "id": "st-marys-church-springfield",
+          "name": "St. Mary's Church",
+          "type": "church",
+          "address": "10 Pleasant St, Springfield, VT 05156",
+          "city": "Springfield",
+          "state": "VT",
+          "zip": "05156",
+          "is_accessible": null,
+          "lat": 43.2985,
+          "lng": -72.4805,
+          "short_name": "St. Mary's"
+        },
+        {
+          "id": "st-josephs-church-chester",
+          "name": "St. Joseph's Church",
+          "type": "church",
+          "address": "148 South Main St, Chester, VT 05143",
+          "city": "Chester",
+          "state": "VT",
+          "zip": "05143",
+          "is_accessible": null,
+          "lat": 43.2613,
+          "lng": -72.5929,
+          "short_name": "St. Joseph's"
+        }
+      ],
+      "contact": {
+        "phone": "802-885-3400",
+        "emails": [
+          "stmarys05156@gmail.com"
+        ],
+        "website": "https://holyfamilyvermont.com/",
+        "office_hours": "M&T 8:00AM-9:00AM (Mass), 9:30AM-4:30PM; W&F 10:00AM-1:00PM",
+        "mailing_address": "10 Pleasant St, Springfield, VT 05156"
+      },
+      "clergy": [
+        {
+          "role": "pastor",
+          "name": "Fr. Larry Rogelio Organiza",
+          "email": null
+        }
+      ],
+      "services": [
+        {
+          "id": "parish_090-dmass-mon-0900-stm",
+          "type": "daily_mass",
+          "day": "monday",
+          "time": "09:00",
+          "end_time": null,
+          "location_id": "st-marys-church-springfield",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_090-dmass-tue-1730-stm",
+          "type": "daily_mass",
+          "day": "tuesday",
+          "time": "17:30",
+          "end_time": null,
+          "location_id": "st-marys-church-springfield",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_090-dmass-wed-0900-stj",
+          "type": "daily_mass",
+          "day": "wednesday",
+          "time": "09:00",
+          "end_time": null,
+          "location_id": "st-josephs-church-chester",
+          "language": "en",
+          "notes": "Followed by Coffee Hour",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_090-dmass-fri-0900-stm",
+          "type": "daily_mass",
+          "day": "friday",
+          "time": "09:00",
+          "end_time": null,
+          "location_id": "st-marys-church-springfield",
+          "language": "en",
+          "notes": "Followed by Coffee Hour",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_090-smass-sat-1600-stj",
+          "type": "sunday_mass",
+          "day": "saturday",
+          "time": "16:00",
+          "end_time": null,
+          "location_id": "st-josephs-church-chester",
+          "language": "en",
+          "notes": "Vigil Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_090-smass-sun-0900-stm",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "09:00",
+          "end_time": null,
+          "location_id": "st-marys-church-springfield",
+          "language": "en",
+          "notes": "Followed by Coffee Hour",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_090-conf-tue-1800-stm",
+          "type": "confession",
+          "day": "tuesday",
+          "time": "18:00",
+          "end_time": "18:30",
+          "location_id": "st-marys-church-springfield",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_090-conf-sat-1500-stj",
+          "type": "confession",
+          "day": "saturday",
+          "time": "15:00",
+          "end_time": "15:30",
+          "location_id": "st-josephs-church-chester",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        }
+      ],
+      "special_events": [],
+      "validation": {
+        "status": "needs_verification",
+        "last_checked": "2026-02-27",
+        "source": "website_2026-02",
+        "recommended_action": null
+      },
+      "visitation": null,
+      "bulletin_url": "https://holyfamilyvermont.com/bulletins",
+      "county": "Windsor",
+      "is_accessible": null
+    },
+    {
+      "id": "parish_091",
+      "name": "All Saints Parish",
+      "town": "Charlestown",
+      "state": "NH",
+      "zip": "03603",
+      "established": null,
+      "is_mission": false,
+      "mission_of": null,
+      "status": "active",
+      "locations": [
+        {
+          "id": "st-catherine-church-charlestown",
+          "name": "St. Catherine of Siena Church",
+          "type": "church",
+          "address": "285 Main St, Charlestown, NH 03603",
+          "city": "Charlestown",
+          "state": "NH",
+          "zip": "03603",
+          "is_accessible": null,
+          "lat": 43.2331,
+          "lng": -72.4236,
+          "short_name": "St. Catherine's"
+        },
+        {
+          "id": "st-peter-church-north-walpole",
+          "name": "St. Peter Church",
+          "type": "church",
+          "address": "38 Church St, North Walpole, NH 03609",
+          "city": "North Walpole",
+          "state": "NH",
+          "zip": "03609",
+          "is_accessible": null,
+          "lat": 43.1418,
+          "lng": -72.4493,
+          "short_name": "St. Peter's"
+        }
+      ],
+      "contact": {
+        "phone": "603-826-3359",
+        "emails": [
+          "allsaints3@comcast.net"
+        ],
+        "website": "http://www.allsaintsparishnh.com/",
+        "office_hours": "Mon, Tue, Thu, Fri 10:00AM-2:00PM"
+      },
+      "clergy": [
+        {
+          "role": "pastor",
+          "name": "Very Rev. John Loughnane",
+          "email": null
+        }
+      ],
+      "services": [
+        {
+          "id": "parish_091-dmass-tue-1730-stp",
+          "type": "daily_mass",
+          "day": "tuesday",
+          "time": "17:30",
+          "end_time": null,
+          "location_id": "st-peter-church-north-walpole",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_091-dmass-wed-1730-stc",
+          "type": "daily_mass",
+          "day": "wednesday",
+          "time": "17:30",
+          "end_time": null,
+          "location_id": "st-catherine-church-charlestown",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_091-dmass-thu-1730-stc",
+          "type": "daily_mass",
+          "day": "thursday",
+          "time": "17:30",
+          "end_time": null,
+          "location_id": "st-catherine-church-charlestown",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_091-dmass-fri-0830-stp",
+          "type": "daily_mass",
+          "day": "friday",
+          "time": "08:30",
+          "end_time": null,
+          "location_id": "st-peter-church-north-walpole",
+          "language": "en",
+          "notes": "In St. Peter's Sacristy",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_091-smass-sat-1600-stp",
+          "type": "sunday_mass",
+          "day": "saturday",
+          "time": "16:00",
+          "end_time": null,
+          "location_id": "st-peter-church-north-walpole",
+          "language": "en",
+          "notes": "Vigil Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_091-smass-sun-0830-stp",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "08:30",
+          "end_time": null,
+          "location_id": "st-peter-church-north-walpole",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_091-smass-sun-1030-stc",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "10:30",
+          "end_time": null,
+          "location_id": "st-catherine-church-charlestown",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_091-dmass-holyday-0830-stc",
+          "type": "daily_mass",
+          "day": "holyday",
+          "time": "08:30",
+          "end_time": null,
+          "location_id": "st-catherine-church-charlestown",
+          "language": "en",
+          "notes": "Holy Day Mass; check bulletin to confirm",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_091-dmass-holyday-1900-stp",
+          "type": "daily_mass",
+          "day": "holyday",
+          "time": "19:00",
+          "end_time": null,
+          "location_id": "st-peter-church-north-walpole",
+          "language": "en",
+          "notes": "Holy Day Mass; check bulletin to confirm",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_091-conf-sat-1500-stp",
+          "type": "confession",
+          "day": "saturday",
+          "time": "15:00",
+          "end_time": "15:45",
+          "location_id": "st-peter-church-north-walpole",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_091-conf-thu-1645-stc",
+          "type": "confession",
+          "day": "thursday",
+          "time": "16:45",
+          "end_time": "17:25",
+          "location_id": "st-catherine-church-charlestown",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_091-ador-thu-0900-stc",
+          "type": "adoration",
+          "day": "thursday",
+          "time": "09:00",
+          "end_time": "19:00",
+          "location_id": "st-catherine-church-charlestown",
+          "language": "en",
+          "notes": "At St. Catherine's Rectory",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_091-stations-mon-1800-stc-lent",
+          "type": "stations_of_cross",
+          "day": "monday",
+          "time": "18:00",
+          "end_time": null,
+          "location_id": "st-catherine-church-charlestown",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_091-stations-fri-1800-stp-lent",
+          "type": "stations_of_cross",
+          "day": "friday",
+          "time": "18:00",
+          "end_time": null,
+          "location_id": "st-peter-church-north-walpole",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        }
+      ],
+      "special_events": [],
+      "validation": {
+        "status": "needs_verification",
+        "last_checked": "2026-02-27",
+        "source": "website_2026-02",
+        "recommended_action": null
+      },
+      "visitation": null,
+      "bulletin_url": "http://www.allsaintsparishnh.com/Bulletin.htm",
+      "county": "Sullivan",
+      "is_accessible": null
+    },
+    {
+      "id": "parish_092",
+      "name": "St. Charles Church",
+      "town": "Bellows Falls",
+      "state": "VT",
+      "zip": "05101",
+      "established": null,
+      "is_mission": false,
+      "mission_of": null,
+      "status": "active",
+      "locations": [
+        {
+          "id": "st-charles-church-bellows-falls",
+          "name": "St. Charles Church",
+          "type": "church",
+          "address": "31 Cherry Hill St, Bellows Falls, VT 05101",
+          "city": "Bellows Falls",
+          "state": "VT",
+          "zip": "05101",
+          "is_accessible": null,
+          "lat": 43.1346,
+          "lng": -72.4481,
+          "short_name": "St. Charles"
+        },
+        {
+          "id": "our-lady-of-the-valley-townshend",
+          "name": "Our Lady of the Valley",
+          "type": "church",
+          "address": "92 Grafton Rd, Townshend, VT 05353",
+          "city": "Townshend",
+          "state": "VT",
+          "zip": "05353",
+          "is_accessible": null,
+          "lat": 43.0475,
+          "lng": -72.6675,
+          "short_name": "OLV"
+        },
+        {
+          "id": "chapel-of-the-snows-bondville",
+          "name": "Chapel of the Snows",
+          "type": "chapel",
+          "address": "749 Stratton Mountain Rd, Bondville, VT 05340",
+          "city": "Bondville",
+          "state": "VT",
+          "zip": "05340",
+          "is_accessible": null,
+          "lat": 43.1147,
+          "lng": -72.9051,
+          "short_name": "Chapel of the Snows"
+        }
+      ],
+      "contact": {
+        "phone": "802-463-0763",
+        "emails": [
+          "stcharles@vermontcatholic.org"
+        ],
+        "website": "https://stcharles.vermontcatholic.org/",
+        "office_hours": "Mon, Wed, Thu 8:00AM-2:00PM"
+      },
+      "clergy": [
+        {
+          "role": "pastor",
+          "name": "Fr. Victor Cruz, HGN",
+          "email": "vcruz@vermontcatholic.org"
+        },
+        {
+          "role": "deacon_retired",
+          "name": "Dcn. Richard Anderberg",
+          "email": null
+        }
+      ],
+      "services": [
+        {
+          "id": "parish_092-dmass-mon-0800-stc",
+          "type": "daily_mass",
+          "day": "monday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": "st-charles-church-bellows-falls",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_092-dmass-tue-0800-stc",
+          "type": "daily_mass",
+          "day": "tuesday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": "st-charles-church-bellows-falls",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_092-dmass-thu-0800-stc",
+          "type": "daily_mass",
+          "day": "thursday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": "st-charles-church-bellows-falls",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_092-dmass-fri-0800-stc",
+          "type": "daily_mass",
+          "day": "friday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": "st-charles-church-bellows-falls",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_092-dmass-fri-1000-olv",
+          "type": "daily_mass",
+          "day": "friday",
+          "time": "10:00",
+          "end_time": null,
+          "location_id": "our-lady-of-the-valley-townshend",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_092-smass-sat-1600-stc",
+          "type": "sunday_mass",
+          "day": "saturday",
+          "time": "16:00",
+          "end_time": null,
+          "location_id": "st-charles-church-bellows-falls",
+          "language": "en",
+          "notes": "Vigil Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_092-smass-sun-0900-stc",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "09:00",
+          "end_time": null,
+          "location_id": "st-charles-church-bellows-falls",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_092-smass-sun-1100-olv",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "11:00",
+          "end_time": null,
+          "location_id": "our-lady-of-the-valley-townshend",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_092-smass-sun-1230-cos",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "12:30",
+          "end_time": null,
+          "location_id": "chapel-of-the-snows-bondville",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_092-smass-sat-1630-cos",
+          "type": "sunday_mass",
+          "day": "saturday",
+          "time": "16:30",
+          "end_time": null,
+          "location_id": "chapel-of-the-snows-bondville",
+          "language": "en",
+          "notes": "Winter Vigil Mass; Thanksgiving to Easter",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_092-conf-sat-1500-stc",
+          "type": "confession",
+          "day": "saturday",
+          "time": "15:00",
+          "end_time": "15:30",
+          "location_id": "st-charles-church-bellows-falls",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_092-conf-sun-after-olv",
+          "type": "confession",
+          "day": "sunday",
+          "time": null,
+          "end_time": null,
+          "location_id": "our-lady-of-the-valley-townshend",
+          "language": "en",
+          "notes": "After Sunday Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_092-ador-mon-0700-stc",
+          "type": "adoration",
+          "day": "monday",
+          "time": "07:00",
+          "end_time": "14:00",
+          "location_id": "st-charles-church-bellows-falls",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_092-ador-tue-0700-stc",
+          "type": "adoration",
+          "day": "tuesday",
+          "time": "07:00",
+          "end_time": "14:00",
+          "location_id": "st-charles-church-bellows-falls",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_092-ador-wed-0700-stc",
+          "type": "adoration",
+          "day": "wednesday",
+          "time": "07:00",
+          "end_time": "14:00",
+          "location_id": "st-charles-church-bellows-falls",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_092-ador-thu-0700-stc",
+          "type": "adoration",
+          "day": "thursday",
+          "time": "07:00",
+          "end_time": "14:00",
+          "location_id": "st-charles-church-bellows-falls",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_092-stations-fri-1045-olv-lent",
+          "type": "stations_of_cross",
+          "day": "friday",
+          "time": "10:45",
+          "end_time": null,
+          "location_id": "our-lady-of-the-valley-townshend",
+          "language": "en",
+          "notes": "Following 10:00AM daily Mass",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        }
+      ],
+      "special_events": [
+        {
+          "id": "parish_092-evt-lenten-fish-fry",
+          "title": "Lenten Fish Fry",
+          "category": "fellowship",
+          "day": "friday",
+          "date": null,
+          "time": "17:00",
+          "end_time": "19:00",
+          "frequency": "weekly",
+          "notes": "St. Charles Social Center",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        }
+      ],
+      "validation": {
+        "status": "needs_verification",
+        "last_checked": "2026-02-27",
+        "source": "bulletin_2026-02",
+        "recommended_action": null
+      },
+      "visitation": null,
+      "bulletin_url": "https://stcharles.vermontcatholic.org/bulletins",
+      "county": "Windham",
+      "is_accessible": null
+    },
+    {
+      "id": "parish_093",
+      "name": "St. Michael Church",
+      "town": "Brattleboro",
+      "state": "VT",
+      "zip": "05301",
+      "established": null,
+      "is_mission": false,
+      "mission_of": null,
+      "status": "active",
+      "locations": [
+        {
+          "id": "st-michael-church-brattleboro",
+          "name": "St. Michael Church",
+          "type": "church",
+          "address": "47 Walnut St, Brattleboro, VT 05301",
+          "city": "Brattleboro",
+          "state": "VT",
+          "zip": "05301",
+          "is_accessible": null,
+          "lat": 42.8561,
+          "lng": -72.5578,
+          "short_name": "St. Michael's"
+        }
+      ],
+      "contact": {
+        "phone": "802-257-5101",
+        "emails": [
+          "stmichael@vermontcatholic.org"
+        ],
+        "website": "https://www.stmichaelvt.com/",
+        "office_hours": "Mon-Fri 9:00AM-4:00PM"
+      },
+      "clergy": [
+        {
+          "role": "pastor",
+          "name": "Fr. Henry Furman",
+          "email": null
+        },
+        {
+          "role": "deacon",
+          "name": "Dcn. Christopher Dougherty",
+          "email": null
+        }
+      ],
+      "services": [
+        {
+          "id": "parish_093-dmass-tue-1715",
+          "type": "daily_mass",
+          "day": "tuesday",
+          "time": "17:15",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_093-dmass-wed-0845",
+          "type": "daily_mass",
+          "day": "wednesday",
+          "time": "08:45",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_093-dmass-thu-1715",
+          "type": "daily_mass",
+          "day": "thursday",
+          "time": "17:15",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_093-dmass-fri-0900",
+          "type": "daily_mass",
+          "day": "friday",
+          "time": "09:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_093-smass-sat-1600",
+          "type": "sunday_mass",
+          "day": "saturday",
+          "time": "16:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Vigil Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_093-smass-sun-0800",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_093-smass-sun-1030",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "10:30",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_093-conf-tue-1800",
+          "type": "confession",
+          "day": "tuesday",
+          "time": "18:00",
+          "end_time": "18:30",
+          "location_id": null,
+          "language": "en",
+          "notes": "After Mass; time estimated",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_093-conf-wed-0930",
+          "type": "confession",
+          "day": "wednesday",
+          "time": "09:30",
+          "end_time": "10:00",
+          "location_id": null,
+          "language": "en",
+          "notes": "After Mass; time estimated",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_093-conf-thu-1800",
+          "type": "confession",
+          "day": "thursday",
+          "time": "18:00",
+          "end_time": "18:30",
+          "location_id": null,
+          "language": "en",
+          "notes": "After Mass; time estimated",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_093-conf-fri-0945",
+          "type": "confession",
+          "day": "friday",
+          "time": "09:45",
+          "end_time": "10:15",
+          "location_id": null,
+          "language": "en",
+          "notes": "After Mass; time estimated",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_093-conf-sat-1445",
+          "type": "confession",
+          "day": "saturday",
+          "time": "14:45",
+          "end_time": "15:30",
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_093-ador-daily-0930",
+          "type": "adoration",
+          "day": "daily",
+          "time": "09:30",
+          "end_time": "15:00",
+          "location_id": null,
+          "language": "en",
+          "notes": "Eucharistic Adoration in the Chapel",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_093-ador-fri-0930",
+          "type": "adoration",
+          "day": "friday",
+          "time": "09:30",
+          "end_time": "15:00",
+          "location_id": null,
+          "language": "en",
+          "notes": "Eucharistic Adoration in the Church",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_093-bened-1fri-1445",
+          "type": "benediction",
+          "day": "first_friday",
+          "time": "14:45",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_093-rosary-tue-1645",
+          "type": "rosary",
+          "day": "tuesday",
+          "time": "16:45",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Half-hour before daily Mass; time estimated",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_093-rosary-wed-0815",
+          "type": "rosary",
+          "day": "wednesday",
+          "time": "08:15",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Half-hour before daily Mass; time estimated",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_093-rosary-thu-1645",
+          "type": "rosary",
+          "day": "thursday",
+          "time": "16:45",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Half-hour before daily Mass; time estimated",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_093-rosary-fri-0830",
+          "type": "rosary",
+          "day": "friday",
+          "time": "08:30",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Half-hour before daily Mass; time estimated",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_093-rosary-sun-0730",
+          "type": "rosary",
+          "day": "sunday",
+          "time": "07:30",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Before 8:00AM Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_093-devot-morning-prayer",
+          "type": "devotion",
+          "day": null,
+          "time": null,
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Morning Prayer (Liturgy of the Hours): Sun & Sat 9:00AM; Tue-Fri 8:00AM",
+          "times_vary": true,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_093-vesp-evening-prayer",
+          "type": "vespers",
+          "day": null,
+          "time": null,
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Evening Prayer: Sun, Mon, Wed, Thu, Fri 4:30PM; Tue 5:45PM; Sat 5:00PM",
+          "times_vary": true,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        }
+      ],
+      "special_events": [],
+      "validation": {
+        "status": "needs_verification",
+        "last_checked": "2026-02-27",
+        "source": "website_2026-02",
+        "recommended_action": null
+      },
+      "visitation": null,
+      "bulletin_url": "https://www.stmichaelvt.com/bulletins",
+      "county": "Windham",
+      "is_accessible": null
+    },
+    {
+      "id": "parish_094",
+      "name": "St. Joseph Church",
+      "town": "Winsted",
+      "state": "CT",
+      "zip": "06098",
+      "established": null,
+      "is_mission": false,
+      "mission_of": null,
+      "status": "active",
+      "locations": [
+        {
+          "id": "st-joseph-church-winsted",
+          "name": "St. Joseph Church",
+          "type": "church",
+          "address": "31 Oak St, Winsted, CT 06098",
+          "city": "Winsted",
+          "state": "CT",
+          "zip": "06098",
+          "is_accessible": null,
+          "lat": 41.9214,
+          "lng": -73.0647,
+          "short_name": "St. Joseph's"
+        }
+      ],
+      "contact": {
+        "phone": "860-379-3369",
+        "emails": [
+          "info@stjoseph-winsted.org"
+        ],
+        "website": "https://stjoseph-winsted.org/",
+        "office_hours": "Mon-Fri 9:00AM-12:00PM, 12:30PM-3:00PM"
+      },
+      "clergy": [
+        {
+          "role": "pastor",
+          "name": "Fr. Bruce Czapla, O.F.M.",
+          "email": "frbruce@stjoseph-winsted.org"
+        },
+        {
+          "role": "provisional_priest",
+          "name": "Fr. Dennis Arambasick, O.F.M.",
+          "email": "frdennis@stjoseph-winsted.org"
+        }
+      ],
+      "services": [
+        {
+          "id": "parish_094-dmass-mon-0800",
+          "type": "daily_mass",
+          "day": "monday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_094-dmass-tue-0800",
+          "type": "daily_mass",
+          "day": "tuesday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_094-dmass-wed-0800",
+          "type": "daily_mass",
+          "day": "wednesday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_094-dmass-thu-0800",
+          "type": "daily_mass",
+          "day": "thursday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_094-dmass-fri-0800",
+          "type": "daily_mass",
+          "day": "friday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_094-dmass-sat-0800",
+          "type": "daily_mass",
+          "day": "saturday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_094-smass-sat-1600",
+          "type": "sunday_mass",
+          "day": "saturday",
+          "time": "16:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Vigil Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_094-smass-sun-0800",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_094-smass-sun-1000",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "10:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_094-smass-sun-1800",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "18:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_094-dmass-holyday-1600",
+          "type": "daily_mass",
+          "day": "holyday_eve",
+          "time": "16:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Holy Day Vigil",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_094-dmass-holyday-0800",
+          "type": "daily_mass",
+          "day": "holyday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Holy Day Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_094-dmass-holyday-1900",
+          "type": "daily_mass",
+          "day": "holyday",
+          "time": "19:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Holy Day Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_094-conf-sat-1430",
+          "type": "confession",
+          "day": "saturday",
+          "time": "14:30",
+          "end_time": "15:15",
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_094-conf-appt",
+          "type": "confession",
+          "day": null,
+          "time": null,
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "By appointment",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_094-conf-mon-1800-lent",
+          "type": "confession",
+          "day": "monday",
+          "time": "18:00",
+          "end_time": "19:00",
+          "location_id": null,
+          "language": "en",
+          "notes": "Lenten Confession Mondays",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_094-ador-1fri-0830",
+          "type": "adoration",
+          "day": "first_friday",
+          "time": "08:30",
+          "end_time": "12:00",
+          "location_id": null,
+          "language": "en",
+          "notes": "First Friday Adoration",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_094-stations-fri-1900-lent",
+          "type": "stations_of_cross",
+          "day": "friday",
+          "time": "19:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Followed by Benediction",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        }
+      ],
+      "special_events": [
+        {
+          "id": "parish_094-evt-ignis-dei",
+          "title": "Ignis Dei Prayer Group",
+          "category": "devotional",
+          "day": "wednesday",
+          "date": null,
+          "time": "18:30",
+          "end_time": "20:30",
+          "frequency": "monthly",
+          "notes": "Last Wednesday of the month; Franciscan Center Library",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_094-evt-mens-group",
+          "title": "Parish Catholic Men's Group",
+          "category": "fellowship",
+          "day": "saturday",
+          "date": null,
+          "time": "08:45",
+          "end_time": "11:00",
+          "frequency": "monthly",
+          "notes": "Every other Saturday after 8AM Mass; Parish Center Library",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_094-evt-womens-group",
+          "title": "St. Joseph Parish Women's Group",
+          "category": "fellowship",
+          "day": "tuesday",
+          "date": null,
+          "time": "19:00",
+          "end_time": "20:30",
+          "frequency": "monthly",
+          "notes": "4th Tuesday of each month",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_094-evt-friendship-in-christ",
+          "title": "Friendship in Christ Group",
+          "category": "social",
+          "day": "tuesday",
+          "date": null,
+          "time": "18:00",
+          "end_time": "20:00",
+          "frequency": "monthly",
+          "notes": "First Tuesday; Youth Group Room; young adults with special needs ages 18+",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_094-evt-life-league",
+          "title": "Our Lady of Angels Life League",
+          "category": "devotional",
+          "day": null,
+          "date": null,
+          "time": "09:00",
+          "end_time": null,
+          "frequency": "monthly",
+          "notes": "Franciscan Center Meeting Room; check parish for schedule",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        }
+      ],
+      "validation": {
+        "status": "needs_verification",
+        "last_checked": "2026-02-27",
+        "source": "bulletin_2026-02",
+        "recommended_action": null
+      },
+      "visitation": null,
+      "bulletin_url": "https://stjoseph-winsted.org/bulletin/",
+      "county": "Litchfield",
+      "is_accessible": null
+    },
+    {
+      "id": "parish_095",
+      "name": "Our Lady of Hope Parish",
+      "town": "New Hartford",
+      "state": "CT",
+      "zip": "06057",
+      "established": null,
+      "is_mission": false,
+      "mission_of": null,
+      "status": "active",
+      "locations": [
+        {
+          "id": "immaculate-conception-new-hartford",
+          "name": "Immaculate Conception Church",
+          "type": "church",
+          "address": "3 Church St North, New Hartford, CT 06057",
+          "city": "New Hartford",
+          "state": "CT",
+          "zip": "06057",
+          "is_accessible": null,
+          "lat": 41.8783,
+          "lng": -72.9804,
+          "short_name": "IC"
+        },
+        {
+          "id": "immaculate-heart-of-mary-harwinton",
+          "name": "Immaculate Heart of Mary Church",
+          "type": "church",
+          "address": "78 Litchfield Rd, Harwinton, CT 06791",
+          "city": "Harwinton",
+          "state": "CT",
+          "zip": "06791",
+          "is_accessible": null,
+          "lat": 41.7708,
+          "lng": -73.0671,
+          "short_name": "IHOM"
+        }
+      ],
+      "contact": {
+        "phone": "860-379-5215",
+        "emails": [
+          "fr.granato@aohct.org"
+        ],
+        "website": "https://www.ourladyofhopeparish.com/",
+        "office_hours": "M, T, W & F 8:30AM-3:30PM (no Thursday)",
+        "mailing_address": "60 Town Hill Rd, P.O. Box 285, New Hartford, CT 06057"
+      },
+      "clergy": [
+        {
+          "role": "pastor",
+          "name": "Rev. John Granato",
+          "email": "fr.granato@aohct.org"
+        },
+        {
+          "role": "deacon",
+          "name": "Dcn. David Reynolds",
+          "email": "dcn.reynolds@aohct.org"
+        }
+      ],
+      "services": [
+        {
+          "id": "parish_095-dmass-mon-0800-ic",
+          "type": "daily_mass",
+          "day": "monday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": "immaculate-conception-new-hartford",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_095-dmass-tue-0800-ic",
+          "type": "daily_mass",
+          "day": "tuesday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": "immaculate-conception-new-hartford",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_095-dmass-wed-0800-ic",
+          "type": "daily_mass",
+          "day": "wednesday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": "immaculate-conception-new-hartford",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_095-dmass-wed-1900-ihom",
+          "type": "daily_mass",
+          "day": "wednesday",
+          "time": "19:00",
+          "end_time": null,
+          "location_id": "immaculate-heart-of-mary-harwinton",
+          "language": "la",
+          "notes": "Mass in Latin Ordinary Form (Novus Ordo)",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_095-dmass-fri-0800-ic",
+          "type": "daily_mass",
+          "day": "friday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": "immaculate-conception-new-hartford",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_095-smass-sat-1700-ihom",
+          "type": "sunday_mass",
+          "day": "saturday",
+          "time": "17:00",
+          "end_time": null,
+          "location_id": "immaculate-heart-of-mary-harwinton",
+          "language": "en",
+          "notes": "Vigil Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_095-smass-sun-0800-ic",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": "immaculate-conception-new-hartford",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_095-smass-sun-0930-ihom",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "09:30",
+          "end_time": null,
+          "location_id": "immaculate-heart-of-mary-harwinton",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_095-smass-sun-1130-ic",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "11:30",
+          "end_time": null,
+          "location_id": "immaculate-conception-new-hartford",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_095-conf-mon-1700-ic",
+          "type": "confession",
+          "day": "monday",
+          "time": "17:00",
+          "end_time": "18:00",
+          "location_id": "immaculate-conception-new-hartford",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_095-conf-wed-1800-ihom",
+          "type": "confession",
+          "day": "wednesday",
+          "time": "18:00",
+          "end_time": "18:45",
+          "location_id": "immaculate-heart-of-mary-harwinton",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_095-conf-sat-1530-ihom",
+          "type": "confession",
+          "day": "saturday",
+          "time": "15:30",
+          "end_time": "16:45",
+          "location_id": "immaculate-heart-of-mary-harwinton",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_095-conf-appt",
+          "type": "confession",
+          "day": null,
+          "time": null,
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "By appointment",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_095-ador-mon-1700-ic",
+          "type": "adoration",
+          "day": "monday",
+          "time": "17:00",
+          "end_time": "18:00",
+          "location_id": "immaculate-conception-new-hartford",
+          "language": "en",
+          "notes": "With Confessions",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_095-ador-tue-1700-ihom",
+          "type": "adoration",
+          "day": "tuesday",
+          "time": "17:00",
+          "end_time": "19:00",
+          "location_id": "immaculate-heart-of-mary-harwinton",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_095-ador-wed-1700-ihom",
+          "type": "adoration",
+          "day": "wednesday",
+          "time": "17:00",
+          "end_time": "19:00",
+          "location_id": "immaculate-heart-of-mary-harwinton",
+          "language": "en",
+          "notes": "With Confessions 6:00-6:45PM; followed by Latin Mass at 7PM",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_095-holyhour-1fri-0830-ic",
+          "type": "holy_hour",
+          "day": "first_friday",
+          "time": "08:30",
+          "end_time": "09:30",
+          "location_id": "immaculate-conception-new-hartford",
+          "language": "en",
+          "notes": "Following 8:00AM Mass; end time estimated",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_095-holyhour-1fri-1900-ihom",
+          "type": "holy_hour",
+          "day": "first_friday",
+          "time": "19:00",
+          "end_time": "20:00",
+          "location_id": "immaculate-heart-of-mary-harwinton",
+          "language": "en",
+          "notes": "After Stations of the Cross during Lent",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_095-holyhour-mon-1200-ic",
+          "type": "holy_hour",
+          "day": "monday",
+          "time": "12:00",
+          "end_time": "13:00",
+          "location_id": "immaculate-conception-new-hartford",
+          "language": "en",
+          "notes": "Weekly Holy Hour in Adoration; Praying for Vocations; end time estimated",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_095-rosary-thu-1830-ihom",
+          "type": "rosary",
+          "day": "thursday",
+          "time": "18:30",
+          "end_time": null,
+          "location_id": "immaculate-heart-of-mary-harwinton",
+          "language": "en",
+          "notes": "Praying for Vocations",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_095-stations-fri-1210-ic-lent",
+          "type": "stations_of_cross",
+          "day": "friday",
+          "time": "12:10",
+          "end_time": null,
+          "location_id": "immaculate-conception-new-hartford",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_095-stations-fri-1900-ihom-lent",
+          "type": "stations_of_cross",
+          "day": "friday",
+          "time": "19:00",
+          "end_time": null,
+          "location_id": "immaculate-heart-of-mary-harwinton",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        }
+      ],
+      "special_events": [
+        {
+          "id": "parish_095-evt-soup-stations",
+          "title": "Soup & Stations",
+          "category": "fellowship",
+          "day": "friday",
+          "date": null,
+          "time": "17:45",
+          "end_time": "18:45",
+          "frequency": "weekly",
+          "notes": "Social Center; meatless soup and bread meal followed by Stations of the Cross",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        }
+      ],
+      "validation": {
+        "status": "needs_verification",
+        "last_checked": "2026-02-27",
+        "source": "bulletin_2026-02",
+        "recommended_action": null
+      },
+      "visitation": null,
+      "bulletin_url": "https://parishesonline.com/organization/our-lady-of-hope-parish-06057",
+      "county": "Litchfield",
+      "is_accessible": null
+    },
+    {
+      "id": "parish_096",
+      "name": "St. Mary's Parish",
+      "town": "Simsbury",
+      "state": "CT",
+      "zip": "06070",
+      "established": null,
+      "is_mission": false,
+      "mission_of": null,
+      "status": "active",
+      "locations": [
+        {
+          "id": "st-marys-church-simsbury",
+          "name": "St. Mary's Church",
+          "type": "church",
+          "address": "944 Hopmeadow St, Simsbury, CT 06070",
+          "city": "Simsbury",
+          "state": "CT",
+          "zip": "06070",
+          "is_accessible": null,
+          "lat": 41.8811,
+          "lng": -72.7993,
+          "short_name": "St. Mary's"
+        }
+      ],
+      "contact": {
+        "phone": "860-658-7627",
+        "emails": [
+          "parishoffice@stmarysimsbury.org"
+        ],
+        "website": "https://stmarysimsbury.org/",
+        "office_hours": "M-Th 8:30AM-3:00PM (closed 12:30-1:00 for lunch); Fri 8:30AM-12:00PM",
+        "mailing_address": "PO Box 575, Simsbury, CT 06070"
+      },
+      "clergy": [
+        {
+          "role": "pastor",
+          "name": "Fr. Stephen Sledesky",
+          "email": null
+        }
+      ],
+      "services": [
+        {
+          "id": "parish_096-dmass-mon-0800",
+          "type": "daily_mass",
+          "day": "monday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_096-dmass-tue-0800",
+          "type": "daily_mass",
+          "day": "tuesday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_096-dmass-wed-0800",
+          "type": "daily_mass",
+          "day": "wednesday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_096-dmass-thu-0800",
+          "type": "daily_mass",
+          "day": "thursday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_096-smass-sat-1700",
+          "type": "sunday_mass",
+          "day": "saturday",
+          "time": "17:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Vigil Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_096-smass-sun-0800",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_096-smass-sun-0930",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "09:30",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_096-smass-sun-1100",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "11:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_096-conf-sat-1530",
+          "type": "confession",
+          "day": "saturday",
+          "time": "15:30",
+          "end_time": "16:15",
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_096-conf-tue-1800",
+          "type": "confession",
+          "day": "tuesday",
+          "time": "18:00",
+          "end_time": "18:30",
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_096-conf-appt",
+          "type": "confession",
+          "day": null,
+          "time": null,
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "By appointment",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_096-conf-thu-0830-lent",
+          "type": "confession",
+          "day": "thursday",
+          "time": "08:30",
+          "end_time": "09:00",
+          "location_id": null,
+          "language": "en",
+          "notes": "During Lent",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_096-ador-tue-1800",
+          "type": "adoration",
+          "day": "tuesday",
+          "time": "18:00",
+          "end_time": "19:00",
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_096-ador-thu-0845",
+          "type": "adoration",
+          "day": "thursday",
+          "time": "08:45",
+          "end_time": "09:45",
+          "location_id": null,
+          "language": "en",
+          "notes": "After 8:00AM Mass; time estimated",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_096-stations-fri-1900-lent",
+          "type": "stations_of_cross",
+          "day": "friday",
+          "time": "19:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_096-devot-tue-1915-lent",
+          "type": "devotion",
+          "day": "tuesday",
+          "time": "19:15",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Lenten Taizé Service; quiet, scripture and musical prayer reflection",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        }
+      ],
+      "special_events": [
+        {
+          "id": "parish_096-evt-lenten-soup-supper",
+          "title": "Lenten Soup Supper",
+          "category": "fellowship",
+          "day": "friday",
+          "date": null,
+          "time": "17:45",
+          "end_time": null,
+          "frequency": "weekly",
+          "notes": "Parish Center; followed by Stations of the Cross",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        }
+      ],
+      "validation": {
+        "status": "needs_verification",
+        "last_checked": "2026-02-27",
+        "source": "bulletin_2026-02",
+        "recommended_action": null
+      },
+      "visitation": null,
+      "bulletin_url": "https://stmarysimsbury.org/bulletins",
+      "county": "Hartford",
+      "is_accessible": null
+    },
+    {
+      "id": "parish_097",
+      "name": "St. Damien of Molokai Parish",
+      "town": "Windsor",
+      "state": "CT",
+      "zip": "06095",
+      "established": null,
+      "is_mission": false,
+      "mission_of": null,
+      "status": "active",
+      "locations": [
+        {
+          "id": "st-gabriel-church-windsor",
+          "name": "St. Gabriel Church",
+          "type": "church",
+          "address": "379 Broad St, Windsor, CT 06095",
+          "city": "Windsor",
+          "state": "CT",
+          "zip": "06095",
+          "is_accessible": true,
+          "accessibility_notes": "Accessible by side entrance",
+          "lat": 41.8478,
+          "lng": -72.6454,
+          "short_name": "St. Gabriel's"
+        },
+        {
+          "id": "st-joseph-church-windsor",
+          "name": "St. Joseph Church & Adoration Chapel",
+          "type": "church",
+          "address": "1747 Poquonock Ave, Windsor, CT 06095",
+          "city": "Windsor",
+          "state": "CT",
+          "zip": "06095",
+          "is_accessible": true,
+          "accessibility_notes": "Accessible by side entrance; chairlift at Adoration Chapel",
+          "lat": 41.9035,
+          "lng": -72.6795,
+          "short_name": "St. Joseph's"
+        }
+      ],
+      "contact": {
+        "phone": "860-688-4905",
+        "emails": [
+          "pastor@windsorcatholic.org"
+        ],
+        "website": "https://www.windsorcatholic.org/",
+        "office_hours": "Mon-Thu 8:00AM-3:00PM"
+      },
+      "clergy": [
+        {
+          "role": "pastor",
+          "name": "Rev. Joseph Moonnanappallil",
+          "email": "pastor@windsorcatholic.org"
+        },
+        {
+          "role": "deacon",
+          "name": "Dcn. Albert Cala",
+          "email": null
+        },
+        {
+          "role": "deacon_retired",
+          "name": "Dcn. R. Carl Lickwar",
+          "email": null
+        }
+      ],
+      "services": [
+        {
+          "id": "parish_097-dmass-mon-0730-sg",
+          "type": "daily_mass",
+          "day": "monday",
+          "time": "07:30",
+          "end_time": null,
+          "location_id": "st-gabriel-church-windsor",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_097-dmass-tue-0730-sg",
+          "type": "daily_mass",
+          "day": "tuesday",
+          "time": "07:30",
+          "end_time": null,
+          "location_id": "st-gabriel-church-windsor",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_097-dmass-wed-0730-sj",
+          "type": "daily_mass",
+          "day": "wednesday",
+          "time": "07:30",
+          "end_time": null,
+          "location_id": "st-joseph-church-windsor",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_097-dmass-fri-0730-sj",
+          "type": "daily_mass",
+          "day": "friday",
+          "time": "07:30",
+          "end_time": null,
+          "location_id": "st-joseph-church-windsor",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_097-smass-sat-1600-sg",
+          "type": "sunday_mass",
+          "day": "saturday",
+          "time": "16:00",
+          "end_time": null,
+          "location_id": "st-gabriel-church-windsor",
+          "language": "en",
+          "notes": "Vigil Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_097-smass-sun-0730-sg",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "07:30",
+          "end_time": null,
+          "location_id": "st-gabriel-church-windsor",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_097-smass-sun-0930-sj",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "09:30",
+          "end_time": null,
+          "location_id": "st-joseph-church-windsor",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_097-smass-sun-1130-sg",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "11:30",
+          "end_time": null,
+          "location_id": "st-gabriel-church-windsor",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_097-conf-sat-1500-sg",
+          "type": "confession",
+          "day": "saturday",
+          "time": "15:00",
+          "end_time": "15:45",
+          "location_id": "st-gabriel-church-windsor",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_097-conf-appt",
+          "type": "confession",
+          "day": null,
+          "time": null,
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "By appointment",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_097-conf-mon-1800-sg-lent",
+          "type": "confession",
+          "day": "monday",
+          "time": "18:00",
+          "end_time": "19:00",
+          "location_id": "st-gabriel-church-windsor",
+          "language": "en",
+          "notes": "Lenten Confessions",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_097-ador-mon-0800-sj",
+          "type": "adoration",
+          "day": "monday",
+          "time": "08:00",
+          "end_time": "20:00",
+          "location_id": "st-joseph-church-windsor",
+          "language": "en",
+          "notes": "St. Joseph Adoration Chapel; Mon-Fri",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_097-ador-tue-0800-sj",
+          "type": "adoration",
+          "day": "tuesday",
+          "time": "08:00",
+          "end_time": "20:00",
+          "location_id": "st-joseph-church-windsor",
+          "language": "en",
+          "notes": "St. Joseph Adoration Chapel",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_097-ador-wed-0800-sj",
+          "type": "adoration",
+          "day": "wednesday",
+          "time": "08:00",
+          "end_time": "20:00",
+          "location_id": "st-joseph-church-windsor",
+          "language": "en",
+          "notes": "St. Joseph Adoration Chapel",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_097-ador-thu-0800-sj",
+          "type": "adoration",
+          "day": "thursday",
+          "time": "08:00",
+          "end_time": "20:00",
+          "location_id": "st-joseph-church-windsor",
+          "language": "en",
+          "notes": "St. Joseph Adoration Chapel",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_097-ador-fri-0800-sj",
+          "type": "adoration",
+          "day": "friday",
+          "time": "08:00",
+          "end_time": "20:00",
+          "location_id": "st-joseph-church-windsor",
+          "language": "en",
+          "notes": "St. Joseph Adoration Chapel",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_097-rosary-sun-sg",
+          "type": "rosary",
+          "day": "sunday",
+          "time": "08:15",
+          "end_time": null,
+          "location_id": "st-gabriel-church-windsor",
+          "language": "en",
+          "notes": "KofC Rosary; after 7:30AM Mass; alternating Sundays; time estimated",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_097-rosary-sun-sj",
+          "type": "rosary",
+          "day": "sunday",
+          "time": "10:15",
+          "end_time": null,
+          "location_id": "st-joseph-church-windsor",
+          "language": "en",
+          "notes": "KofC Rosary; after 9:30AM Mass; alternating Sundays; time estimated",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_097-stations-fri-1200-sj-lent",
+          "type": "stations_of_cross",
+          "day": "friday",
+          "time": "12:00",
+          "end_time": null,
+          "location_id": "st-joseph-church-windsor",
+          "language": "en",
+          "notes": "March 13, 20, 27",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_097-stations-fri-1800-sj-lent",
+          "type": "stations_of_cross",
+          "day": "friday",
+          "time": "18:00",
+          "end_time": null,
+          "location_id": "st-joseph-church-windsor",
+          "language": "en",
+          "notes": "With Benediction; March 13, 20 & 27",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_097-holyhour-fri-1100-sj-lent",
+          "type": "holy_hour",
+          "day": "friday",
+          "time": "11:00",
+          "end_time": "12:00",
+          "location_id": "st-joseph-church-windsor",
+          "language": "en",
+          "notes": "March 6 only; precedes Stations at noon; end time estimated",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_097-divmerc-fri-1900-sj-lent",
+          "type": "divine_mercy",
+          "day": "friday",
+          "time": "19:00",
+          "end_time": null,
+          "location_id": "st-joseph-church-windsor",
+          "language": "en",
+          "notes": "Rosary, Divine Mercy Chaplet, Exposition, Adoration & Benediction; March 6",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        }
+      ],
+      "special_events": [
+        {
+          "id": "parish_097-evt-soup-for-soul",
+          "title": "Soup for the Soul",
+          "category": "fellowship",
+          "day": "wednesday",
+          "date": null,
+          "time": "18:00",
+          "end_time": null,
+          "frequency": "weekly",
+          "notes": "St. Gabriel Church Hall; Lenten readings and discussion led by Dcn. Carl; Feb 18-Mar 25",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_097-evt-feast-day-dinner",
+          "title": "St. Joseph Feast Day Mass and Dinner",
+          "category": "fellowship",
+          "day": null,
+          "date": "2026-03-19",
+          "time": "16:00",
+          "end_time": null,
+          "frequency": "one_time",
+          "notes": "St. Joseph Church; Mass 4PM, Dinner 5PM; $10/person, $25/family",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_097-evt-coffee-hour",
+          "title": "Parish Coffee Hour",
+          "category": "fellowship",
+          "day": "sunday",
+          "date": null,
+          "time": null,
+          "end_time": null,
+          "frequency": "weekly",
+          "notes": "St. Gabriel Church Hall; after 7:30AM Mass & Rosary and after 11:30AM Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        }
+      ],
+      "validation": {
+        "status": "needs_verification",
+        "last_checked": "2026-02-27",
+        "source": "bulletin_2026-02",
+        "recommended_action": null
+      },
+      "visitation": null,
+      "bulletin_url": "https://parishesonline.com/organization/st-damien-of-molokai-parish-06095",
+      "county": "Hartford",
+      "is_accessible": null
+    },
+    {
+      "id": "parish_098",
+      "name": "Mary, Gate of Heaven Parish",
+      "town": "Windsor Locks",
+      "state": "CT",
+      "zip": "06096",
+      "established": null,
+      "is_mission": false,
+      "mission_of": null,
+      "status": "active",
+      "locations": [
+        {
+          "id": "st-mary-church-windsor-locks",
+          "name": "St. Mary Church",
+          "type": "church",
+          "address": "42 Spring St, Windsor Locks, CT 06096",
+          "city": "Windsor Locks",
+          "state": "CT",
+          "zip": "06096",
+          "is_accessible": null,
+          "lat": 41.9305,
+          "lng": -72.6301,
+          "short_name": "St. Mary's"
+        },
+        {
+          "id": "st-robert-bellarmine-windsor-locks",
+          "name": "St. Robert Bellarmine Church",
+          "type": "church",
+          "address": "52 South Elm St, Windsor Locks, CT 06096",
+          "city": "Windsor Locks",
+          "state": "CT",
+          "zip": "06096",
+          "is_accessible": null,
+          "lat": 41.9233,
+          "lng": -72.6463,
+          "short_name": "St. Robert's"
+        }
+      ],
+      "contact": {
+        "phone": "860-623-2524",
+        "emails": [
+          "office@marygateofheaven.org"
+        ],
+        "website": "https://stmarystrobertwl.org/",
+        "office_hours": "Mon-Thu 8:00AM-3:00PM"
+      },
+      "clergy": [
+        {
+          "role": "pastor",
+          "name": "Rev. Timothy A. O'Brien",
+          "email": null
+        },
+        {
+          "role": "provisional_priest",
+          "name": "Rev. Msgr. Robert A. O'Grady",
+          "email": null
+        },
+        {
+          "role": "deacon",
+          "name": "Dcn. Hank Szumowski",
+          "email": null
+        }
+      ],
+      "services": [
+        {
+          "id": "parish_098-dmass-mon-0730-sm",
+          "type": "daily_mass",
+          "day": "monday",
+          "time": "07:30",
+          "end_time": null,
+          "location_id": "st-mary-church-windsor-locks",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_098-dmass-tue-0730-sm",
+          "type": "daily_mass",
+          "day": "tuesday",
+          "time": "07:30",
+          "end_time": null,
+          "location_id": "st-mary-church-windsor-locks",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_098-dmass-wed-0730-sm",
+          "type": "daily_mass",
+          "day": "wednesday",
+          "time": "07:30",
+          "end_time": null,
+          "location_id": "st-mary-church-windsor-locks",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_098-dmass-thu-0730-sm",
+          "type": "daily_mass",
+          "day": "thursday",
+          "time": "07:30",
+          "end_time": null,
+          "location_id": "st-mary-church-windsor-locks",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_098-dmass-fri-0730-sm",
+          "type": "daily_mass",
+          "day": "friday",
+          "time": "07:30",
+          "end_time": null,
+          "location_id": "st-mary-church-windsor-locks",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_098-smass-sat-1630-sr",
+          "type": "sunday_mass",
+          "day": "saturday",
+          "time": "16:30",
+          "end_time": null,
+          "location_id": "st-robert-bellarmine-windsor-locks",
+          "language": "en",
+          "notes": "Vigil Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_098-smass-sun-0700-sm",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "07:00",
+          "end_time": null,
+          "location_id": "st-mary-church-windsor-locks",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_098-smass-sun-0900-sr",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "09:00",
+          "end_time": null,
+          "location_id": "st-robert-bellarmine-windsor-locks",
+          "language": "en",
+          "notes": "Livestreamed",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_098-smass-sun-1100-sm",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "11:00",
+          "end_time": null,
+          "location_id": "st-mary-church-windsor-locks",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_098-conf-sat-1530-sr",
+          "type": "confession",
+          "day": "saturday",
+          "time": "15:30",
+          "end_time": "16:00",
+          "location_id": "st-robert-bellarmine-windsor-locks",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_098-ador-wed-1500-sm",
+          "type": "adoration",
+          "day": "wednesday",
+          "time": "15:00",
+          "end_time": "19:00",
+          "location_id": "st-mary-church-windsor-locks",
+          "language": "en",
+          "notes": "1st & 3rd Wednesday of each month",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_098-devot-tue-1815-sr",
+          "type": "devotion",
+          "day": "tuesday",
+          "time": "18:15",
+          "end_time": null,
+          "location_id": "st-robert-bellarmine-windsor-locks",
+          "language": "en",
+          "notes": "Novena of the Miraculous Medal; St. Robert's Church Lobby",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_098-rosary-mon-0815-sm",
+          "type": "rosary",
+          "day": "monday",
+          "time": "08:15",
+          "end_time": null,
+          "location_id": "st-mary-church-windsor-locks",
+          "language": "en",
+          "notes": "After 7:30AM Mass; Mon-Fri; time estimated",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_098-rosary-tue-1100-sm",
+          "type": "rosary",
+          "day": "tuesday",
+          "time": "11:00",
+          "end_time": null,
+          "location_id": "st-mary-church-windsor-locks",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_098-rosary-sun-1500-sr",
+          "type": "rosary",
+          "day": "sunday",
+          "time": "15:00",
+          "end_time": null,
+          "location_id": "st-robert-bellarmine-windsor-locks",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_098-divmerc-sun-1530-sr",
+          "type": "divine_mercy",
+          "day": "sunday",
+          "time": "15:30",
+          "end_time": null,
+          "location_id": "st-robert-bellarmine-windsor-locks",
+          "language": "en",
+          "notes": "After Sunday Rosary; time estimated",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_098-conf-mon-1800-sm-lent",
+          "type": "confession",
+          "day": "monday",
+          "time": "18:00",
+          "end_time": "19:00",
+          "location_id": "st-mary-church-windsor-locks",
+          "language": "en",
+          "notes": "Lenten Confessions; beginning Feb 23",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_098-stations-fri-1900-sm-lent",
+          "type": "stations_of_cross",
+          "day": "friday",
+          "time": "19:00",
+          "end_time": null,
+          "location_id": "st-mary-church-windsor-locks",
+          "language": "en",
+          "notes": "Starting Feb 20",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        }
+      ],
+      "special_events": [
+        {
+          "id": "parish_098-evt-bible-study",
+          "title": "Bible Study",
+          "category": "devotional",
+          "day": "sunday",
+          "date": null,
+          "time": "18:30",
+          "end_time": "19:30",
+          "frequency": "weekly",
+          "notes": "St. Robert's Hall classroom",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        }
+      ],
+      "validation": {
+        "status": "needs_verification",
+        "last_checked": "2026-02-27",
+        "source": "bulletin_2026-02",
+        "recommended_action": null
+      },
+      "visitation": null,
+      "bulletin_url": "https://parishesonline.com/organization/mary-gate-of-heaven-parish",
+      "county": "Hartford",
+      "is_accessible": null
+    },
+    {
+      "id": "parish_099",
+      "name": "Immaculate Heart of Mary Chapel — Saint Benedict Center",
+      "town": "Harvard",
+      "state": "MA",
+      "zip": "01451",
+      "established": null,
+      "is_mission": false,
+      "mission_of": null,
+      "status": "active",
+      "locations": [
+        {
+          "id": "ihm-chapel-harvard",
+          "name": "Immaculate Heart of Mary Chapel",
+          "type": "chapel",
+          "address": "282 Still River Rd, Harvard, MA 01451",
+          "city": "Harvard",
+          "state": "MA",
+          "zip": "01451",
+          "is_accessible": null,
+          "lat": 42.4828,
+          "lng": -71.6226,
+          "short_name": "IHM Chapel",
+          "notes": "Private monastery chapel open to public; Latin Mass exclusive; monastery dress code enforced"
+        }
+      ],
+      "contact": {
+        "phone": "978-456-8296",
+        "emails": [
+          "contact@saintbenedict.com"
+        ],
+        "website": "https://www.saintbenedict.com/",
+        "facebook": "https://www.facebook.com/SaintBenedictCenter",
+        "mailing_address": "PO Box 1000, Harvard, MA 01451"
+      },
+      "clergy": [
+        {
+          "role": "pastor",
+          "name": "Brother Thomas Augustine, MICM",
+          "email": "contact@saintbenedict.com"
+        }
+      ],
+      "services": [
+        {
+          "id": "parish_099-smass-sun-0700",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "07:00",
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "Low Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-smass-sun-0900",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "09:00",
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "Sung Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-smass-sun-1100",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "11:00",
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "Low Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-vesp-sun-1700",
+          "type": "vespers",
+          "day": "sunday",
+          "time": "17:00",
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "Vespers and Benediction",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-devot-sun-1930",
+          "type": "devotion",
+          "day": "sunday",
+          "time": "19:30",
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "Compline",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-dmass-mon-0700",
+          "type": "daily_mass",
+          "day": "monday",
+          "time": "07:00",
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "Low Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-dmass-tue-0700",
+          "type": "daily_mass",
+          "day": "tuesday",
+          "time": "07:00",
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "Low Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-dmass-wed-0700",
+          "type": "daily_mass",
+          "day": "wednesday",
+          "time": "07:00",
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "Low Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-dmass-thu-0700",
+          "type": "daily_mass",
+          "day": "thursday",
+          "time": "07:00",
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "Low Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-dmass-fri-0700",
+          "type": "daily_mass",
+          "day": "friday",
+          "time": "07:00",
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "Low Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-dmass-sat-0700",
+          "type": "daily_mass",
+          "day": "saturday",
+          "time": "07:00",
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "Low Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-dmass-mon-0830",
+          "type": "daily_mass",
+          "day": "monday",
+          "time": "08:30",
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "Community Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-dmass-tue-0830",
+          "type": "daily_mass",
+          "day": "tuesday",
+          "time": "08:30",
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "Community Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-dmass-wed-0830",
+          "type": "daily_mass",
+          "day": "wednesday",
+          "time": "08:30",
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "Community Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-dmass-thu-0830",
+          "type": "daily_mass",
+          "day": "thursday",
+          "time": "08:30",
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "Community Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-dmass-fri-0830",
+          "type": "daily_mass",
+          "day": "friday",
+          "time": "08:30",
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "Community Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-dmass-sat-0830",
+          "type": "daily_mass",
+          "day": "saturday",
+          "time": "08:30",
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "Community Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-rosary-mon-0800",
+          "type": "rosary",
+          "day": "monday",
+          "time": "08:00",
+          "language": "la",
+          "notes": "In Latin",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-rosary-tue-0800",
+          "type": "rosary",
+          "day": "tuesday",
+          "time": "08:00",
+          "language": "la",
+          "notes": "In Latin",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-rosary-wed-0800",
+          "type": "rosary",
+          "day": "wednesday",
+          "time": "08:00",
+          "language": "la",
+          "notes": "In Latin",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-rosary-thu-0800",
+          "type": "rosary",
+          "day": "thursday",
+          "time": "08:00",
+          "language": "la",
+          "notes": "In Latin",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-rosary-fri-0800",
+          "type": "rosary",
+          "day": "friday",
+          "time": "08:00",
+          "language": "la",
+          "notes": "In Latin",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-rosary-sat-0800",
+          "type": "rosary",
+          "day": "saturday",
+          "time": "08:00",
+          "language": "la",
+          "notes": "In Latin",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-rosary-mon-1700",
+          "type": "rosary",
+          "day": "monday",
+          "time": "17:00",
+          "language": "en",
+          "notes": "In English; followed by Benediction",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-rosary-tue-1700",
+          "type": "rosary",
+          "day": "tuesday",
+          "time": "17:00",
+          "language": "en",
+          "notes": "In English; followed by Benediction",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-rosary-wed-1700",
+          "type": "rosary",
+          "day": "wednesday",
+          "time": "17:00",
+          "language": "en",
+          "notes": "In English; followed by Benediction",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-rosary-thu-1700",
+          "type": "rosary",
+          "day": "thursday",
+          "time": "17:00",
+          "language": "en",
+          "notes": "In English; followed by Benediction",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-rosary-fri-1700",
+          "type": "rosary",
+          "day": "friday",
+          "time": "17:00",
+          "language": "en",
+          "notes": "In English; followed by Benediction",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-rosary-sat-1700",
+          "type": "rosary",
+          "day": "saturday",
+          "time": "17:00",
+          "language": "en",
+          "notes": "In English; followed by Benediction",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-devot-thu-1930",
+          "type": "devotion",
+          "day": "thursday",
+          "time": "19:30",
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "Miraculous Medal Novena followed by Benediction",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-conf-mon-0915",
+          "type": "confession",
+          "day": "monday",
+          "time": "09:15",
+          "language": "en",
+          "notes": "After 8:30AM Mass; Mon-Sat; time estimated",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02",
+          "end_time": "09:45"
+        },
+        {
+          "id": "parish_099-conf-thu-2000",
+          "type": "confession",
+          "day": "thursday",
+          "time": "20:00",
+          "language": "en",
+          "notes": "After 7:30PM Miraculous Medal Novena; time estimated",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02",
+          "end_time": "20:30"
+        }
+      ],
+      "special_events": [],
+      "validation": {
+        "status": "needs_verification",
+        "last_checked": "2026-02-27",
+        "source": "website_2026-02",
+        "recommended_action": null
+      },
+      "visitation": null,
+      "bulletin_url": "https://www.saintbenedict.com/pray/monthly-bulletin/",
+      "county": "Worcester",
+      "is_accessible": null
+    },
+    {
+      "id": "parish_100",
+      "name": "St. Ambrose Parish",
+      "town": "North Branford",
+      "state": "CT",
+      "zip": "06471",
+      "established": null,
+      "is_mission": false,
+      "mission_of": null,
+      "status": "active",
+      "locations": [
+        {
+          "id": "st-augustine-church-north-branford",
+          "name": "St. Augustine Church",
+          "type": "church",
+          "address": "30 Caputo Rd, North Branford, CT 06471",
+          "city": "North Branford",
+          "state": "CT",
+          "zip": "06471",
+          "is_accessible": null,
+          "lat": 41.3347,
+          "lng": -72.8037,
+          "short_name": "St. Augustine's"
+        },
+        {
+          "id": "st-monica-church-northford",
+          "name": "St. Monica Church",
+          "type": "church",
+          "address": "1321 Middletown Ave, Northford, CT 06472",
+          "city": "Northford",
+          "state": "CT",
+          "zip": "06472",
+          "is_accessible": null,
+          "lat": 41.3879,
+          "lng": -72.7955,
+          "short_name": "St. Monica's"
+        }
+      ],
+      "contact": {
+        "phone": "203-484-0403",
+        "emails": [],
+        "website": "https://www.nbcatholics.org/"
+      },
+      "clergy": [
+        {
+          "role": "pastor",
+          "name": "Fr. Turner",
+          "email": null
+        }
+      ],
+      "services": [
+        {
+          "id": "parish_100-dmass-mon-0900-sa",
+          "type": "daily_mass",
+          "day": "monday",
+          "time": "09:00",
+          "end_time": null,
+          "location_id": "st-augustine-church-north-branford",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_100-dmass-tue-0900-sa",
+          "type": "daily_mass",
+          "day": "tuesday",
+          "time": "09:00",
+          "end_time": null,
+          "location_id": "st-augustine-church-north-branford",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_100-dmass-tue-1800-sa",
+          "type": "daily_mass",
+          "day": "tuesday",
+          "time": "18:00",
+          "end_time": null,
+          "location_id": "st-augustine-church-north-branford",
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "Low Mass in the Extraordinary Form",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_100-dmass-wed-0900-sa",
+          "type": "daily_mass",
+          "day": "wednesday",
+          "time": "09:00",
+          "end_time": null,
+          "location_id": "st-augustine-church-north-branford",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_100-dmass-fri-0900-sa",
+          "type": "daily_mass",
+          "day": "friday",
+          "time": "09:00",
+          "end_time": null,
+          "location_id": "st-augustine-church-north-branford",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_100-dmass-sat-0900-sa",
+          "type": "daily_mass",
+          "day": "saturday",
+          "time": "09:00",
+          "end_time": null,
+          "location_id": "st-augustine-church-north-branford",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_100-smass-sat-1630-sa",
+          "type": "sunday_mass",
+          "day": "saturday",
+          "time": "16:30",
+          "end_time": null,
+          "location_id": "st-augustine-church-north-branford",
+          "language": "en",
+          "notes": "Vigil Mass; English Ordinary, no incense",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_100-smass-sun-0900-sm",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "09:00",
+          "end_time": null,
+          "location_id": "st-monica-church-northford",
+          "language": "en",
+          "notes": "English Ordinary, no incense",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_100-smass-sun-1100-sa",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "11:00",
+          "end_time": null,
+          "location_id": "st-augustine-church-north-branford",
+          "language": "la",
+          "notes": "Latin Ordinary Form (Novus Ordo in Latin); with incense",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_100-conf-mon-1700-sa",
+          "type": "confession",
+          "day": "monday",
+          "time": "17:00",
+          "end_time": "18:00",
+          "location_id": "st-augustine-church-north-branford",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_100-ador-mon-1700-sa",
+          "type": "adoration",
+          "day": "monday",
+          "time": "17:00",
+          "end_time": "18:00",
+          "location_id": "st-augustine-church-north-branford",
+          "language": "en",
+          "notes": "With opportunity for Confession",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_100-ador-1fri-1700-sa",
+          "type": "adoration",
+          "day": "first_friday",
+          "time": "17:00",
+          "end_time": "18:00",
+          "location_id": "st-augustine-church-north-branford",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_100-conf-mon-0830-sa",
+          "type": "confession",
+          "day": "monday",
+          "time": "08:30",
+          "end_time": "09:00",
+          "location_id": "st-augustine-church-north-branford",
+          "language": "en",
+          "notes": "30 minutes before 9:00AM Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_100-conf-tue-0830-sa",
+          "type": "confession",
+          "day": "tuesday",
+          "time": "08:30",
+          "end_time": "09:00",
+          "location_id": "st-augustine-church-north-branford",
+          "language": "en",
+          "notes": "30 minutes before 9:00AM Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_100-conf-wed-0830-sa",
+          "type": "confession",
+          "day": "wednesday",
+          "time": "08:30",
+          "end_time": "09:00",
+          "location_id": "st-augustine-church-north-branford",
+          "language": "en",
+          "notes": "30 minutes before 9:00AM Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_100-conf-fri-0830-sa",
+          "type": "confession",
+          "day": "friday",
+          "time": "08:30",
+          "end_time": "09:00",
+          "location_id": "st-augustine-church-north-branford",
+          "language": "en",
+          "notes": "30 minutes before 9:00AM Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_100-conf-sat-0830-sa",
+          "type": "confession",
+          "day": "saturday",
+          "time": "08:30",
+          "end_time": "09:00",
+          "location_id": "st-augustine-church-north-branford",
+          "language": "en",
+          "notes": "30 minutes before 9:00AM Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_100-conf-sat-1600-sa",
+          "type": "confession",
+          "day": "saturday",
+          "time": "16:00",
+          "end_time": "16:30",
+          "location_id": "st-augustine-church-north-branford",
+          "language": "en",
+          "notes": "30 minutes before 4:30PM Vigil Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        }
+      ],
+      "special_events": [],
+      "validation": {
+        "status": "needs_verification",
+        "last_checked": "2026-02-27",
+        "source": "website_2026-02",
+        "recommended_action": null
+      },
+      "visitation": null,
+      "bulletin_url": null,
+      "county": "New Haven",
+      "is_accessible": null
+    },
+    {
+      "id": "parish_101",
+      "name": "St. Stanislaus Kostka Church",
+      "town": "Winchester",
+      "state": "NH",
+      "zip": "03470",
+      "established": null,
+      "is_mission": false,
+      "mission_of": null,
+      "status": "active",
+      "locations": [
+        {
+          "id": "st-stanislaus-kostka-winchester",
+          "name": "St. Stanislaus Kostka Church",
+          "type": "church",
+          "address": "80 Richmond Rd, Winchester, NH 03470",
+          "city": "Winchester",
+          "state": "NH",
+          "zip": "03470",
+          "is_accessible": null,
+          "lat": 42.7701,
+          "lng": -72.3766,
+          "short_name": "St. Stanislaus",
+          "notes": "Latin Mass exclusive; Institute of the Good Shepherd (IBP)"
+        }
+      ],
+      "contact": {
+        "phone": "603-803-4015",
+        "emails": [],
+        "website": "https://www.winchesterlatinmass.com/",
+        "facebook": "https://www.facebook.com/winchesterlatinmass",
+        "office_hours": "Tue-Fri 9:00AM-12:00PM, 2:00PM-5:00PM"
+      },
+      "clergy": [
+        {
+          "role": "pastor",
+          "name": "Fr. Hugues Beaugrand, IBP",
+          "email": null
+        },
+        {
+          "role": "provisional_priest",
+          "name": "Fr. Grzegorz Krol, IBP",
+          "email": null
+        }
+      ],
+      "services": [
+        {
+          "id": "parish_101-smass-sun-0830",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "08:30",
+          "end_time": null,
+          "location_id": null,
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "Low Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_101-smass-sun-1030",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "10:30",
+          "end_time": null,
+          "location_id": null,
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "High Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_101-vesp-sun-1300",
+          "type": "vespers",
+          "day": "sunday",
+          "time": "13:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "la",
+          "rite": "tridentine",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_101-dmass-mon-0900",
+          "type": "daily_mass",
+          "day": "monday",
+          "time": "09:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "la",
+          "rite": "tridentine",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_101-dmass-tue-0715",
+          "type": "daily_mass",
+          "day": "tuesday",
+          "time": "07:15",
+          "end_time": null,
+          "location_id": null,
+          "language": "la",
+          "rite": "tridentine",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_101-dmass-wed-0715",
+          "type": "daily_mass",
+          "day": "wednesday",
+          "time": "07:15",
+          "end_time": null,
+          "location_id": null,
+          "language": "la",
+          "rite": "tridentine",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_101-dmass-wed-1130",
+          "type": "daily_mass",
+          "day": "wednesday",
+          "time": "11:30",
+          "end_time": null,
+          "location_id": null,
+          "language": "la",
+          "rite": "tridentine",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_101-dmass-thu-0715",
+          "type": "daily_mass",
+          "day": "thursday",
+          "time": "07:15",
+          "end_time": null,
+          "location_id": null,
+          "language": "la",
+          "rite": "tridentine",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_101-dmass-fri-0800",
+          "type": "daily_mass",
+          "day": "friday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "la",
+          "rite": "tridentine",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_101-dmass-fri-1800",
+          "type": "daily_mass",
+          "day": "friday",
+          "time": "18:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "With Adoration and Benediction",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_101-dmass-sat-0900",
+          "type": "daily_mass",
+          "day": "saturday",
+          "time": "09:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "la",
+          "rite": "tridentine",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_101-conf-sun-0800",
+          "type": "confession",
+          "day": "sunday",
+          "time": "08:00",
+          "end_time": "08:30",
+          "location_id": null,
+          "language": "la",
+          "notes": "30 minutes before Low Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02",
+          "rite": "tridentine"
+        },
+        {
+          "id": "parish_101-conf-sun-1000",
+          "type": "confession",
+          "day": "sunday",
+          "time": "10:00",
+          "end_time": "10:30",
+          "location_id": null,
+          "language": "la",
+          "notes": "30 minutes before High Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02",
+          "rite": "tridentine"
+        },
+        {
+          "id": "parish_101-conf-mon-0830",
+          "type": "confession",
+          "day": "monday",
+          "time": "08:30",
+          "end_time": "09:00",
+          "location_id": null,
+          "language": "la",
+          "notes": "30 minutes before Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02",
+          "rite": "tridentine"
+        },
+        {
+          "id": "parish_101-conf-tue-0645",
+          "type": "confession",
+          "day": "tuesday",
+          "time": "06:45",
+          "end_time": "07:15",
+          "location_id": null,
+          "language": "la",
+          "notes": "30 minutes before Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02",
+          "rite": "tridentine"
+        },
+        {
+          "id": "parish_101-conf-wed-0645",
+          "type": "confession",
+          "day": "wednesday",
+          "time": "06:45",
+          "end_time": "07:15",
+          "location_id": null,
+          "language": "la",
+          "notes": "30 minutes before 7:15AM Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02",
+          "rite": "tridentine"
+        },
+        {
+          "id": "parish_101-conf-wed-1100",
+          "type": "confession",
+          "day": "wednesday",
+          "time": "11:00",
+          "end_time": "11:30",
+          "location_id": null,
+          "language": "la",
+          "notes": "30 minutes before 11:30AM Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02",
+          "rite": "tridentine"
+        },
+        {
+          "id": "parish_101-conf-thu-0645",
+          "type": "confession",
+          "day": "thursday",
+          "time": "06:45",
+          "end_time": "07:15",
+          "location_id": null,
+          "language": "la",
+          "notes": "30 minutes before Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02",
+          "rite": "tridentine"
+        },
+        {
+          "id": "parish_101-conf-fri-0730",
+          "type": "confession",
+          "day": "friday",
+          "time": "07:30",
+          "end_time": "08:00",
+          "location_id": null,
+          "language": "la",
+          "notes": "30 minutes before 8:00AM Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02",
+          "rite": "tridentine"
+        },
+        {
+          "id": "parish_101-conf-fri-1730",
+          "type": "confession",
+          "day": "friday",
+          "time": "17:30",
+          "end_time": "18:00",
+          "location_id": null,
+          "language": "la",
+          "notes": "30 minutes before 6:00PM Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02",
+          "rite": "tridentine"
+        },
+        {
+          "id": "parish_101-conf-sat-0830",
+          "type": "confession",
+          "day": "saturday",
+          "time": "08:30",
+          "end_time": "09:00",
+          "location_id": null,
+          "language": "la",
+          "notes": "30 minutes before Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02",
+          "rite": "tridentine"
+        }
+      ],
+      "special_events": [],
+      "validation": {
+        "status": "needs_verification",
+        "last_checked": "2026-02-27",
+        "source": "bulletin_2026-02",
+        "recommended_action": null
+      },
+      "visitation": null,
+      "bulletin_url": "https://www.winchesterlatinmass.com/bulletins",
+      "county": "Cheshire",
+      "is_accessible": null
+    },
+    {
+      "id": "parish_102",
+      "name": "St. Patrick Oratory",
+      "town": "Waterbury",
+      "state": "CT",
+      "zip": "06708",
+      "established": null,
+      "is_mission": false,
+      "mission_of": null,
+      "status": "active",
+      "locations": [
+        {
+          "id": "st-patrick-oratory-waterbury",
+          "name": "St. Patrick Oratory",
+          "type": "church",
+          "address": "48 Charles St, Waterbury, CT 06708",
+          "city": "Waterbury",
+          "state": "CT",
+          "zip": "06708",
+          "is_accessible": null,
+          "lat": 41.5425,
+          "lng": -73.0456,
+          "short_name": "St. Patrick's",
+          "notes": "Latin Mass exclusive; Institute of Christ the King Sovereign Priest (ICKSP)",
+          "mailing": "50 Charles St, Waterbury, CT 06708"
+        }
+      ],
+      "contact": {
+        "phone": "203-756-8837",
+        "emails": [
+          "stpatrick@icksp.org"
+        ],
+        "website": "https://www.institute-christ-king.org/waterbury-home",
+        "office_hours": "Mon-Fri 10:00AM-4:00PM"
+      },
+      "clergy": [
+        {
+          "role": "pastor",
+          "name": "Canon Matthew Weaver",
+          "email": null
+        },
+        {
+          "role": "provisional_priest",
+          "name": "Abbé Luke Ball",
+          "email": null
+        }
+      ],
+      "services": [
+        {
+          "id": "parish_102-smass-sun-0830",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "08:30",
+          "end_time": null,
+          "location_id": null,
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "Low Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_102-smass-sun-1030",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "10:30",
+          "end_time": null,
+          "location_id": null,
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "High Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_102-dmass-mon-1800",
+          "type": "daily_mass",
+          "day": "monday",
+          "time": "18:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "Low Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_102-dmass-tue-0800",
+          "type": "daily_mass",
+          "day": "tuesday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "Low Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_102-dmass-wed-1200",
+          "type": "daily_mass",
+          "day": "wednesday",
+          "time": "12:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "Low Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_102-dmass-thu-0800",
+          "type": "daily_mass",
+          "day": "thursday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "Low Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_102-dmass-fri-1800",
+          "type": "daily_mass",
+          "day": "friday",
+          "time": "18:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "Low Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_102-dmass-sat-0800",
+          "type": "daily_mass",
+          "day": "saturday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "Low Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_102-ador-sun-1700",
+          "type": "adoration",
+          "day": "sunday",
+          "time": "17:00",
+          "end_time": "18:00",
+          "location_id": null,
+          "language": "en",
+          "notes": "Sun-Tue 5-6PM",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_102-ador-mon-1700",
+          "type": "adoration",
+          "day": "monday",
+          "time": "17:00",
+          "end_time": "18:00",
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_102-ador-tue-1700",
+          "type": "adoration",
+          "day": "tuesday",
+          "time": "17:00",
+          "end_time": "18:00",
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_102-ador-wed-1000",
+          "type": "adoration",
+          "day": "wednesday",
+          "time": "10:00",
+          "end_time": "12:00",
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_102-ador-thu-1700",
+          "type": "adoration",
+          "day": "thursday",
+          "time": "17:00",
+          "end_time": "18:00",
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_102-ador-fri-1700",
+          "type": "adoration",
+          "day": "friday",
+          "time": "17:00",
+          "end_time": "18:00",
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_102-ador-1sat-0845",
+          "type": "adoration",
+          "day": "first_saturday",
+          "time": "08:45",
+          "end_time": "09:30",
+          "location_id": null,
+          "language": "en",
+          "notes": "After Holy Mass; Exposition, Holy Rosary & Benediction; time estimated",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_102-conf-sun-0800",
+          "type": "confession",
+          "day": "sunday",
+          "time": "08:00",
+          "end_time": "08:30",
+          "location_id": null,
+          "language": "la",
+          "notes": "30 minutes before Low Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02",
+          "rite": "tridentine"
+        },
+        {
+          "id": "parish_102-conf-sun-1000",
+          "type": "confession",
+          "day": "sunday",
+          "time": "10:00",
+          "end_time": "10:30",
+          "location_id": null,
+          "language": "la",
+          "notes": "30 minutes before High Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02",
+          "rite": "tridentine"
+        },
+        {
+          "id": "parish_102-conf-mon-1730",
+          "type": "confession",
+          "day": "monday",
+          "time": "17:30",
+          "end_time": "18:00",
+          "location_id": null,
+          "language": "la",
+          "notes": "30 minutes before 6:00PM Low Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02",
+          "rite": "tridentine"
+        },
+        {
+          "id": "parish_102-conf-tue-0730",
+          "type": "confession",
+          "day": "tuesday",
+          "time": "07:30",
+          "end_time": "08:00",
+          "location_id": null,
+          "language": "la",
+          "notes": "30 minutes before 8:00AM Low Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02",
+          "rite": "tridentine"
+        },
+        {
+          "id": "parish_102-conf-wed-1130",
+          "type": "confession",
+          "day": "wednesday",
+          "time": "11:30",
+          "end_time": "12:00",
+          "location_id": null,
+          "language": "la",
+          "notes": "30 minutes before 12:00PM Low Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02",
+          "rite": "tridentine"
+        },
+        {
+          "id": "parish_102-conf-thu-0730",
+          "type": "confession",
+          "day": "thursday",
+          "time": "07:30",
+          "end_time": "08:00",
+          "location_id": null,
+          "language": "la",
+          "notes": "30 minutes before 8:00AM Low Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02",
+          "rite": "tridentine"
+        },
+        {
+          "id": "parish_102-conf-fri-1730",
+          "type": "confession",
+          "day": "friday",
+          "time": "17:30",
+          "end_time": "18:00",
+          "location_id": null,
+          "language": "la",
+          "notes": "30 minutes before 6:00PM Low Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02",
+          "rite": "tridentine"
+        },
+        {
+          "id": "parish_102-conf-sat-0730",
+          "type": "confession",
+          "day": "saturday",
+          "time": "07:30",
+          "end_time": "08:00",
+          "location_id": null,
+          "language": "la",
+          "notes": "30 minutes before 8:00AM Low Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02",
+          "rite": "tridentine"
+        }
+      ],
+      "special_events": [],
+      "validation": {
+        "status": "needs_verification",
+        "last_checked": "2026-02-27",
+        "source": "bulletin_2026-02",
+        "recommended_action": null
+      },
+      "visitation": null,
+      "bulletin_url": "https://www.institute-christ-king.org/waterbury-bulletins",
+      "county": "New Haven",
+      "is_accessible": null
     }
   ],
   "yc_events": [
