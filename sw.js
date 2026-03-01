@@ -1,4 +1,4 @@
-const CACHE_NAME = 'massfinder-v2';
+const CACHE_NAME = 'massfinder-v2_1';
 const SHELL_ASSETS = [
   '/',
   '/index.html',
@@ -33,6 +33,20 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
 
+  // Always pass API calls and external services straight to the network — never cache them.
+  // This covers the readings API, saint API, Web3Forms, Google Analytics, fonts, etc.
+  const NETWORK_ONLY_HOSTS = [
+    'massfinder-readings-api.vercel.app',
+    'api.web3forms.com',
+    'www.googletagmanager.com',
+    'www.google-analytics.com',
+    'universalis.com',
+  ];
+  if (NETWORK_ONLY_HOSTS.some(h => url.hostname === h)) {
+    // Let the browser handle it directly — no SW involvement
+    return;
+  }
+
   // For parish_data.json: stale-while-revalidate
   if (url.pathname.endsWith('parish_data.json')) {
     event.respondWith(
@@ -49,7 +63,7 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // For everything else: cache-first, fall back to network
+  // For shell assets: cache-first, fall back to network
   event.respondWith(
     caches.match(event.request).then(cached => cached || fetch(event.request))
   );
