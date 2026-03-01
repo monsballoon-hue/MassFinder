@@ -279,6 +279,8 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 /* MORE FILTERS OVERLAY */
 .filters-overlay { position: fixed; inset: 0; z-index: 1100; background: var(--color-surface); transform: translateY(100%); transition: transform 0.35s var(--ease-out); overflow-y: auto; -webkit-overflow-scrolling: touch; }
 .filters-overlay.open { transform: translateY(0); }
+.filters-backdrop { position: fixed; inset: 0; z-index: 1099; background: rgba(26,30,38,0.35); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); opacity: 0; pointer-events: none; transition: opacity 0.3s var(--ease-out); }
+.filters-backdrop.open { opacity: 1; pointer-events: auto; }
 @media(min-width:769px){ .filters-overlay { inset: 10vh auto auto 50%; transform: translateX(-50%) translateY(30px); width: min(560px, 90vw); max-height: 80vh; border-radius: var(--radius-lg); box-shadow: var(--shadow-elevated); opacity: 0; pointer-events: none; transition: transform 0.3s var(--ease-out), opacity 0.3s var(--ease-out); } .filters-overlay.open { transform: translateX(-50%) translateY(0); opacity: 1; pointer-events: auto; } }
 .filters-header { display: flex; align-items: center; justify-content: space-between; padding: var(--space-4) var(--space-5); border-bottom: 1px solid var(--color-border-light); position: sticky; top: 0; background: var(--color-surface); z-index: 2; }
 .filters-header h2 { font-family: var(--font-display); font-size: var(--text-xl); font-weight: var(--weight-semibold); }
@@ -334,8 +336,8 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .skip-link:focus { position: fixed; top: 0; left: 0; outline: 2px solid var(--color-accent); outline-offset: 2px; }
 
 /* MAP TAB */
-#panelMap { padding: var(--space-2); box-sizing: border-box; }
-#mapContainer { width: 100%; height: 65vh; height: 65dvh; border-radius: var(--radius-md); overflow: hidden; }
+#panelMap { padding: 0; box-sizing: border-box; }
+#mapContainer { width: 100%; height: calc(100vh - 52px - var(--tab-bar-height) - var(--safe-bottom)); height: calc(100dvh - 52px - var(--tab-bar-height) - var(--safe-bottom)); overflow: hidden; }
 .leaflet-container { background: var(--color-bg); font-family: var(--font-body); }
 .map-cluster {
   background: rgba(44,62,90,0.15); border-radius: 50%;
@@ -419,13 +421,13 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .events-widget-seeall { font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--color-accent-text); }
 .events-widget-strip { display: flex; gap: var(--space-3); overflow-x: auto; padding: 0 var(--space-4) var(--space-2); scrollbar-width: none; -webkit-overflow-scrolling: touch; }
 .events-widget-strip::-webkit-scrollbar { display: none; }
-.event-mini-card { flex-shrink: 0; width: 172px; background: linear-gradient(135deg,#FBF8F1 0%,#F5EDD8 100%); border-left: 3px solid var(--color-accent); border-radius: var(--radius-md); padding: var(--space-3); cursor: pointer; box-shadow: var(--shadow-card); transition: box-shadow var(--transition-fast); }
+.event-mini-card { flex-shrink: 0; width: 140px; background: var(--color-surface); border-left: 2px solid var(--color-accent); border-radius: var(--radius-sm); padding: var(--space-2) var(--space-3); cursor: pointer; box-shadow: var(--shadow-card); transition: box-shadow var(--transition-fast); }
 .event-mini-card:hover { box-shadow: var(--shadow-card-hover); }
-.event-mini-fav { display: flex; align-items: center; gap: 3px; font-size: 10px; font-weight: var(--weight-semibold); color: var(--color-fav); margin-bottom: 3px; }
-.event-mini-church { font-size: var(--text-xs); color: var(--color-text-tertiary); margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.event-mini-title { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-text-primary); line-height: 1.3; margin-bottom: var(--space-2); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.event-mini-date { font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--color-accent-text); }
-.event-mini-near { display: inline-flex; align-items: center; gap: 3px; font-size: 10px; color: var(--color-info); font-weight: var(--weight-semibold); margin-bottom: 3px; }
+.event-mini-fav { display: flex; align-items: center; gap: 3px; font-size: 10px; font-weight: var(--weight-semibold); color: var(--color-fav); margin-bottom: 2px; }
+.event-mini-church { font-size: 11px; color: var(--color-text-tertiary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.event-mini-title { font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--color-text-primary); line-height: 1.3; margin-bottom: 2px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.event-mini-date { font-size: 11px; font-weight: var(--weight-semibold); color: var(--color-accent-text); margin-bottom: 2px; }
+.event-mini-near { display: inline-flex; align-items: center; gap: 3px; font-size: 10px; color: var(--color-info); font-weight: var(--weight-semibold); margin-bottom: 2px; }
 
 /* SPARSE MESSAGE */
 .sparse-msg { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--space-4) var(--space-2); }
@@ -682,6 +684,7 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
   <div id="detailContent"></div>
 </div>
 
+<div id="filtersBackdrop" class="filters-backdrop" onclick="closeMoreFilters()"></div>
 <div id="filtersOverlay" class="filters-overlay" role="dialog" aria-modal="true" aria-label="Filter options">
   <div class="filters-header">
     <h2>Filters</h2>
@@ -709,6 +712,8 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
 <script>
 let allParishes=[],filteredParishes=[],userLat=null,userLng=null,currentSort='name',currentFilter='all',searchQuery='',favorites=[],ycEvents=[];
+let keepParishIds=new Set();
+function displayName(name,id){if(!id||!keepParishIds.has(id))return name.replace(/ Parish$/,' Church');return name}
 let advancedFilters={types:[],days:[],languages:[]},tempAdvanced={types:[],days:[],languages:[]};
 const DAY_ORDER=['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
 const DAY_NAMES={sunday:'Sunday',monday:'Monday',tuesday:'Tuesday',wednesday:'Wednesday',thursday:'Thursday',friday:'Friday',saturday:'Saturday'};
@@ -800,8 +805,8 @@ function removeAdv(k,v){advancedFilters[k]=advancedFilters[k].filter(x=>x!==v);r
 function updateMFChip(){const btn=document.getElementById('moreFiltersBtn');const c=advancedFilters.types.length+advancedFilters.days.length+advancedFilters.languages.length;btn.innerHTML=c>0?'Filters <span class="chip-count">'+c+'</span>':'More Filters';btn.classList.toggle('active',c>0)}
 
 // More Filters overlay
-function openMoreFilters(){tempAdvanced=JSON.parse(JSON.stringify(advancedFilters));renderFiltersBody();document.getElementById('filtersOverlay').classList.add('open');document.body.style.overflow='hidden';trapFocus(document.getElementById('filtersOverlay'))}
-function closeMoreFilters(){document.getElementById('filtersOverlay').classList.remove('open');document.body.style.overflow='';releaseFocus()}
+function openMoreFilters(){tempAdvanced=JSON.parse(JSON.stringify(advancedFilters));renderFiltersBody();document.getElementById('filtersBackdrop').classList.add('open');document.getElementById('filtersOverlay').classList.add('open');document.body.style.overflow='hidden';trapFocus(document.getElementById('filtersOverlay'))}
+function closeMoreFilters(){document.getElementById('filtersBackdrop').classList.remove('open');document.getElementById('filtersOverlay').classList.remove('open');document.body.style.overflow='';releaseFocus()}
 function clearAdvancedFilters(){tempAdvanced={types:[],days:[],languages:[]};renderFiltersBody()}
 function applyAdvancedFilters(){advancedFilters=JSON.parse(JSON.stringify(tempAdvanced));closeMoreFilters();renderPills();updateMFChip();filterParishes();renderCards()}
 function toggleTemp(k,v){if(tempAdvanced[k].includes(v))tempAdvanced[k]=tempAdvanced[k].filter(x=>x!==v);else tempAdvanced[k].push(v);renderFiltersBody()}
@@ -909,7 +914,7 @@ function renderYCCard(e,delay,idx){
   return '<article class="yc-card" role="listitem" style="animation-delay:'+(delay||0)+'ms" onclick="openDetail(\''+e.parish_id+'\')">'
     +'<div class="yc-card-top"><div class="yc-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Young &amp; Catholic</div>'+calBtn+'</div>'
     +'<div class="yc-title">'+esc(e.title)+'</div>'
-    +'<div class="yc-church">'+esc(r.locName||r.parishName)+', '+esc(r.town)+'</div>'
+    +'<div class="yc-church">'+esc(displayName(r.locName||r.parishName,e.parish_id))+', '+esc(r.town)+'</div>'
     +'<div class="yc-datetime"><span class="yc-date">'+fmtYCDate(e.date)+'</span><span class="yc-time">'+timeStr+'</span></div>'
     +(e.social?'<div class="yc-social-tag">✦ Social gathering included</div>':'')
     +(e.notes?'<div style="font-size:var(--text-xs);color:var(--color-text-tertiary);font-style:italic;margin-top:var(--space-1)">'+esc(e.notes)+'</div>':'')
@@ -949,23 +954,13 @@ function renderCards(){
     let nh;if(next){nh='<div class="card-next-service"><span class="card-next-time">'+next.timeFormatted+'</span><span class="card-next-label">'+esc(SVC[next.service.type]||next.service.type)+'</span>'+(next.isSoon?'<span class="card-soon-badge"><span class="pulse-dot"></span>Soon</span>':'')+'</div><div class="card-next-day">'+next.dayLabel+'</div>'}
     else{nh='<div class="card-next-service"><span class="card-next-label" style="color:var(--color-text-tertiary)">Check bulletin for times</span></div>'}
     return '<article class="parish-card" role="listitem" style="animation-delay:'+d+'ms" onclick="openDetail(\''+p.id+'\')">'
-      +'<div class="card-top"><div class="card-name-row"><h3 class="card-name">'+esc(p.name)+'</h3>'+(ver?checkSvg:'')+'</div>'
+      +'<div class="card-top"><div class="card-name-row"><h3 class="card-name">'+esc(displayName(p.name,p.id))+'</h3>'+(ver?checkSvg:'')+'</div>'
       +'<div class="card-right">'+(dist!==null?'<span class="card-distance">'+fmtDist(dist)+'</span>':'')
       +'<button class="card-fav'+(fav?' is-fav':'')+'" onclick="toggleFav(\''+p.id+"',event)\" aria-label=\"Favorite\"><svg viewBox=\"0 0 24 24\" fill=\""+(fav?'currentColor':'none')+"\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z\"/></svg></button>"
       +'</div></div><div class="card-town">'+esc(p.town)+', '+esc(p.county)+' County</div>'+nh
       +(tag||hasLent?'<div class="card-tags">'+(tag?'<span class="card-tag '+tag.c+'">'+tag.t+'</span>':'')+(hasLent?'<span class="card-seasonal-badge">🌿 Lenten services</span>':'')+'</div>':'')
       +'</article>';
   });
-
-  // Inject YC events inline: show next 2 upcoming after card 3, then 1 more after card 10
-  if(upcoming.length&&currentFilter==='all'){
-    const ycSlice=upcoming.slice(0,3);
-    const ycHeader='<div class="yc-section-header"><span class="yc-section-title">Young &amp; Catholic</span><span class="yc-section-count">'+upcoming.length+' upcoming</span></div>';
-    const ycCards=ycSlice.map((e,i)=>renderYCCard(e,0,i)).join('');
-    const viewAll=upcoming.length>3?'<div style="text-align:center;padding:var(--space-2) 0"><button style="font-size:var(--text-sm);font-weight:var(--weight-semibold);color:var(--color-accent-text);padding:var(--space-2) var(--space-4)" onclick="document.querySelector(\'[data-filter=yc]\').click()">See all '+upcoming.length+' YC events →</button></div>':'';
-    const insertIdx=Math.min(3,cards.length);
-    cards.splice(insertIdx,0,ycHeader+ycCards+viewAll);
-  }
 
   el.innerHTML=cards.join('');
 }
@@ -1008,7 +1003,7 @@ function openDetail(id){
   if(thirdActionUrl)qa+='<a class="quick-action" href="'+esc(thirdActionUrl)+'" target="_blank" rel="noopener">'+thirdActionIcon+'<span>'+thirdActionLabel+'</span></a>';
   // Share button (Web Share API)
   if(navigator.share){
-    qa+='<button class="quick-action" onclick="shareParish(\''+esc(p.name)+'\',\''+p.id+'\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg><span>Share</span></button>';
+    qa+='<button class="quick-action" onclick="shareParish(\''+esc(displayName(p.name,p.id))+'\',\''+p.id+'\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg><span>Share</span></button>';
   }
   qa+='</div>';
 
@@ -1078,10 +1073,10 @@ function openDetail(id){
   let footer='';if(v.last_checked)footer='<div class="detail-verified-footer">Last checked: '+esc(v.last_checked)+(v.bulletin_date?' · Bulletin: '+esc(v.bulletin_date):'')+(v.source?'<br>Source: '+esc(v.source):'')+'</div>';
 
   document.getElementById('detailContent').innerHTML=
-    '<div class="detail-header"><div class="detail-header-top"><h2 class="detail-name">'+esc(p.name)+'</h2>'
+    '<div class="detail-header"><div class="detail-header-top"><h2 class="detail-name">'+esc(displayName(p.name,p.id))+'</h2>'
     +'<div class="detail-actions"><button class="detail-action-btn fav-btn'+(fav?' fav-active':'')+'" data-id="'+p.id+'" onclick="toggleFav(\''+p.id+'\')" aria-label="Favorite"><svg viewBox="0 0 24 24" fill="'+(fav?'currentColor':'none')+'" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>'
     +'<button class="detail-action-btn" onclick="closeDetail()" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>'
-    +'</div></div><div class="detail-town">'+esc(p.town)+', Massachusetts</div><div class="detail-badges">'+bg+'</div></div>'
+    +'</div></div><div class="detail-town">'+esc(p.town)+', '+esc({MA:'Massachusetts',CT:'Connecticut',VT:'Vermont',NH:'New Hampshire'}[p.state]||p.state||'Massachusetts')+'</div><div class="detail-badges">'+bg+'</div></div>'
     +'<div class="detail-body">'+chtml+qa+visitHtml+mlNote+secHtml+vp+footer+'</div>';
 
   document.getElementById('detailBackdrop').classList.add('open');
@@ -1556,7 +1551,7 @@ function initMap(){
       const dist=getDist(p);
 
       let popupHtml='<div class="popup-card" onclick="closeMapPopup();openDetail(\''+p.id+'\')">';
-      popupHtml+='<div class="popup-name">'+esc(p.name)+'</div>';
+      popupHtml+='<div class="popup-name">'+esc(displayName(p.name,p.id))+'</div>';
       popupHtml+='<div class="popup-town">'+esc(p.town)+', '+esc(p.county)+' County</div>';
       if(next){
         popupHtml+='<div class="popup-next"><span class="popup-time">'+next.timeFormatted+'</span>';
@@ -1652,7 +1647,7 @@ function renderSaved(){
     if(next){nh='<div class="card-next-service"><span class="card-next-time">'+next.timeFormatted+'</span><span class="card-next-label">'+esc(SVC[next.service.type]||next.service.type)+'</span>'+(next.isSoon?'<span class="card-soon-badge"><span class="pulse-dot"></span>Soon</span>':'')+'</div><div class="card-next-day">'+next.dayLabel+'</div>'}
     else{nh='<div class="card-next-service"><span class="card-next-label" style="color:var(--color-text-tertiary)">Check bulletin for times</span></div>'}
     return '<article class="parish-card" role="listitem" onclick="openDetail(\''+p.id+'\')">'
-      +'<div class="card-top"><div class="card-name-row"><h3 class="card-name">'+esc(p.name)+'</h3>'+(ver?checkSvg:'')+'</div>'
+      +'<div class="card-top"><div class="card-name-row"><h3 class="card-name">'+esc(displayName(p.name,p.id))+'</h3>'+(ver?checkSvg:'')+'</div>'
       +'<div class="card-right">'+(dist!==null?'<span class="card-distance">'+fmtDist(dist)+'</span>':'')
       +'<button class="card-fav is-fav" onclick="toggleFav(\''+p.id+"',event);renderSaved()\" aria-label=\"Remove from favorites\"><svg viewBox=\"0 0 24 24\" fill=\"currentColor\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z\"/></svg></button>"
       +'</div></div><div class="card-town">'+esc(p.town)+', '+esc(p.county)+' County</div>'+nh
@@ -1673,31 +1668,16 @@ function renderEventsWidget(){
   const upcoming=getUpcomingYC();
   if(!upcoming.length){el.innerHTML='';return}
 
-  // Priority: favorites first, then within 10 miles, then rest
-  const favSet=new Set(favorites);
-  const favEvents=upcoming.filter(e=>favSet.has(e.parish_id));
-  const nearEvents=upcoming.filter(e=>{
-    if(favSet.has(e.parish_id))return false;
-    const p=allParishes.find(x=>x.id===e.parish_id);
-    if(!p)return false;
-    const d=getDist(p);
-    return d!==null&&d<=10;
-  });
-  const rest=upcoming.filter(e=>!favSet.has(e.parish_id)&&!nearEvents.includes(e));
-  const ordered=[...favEvents,...nearEvents,...rest].slice(0,6);
+  // Show in date order (getUpcomingYC already returns date-sorted)
+  const ordered=upcoming.slice(0,6);
   if(!ordered.length){el.innerHTML='';return}
 
   const cards=ordered.map((e,i)=>{
     const r=resolveYC(e);
-    const isFavE=favSet.has(e.parish_id);
-    const dist=r.parishName?getDist(allParishes.find(x=>x.id===e.parish_id)):null;
-    const isNear=!isFavE&&dist!==null&&dist<=10;
-    const indicator=isFavE?'<div class="event-mini-fav">♥ Saved church</div>':isNear?'<div class="event-mini-near">📍 '+fmtDist(dist)+' away</div>':'';
     return '<div class="event-mini-card" onclick="openDetail(\''+e.parish_id+'\')">'
-      +indicator
-      +'<div class="event-mini-church">'+esc(r.locName||r.parishName)+'</div>'
-      +'<div class="event-mini-title">'+esc(e.title)+'</div>'
       +'<div class="event-mini-date">'+fmtYCDate(e.date)+'</div>'
+      +'<div class="event-mini-title">'+esc(e.title)+'</div>'
+      +'<div class="event-mini-church">'+esc(displayName(r.locName||r.parishName,e.parish_id))+'</div>'
       +'</div>';
   }).join('');
 
@@ -1816,18 +1796,13 @@ function toggleReading(id){
 // DEVOTIONAL CONTENT
 // ============================================================
 const DEVOTIONAL_GUIDES=[
-  {icon:'📿',title:'How to pray the Rosary',body:`
-<p>The Rosary is a meditative prayer built around 20 mysteries — events in the lives of Jesus and Mary — divided into four sets: Joyful, Luminous, Sorrowful, and Glorious. A traditional weekly rotation is Joyful on Monday and Saturday, Luminous on Thursday, Sorrowful on Tuesday and Friday, and Glorious on Wednesday and Sunday.</p>
-<p>To pray the Rosary: begin with the <strong>Apostles' Creed</strong> on the crucifix, then one <strong>Our Father</strong>, three <strong>Hail Marys</strong>, and a <strong>Glory Be</strong> on the introductory beads. For each of the five decades, announce the mystery you're meditating on, pray one Our Father, ten Hail Marys, and a Glory Be. Close with the <strong>Hail, Holy Queen</strong>.</p>
-<p>The power of the Rosary lies less in the words and more in the quiet meditation on the mysteries. It's fine to start slowly — even one decade is a good beginning.</p>
-  `},
   {icon:'🕯️',title:'What is Adoration?',body:`
 <p><strong>Eucharistic Adoration</strong> is time spent in prayer before the Blessed Sacrament — the consecrated host — which Catholics believe is truly the Body of Christ. The host is placed in a vessel called a monstrance and displayed on the altar. You simply sit, kneel, or stand in its presence.</p>
 <p>There's no required prayer or posture. Many people read Scripture, pray the Rosary, journal, or simply sit in silence. Adoration chapels are typically quiet spaces open for individual prayer, sometimes for extended hours.</p>
 <p>If a parish offers <strong>Perpetual Adoration</strong>, it means the chapel is open 24 hours a day, 7 days a week, kept continuous by volunteers who sign up for hourly slots. Many people find regular Adoration to be the most transformative spiritual practice of their week.</p>
   `,filter:'adoration'},
   {icon:'☩',title:'How to go to Confession',body:`
-<p>Confession — also called the Sacrament of Reconciliation — is how Catholics receive forgiveness for serious sins committed after Baptism. It's available to all baptized Catholics in good standing. If you've been away for a long time, a gentle priest will be happy to help you through it.</p>
+<p>Confession — also called the Sacrament of Reconciliation — is how Catholics receive God's forgiveness for sins committed after Baptism. It is required for mortal sins and strongly recommended for all sins. If you've been away for a long time, a gentle priest will be happy to help you through it.</p>
 <p>The basic steps:</p>
 <ol>
 <li><strong>Examination of conscience</strong> — Quietly reflect on your actions since your last Confession. A simple guide: think through the Ten Commandments and ask where you've fallen short.</li>
@@ -1849,17 +1824,26 @@ const DEVOTIONAL_GUIDES=[
 <p>The 14 stations: <strong>1.</strong> Jesus is condemned to death. <strong>2.</strong> Jesus takes up His cross. <strong>3.</strong> He falls the first time. <strong>4.</strong> He meets His Mother. <strong>5.</strong> Simon of Cyrene helps carry the cross. <strong>6.</strong> Veronica wipes His face. <strong>7.</strong> He falls a second time. <strong>8.</strong> He meets the women of Jerusalem. <strong>9.</strong> He falls a third time. <strong>10.</strong> He is stripped of His garments. <strong>11.</strong> He is nailed to the cross. <strong>12.</strong> He dies on the cross. <strong>13.</strong> He is taken down. <strong>14.</strong> He is laid in the tomb.</p>
 <p>Stations are prayed most often on Fridays during Lent, either privately or as a parish group. They typically take 20–30 minutes. Many parishes hold them at noon or in the early evening. Look for them under the Lent chip filter on the Find tab.</p>
   `,filter:'lent'},
-  {icon:'⛪',title:'The Sunday Obligation',body:`
-<p>Catholics are obligated to attend Mass on Sundays and Holy Days of Obligation. This isn't a legalistic rule but a recognition that the Sunday Eucharist is the heartbeat of Catholic life — where the community gathers, hears the Word, and receives Christ in the Eucharist.</p>
-<p>The obligation is fulfilled by attending any valid Mass from Saturday evening through Sunday. A <strong>Saturday Vigil Mass</strong> — offered at most parishes in the late afternoon or evening — fully satisfies the Sunday obligation. The Vigil begins after 4:00 PM in most dioceses.</p>
-<p>A <strong>Communion Service</strong> (labeled "no priest" in this app) does not fulfill the Sunday obligation. It is a meaningful prayer service, but it is not a Mass and does not include the Eucharist consecrated by a priest.</p>
-<p><strong>Holy Days of Obligation</strong> in the United States: Christmas (Dec. 25), Mary, Mother of God (Jan. 1), Ascension Thursday (or Sunday, depending on the diocese), Assumption (Aug. 15), All Saints' Day (Nov. 1), and the Immaculate Conception (Dec. 8).</p>
-  `},
   {icon:'🙏',title:'What is a Novena?',body:`
 <p>A Novena is nine consecutive days of prayer for a specific intention — the name comes from the Latin <em>novem</em>, meaning nine. The practice traces back to the nine days the apostles and Mary prayed together between the Ascension and Pentecost.</p>
 <p>Novenas can be prayed privately at any time, or communally at a parish. Common novenas include the <strong>Novena to the Holy Spirit</strong> (before Pentecost), the <strong>Divine Mercy Novena</strong> (beginning Good Friday), and novenas to specific saints like St. Joseph, St. Anthony, or Our Lady of Guadalupe.</p>
 <p>To begin a novena, simply choose a prayer — many are available in prayer books or online — commit to praying it on nine consecutive days, and bring your intention before God with trust. The power of a novena is less in the number of days and more in the sustained, intentional attention you bring to prayer.</p>
   `},
+  {icon:'🏅',title:'The Miraculous Medal Devotion',body:`
+<p>The Miraculous Medal devotion stems from apparitions of the Blessed Virgin Mary to St. Catherine Labouré in Paris in 1830. Mary appeared standing on a globe, with rays of light streaming from her hands, and asked that a medal be struck in this image. The front bears the prayer: <em>"O Mary, conceived without sin, pray for us who have recourse to thee."</em></p>
+<p>The medal was approved by the Church and quickly became one of the most widely worn sacramentals in Catholic life. It is not a good-luck charm — it is a sign of devotion to Mary and trust in her intercession. Those who wear it are encouraged to pray the inscription daily.</p>
+<p>Many parishes hold a weekly <strong>Miraculous Medal Novena</strong>, often on Mondays, consisting of prayers, hymns, and the Novena prayer to Our Lady of the Miraculous Medal. These services are typically brief — about 15 to 20 minutes.</p>
+  `},
+  {icon:'✟',title:'What is Gorzkie Żale?',body:`
+<p><strong>Gorzkie Żale</strong> (pronounced <em>GOSH-kyeh ZAH-leh</em>, meaning "Bitter Lamentations") is a traditional Polish Lenten devotion dating to the early 18th century. It is a sung meditation on the Passion of Christ, structured in three parts that reflect on Christ's suffering, His trial, and His death on the cross.</p>
+<p>The devotion is typically held on Sunday afternoons during Lent, often followed by Benediction of the Blessed Sacrament. It combines hymns, prayers, and readings in a format unique to the Polish Catholic tradition. Gorzkie Żale holds a place in Polish Catholic life similar to the Stations of the Cross in other traditions.</p>
+<p>In Western New England, parishes with Polish heritage continue this devotion as a cherished link between faith and cultural identity. The service is usually about 30–40 minutes and is sung partly or entirely in Polish.</p>
+  `},
+  {icon:'🕊️',title:'The Traditional Latin Mass',body:`
+<p>The Traditional Latin Mass — also known as the <em>Extraordinary Form</em> or the <em>Usus Antiquior</em> — is the form of the Roman Rite that was the universal norm before the liturgical reforms of the Second Vatican Council (1962–1965). It is celebrated entirely in Latin, with the priest facing the altar (<em>ad orientem</em>) for much of the liturgy.</p>
+<p>Key differences from the Ordinary Form (the standard Mass most Catholics attend): the prayers are from the 1962 Roman Missal, the congregation participates primarily through interior prayer and sung responses, and the structure includes prayers like the <strong>Last Gospel</strong> and the <strong>Prayers at the Foot of the Altar</strong> that are not part of the newer form.</p>
+<p>Catholics who attend the Traditional Latin Mass do so for a variety of reasons, including its contemplative character, its continuity with centuries of Catholic worship, and its rich musical tradition of Gregorian chant and polyphony. The Mass fulfills the Sunday obligation. Missals with Latin-English translations are usually available at the church to help you follow along.</p>
+  `,filter:'latin'},
 ];
 
 // ============================================================
@@ -1943,7 +1927,7 @@ function renderMore(){
         +indicator
         +'<div class="wh-event-date">'+fmtYCDate(e.date)+(e.time?' · '+fmt12(e.time):'')+'</div>'
         +'<div class="wh-event-title">'+esc(e.title)+'</div>'
-        +'<div class="wh-event-church">'+esc(r.locName||r.parishName)+'</div>'
+        +'<div class="wh-event-church">'+esc(displayName(r.locName||r.parishName,e.parish_id))+'</div>'
         +'</div>';
     }).join(''):'<p class="wh-empty">No upcoming YC events.</p>';
 
@@ -1958,7 +1942,7 @@ function renderMore(){
         +near
         +(e.date?'<div class="wh-event-date">'+esc(e.date)+'</div>':e.day?'<div class="wh-event-date">'+esc(DAY_NAMES[e.day]||e.day)+(e.time?' · '+fmt12(e.time):'')+'</div>':'')
         +'<div class="wh-event-title">'+esc(e.title)+'</div>'
-        +'<div class="wh-event-church">'+esc(e.parishName)+'</div>'
+        +'<div class="wh-event-church">'+esc(displayName(e.parishName,e.parishId))+'</div>'
         +(e.notes?'<div class="wh-event-time">'+esc(e.notes)+'</div>':'')
         +'</div>';
     }).join(''):'<p class="wh-empty">No upcoming events.</p>';
@@ -2114,6 +2098,11 @@ async function init(){
       });
     });
     ycEvents=(data.yc_events||[]).sort((a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time));
+    // Compute which parishes keep "Parish" label (2+ worship-site locations)
+    keepParishIds=new Set(allParishes.filter(p=>{
+      const worshipSites=(p.locations||[]).filter(l=>['church','chapel','mission'].includes(l.type));
+      return worshipSites.length>=2;
+    }).map(p=>p.id));
     // Show Lent chip if currently in Lent season
     const lentChip=document.getElementById('lentChip');
     if(lentChip&&isLentSeason())lentChip.style.display='';
