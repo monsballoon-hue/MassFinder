@@ -227,6 +227,73 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .detail-badge svg { width: 14px; height: 14px; }
 .detail-body { padding: 0 var(--space-5) var(--space-8); }
 
+/* EVENT DETAIL PANEL (stacks above parish panel) */
+.event-detail-panel { position: fixed; bottom: 0; left: 0; right: 0; z-index: 1002; background: var(--color-surface); border-radius: var(--radius-lg) var(--radius-lg) 0 0; max-height: 92vh; max-height: 92dvh; overflow-y: auto; -webkit-overflow-scrolling: touch; transform: translateY(100%); transition: transform 0.35s var(--ease-out); box-shadow: var(--shadow-elevated); overscroll-behavior: contain; }
+.event-detail-panel.open { transform: translateY(0); }
+@media (min-width: 768px) { .event-detail-panel { left: 50%; right: auto; width: 100%; max-width: var(--max-width); transform: translate(-50%, 100%); } .event-detail-panel.open { transform: translate(-50%, 0); } }
+
+.evt-header { padding: var(--space-2) var(--space-5) var(--space-4); }
+.evt-header-top { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-3); }
+.evt-title { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 700; color: var(--color-text-primary); line-height: 1.25; flex: 1; }
+.evt-close { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--color-text-secondary); transition: all var(--transition-fast); flex-shrink: 0; }
+.evt-close:hover { background: var(--color-surface-hover); }
+.evt-close svg { width: 22px; height: 22px; }
+.evt-badges { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-3); }
+.evt-badge { display: inline-flex; align-items: center; gap: 4px; font-size: var(--text-xs); font-weight: var(--weight-semibold); padding: 5px 12px; border-radius: var(--radius-full); }
+.evt-badge.yc { color: var(--color-accent-text); background: var(--color-accent-pale); }
+.evt-badge.community { color: var(--color-primary); background: var(--color-info-bg); }
+.evt-badge.date-badge { color: var(--color-primary); background: rgba(44,62,90,0.08); font-weight: var(--weight-semibold); }
+.evt-badge.time-badge { color: var(--color-text-secondary); background: var(--color-surface-hover); }
+.evt-badge.social-badge { color: #0F766E; background: #E0F7F5; }
+.evt-badge.type-badge { color: var(--color-text-secondary); background: var(--color-surface-hover); text-transform: capitalize; }
+.evt-badge.countdown-badge { color: var(--color-verified); background: var(--color-verified-bg); }
+.evt-badge.countdown-badge.imminent { color: #B45309; background: #FEF3C7; }
+
+/* COMMUNITY EVENTS in parish detail */
+.community-events-section { margin-top: var(--space-4); border-top: 1px solid var(--color-border-light); padding-top: var(--space-4); }
+.community-events-header { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3); }
+.community-events-header svg { width: 20px; height: 20px; color: var(--color-accent-text); flex-shrink: 0; }
+.community-events-title { font-size: var(--text-base); font-weight: var(--weight-semibold); color: var(--color-text-primary); }
+.community-events-count { font-size: var(--text-xs); color: var(--color-accent-text); font-weight: var(--weight-medium); background: var(--color-accent-pale); padding: 2px 8px; border-radius: var(--radius-full); }
+.ce-group-label { font-size: 11px; font-weight: var(--weight-semibold); text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-tertiary); margin: var(--space-3) 0 var(--space-2); }
+.ce-group-label:first-child { margin-top: 0; }
+.ce-item { display: flex; gap: var(--space-3); padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border-light); align-items: flex-start; }
+.ce-item:last-child { border-bottom: none; }
+.ce-item-accent { width: 3px; border-radius: 2px; flex-shrink: 0; align-self: stretch; min-height: 24px; }
+.ce-item-accent.upcoming { background: var(--color-accent); }
+.ce-item-accent.ongoing { background: var(--color-border); }
+.ce-item-body { flex: 1; min-width: 0; }
+.ce-item-title { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-text-primary); line-height: 1.3; }
+.ce-item-when { font-size: var(--text-xs); color: var(--color-text-secondary); margin-top: 1px; }
+.ce-item-when .ce-countdown { color: var(--color-accent-text); font-weight: var(--weight-medium); }
+.ce-item-notes { font-size: var(--text-xs); color: var(--color-text-tertiary); font-style: italic; margin-top: 2px; line-height: 1.4; }
+
+.evt-body { padding: 0 var(--space-5) var(--space-8); }
+
+.evt-parish-link { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-4) 0; border-bottom: 1px solid var(--color-border-light); cursor: pointer; transition: background var(--transition-fast); margin: 0 calc(-1 * var(--space-5)); padding-left: var(--space-5); padding-right: var(--space-5); }
+.evt-parish-link:hover { background: var(--color-surface-hover); }
+.evt-parish-link-icon { width: 36px; height: 36px; border-radius: 50%; background: var(--color-bg); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.evt-parish-link-icon svg { width: 18px; height: 18px; color: var(--color-primary); }
+.evt-parish-link-text { flex: 1; }
+.evt-parish-link-label { font-size: var(--text-xs); color: var(--color-text-tertiary); font-weight: var(--weight-medium); text-transform: uppercase; letter-spacing: 0.04em; }
+.evt-parish-link-name { font-size: var(--text-base); font-weight: var(--weight-semibold); color: var(--color-primary); }
+.evt-parish-link-chevron { width: 20px; height: 20px; color: var(--color-text-tertiary); flex-shrink: 0; }
+
+.evt-description { padding: var(--space-4) 0; border-bottom: 1px solid var(--color-border-light); }
+.evt-description p { font-size: var(--text-sm); color: var(--color-text-secondary); line-height: 1.6; }
+.evt-notes-callout { margin-top: var(--space-3); padding: var(--space-3) var(--space-4); background: var(--color-warning-bg); border-radius: var(--radius-sm); font-size: var(--text-sm); color: var(--color-warning); font-style: italic; }
+
+.evt-actions { display: flex; gap: var(--space-3); padding: var(--space-4) 0; border-bottom: 1px solid var(--color-border-light); flex-wrap: wrap; }
+.evt-action-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: var(--space-1); padding: var(--space-3); border-radius: var(--radius-md); background: var(--color-bg); transition: background var(--transition-fast); text-decoration: none; min-height: 44px; min-width: 80px; }
+.evt-action-btn:hover { background: var(--color-surface-hover); text-decoration: none; }
+.evt-action-btn svg { width: 22px; height: 22px; color: var(--color-primary); }
+.evt-action-btn span { font-size: var(--text-xs); font-weight: var(--weight-medium); color: var(--color-text-secondary); text-align: center; }
+
+.evt-footer-link { display: flex; align-items: center; justify-content: center; gap: var(--space-2); margin-top: var(--space-6); padding: var(--space-4); background: var(--color-bg); border-radius: var(--radius-md); cursor: pointer; transition: background var(--transition-fast); }
+.evt-footer-link:hover { background: var(--color-surface-hover); }
+.evt-footer-link span { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-primary); }
+.evt-footer-link svg { width: 16px; height: 16px; color: var(--color-text-tertiary); }
+
 /* Contact & Actions */
 .detail-contact { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-5) 0; border-bottom: 1px solid var(--color-border-light); }
 .contact-row { display: flex; align-items: center; gap: var(--space-3); }
@@ -455,9 +522,15 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .reading-entry-header { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); }
 .reading-expand-icon { flex-shrink: 0; color: var(--color-text-tertiary); transition: transform 0.2s ease; }
 .reading-entry.expanded .reading-expand-icon { transform: rotate(180deg); }
-.reading-text { display: none; font-size: var(--text-sm); color: var(--color-text-secondary); line-height: 1.7; margin-top: var(--space-3); padding-top: var(--space-3); border-top: 1px solid var(--color-border-light); white-space: pre-wrap; }
+.reading-text { display: none; font-size: var(--text-sm); color: var(--color-text-secondary); line-height: 1.7; margin-top: var(--space-3); padding-top: var(--space-3); border-top: 1px solid var(--color-border-light); }
+.reading-text .reading-para { margin: 0 0 var(--space-3) 0; }
+.reading-text .reading-para:last-child { margin-bottom: 0; }
 .reading-entry.expanded .reading-text { display: block; }
 .reading-entry:not(.expanded):hover .reading-ref { color: var(--color-accent-text); }
+
+/* TOAST NOTIFICATION */
+.mf-toast { position: fixed; bottom: calc(80px + env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%) translateY(20px); background: var(--color-text-primary); color: var(--color-surface); padding: var(--space-3) var(--space-5); border-radius: var(--radius-full); font-size: var(--text-sm); font-weight: var(--weight-medium); opacity: 0; pointer-events: none; transition: opacity 0.25s ease, transform 0.25s ease; z-index: 10000; white-space: nowrap; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.mf-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
 /* LITURGICAL CALENDAR */
 .litu-event { display: flex; align-items: flex-start; gap: var(--space-4); padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border-light); }
@@ -514,6 +587,39 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 
 /* SCHEDULE LOCATION BADGE (multi-location detail panel) */
 .schedule-loc-badge { display: inline-flex; align-items: center; font-size: 11px; font-weight: var(--weight-semibold); color: var(--color-primary); background: var(--color-info-bg); border: 1px solid rgba(52,120,198,0.2); padding: 2px 8px; border-radius: var(--radius-full); margin-top: 3px; }
+
+/* WEEK AT A GLANCE */
+.wag-strip { display: flex; gap: var(--space-2); padding: var(--space-1) 0 var(--space-2); }
+.wag-day { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: var(--space-3) var(--space-1); background: var(--color-surface); border: 1.5px solid var(--color-border-light); border-radius: var(--radius-md); cursor: pointer; transition: all var(--transition-fast); min-height: 68px; }
+.wag-day:hover { border-color: var(--color-primary); background: var(--color-surface-hover); }
+.wag-day.today { border-color: var(--color-accent); background: var(--color-accent-pale); }
+.wag-label { font-size: 11px; font-weight: var(--weight-semibold); color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.03em; }
+.wag-day.today .wag-label { color: var(--color-accent-text); }
+.wag-count { font-size: var(--text-xl); font-weight: var(--weight-semibold); color: var(--color-primary); line-height: 1.1; }
+.wag-day.today .wag-count { color: var(--color-accent-text); }
+.wag-sub { font-size: 10px; color: var(--color-text-tertiary); }
+.wag-day.today .wag-sub { color: var(--color-accent-text); }
+
+/* SAINT OF THE DAY */
+.saint-card { background: var(--color-surface); border-radius: var(--radius-md); padding: var(--space-5); box-shadow: var(--shadow-card); border-left: 3px solid var(--color-accent); }
+.saint-feast { font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--color-accent-text); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: var(--space-2); }
+.saint-name { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 700; color: var(--color-text-primary); line-height: 1.3; }
+.saint-source { display: inline-flex; align-items: center; gap: var(--space-2); margin-top: var(--space-4); padding: var(--space-3) var(--space-4); background: var(--color-info-bg); border-radius: var(--radius-md); font-size: var(--text-sm); color: var(--color-info); font-weight: var(--weight-medium); text-decoration: none; }
+.saint-source:hover { text-decoration: none; background: #dbeafe; }
+
+/* CONFESSION GUIDE ENHANCEMENTS */
+.conf-act { background: var(--color-accent-pale); border: 1px solid rgba(184,150,63,0.25); border-radius: var(--radius-md); padding: var(--space-4); margin-top: var(--space-4); }
+.conf-act-label { font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--color-accent-text); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: var(--space-2); }
+.conf-act-text { font-size: var(--text-sm); color: var(--color-text-secondary); line-height: 1.8; font-style: italic; }
+.conf-exam { margin-top: var(--space-4); border: 1px solid var(--color-border-light); border-radius: var(--radius-md); overflow: hidden; }
+.conf-exam summary { display: flex; align-items: center; justify-content: space-between; padding: var(--space-3) var(--space-4); cursor: pointer; list-style: none; font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-text-secondary); background: var(--color-surface-hover); min-height: 44px; }
+.conf-exam summary::-webkit-details-marker { display: none; }
+.conf-exam[open] summary { border-bottom: 1px solid var(--color-border-light); }
+.conf-exam-body { padding: var(--space-4); font-size: var(--text-sm); color: var(--color-text-secondary); line-height: 1.75; }
+.conf-exam-body p { font-weight: var(--weight-semibold); color: var(--color-text-primary); margin: var(--space-3) 0 var(--space-2); }
+.conf-exam-body p:first-child { margin-top: 0; }
+.conf-exam-body ul { padding-left: var(--space-5); }
+.conf-exam-body ul li { margin-bottom: var(--space-1); }
 </style>
 </head>
 <body>
@@ -590,16 +696,6 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 <div id="panelMore" class="tab-panel" role="tabpanel">
   <div class="more-content">
 
-    <!-- ADD TO HOME SCREEN -->
-    <div class="more-section" id="installGuideSection">
-      <h2 class="more-section-title">Add MassFinder to Your Phone</h2>
-      <p style="font-size:var(--text-sm);color:var(--color-text-secondary);margin-bottom:var(--space-3)">Get instant access from your home screen — no app store needed.</p>
-      <div id="installSteps" style="background:var(--color-surface);border-radius:var(--radius-md);padding:var(--space-4);box-shadow:var(--shadow-card)">
-        <!-- Filled by JS based on device -->
-      </div>
-      <button id="installDismissBtn" onclick="dismissInstallGuide()" style="margin-top:var(--space-3);background:none;border:none;font-size:var(--text-xs);color:var(--color-text-tertiary);cursor:pointer;padding:var(--space-1) 0;text-decoration:underline">Already added? Hide this</button>
-    </div>
-
     <!-- WHAT'S HAPPENING: YC Events + Community Events, equal prominence -->
     <div class="more-section" id="whatsHappeningSection" style="display:none">
       <h2 class="more-section-title">What's Happening</h2>
@@ -619,6 +715,19 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
           <div id="whCommunityList"><p class="wh-empty">No upcoming events.</p></div>
         </div>
       </div>
+    </div>
+
+    <!-- WEEK AT A GLANCE -->
+    <div class="more-section">
+      <h2 class="more-section-title">This Week at a Glance</h2>
+      <p style="font-size:var(--text-sm);color:var(--color-text-secondary);margin-bottom:var(--space-3)">Masses across all parishes — tap a day to filter.</p>
+      <div id="weekGlanceStrip" class="wag-strip"></div>
+    </div>
+
+    <!-- SAINT OF THE DAY -->
+    <div class="more-section">
+      <h2 class="more-section-title">🌟 Saint of the Day</h2>
+      <div id="saintOfDayCard"><div class="saint-card"><div class="saint-feast">Loading…</div><div class="saint-name" style="font-size:var(--text-base);color:var(--color-text-tertiary);font-family:var(--font-body);font-weight:var(--weight-regular)">Fetching today's feast day…</div></div></div>
     </div>
 
     <!-- DAILY READINGS -->
@@ -662,7 +771,8 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
     <!-- ABOUT + CORRECTION -->
     <div class="more-section">
       <h2 class="more-section-title">About MassFinder</h2>
-      <p>MassFinder helps Catholics across Western New England find Mass times, Confession, Adoration, and other services at churches near them. Flagging an error when you spot one keeps the data accurate for everyone.</p>
+      <div class="stat-grid" id="aboutStatGrid"></div>
+      <p>MassFinder is a stewardship project — built for our Catholic community across Western New England to find Mass times, Confession, Adoration, and other services nearby. If something looks off or you have suggestions, please submit a correction. Your feedback keeps the data accurate for everyone.</p>
       <div class="more-links-inline">
         <a class="more-link-pill" href="https://diospringfield.org" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
@@ -696,10 +806,15 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
   </div>
 </div>
 
-<div id="detailBackdrop" class="detail-backdrop" onclick="closeDetail()"></div>
+<div id="detailBackdrop" class="detail-backdrop" onclick="closeAllPanels()"></div>
 <div id="detailPanel" class="detail-panel" role="dialog" aria-modal="true" aria-label="Church details">
   <div class="detail-handle" onclick="closeDetail()"><div class="detail-handle-bar"></div></div>
   <div id="detailContent"></div>
+</div>
+
+<div id="eventDetailPanel" class="event-detail-panel" role="dialog" aria-modal="true" aria-label="Event details">
+  <div class="detail-handle" onclick="closeEventDetail()"><div class="detail-handle-bar"></div></div>
+  <div id="eventDetailContent"></div>
 </div>
 
 <div id="filtersBackdrop" class="filters-backdrop" onclick="closeMoreFilters()"></div>
@@ -729,7 +844,7 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
 <script>
-let allParishes=[],filteredParishes=[],userLat=null,userLng=null,currentSort='name',currentFilter='all',searchQuery='',favorites=[],ycEvents=[];
+let allParishes=[],filteredParishes=[],userLat=null,userLng=null,currentSort='name',currentFilter='all',searchQuery='',favorites=[],ycEvents=[],eventsData=[];
 let keepParishIds=new Set();
 function displayName(name,id){if(!id||!keepParishIds.has(id))return name.replace(/ Parish$/,' Church');return name}
 let advancedFilters={types:[],days:[],languages:[]},tempAdvanced={types:[],days:[],languages:[]};
@@ -880,7 +995,7 @@ function getTag(p,next){
 function isVer(p){const v=p.validation;return v&&(v.status==='verified'||v.status==='manually_verified')}
 
 // YC Events
-function generateICS(title,date,time,endTime,location,description){
+function generateICS(title,date,time,endTime,location,description,url){
   function pad(n){return String(n).padStart(2,'0')}
   function toICSDate(dateStr,timeStr){
     const d=new Date(dateStr+'T'+timeStr);
@@ -889,15 +1004,17 @@ function generateICS(title,date,time,endTime,location,description){
   const dtStart=toICSDate(date,time);
   const dtEnd=endTime?toICSDate(date,endTime):toICSDate(date,time.replace(/(\d{2}):(\d{2})/,(m,h,mi)=>pad((+h+1)%24)+':'+mi));
   const uid=Date.now()+'@massfinder.app';
-  const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//MassFinder//EN','BEGIN:VEVENT',
+  const fields=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//MassFinder//EN','BEGIN:VEVENT',
     'DTSTART:'+dtStart,'DTEND:'+dtEnd,'SUMMARY:'+title.replace(/[,;]/g,' '),
     'LOCATION:'+(location||'').replace(/[,;]/g,' '),
-    'DESCRIPTION:'+(description||'').replace(/\n/g,'\\n').replace(/[,;]/g,' '),
-    'UID:'+uid,'END:VEVENT','END:VCALENDAR'].join('\r\n');
+    'DESCRIPTION:'+(description||'').replace(/\n/g,'\\n').replace(/[,;]/g,' ')];
+  if(url)fields.push('URL:'+url);
+  fields.push('UID:'+uid,'END:VEVENT','END:VCALENDAR');
+  const ics=fields.join('\r\n');
   const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');a.href=url;a.download=(title.replace(/[^a-zA-Z0-9 ]/g,'').replace(/\s+/g,'_')||'event')+'.ics';
-  document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+  const blobUrl=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=blobUrl;a.download=(title.replace(/[^a-zA-Z0-9 ]/g,'').replace(/\s+/g,'_')||'event')+'.ics';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(blobUrl);
 }
 function addYCToCalendar(idx,ev){
   if(ev)ev.stopPropagation();
@@ -929,7 +1046,7 @@ function renderYCCard(e,delay,idx){
   const r=resolveYC(e);
   const timeStr=fmt12(e.time)+(e.end_time?' – '+fmt12(e.end_time):'');
   const calBtn=typeof idx==='number'?'<button class="yc-cal-btn" onclick="addYCToCalendar('+idx+',event)" aria-label="Add to calendar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="12" y1="14" x2="12" y2="18"/><line x1="10" y1="16" x2="14" y2="16"/></svg></button>':'';
-  return '<article class="yc-card" role="listitem" style="animation-delay:'+(delay||0)+'ms" onclick="openDetail(\''+e.parish_id+'\')">'
+  return '<article class="yc-card" role="listitem" style="animation-delay:'+(delay||0)+'ms" onclick="openEventDetail(\''+e.id+'\')">'
     +'<div class="yc-card-top"><div class="yc-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Young &amp; Catholic</div>'+calBtn+'</div>'
     +'<div class="yc-title">'+esc(e.title)+'</div>'
     +'<div class="yc-church">'+esc(displayName(r.locName||r.parishName,e.parish_id))+', '+esc(r.town)+'</div>'
@@ -984,10 +1101,97 @@ function renderCards(){
 }
 
 // Detail Panel
+function renderCommunityEvents(p){
+  const evts=p.special_events||[];
+  if(!evts.length)return '';
+  const today=getNow().toISOString().slice(0,10);
+
+  // Split into upcoming (dated, future) and ongoing (recurring + undated)
+  const upcoming=[];
+  const ongoing=[];
+  for(const e of evts){
+    // Filter out past dated one-time events
+    if(e.date&&e.date<today&&(e.frequency==='one_time'||!e.frequency))continue;
+    if(e.date&&e.date>=today){
+      upcoming.push(e);
+    }else{
+      ongoing.push(e);
+    }
+  }
+  // Sort upcoming by date
+  upcoming.sort((a,b)=>(a.date||'').localeCompare(b.date||''));
+  // Sort ongoing: weekly first (by day order), then monthly
+  const dayOrd={sunday:0,monday:1,tuesday:2,wednesday:3,thursday:4,friday:5,saturday:6};
+  ongoing.sort((a,b)=>{
+    const fa=a.frequency==='weekly'?0:a.frequency==='monthly'?1:2;
+    const fb=b.frequency==='weekly'?0:b.frequency==='monthly'?1:2;
+    if(fa!==fb)return fa-fb;
+    return(dayOrd[a.day]??7)-(dayOrd[b.day]??7);
+  });
+
+  const total=upcoming.length+ongoing.length;
+  if(!total)return '';
+
+  // Render individual items
+  function renderItem(e,isUpcoming){
+    let whenText='';
+    if(isUpcoming&&e.date){
+      const d=new Date(e.date+'T12:00:00');
+      const dateStr=d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+      const timeStr=e.time?(' · '+fmt12(e.time)):'';
+      // Mini countdown
+      const diffMs=new Date(e.date+'T'+(e.time||'12:00')).getTime()-getNow().getTime();
+      let cdText='';
+      if(diffMs>0){
+        const days=Math.floor(diffMs/(1000*60*60*24));
+        if(days===0)cdText=' · Today';
+        else if(days===1)cdText=' · Tomorrow';
+        else if(days<14)cdText=' · In '+days+' days';
+      }
+      whenText=dateStr+timeStr+(cdText?'<span class="ce-countdown">'+cdText+'</span>':'');
+    }else{
+      // Recurring: day + time + frequency
+      const dayName=e.day?DAY_NAMES[e.day]||e.day.charAt(0).toUpperCase()+e.day.slice(1):'';
+      const freqLabel=e.frequency==='weekly'?'Weekly':e.frequency==='monthly'?'Monthly':'';
+      const timeStr=e.time?(e.time.includes(':')?fmt12(e.time):e.time):'';
+      whenText=[freqLabel,dayName?dayName+'s':'',timeStr].filter(Boolean).join(' · ');
+    }
+    const accent=isUpcoming?'upcoming':'ongoing';
+    return '<div class="ce-item">'
+      +'<div class="ce-item-accent '+accent+'"></div>'
+      +'<div class="ce-item-body">'
+      +'<div class="ce-item-title">'+esc(e.title)+'</div>'
+      +(whenText?'<div class="ce-item-when">'+whenText+'</div>':'')
+      +(e.notes?'<div class="ce-item-notes">'+esc(e.notes)+'</div>':'')
+      +'</div></div>';
+  }
+
+  let html='<div class="community-events-section">'
+    +'<div class="community-events-header">'
+    +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>'
+    +'<span class="community-events-title">Community Life</span>'
+    +'<span class="community-events-count">'+total+'</span>'
+    +'</div>';
+
+  if(upcoming.length&&ongoing.length){
+    html+='<div class="ce-group-label">Upcoming</div>';
+    html+=upcoming.map(e=>renderItem(e,true)).join('');
+    html+='<div class="ce-group-label">Ongoing</div>';
+    html+=ongoing.map(e=>renderItem(e,false)).join('');
+  }else if(upcoming.length){
+    html+=upcoming.map(e=>renderItem(e,true)).join('');
+  }else{
+    html+=ongoing.map(e=>renderItem(e,false)).join('');
+  }
+
+  html+='</div>';
+  return html;
+}
+
 function openDetail(id){
   const p=allParishes.find(x=>x.id===id);if(!p)return;
   const fav=isFav(p.id),ver=isVer(p),v=p.validation||{},loc0=p.locations&&p.locations[0],dist=getDist(p),ct=p.contact||{};
-  const mapUrl=loc0?'https://maps.google.com/?q='+encodeURIComponent(loc0.address||loc0.name):'';
+  const mapUrl=loc0?getMapsUrl(loc0.address||loc0.name):'';
   const domain=ct.website?ct.website.replace(/^https?:\/\//,'').replace(/\/.*/,''):'';
 
   // Badges
@@ -1019,10 +1223,8 @@ function openDetail(id){
   if(ct.phone)qa+='<a class="quick-action" href="tel:'+ct.phone+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>Call</span></a>';
   if(mapUrl)qa+='<a class="quick-action" href="'+mapUrl+'" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg><span>Directions</span></a>';
   if(thirdActionUrl)qa+='<a class="quick-action" href="'+esc(thirdActionUrl)+'" target="_blank" rel="noopener">'+thirdActionIcon+'<span>'+thirdActionLabel+'</span></a>';
-  // Share button (Web Share API)
-  if(navigator.share){
-    qa+='<button class="quick-action" onclick="shareParish(\''+esc(displayName(p.name,p.id))+'\',\''+p.id+'\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg><span>Share</span></button>';
-  }
+  // Share button (native share or clipboard copy)
+  qa+='<button class="quick-action" onclick="shareParish(\''+esc(displayName(p.name,p.id))+'\',\''+p.id+'\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg><span>Share</span></button>';
   qa+='</div>';
 
   // Visitation data
@@ -1070,6 +1272,9 @@ function openDetail(id){
     +p.locations.map(l=>'<span style="font-size:var(--text-xs);font-weight:var(--weight-semibold);color:var(--color-primary);background:white;border:1px solid rgba(52,120,198,0.2);padding:2px 10px;border-radius:var(--radius-full)">'+esc(l.short_name||l.name)+'</span>').join('')
     +'</div>';
 
+  // Community events section
+  const ceHtml=renderCommunityEvents(p);
+
   // Verify prompt + correction form + footer
   const vp='<div class="verify-prompt" id="verifyPrompt"><p>Were these times accurate when you last visited?</p><div class="verify-prompt-btns"><button class="verify-btn yes" onclick="verifyOk(true)">✓ Yes, looks right</button><button class="verify-btn no" onclick="showCorrectionForm()">Not quite</button></div></div>'
     +'<div class="correction-form" id="correctionForm" style="display:none">'
@@ -1095,7 +1300,7 @@ function openDetail(id){
     +'<div class="detail-actions"><button class="detail-action-btn fav-btn'+(fav?' fav-active':'')+'" data-id="'+p.id+'" onclick="toggleFav(\''+p.id+'\')" aria-label="Favorite"><svg viewBox="0 0 24 24" fill="'+(fav?'currentColor':'none')+'" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>'
     +'<button class="detail-action-btn" onclick="closeDetail()" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>'
     +'</div></div><div class="detail-town">'+esc(p.town)+', '+esc({MA:'Massachusetts',CT:'Connecticut',VT:'Vermont',NH:'New Hampshire'}[p.state]||p.state||'Massachusetts')+'</div><div class="detail-badges">'+bg+'</div></div>'
-    +'<div class="detail-body">'+chtml+qa+visitHtml+mlNote+secHtml+vp+footer+'</div>';
+    +'<div class="detail-body">'+chtml+qa+visitHtml+mlNote+secHtml+ceHtml+vp+footer+'</div>';
 
   document.getElementById('detailBackdrop').classList.add('open');
   document.getElementById('detailPanel').classList.add('open');
@@ -1108,6 +1313,8 @@ function openDetail(id){
 }
 
 function closeDetail(){
+  // If event panel is open on top, close that first
+  if(document.getElementById('eventDetailPanel').classList.contains('open')){closeEventDetail();return}
   document.getElementById('detailBackdrop').classList.remove('open');
   document.getElementById('detailPanel').classList.remove('open');
   document.body.style.overflow='';
@@ -1115,12 +1322,183 @@ function closeDetail(){
   if(window._lastFocused)window._lastFocused.focus();
   history.replaceState(null,'',location.pathname+location.search);
 }
+
+function closeEventDetail(){
+  document.getElementById('eventDetailPanel').classList.remove('open');
+  // If parish panel is open underneath, keep backdrop and body lock
+  if(!document.getElementById('detailPanel').classList.contains('open')){
+    document.getElementById('detailBackdrop').classList.remove('open');
+    document.body.style.overflow='';
+    releaseFocus();
+    if(window._lastFocused)window._lastFocused.focus();
+    history.replaceState(null,'',location.pathname+location.search);
+  } else {
+    trapFocus(document.getElementById('detailPanel'));
+  }
+}
+
+function closeAllPanels(){
+  document.getElementById('eventDetailPanel').classList.remove('open');
+  document.getElementById('detailPanel').classList.remove('open');
+  document.getElementById('detailBackdrop').classList.remove('open');
+  document.body.style.overflow='';
+  releaseFocus();
+  if(window._lastFocused)window._lastFocused.focus();
+  history.replaceState(null,'',location.pathname+location.search);
+}
+
+// Event type display names
+const EVT_TYPES={adoration:'Adoration',devotion:'Devotion',sunday_mass:'Mass',daily_mass:'Mass',retreat:'Retreat',mission:'Mission',concert:'Concert',pilgrimage:'Pilgrimage',social_event:'Social',bible_study:'Bible Study'};
+
+function openEventDetail(eventId){
+  const evt=eventsData.find(e=>e.id===eventId)||ycEvents.find(e=>e.id===eventId);
+  if(!evt)return;
+  const p=allParishes.find(x=>x.id===evt.parish_id)||{};
+  const loc0=p.locations&&p.locations[0];
+  // Resolve location name
+  let locName='';
+  if(evt.location_id){for(const l of(p.locations||[])){if(l.id===evt.location_id){locName=l.short_name||l.name;break}}}
+  // Address: venue override > matched location > first parish location
+  let evtAddress=evt.venue_address;
+  let evtLat=evt.venue_lat,evtLng=evt.venue_lng;
+  if(!evtAddress&&evt.location_id){
+    for(const l of(p.locations||[])){if(l.id===evt.location_id){evtAddress=l.address;evtLat=l.lat;evtLng=l.lng;break}}
+  }
+  if(!evtAddress&&loc0){evtAddress=loc0.address;evtLat=loc0.lat;evtLng=loc0.lng;}
+
+  const mapUrl=evtAddress?getMapsUrl(evtAddress):'';
+  const parishDisplayName=displayName(p.name||'',evt.parish_id);
+  const venueName=evt.venue_name||locName||parishDisplayName;
+
+  // Format date
+  const d=new Date(evt.date+'T12:00:00');
+  const dateStr=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+  const timeStr=evt.time?fmt12(evt.time):'';
+  const endStr=evt.end_time?' – '+fmt12(evt.end_time):'';
+
+  // Badges
+  let badges='';
+  // Category badge
+  if(evt.category==='yc')badges+='<span class="evt-badge yc">Young & Catholic</span>';
+  else if(evt.category==='community')badges+='<span class="evt-badge community">Community</span>';
+  // Date badge
+  const today=getNow().toISOString().slice(0,10);
+  const tomorrow=new Date(getNow());tomorrow.setDate(tomorrow.getDate()+1);
+  const tomorrowStr=tomorrow.toISOString().slice(0,10);
+  let dateBadgeText=dateStr;
+  if(evt.date===today)dateBadgeText='Today · '+dateStr.split(', ').slice(1).join(', ');
+  else if(evt.date===tomorrowStr)dateBadgeText='Tomorrow · '+dateStr.split(', ').slice(1).join(', ');
+  badges+='<span class="evt-badge date-badge">'+dateBadgeText+'</span>';
+  // Time badge
+  if(timeStr)badges+='<span class="evt-badge time-badge">'+timeStr+endStr+'</span>';
+  // Type badge
+  const typeLabel=EVT_TYPES[evt.type]||evt.type;
+  if(typeLabel)badges+='<span class="evt-badge type-badge">'+esc(typeLabel)+'</span>';
+  // Social badge
+  if(evt.social)badges+='<span class="evt-badge social-badge">✦ Social gathering</span>';
+  // Countdown badge
+  const evtDateTime=new Date(evt.date+'T'+(evt.time||'12:00'));
+  const nowMs=getNow().getTime();
+  const diffMs=evtDateTime.getTime()-nowMs;
+  if(diffMs>0){
+    const diffMins=Math.floor(diffMs/60000);
+    const diffHrs=Math.floor(diffMins/60);
+    const diffDays=Math.floor(diffHrs/24);
+    let countdownText='';
+    let imminent=false;
+    if(diffMins<60){countdownText='In '+diffMins+' minute'+(diffMins!==1?'s':'');imminent=true}
+    else if(diffHrs<24){countdownText='In '+diffHrs+' hour'+(diffHrs!==1?'s':'');imminent=diffHrs<=3}
+    else if(diffDays===1){countdownText='In 1 day'}
+    else if(diffDays<30){countdownText='In '+diffDays+' days'}
+    else{const diffWeeks=Math.floor(diffDays/7);countdownText='In '+diffWeeks+' week'+(diffWeeks!==1?'s':'')}
+    badges+='<span class="evt-badge countdown-badge'+(imminent?' imminent':'')+'">'+countdownText+'</span>';
+  }
+
+  // Parish link row
+  const parishLink=p.id?'<div class="evt-parish-link" onclick="navEventToParish(\''+p.id+'\')">'
+    +'<div class="evt-parish-link-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/></svg></div>'
+    +'<div class="evt-parish-link-text"><div class="evt-parish-link-label">Hosted at</div>'
+    +'<div class="evt-parish-link-name">'+esc(parishDisplayName)+'</div></div>'
+    +'<svg class="evt-parish-link-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div>':'';
+
+  // Description & notes
+  let descHtml='';
+  if(evt.description||evt.notes){
+    descHtml='<div class="evt-description">';
+    if(evt.description)descHtml+='<p>'+esc(evt.description)+'</p>';
+    if(evt.notes)descHtml+='<div class="evt-notes-callout">'+esc(evt.notes)+'</div>';
+    descHtml+='</div>';
+  }
+
+  // Actions: Directions, Add to Calendar, Registration, Flyer
+  let actions='<div class="evt-actions">';
+  if(mapUrl)actions+='<a class="evt-action-btn" href="'+mapUrl+'" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg><span>Directions</span></a>';
+  // iCal download
+  actions+='<button class="evt-action-btn" onclick="downloadEventIcal(\''+esc(evt.id)+'\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>Add to Calendar</span></button>';
+  if(evt.registration_url)actions+='<a class="evt-action-btn" href="'+esc(evt.registration_url)+'" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg><span>Register</span></a>';
+  if(evt.flyer_url)actions+='<a class="evt-action-btn" href="'+esc(evt.flyer_url)+'" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span>View Flyer</span></a>';
+  actions+='</div>';
+
+  // Image (optional hero)
+  let imageHtml='';
+  if(evt.image_url)imageHtml='<div style="margin:0 calc(-1 * var(--space-5));"><img src="'+esc(evt.image_url)+'" alt="" style="width:100%;max-height:200px;object-fit:cover;"></div>';
+
+  // Footer: "See all at this parish"
+  const footerLink=p.id?'<div class="evt-footer-link" onclick="navEventToParish(\''+p.id+'\')">'
+    +'<span>See all services at '+esc(parishDisplayName)+'</span>'
+    +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div>':'';
+
+  document.getElementById('eventDetailContent').innerHTML=
+    '<div class="evt-header"><div class="evt-header-top"><h2 class="evt-title">'+esc(evt.title)+'</h2>'
+    +'<button class="evt-close" onclick="closeEventDetail()" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>'
+    +'</div><div class="evt-badges">'+badges+'</div></div>'
+    +'<div class="evt-body">'+imageHtml+parishLink+descHtml+actions+footerLink+'</div>';
+
+  document.getElementById('detailBackdrop').classList.add('open');
+  document.getElementById('eventDetailPanel').classList.add('open');
+  document.body.style.overflow='hidden';
+  document.getElementById('eventDetailPanel').scrollTop=0;
+  window._lastFocused=window._lastFocused||document.activeElement;
+  trapFocus(document.getElementById('eventDetailPanel'));
+}
+
+function downloadEventIcal(eventId){
+  const evt=eventsData.find(e=>e.id===eventId)||ycEvents.find(e=>e.id===eventId);
+  if(!evt)return;
+  const p=allParishes.find(x=>x.id===evt.parish_id)||{};
+  let loc=evt.venue_name||'';
+  let addr=evt.venue_address||'';
+  if(!loc&&evt.location_id){for(const l of(p.locations||[])){if(l.id===evt.location_id){loc=l.short_name||l.name;addr=l.address||'';break}}}
+  if(!loc&&p.locations&&p.locations[0]){loc=p.locations[0].name;addr=p.locations[0].address||'';}
+  if(p.town)loc+=(loc?', ':'')+p.town;
+  const mapsUrl=addr?getMapsUrl(addr):(loc?getMapsUrl(loc):'');
+  const desc=[evt.description||'',evt.notes||'',mapsUrl?'Directions: '+mapsUrl:'','From MassFinder'].filter(Boolean).join('\n');
+  generateICS(evt.title,evt.date,evt.time||'',evt.end_time||'',loc,desc,mapsUrl);
+}
+
+function navEventToParish(parishId){
+  // Close event panel, then open parish detail
+  document.getElementById('eventDetailPanel').classList.remove('open');
+  setTimeout(()=>openDetail(parishId),100);
+}
 function shareParish(name,id){
-  navigator.share({
-    title:name+' — MassFinder',
-    text:'Mass times and services at '+name,
-    url:location.origin+location.pathname+'#'+id
-  }).catch(()=>{});
+  const url=location.origin+location.pathname+'#'+id;
+  if(navigator.share){
+    navigator.share({title:name+' — MassFinder',url:url}).catch(()=>{});
+  }else{
+    navigator.clipboard.writeText(url).then(()=>showToast('Link copied!')).catch(()=>{});
+  }
+}
+function showToast(msg){
+  let t=document.getElementById('mf-toast');
+  if(!t){t=document.createElement('div');t.id='mf-toast';document.body.appendChild(t)}
+  t.textContent=msg;t.className='mf-toast show';
+  clearTimeout(t._tid);t._tid=setTimeout(()=>t.className='mf-toast',2200);
+}
+function getMapsUrl(query){
+  const q=encodeURIComponent(query);
+  const isApple=/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)&&'ontouchend' in document;
+  return isApple?'https://maps.apple.com/?q='+q:'https://maps.google.com/?q='+q;
 }
 function toggleAcc(btn){const exp=btn.getAttribute('aria-expanded')==='true';btn.setAttribute('aria-expanded',!exp);btn.nextElementSibling.classList.toggle('open',!exp)}
 async function verifyOk(ok){
@@ -1524,7 +1902,7 @@ function switchTab(id,btn){
   if(id==='panelMap'&&!mapInitialized){initMap();mapInitialized=true}
   if(id==='panelMap'&&mapInitialized&&window._map){setTimeout(()=>window._map.invalidateSize(),100)}
   if(id==='panelSaved')renderSaved();
-  if(id==='panelMore'&&!window._moreRendered){renderMore();initInstallGuide();window._moreRendered=true}
+  if(id==='panelMore'&&!window._moreRendered){renderMore();window._moreRendered=true}
 }
 
 // ============================================================
@@ -1704,7 +2082,7 @@ function renderEventsWidget(){
 
   const cards=ordered.map((e,i)=>{
     const r=resolveYC(e);
-    return '<div class="event-mini-card" onclick="openDetail(\''+e.parish_id+'\')">'
+    return '<div class="event-mini-card" onclick="openEventDetail(\''+e.id+'\')">'
       +'<div class="event-mini-date">'+fmtYCDate(e.date)+'</div>'
       +'<div class="event-mini-title">'+esc(e.title)+'</div>'
       +'<div class="event-mini-church">'+esc(displayName(r.locName||r.parishName,e.parish_id))+'</div>'
@@ -1785,6 +2163,9 @@ async function fetchReadings(){
     const data=await resp.json();
     if(!data.sections||!data.sections.length)throw new Error('no sections');
 
+    // ── Populate saint card from the feast title ──────────────────────────
+    if(data.title)renderSaintFromTitle(data.title,now);
+
     // Filter out Verse Before the Gospel / Alleluia / Sequence
     const sections=data.sections.filter(s=>{
       const h=s.heading.toLowerCase();
@@ -1806,19 +2187,81 @@ async function fetchReadings(){
         +'</div>'
         +(hasText?chevron:'')
         +'</div>'
-        +(hasText?'<div class="reading-text">'+esc(s.text)+'</div>':'')
+        +(hasText?'<div class="reading-text">'+formatReadingText(s.text)+'</div>':'')
         +'</div>';
     }).join('');
     html+=usccbLink;
     el.innerHTML=html;
   }catch(e){
     el.innerHTML=usccbLink;
+    renderSaintFallback(now);
   }
+}
+
+// ── Saint of the Day — populated from the readings API title ─────────────────
+// The USCCB title (e.g. "Memorial of Saint David of Wales") IS the feast name.
+// No separate API call needed — zero CORS issues.
+function renderSaintFromTitle(title,now){
+  const el=document.getElementById('saintOfDayCard');
+  if(!el)return;
+  const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const dateLabel=months[now.getMonth()]+' '+now.getDate();
+  const universalisUrl='https://universalis.com/'+now.getFullYear()+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0')+'/0/Mass.htm';
+
+  // Determine feast label vs saint name
+  // USCCB titles are like:
+  //   "Memorial of Saint David of Wales"
+  //   "Feast of the Chair of Saint Peter the Apostle"
+  //   "Solemnity of the Most Holy Trinity"
+  //   "Saturday of the First Week of Lent"
+  //   "Easter Sunday of the Resurrection of the Lord"
+  let feastLabel='';
+  let saintName=title;
+
+  const rankPrefixes=['Solemnity of','Feast of','Memorial of','Optional Memorial of'];
+  for(const prefix of rankPrefixes){
+    if(title.toLowerCase().startsWith(prefix.toLowerCase())){
+      feastLabel=prefix.replace(' of','')+ ' · '+dateLabel;
+      saintName=title.slice(prefix.length).trim();
+      break;
+    }
+  }
+  if(!feastLabel) feastLabel=dateLabel;
+
+  el.innerHTML='<div class="saint-card">'
+    +'<div class="saint-feast">'+esc(feastLabel)+'</div>'
+    +'<div class="saint-name">'+esc(saintName)+'</div>'
+    +'<a class="saint-source" href="'+universalisUrl+'" target="_blank" rel="noopener">'
+    +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="14" height="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>'
+    +'More at Universalis</a>'
+    +'</div>';
+}
+
+function renderSaintFallback(now){
+  const el=document.getElementById('saintOfDayCard');
+  if(!el)return;
+  const universalisUrl='https://universalis.com/'+now.getFullYear()+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0')+'/0/Mass.htm';
+  el.innerHTML='<div class="saint-card">'
+    +'<div class="saint-name" style="font-size:var(--text-base);font-family:var(--font-body);font-weight:var(--weight-regular);color:var(--color-text-secondary)">See today\'s feast day at Universalis</div>'
+    +'<a class="saint-source" href="'+universalisUrl+'" target="_blank" rel="noopener">'
+    +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="14" height="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>'
+    +'Open Universalis</a>'
+    +'</div>';
 }
 
 function toggleReading(id){
   const el=document.getElementById(id);
   if(el)el.classList.toggle('expanded');
+}
+function formatReadingText(raw){
+  if(!raw)return '';
+  // Split into paragraphs (double newline or explicit break)
+  const paragraphs=raw.split(/\n\s*\n/).filter(Boolean);
+  return paragraphs.map(para=>{
+    // Within each paragraph, preserve verse-level line breaks
+    const lines=para.split('\n').map(l=>esc(l.trim())).filter(Boolean);
+    return '<p class="reading-para">'+lines.join('<br>')+'</p>';
+  }).join('');
 }
 
 
@@ -1835,14 +2278,43 @@ const DEVOTIONAL_GUIDES=[
 <p>Confession — also called the Sacrament of Reconciliation — is how Catholics receive God's forgiveness for sins committed after Baptism. It is required for mortal sins and strongly recommended for all sins. If you've been away for a long time, a gentle priest will be happy to help you through it.</p>
 <p>The basic steps:</p>
 <ol>
-<li><strong>Examination of conscience</strong> — Quietly reflect on your actions since your last Confession. A simple guide: think through the Ten Commandments and ask where you've fallen short.</li>
+<li><strong>Examination of conscience</strong> — Quietly reflect on your actions since your last Confession.</li>
 <li><strong>Enter the confessional</strong> — You can kneel behind a screen or sit face to face with the priest. Begin: "Bless me, Father, for I have sinned. It has been [length of time] since my last Confession."</li>
 <li><strong>Confess your sins</strong> — Speak honestly. You don't need to be eloquent. The priest may offer gentle guidance.</li>
-<li><strong>Act of Contrition</strong> — Express sorrow for your sins. A traditional prayer: "O my God, I am heartily sorry…" or simply your own sincere words.</li>
+<li><strong>Act of Contrition</strong> — Express sorrow for your sins. See the traditional prayer below.</li>
 <li><strong>Absolution</strong> — The priest pronounces absolution. Your sins are forgiven.</li>
 <li><strong>Penance</strong> — Complete the prayer or act the priest assigns, usually shortly after leaving.</li>
 </ol>
 <p>If you're nervous, that's normal. The confessional is one of the most merciful places in the world.</p>
+<details class="conf-exam">
+  <summary>Examination of Conscience <svg style="width:16px;height:16px;flex-shrink:0;transition:transform 0.2s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></summary>
+  <div class="conf-exam-body">
+    <p>Toward God</p>
+    <ul>
+      <li>Have I neglected prayer, Sunday Mass, or my relationship with God?</li>
+      <li>Have I taken God's name in vain or treated sacred things carelessly?</li>
+      <li>Have I placed other things — money, status, approval — above God?</li>
+    </ul>
+    <p>Toward others</p>
+    <ul>
+      <li>Have I been dishonest, deceptive, or unkind in word or deed?</li>
+      <li>Have I harbored resentment, anger, or refused to forgive someone?</li>
+      <li>Have I gossiped, slandered, or damaged someone's reputation?</li>
+      <li>Have I taken what isn't mine, or failed to return what I owe?</li>
+      <li>Have I failed to help someone in genuine need when I could?</li>
+    </ul>
+    <p>Toward myself</p>
+    <ul>
+      <li>Have I acted against the dignity of my own body or soul?</li>
+      <li>Have I been ruled by pride, envy, greed, or self-pity?</li>
+      <li>Have I neglected my duties to my family, work, or community?</li>
+    </ul>
+  </div>
+</details>
+<div class="conf-act">
+  <div class="conf-act-label">Act of Contrition</div>
+  <div class="conf-act-text">O my God, I am heartily sorry for having offended Thee, and I detest all my sins because I dread the loss of heaven and the pains of hell; but most of all because they offend Thee, my God, who art all good and deserving of all my love. I firmly resolve, with the help of Thy grace, to confess my sins, to do penance, and to amend my life. Amen.</div>
+</div>
   `,filter:'confession'},
   {icon:'🌊',title:'What is the Divine Mercy Chaplet?',body:`
 <p>The Divine Mercy Chaplet is a short prayer given to St. Faustina Kowalska in the 1930s, centred on trust in God's mercy. It is prayed on ordinary Rosary beads and takes about 10–15 minutes.</p>
@@ -1914,46 +2386,48 @@ async function submitFeedback(){
 // ============================================================
 // MORE TAB
 // ============================================================
-// ============================================================
-// ADD TO HOME SCREEN GUIDE
-// ============================================================
-function initInstallGuide(){
-  const section=document.getElementById('installGuideSection');
-  if(!section)return;
-  // Hide if already installed as PWA
-  if(window.matchMedia('(display-mode: standalone)').matches||navigator.standalone){section.style.display='none';return}
-  // Hide if user dismissed
-  if(localStorage.getItem('mf_install_dismissed')){section.style.display='none';return}
-  const steps=document.getElementById('installSteps');
-  const ua=navigator.userAgent||'';
-  const isIOS=/iPad|iPhone|iPod/.test(ua)||(/Macintosh/.test(ua)&&'ontouchend' in document);
-  const isAndroid=/Android/.test(ua);
-  const stepStyle='display:flex;align-items:flex-start;gap:var(--space-3);margin-bottom:var(--space-3)';
-  const numStyle='flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--color-primary);color:white;display:flex;align-items:center;justify-content:center;font-size:var(--text-xs);font-weight:700';
-  const txtStyle='font-size:var(--text-sm);color:var(--color-text-secondary);line-height:1.5;padding-top:3px';
-  if(isIOS){
-    steps.innerHTML=
-      '<div style="'+stepStyle+'"><div style="'+numStyle+'">1</div><div style="'+txtStyle+'">Tap the <strong>Share</strong> button <span style="font-size:1.1em">&#xFEFF;⎙</span> at the bottom of your browser</div></div>'
-      +'<div style="'+stepStyle+'"><div style="'+numStyle+'">2</div><div style="'+txtStyle+'">Scroll down and tap <strong>"Add to Home Screen"</strong></div></div>'
-      +'<div style="'+stepStyle+'margin-bottom:0"><div style="'+numStyle+'">3</div><div style="'+txtStyle+'">Tap <strong>Add</strong> — MassFinder now lives on your home screen</div></div>';
-  }else if(isAndroid){
-    steps.innerHTML=
-      '<div style="'+stepStyle+'"><div style="'+numStyle+'">1</div><div style="'+txtStyle+'">Tap the <strong>three-dot menu</strong> ⋮ in the top-right of Chrome</div></div>'
-      +'<div style="'+stepStyle+'"><div style="'+numStyle+'">2</div><div style="'+txtStyle+'">Tap <strong>"Add to Home screen"</strong> or <strong>"Install app"</strong></div></div>'
-      +'<div style="'+stepStyle+'margin-bottom:0"><div style="'+numStyle+'">3</div><div style="'+txtStyle+'">Tap <strong>Install</strong> — MassFinder now opens like a real app</div></div>';
-  }else{
-    steps.innerHTML=
-      '<div style="'+stepStyle+'"><div style="'+numStyle+'">📱</div><div style="'+txtStyle+'"><strong>On iPhone:</strong> In Safari, tap Share → "Add to Home Screen"</div></div>'
-      +'<div style="'+stepStyle+'margin-bottom:0"><div style="'+numStyle+'">📱</div><div style="'+txtStyle+'"><strong>On Android:</strong> In Chrome, tap ⋮ menu → "Add to Home screen"</div></div>';
-  }
-}
-function dismissInstallGuide(){
-  localStorage.setItem('mf_install_dismissed','1');
-  const s=document.getElementById('installGuideSection');if(s)s.style.display='none';
-}
-
 function renderMore(){
   const langCount=new Set();allParishes.forEach(p=>p.services.forEach(s=>{if(s.language)langCount.add(s.language)}));
+
+  // ── WEEK AT A GLANCE ──────────────────────────────────────────────────────
+  (function(){
+    const strip=document.getElementById('weekGlanceStrip');
+    if(!strip)return;
+    const todayIdx=getNow().getDay(); // 0=Sun
+    const MASS_TYPES=['sunday_mass','daily_mass'];
+    const DAYS_KEY=['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
+    const LABELS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    const counts=[0,0,0,0,0,0,0];
+    allParishes.forEach(p=>{
+      (p.services||[]).forEach(s=>{
+        if(!MASS_TYPES.includes(s.type))return;
+        const d=s.day;
+        if(d==='daily'){for(let i=0;i<7;i++)counts[i]++;}
+        else if(d==='weekday'){for(let i=1;i<=5;i++)counts[i]++;}
+        else{const i=DAYS_KEY.indexOf(d);if(i>=0)counts[i]++;}
+      });
+    });
+    strip.innerHTML=DAYS_KEY.map((dayKey,i)=>{
+      const isToday=i===todayIdx;
+      return '<button class="wag-day'+(isToday?' today':'')+'" onclick="wagGoToDay(\''+dayKey+'\')" aria-label="'+LABELS[i]+': '+counts[i]+' Masses">'
+        +'<span class="wag-label">'+LABELS[i]+'</span>'
+        +'<span class="wag-count">'+counts[i]+'</span>'
+        +'<span class="wag-sub">Mass'+(counts[i]!==1?'es':'')+'</span>'
+        +'</button>';
+    }).join('');
+  })();
+
+  // ── ABOUT STAT GRID ───────────────────────────────────────────────────────
+  (function(){
+    const grid=document.getElementById('aboutStatGrid');
+    if(!grid)return;
+    const svcCount=allParishes.reduce((n,p)=>n+(p.services||[]).length,0);
+    grid.innerHTML=
+      '<div class="stat-card"><div class="stat-value">'+allParishes.length+'</div><div class="stat-label">Parishes</div></div>'
+      +'<div class="stat-card"><div class="stat-value">'+svcCount.toLocaleString()+'</div><div class="stat-label">Services</div></div>'
+      +'<div class="stat-card"><div class="stat-value">'+langCount.size+'</div><div class="stat-label">Languages</div></div>'
+      +'<div class="stat-card"><div class="stat-value">4</div><div class="stat-label">States</div></div>';
+  })();
 
   // ── What's Happening: unified YC + Community events ────────────────────
   const upcoming=getUpcomingYC();
@@ -1992,7 +2466,7 @@ function renderMore(){
       const dist=p?getDist(p):null;
       const isNear=!isFavE&&dist!==null&&dist<=10;
       const indicator=isFavE?'<div class="wh-event-fav">♥ Saved</div>':isNear?'<div class="wh-event-near">📍 '+fmtDist(dist)+'</div>':'';
-      return '<div class="wh-event-card" onclick="openDetail(\''+e.parish_id+'\')">'
+      return '<div class="wh-event-card" onclick="openEventDetail(\''+e.id+'\')">'
         +indicator
         +'<div class="wh-event-date">'+fmtYCDate(e.date)+(e.time?' · '+fmt12(e.time):'')+'</div>'
         +'<div class="wh-event-title">'+esc(e.title)+'</div>'
@@ -2050,8 +2524,18 @@ function renderMore(){
   // Footer
   document.getElementById('moreFooter').innerHTML='MassFinder v2.0<br>'+allParishes.length+' churches · '+langCount.size+' languages · 4 states';
 
-  // Trigger readings fetch async
+  // Trigger readings fetch async (also populates saint card)
   fetchReadings();
+}
+
+function wagGoToDay(dayKey){
+  const findTab=document.querySelector('[data-tab=panelFind]');
+  if(findTab)switchTab('panelFind',findTab);
+  setTimeout(function(){
+    advancedFilters.days=[dayKey];
+    renderPills();updateMFChip();filterParishes();renderCards();
+    window.scrollTo({top:0,behavior:'smooth'});
+  },300);
 }
 
 // Chips
@@ -2132,6 +2616,8 @@ function releaseFocus(){if(_focusTrapHandler){document.removeEventListener('keyd
 document.querySelector('.top-header').addEventListener('click',function(e){
   // Don't interfere if user clicked a child interactive element
   if(e.target.closest('button,a,input'))return;
+  const evtPanel=document.getElementById('eventDetailPanel');
+  if(evtPanel.classList.contains('open')){evtPanel.scrollTo({top:0,behavior:'smooth'});return;}
   const detail=document.getElementById('detailPanel');
   if(detail.classList.contains('open')){detail.scrollTo({top:0,behavior:'smooth'});return;}
   const activePanel=document.querySelector('.tab-panel.active');
@@ -2140,7 +2626,7 @@ document.querySelector('.top-header').addEventListener('click',function(e){
 });
 
 // Keyboard
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(document.getElementById('filtersOverlay').classList.contains('open'))closeMoreFilters();else if(document.getElementById('detailPanel').classList.contains('open'))closeDetail()}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(document.getElementById('eventDetailPanel').classList.contains('open'))closeEventDetail();else if(document.getElementById('filtersOverlay').classList.contains('open'))closeMoreFilters();else if(document.getElementById('detailPanel').classList.contains('open'))closeDetail()}});
 
 // Smart defaults
 function smartDefault(){const n=getNow(),d=n.getDay(),h=n.getHours();if(d===6&&h>=14)return'weekend';if(d===0&&h<14)return'today';return'all'}
@@ -2166,7 +2652,22 @@ async function init(){
         return true;
       });
     });
-    ycEvents=(data.yc_events||[]).sort((a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time));
+    ycEvents=(data.yc_events||[]).sort((a,b)=>a.date.localeCompare(b.date)||(a.time||'').localeCompare(b.time||''));
+    // Also try loading events.json (standalone events file)
+    try{
+      const evtResp=await fetch('events.json',{signal:AbortSignal.timeout(5000)});
+      if(evtResp.ok){
+        const evtData=await evtResp.json();
+        eventsData=(evtData.events||[]).sort((a,b)=>a.date.localeCompare(b.date)||(a.time||'').localeCompare(b.time||''));
+        // Use events.json YC events as canonical source if available
+        const ycFromFile=eventsData.filter(e=>e.category==='yc');
+        if(ycFromFile.length)ycEvents=ycFromFile;
+        console.log('[MassFinder] Loaded events.json:',eventsData.length,'events,',ycFromFile.length,'YC');
+      }else{
+        console.warn('[MassFinder] events.json fetch failed:',evtResp.status);
+      }
+    }catch(e){console.warn('[MassFinder] events.json not available:',e.message)}
+    console.log('[MassFinder] ycEvents count:',ycEvents.length);
     // Compute which parishes keep "Parish" label (2+ worship-site locations)
     keepParishIds=new Set(allParishes.filter(p=>{
       const worshipSites=(p.locations||[]).filter(l=>['church','chapel','mission'].includes(l.type));
