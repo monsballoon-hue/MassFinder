@@ -2423,7 +2423,7 @@ function renderMore(){
     if(!grid)return;
     const svcCount=allParishes.reduce((n,p)=>n+(p.services||[]).length,0);
     grid.innerHTML=
-      '<div class="stat-card"><div class="stat-value">'+allParishes.length+'</div><div class="stat-label">Parishes</div></div>'
+      '<div class="stat-card"><div class="stat-value">'+allParishes.length+'</div><div class="stat-label">Churches</div></div>'
       +'<div class="stat-card"><div class="stat-value">'+svcCount.toLocaleString()+'</div><div class="stat-label">Services</div></div>'
       +'<div class="stat-card"><div class="stat-value">'+langCount.size+'</div><div class="stat-label">Languages</div></div>'
       +'<div class="stat-card"><div class="stat-value">4</div><div class="stat-label">States</div></div>';
