@@ -590,6 +590,16 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 <div id="panelMore" class="tab-panel" role="tabpanel">
   <div class="more-content">
 
+    <!-- ADD TO HOME SCREEN -->
+    <div class="more-section" id="installGuideSection">
+      <h2 class="more-section-title">Add MassFinder to Your Phone</h2>
+      <p style="font-size:var(--text-sm);color:var(--color-text-secondary);margin-bottom:var(--space-3)">Get instant access from your home screen — no app store needed.</p>
+      <div id="installSteps" style="background:var(--color-surface);border-radius:var(--radius-md);padding:var(--space-4);box-shadow:var(--shadow-card)">
+        <!-- Filled by JS based on device -->
+      </div>
+      <button id="installDismissBtn" onclick="dismissInstallGuide()" style="margin-top:var(--space-3);background:none;border:none;font-size:var(--text-xs);color:var(--color-text-tertiary);cursor:pointer;padding:var(--space-1) 0;text-decoration:underline">Already added? Hide this</button>
+    </div>
+
     <!-- WHAT'S HAPPENING: YC Events + Community Events, equal prominence -->
     <div class="more-section" id="whatsHappeningSection" style="display:none">
       <h2 class="more-section-title">What's Happening</h2>
@@ -1514,7 +1524,7 @@ function switchTab(id,btn){
   if(id==='panelMap'&&!mapInitialized){initMap();mapInitialized=true}
   if(id==='panelMap'&&mapInitialized&&window._map){setTimeout(()=>window._map.invalidateSize(),100)}
   if(id==='panelSaved')renderSaved();
-  if(id==='panelMore'&&!window._moreRendered){renderMore();window._moreRendered=true}
+  if(id==='panelMore'&&!window._moreRendered){renderMore();initInstallGuide();window._moreRendered=true}
 }
 
 // ============================================================
@@ -1904,6 +1914,44 @@ async function submitFeedback(){
 // ============================================================
 // MORE TAB
 // ============================================================
+// ============================================================
+// ADD TO HOME SCREEN GUIDE
+// ============================================================
+function initInstallGuide(){
+  const section=document.getElementById('installGuideSection');
+  if(!section)return;
+  // Hide if already installed as PWA
+  if(window.matchMedia('(display-mode: standalone)').matches||navigator.standalone){section.style.display='none';return}
+  // Hide if user dismissed
+  if(localStorage.getItem('mf_install_dismissed')){section.style.display='none';return}
+  const steps=document.getElementById('installSteps');
+  const ua=navigator.userAgent||'';
+  const isIOS=/iPad|iPhone|iPod/.test(ua)||(/Macintosh/.test(ua)&&'ontouchend' in document);
+  const isAndroid=/Android/.test(ua);
+  const stepStyle='display:flex;align-items:flex-start;gap:var(--space-3);margin-bottom:var(--space-3)';
+  const numStyle='flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--color-primary);color:white;display:flex;align-items:center;justify-content:center;font-size:var(--text-xs);font-weight:700';
+  const txtStyle='font-size:var(--text-sm);color:var(--color-text-secondary);line-height:1.5;padding-top:3px';
+  if(isIOS){
+    steps.innerHTML=
+      '<div style="'+stepStyle+'"><div style="'+numStyle+'">1</div><div style="'+txtStyle+'">Tap the <strong>Share</strong> button <span style="font-size:1.1em">&#xFEFF;⎙</span> at the bottom of Safari</div></div>'
+      +'<div style="'+stepStyle+'"><div style="'+numStyle+'">2</div><div style="'+txtStyle+'">Scroll down and tap <strong>"Add to Home Screen"</strong></div></div>'
+      +'<div style="'+stepStyle+'margin-bottom:0"><div style="'+numStyle+'">3</div><div style="'+txtStyle+'">Tap <strong>Add</strong> — MassFinder now lives on your home screen</div></div>';
+  }else if(isAndroid){
+    steps.innerHTML=
+      '<div style="'+stepStyle+'"><div style="'+numStyle+'">1</div><div style="'+txtStyle+'">Tap the <strong>three-dot menu</strong> ⋮ in the top-right of Chrome</div></div>'
+      +'<div style="'+stepStyle+'"><div style="'+numStyle+'">2</div><div style="'+txtStyle+'">Tap <strong>"Add to Home screen"</strong> or <strong>"Install app"</strong></div></div>'
+      +'<div style="'+stepStyle+'margin-bottom:0"><div style="'+numStyle+'">3</div><div style="'+txtStyle+'">Tap <strong>Install</strong> — MassFinder now opens like a real app</div></div>';
+  }else{
+    steps.innerHTML=
+      '<div style="'+stepStyle+'"><div style="'+numStyle+'">📱</div><div style="'+txtStyle+'"><strong>On iPhone:</strong> In Safari, tap Share → "Add to Home Screen"</div></div>'
+      +'<div style="'+stepStyle+'margin-bottom:0"><div style="'+numStyle+'">📱</div><div style="'+txtStyle+'"><strong>On Android:</strong> In Chrome, tap ⋮ menu → "Add to Home screen"</div></div>';
+  }
+}
+function dismissInstallGuide(){
+  localStorage.setItem('mf_install_dismissed','1');
+  const s=document.getElementById('installGuideSection');if(s)s.style.display='none';
+}
+
 function renderMore(){
   const langCount=new Set();allParishes.forEach(p=>p.services.forEach(s=>{if(s.language)langCount.add(s.language)}));
 
