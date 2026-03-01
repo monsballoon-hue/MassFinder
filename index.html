@@ -1118,8 +1118,9 @@ async function verifyOk(ok){
   document.getElementById('verifyThanks').style.display='block';
   const church=document.getElementById('corrChurch')?document.getElementById('corrChurch').value:'Unknown Parish';
   try{
-    await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({access_key:'3d503d58-e668-4ef8-81ff-70ad5ec3ecf6',to:'massfinderapp@gmail.com',subject:'MassFinder \u2713 Times Confirmed: '+church,from_name:'MassFinder',message:'A visitor confirmed the schedule for '+church+' looks correct.\n\nAction: "Yes, these times look right!"\nParish: '+church+'\nSubmitted: '+new Date().toLocaleString('en-US',{dateStyle:'medium',timeStyle:'short'})})});
-  }catch(e){/* silent */}
+    const resp=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({access_key:'3d503d58-e668-4ef8-81ff-70ad5ec3ecf6',subject:'MassFinder \u2713 Times Confirmed: '+church,from_name:'MassFinder',message:'A visitor confirmed the schedule for '+church+' looks correct.\n\nAction: "Yes, these times look right!"\nParish: '+church+'\nSubmitted: '+new Date().toLocaleString('en-US',{dateStyle:'medium',timeStyle:'short'})})});
+    const data=await resp.json();if(!data.success)console.warn('Web3Forms verify error:',data.message);
+  }catch(e){console.warn('Verify email failed:',e)}
 }
 function showCorrectionForm(){document.getElementById('verifyPrompt').style.display='none';document.getElementById('correctionForm').style.display='block'}
 const CORR_PLACEHOLDERS={'Wrong time':'Which service, and what\'s the correct time?','Mass cancelled or moved':'Which Mass, and where did it move to?','Missing a service':'What service is missing? (e.g., Saturday 4 PM Confession)','Other':'Tell us what needs updating'};
@@ -1132,8 +1133,9 @@ async function submitCorrection(){
   if(!category){document.getElementById('corrPills').style.outline='2px solid var(--color-error)';return}
   if(!msg){document.getElementById('corrMessage').style.borderColor='var(--color-error)';return}
   try{
-    await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({access_key:'3d503d58-e668-4ef8-81ff-70ad5ec3ecf6',to:'massfinderapp@gmail.com',subject:'MassFinder Correction ['+category+']: '+church,from_name:'MassFinder',church:church,category:category,message:msg,email:email||'(not provided)'})});
-  }catch(e){/* still show thanks */}
+    const resp=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({access_key:'3d503d58-e668-4ef8-81ff-70ad5ec3ecf6',subject:'MassFinder Correction ['+category+']: '+church,from_name:'MassFinder',church:church,category:category,message:msg,email:email||'(not provided)'})});
+    const data=await resp.json();if(!data.success)console.warn('Web3Forms correction error:',data.message);
+  }catch(e){console.warn('Correction email failed:',e)}
   document.getElementById('correctionForm').style.display='none';
   document.getElementById('verifyThanks').style.display='block';
 }
@@ -1147,8 +1149,9 @@ async function submitMoreCorrection(){
   if(!category){document.getElementById('moreCorrPills').style.outline='2px solid var(--color-error)';return}
   if(!msg){document.getElementById('moreCorrMessage').style.borderColor='var(--color-error)';return}
   try{
-    await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({access_key:'3d503d58-e668-4ef8-81ff-70ad5ec3ecf6',to:'massfinderapp@gmail.com',subject:'MassFinder Correction ['+category+']: '+(church||'General'),from_name:'MassFinder',church:church||'(general)',category:category,message:msg,email:email||'(not provided)'})});
-  }catch(e){/* still show thanks */}
+    const resp=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({access_key:'3d503d58-e668-4ef8-81ff-70ad5ec3ecf6',subject:'MassFinder Correction ['+category+']: '+(church||'General'),from_name:'MassFinder',church:church||'(general)',category:category,message:msg,email:email||'(not provided)'})});
+    const data=await resp.json();if(!data.success)console.warn('Web3Forms moreCorr error:',data.message);
+  }catch(e){console.warn('More correction email failed:',e)}
   document.getElementById('moreCorrThanks').style.display='block';
   document.getElementById('moreCorrectionForm').querySelectorAll('input,textarea,button:not(#moreCorrThanks)').forEach(el=>el.style.display='none');
 }
@@ -1880,7 +1883,7 @@ async function submitFeedback(){
   // Web3Forms — get your free key at web3forms.com (enter your email, they send you a key instantly)
   const WEB3FORMS_KEY='3d503d58-e668-4ef8-81ff-70ad5ec3ecf6';
   try{
-    await fetch('https://api.web3forms.com/submit',{
+    const resp=await fetch('https://api.web3forms.com/submit',{
       method:'POST',
       headers:{'Content-Type':'application/json','Accept':'application/json'},
       body:JSON.stringify({
@@ -1892,7 +1895,8 @@ async function submitFeedback(){
         from_name:'MassFinder Feedback'
       })
     });
-  }catch(e){/* still show thanks */}
+    const data=await resp.json();if(!data.success)console.warn('Web3Forms feedback error:',data.message);
+  }catch(e){console.warn('Feedback email failed:',e)}
   document.getElementById('feedbackFormWrap').style.display='none';
   document.getElementById('fbThanks').style.display='block';
 }
