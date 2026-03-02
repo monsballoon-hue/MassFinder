@@ -1,0 +1,70 @@
+name: Validate parish_data.json
+
+on:
+  push:
+    branches: [main, dev]
+    paths:
+      - 'parish_data.json'
+      - 'parish_data.schema.json'
+      - '.github/workflows/validate.yml'
+      - '.github/scripts/freshness-check.js'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'parish_data.json'
+
+jobs:
+  validate:
+    name: Schema & Freshness Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install ajv-cli and ajv-formats
+        run: npm install -g ajv-cli@5 ajv-formats@3
+
+      # Step 1: Confirm the file is valid JSON before anything else
+      - name: Check JSON syntax
+        run: |
+          node -e "
+            const fs = require('fs');
+            try {
+              JSON.parse(fs.readFileSync('parish_data.json', 'utf8'));
+              console.log('✓ parish_data.json is valid JSON');
+            } catch (e) {
+              console.error('✗ JSON parse error:', e.message);
+              process.exit(1);
+            }
+          "
+
+      # Step 2: Validate structure against the JSON Schema
+      - name: Validate against schema
+        run: |
+          ajv validate \
+            --spec=draft7 \
+            -s parish_data.schema.json \
+            -d parish_data.json \
+            --errors=text \
+            --all-errors \
+            -c ajv-formats
+        # Exits non-zero on any schema violation — blocks merge to main
+
+      # Step 3: Freshness report (warnings only, never blocks the build)
+      - name: Run freshness check
+        run: node .github/scripts/freshness-check.js
+        continue-on-error: true
+
+      - name: Upload freshness report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: freshness-report
+          path: freshness-report.json
+          if-no-files-found: ignore

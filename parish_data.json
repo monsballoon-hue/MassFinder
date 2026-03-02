@@ -11512,7 +11512,11 @@
           "location": "St. Elizabeth Ann Seton Youth Center, 87 Beacon St, Florence",
           "category": "one_time_series",
           "id": "parish_042-devot-x-1730",
-          "language": "en"
+          "language": "en",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          }
         }
       ],
       "validation": {
