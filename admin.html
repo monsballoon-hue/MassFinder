@@ -18,6 +18,7 @@ html{-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%}
   --green:#4A7C59;   --green-bg:#EDF5F0;
   --amber:#D97706;   --amber-bg:#FEF5E7;
   --red:#B91C1C;     --red-bg:#FEF2F2;
+  --purple:#7C3AED;  --teal:#0D9488;
   --border:#E5E2DC;  --border-lt:#F0EDE8;
   --font-d:'Playfair Display',Georgia,serif;
   --font-b:'Source Sans 3',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
@@ -25,6 +26,7 @@ html{-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%}
   --r-sm:8px; --r-md:12px; --r-lg:16px;
   --sh-card:0 1px 3px rgba(26,30,38,.06),0 4px 12px rgba(26,30,38,.04);
   --sh-up:0 4px 16px rgba(26,30,38,.10),0 12px 40px rgba(26,30,38,.08);
+  --ease:cubic-bezier(0.25,0.46,0.45,0.94);
 }
 body{font-family:var(--font-b);background:var(--bg);color:var(--txt);font-size:15px;line-height:1.5}
 
@@ -66,8 +68,9 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--txt);font-size:1
 .sidebar-search:focus{border-color:var(--primary);background:#fff;box-shadow:0 0 0 3px rgba(44,62,90,.07)}
 .sidebar-stats{padding:6px 13px 7px;font-size:11.5px;color:var(--txt3);border-bottom:1px solid var(--border-lt)}
 #parishList{flex:1;overflow-y:auto}
-.parish-row{padding:9px 12px;cursor:pointer;border-bottom:1px solid var(--border-lt);display:flex;align-items:flex-start;gap:8px;transition:background .1s}
+.parish-row{padding:9px 12px;cursor:pointer;border-bottom:1px solid var(--border-lt);display:flex;align-items:flex-start;gap:8px;transition:background .1s,transform .08s}
 .parish-row:hover{background:var(--bg)}
+.parish-row:active{transform:scale(0.99)}
 .parish-row.active{background:var(--accent-pale);border-left:3px solid var(--accent);padding-left:9px}
 .status-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px}
 .status-dot.verified,.status-dot.manually_verified{background:var(--green)}
@@ -84,43 +87,81 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--txt);font-size:1
 .empty-state svg{opacity:.22;width:52px;height:52px}
 .empty-state p{font-size:15px;color:var(--txt2)}
 .empty-state small{font-size:13px;line-height:1.6;max-width:260px;color:var(--txt3)}
+.shortcut-hints{display:flex;flex-direction:column;gap:6px;margin-top:12px}
+.hint-row{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--txt3)}
+.hint-row kbd{min-width:52px;text-align:center}
+kbd{display:inline-block;padding:2px 7px;background:var(--surface);border:1px solid var(--border);border-radius:4px;font-size:11.5px;font-family:var(--font-m);color:var(--txt2);box-shadow:0 1px 0 var(--border);line-height:1.5}
 
-/* Sticky edit header */
+/* ── Sticky edit header ────────────────────────────────────────────── */
 .edit-sticky{position:sticky;top:0;z-index:10}
-.edit-hdr{background:var(--primary);color:#fff;padding:11px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.edit-hdr-left{min-width:0}
-.edit-hdr h2{font-family:var(--font-d);font-size:1.1rem;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:360px}
-.edit-hdr-town{font-size:11px;opacity:.65;margin-top:2px;font-family:var(--font-m)}
-.edit-hdr-right{display:flex;align-items:center;gap:9px;flex-shrink:0}
+.edit-hdr{background:var(--primary);color:#fff;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.edit-hdr-left{display:flex;align-items:center;gap:10px;min-width:0}
+.nav-btns{display:flex;gap:3px;flex-shrink:0}
+.btn-nav{width:28px;height:28px;border-radius:var(--r-sm);border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.8);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;font-weight:600;transition:background .15s}
+.btn-nav:hover{background:rgba(255,255,255,.15);color:#fff}
+.edit-hdr-info{min-width:0}
+.edit-hdr h2{font-family:var(--font-d);font-size:1.05rem;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:320px}
+.edit-hdr-town{font-size:11px;opacity:.65;margin-top:1px;font-family:var(--font-m)}
+.edit-hdr-right{display:flex;align-items:center;gap:7px;flex-shrink:0}
 .vpill{padding:3px 9px;border-radius:99px;font-size:11px;font-weight:600;white-space:nowrap}
 .vpill.verified,.vpill.manually_verified{background:rgba(74,124,89,.18);color:#1f4d31;border:1px solid rgba(74,124,89,.3)}
 .vpill.needs_verification,.vpill.low_confidence{background:rgba(217,119,6,.18);color:#7c4208;border:1px solid rgba(217,119,6,.3)}
 .vpill.unverified{background:rgba(156,163,175,.18);color:#4B5563;border:1px solid rgba(156,163,175,.3)}
 .vpill.excluded{background:rgba(185,28,28,.15);color:#991B1B;border:1px solid rgba(185,28,28,.2)}
-.btn-del-parish{height:32px;padding:0 12px;background:transparent;border:1px solid rgba(185,28,28,.4);color:#fca5a5;border-radius:var(--r-sm);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font-b);white-space:nowrap;transition:background .15s,border-color .15s,color .15s}
-.btn-del-parish:hover{background:rgba(185,28,28,.25);border-color:#fca5a5;color:#fff}
-.btn-save{height:32px;padding:0 16px;background:var(--green);color:#fff;border:none;border-radius:var(--r-sm);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font-b);transition:background .15s,box-shadow .4s;white-space:nowrap}
+.btn-verify{height:28px;padding:0 10px;background:rgba(74,124,89,.2);border:1px solid rgba(74,124,89,.35);color:#a8e6c0;border-radius:var(--r-sm);font-size:11.5px;font-weight:600;cursor:pointer;font-family:var(--font-b);white-space:nowrap;transition:background .15s}
+.btn-verify:hover{background:rgba(74,124,89,.35);color:#fff}
+.btn-del-parish{height:28px;padding:0 10px;background:transparent;border:1px solid rgba(185,28,28,.3);color:#fca5a5;border-radius:var(--r-sm);font-size:11.5px;font-weight:600;cursor:pointer;font-family:var(--font-b);white-space:nowrap;transition:background .15s}
+.btn-del-parish:hover{background:rgba(185,28,28,.25);color:#fff}
+.btn-save{height:28px;padding:0 14px;background:var(--green);color:#fff;border:none;border-radius:var(--r-sm);font-size:12.5px;font-weight:600;cursor:pointer;font-family:var(--font-b);transition:background .15s,box-shadow .4s;white-space:nowrap}
 .btn-save:hover{background:#3d6b4c}
 .btn-save.dirty{background:var(--accent);animation:savepulse 2.4s ease infinite}
 @keyframes savepulse{0%,100%{box-shadow:0 0 0 0 rgba(184,150,63,.5)}60%{box-shadow:0 0 0 7px rgba(184,150,63,0)}}
-.save-flash{font-size:12px;color:#a8e6c0;opacity:0;transition:opacity .35s;pointer-events:none;min-width:48px;text-align:right}
+
+/* URL bar in sticky header */
+.edit-hdr-urls{background:rgba(44,62,90,.92);padding:6px 20px 8px;display:flex;gap:10px}
+.url-hdr-grp{flex:1;display:flex;flex-direction:column;gap:2px}
+.url-hdr-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.45)}
+.url-hdr-row{display:flex;gap:4px}
+.url-hdr-row input{flex:1;padding:5px 10px;border:1px solid rgba(255,255,255,.18);border-radius:var(--r-sm);background:rgba(255,255,255,.07);color:#fff;font-size:12.5px;font-family:var(--font-m);outline:none;transition:border-color .15s,background .15s;min-width:0}
+.url-hdr-row input::placeholder{color:rgba(255,255,255,.3)}
+.url-hdr-row input:focus{border-color:var(--accent);background:rgba(255,255,255,.13)}
+.btn-hdr-open{padding:0 8px;border:1px solid rgba(255,255,255,.18);border-radius:var(--r-sm);background:transparent;color:rgba(255,255,255,.6);cursor:pointer;font-size:13px;transition:background .15s,color .15s;flex-shrink:0;display:flex;align-items:center}
+.btn-hdr-open:hover{background:rgba(255,255,255,.14);color:#fff}
 
 /* ── Cards ──────────────────────────────────────────────────────────── */
 .edit-content{padding:16px 20px 80px;display:flex;flex-direction:column;gap:12px;max-width:700px}
 .card{background:var(--surface);border-radius:var(--r-md);box-shadow:var(--sh-card);overflow:hidden}
-.card-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--txt3);padding:14px 18px 2px}
+.card-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--txt3);padding:14px 18px 2px;display:flex;align-items:center;justify-content:space-between}
 .card-body{padding:10px 18px 18px;display:flex;flex-direction:column;gap:13px}
 details.card>summary{
-  list-style:none;padding:13px 18px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;
+  list-style:none;padding:13px 18px;cursor:pointer;display:flex;align-items:center;gap:10px;
   font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--txt3);user-select:none;
 }
 details.card>summary::-webkit-details-marker{display:none}
-details.card>summary::after{content:'›';font-size:18px;color:var(--txt3);transition:transform .2s;line-height:1}
+details.card>summary::after{content:'›';font-size:18px;color:var(--txt3);transition:transform .2s;line-height:1;margin-left:auto}
 details.card[open]>summary::after{transform:rotate(90deg)}
 details.card>.card-body{border-top:1px solid var(--border-lt)}
 
-/* ── Form fields (single column) ────────────────────────────────────── */
-.f{display:flex;flex-direction:column;gap:5px}
+/* Card enter animations */
+.edit-content>.card,.edit-content>details.card{animation:cardIn .3s var(--ease) both}
+.edit-content>:nth-child(1){animation-delay:0ms}
+.edit-content>:nth-child(2){animation-delay:50ms}
+.edit-content>:nth-child(3){animation-delay:100ms}
+.edit-content>:nth-child(4){animation-delay:150ms}
+.edit-content>:nth-child(5){animation-delay:200ms}
+@keyframes cardIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* Validation summary on collapsed state */
+.val-summary{display:flex;align-items:center;gap:8px}
+.vpill-sm{padding:2px 7px;border-radius:99px;font-size:10px;font-weight:600;text-transform:none;letter-spacing:normal}
+.vpill-sm.verified,.vpill-sm.manually_verified{background:rgba(74,124,89,.15);color:#1f4d31;border:1px solid rgba(74,124,89,.25)}
+.vpill-sm.needs_verification,.vpill-sm.low_confidence{background:rgba(217,119,6,.15);color:#7c4208;border:1px solid rgba(217,119,6,.25)}
+.vpill-sm.unverified{background:rgba(156,163,175,.15);color:#4B5563;border:1px solid rgba(156,163,175,.25)}
+.vpill-sm.excluded{background:rgba(185,28,28,.12);color:#991B1B;border:1px solid rgba(185,28,28,.18)}
+.val-date{font-size:11px;color:var(--txt2);text-transform:none;letter-spacing:normal;font-weight:500}
+
+/* ── Form fields ───────────────────────────────────────────────────── */
+.f{display:flex;flex-direction:column;gap:5px;transition:border-left .2s,padding-left .2s}
 .f label{font-size:12px;font-weight:600;color:var(--txt2);letter-spacing:.01em}
 .f input,.f select,.f textarea{
   padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);
@@ -129,6 +170,7 @@ details.card>.card-body{border-top:1px solid var(--border-lt)}
 }
 .f input:focus,.f select:focus,.f textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(44,62,90,.08)}
 .f textarea{resize:vertical;min-height:64px}
+.f.changed{border-left:3px solid var(--accent);padding-left:8px}
 .row-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .row-addr{display:flex;gap:10px}
 .row-addr .city{flex:1}
@@ -138,8 +180,12 @@ details.card>.card-body{border-top:1px solid var(--border-lt)}
 .check-row input[type=checkbox]{width:15px;height:15px;cursor:pointer;accent-color:var(--primary);flex-shrink:0}
 .check-row label{font-size:14px;cursor:pointer;user-select:none}
 .hint{font-size:12px;color:var(--txt3);line-height:1.6;margin-top:2px}
+.date-with-today{display:flex;align-items:flex-end;gap:6px}
+.date-with-today .f{flex:1}
+.btn-today{height:40px;padding:0 10px;border:1.5px solid var(--green);border-radius:var(--r-sm);background:var(--green-bg);color:var(--green);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font-b);transition:background .15s;white-space:nowrap}
+.btn-today:hover{background:var(--green);color:#fff}
 
-/* URL field + open button */
+/* URL field + open button (in cards) */
 .url-grp{display:flex;gap:6px;align-items:flex-end}
 .url-grp .f{flex:1}
 .btn-open{flex-shrink:0;height:40px;padding:0 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);background:var(--bg);color:var(--txt2);font-size:12.5px;font-weight:600;cursor:pointer;font-family:var(--font-b);transition:border-color .15s,color .15s;display:flex;align-items:center;gap:5px}
@@ -147,8 +193,16 @@ details.card>.card-body{border-top:1px solid var(--border-lt)}
 .btn-open svg{width:11px;height:11px;flex-shrink:0}
 
 /* ── Schedule card ──────────────────────────────────────────────────── */
-.sched-group{padding:10px 18px 4px}
+.sched-group{padding:10px 18px 4px;transition:border-left .2s}
 .sched-group+.sched-group{border-top:1px solid var(--border-lt)}
+.sched-group[data-group="sunday"]{border-left:3px solid var(--primary)}
+.sched-group[data-group="weekday"]{border-left:3px solid var(--primary-lt)}
+.sched-group[data-group="confession"]{border-left:3px solid var(--purple)}
+.sched-group[data-group="adoration"]{border-left:3px solid var(--accent)}
+.sched-group[data-group="devotions"]{border-left:3px solid var(--green)}
+.sched-group[data-group="triduum"]{border-left:3px solid var(--red)}
+.sched-group[data-group="community"]{border-left:3px solid var(--teal)}
+.sched-group[data-group="other"]{border-left:3px solid var(--txt3)}
 .sched-group-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
 .sched-group-left{display:flex;align-items:center;gap:7px}
 .sched-group-label{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--txt)}
@@ -156,24 +210,37 @@ details.card>.card-body{border-top:1px solid var(--border-lt)}
 .btn-sched-add{background:none;border:none;color:var(--primary);font-size:12.5px;font-weight:600;cursor:pointer;font-family:var(--font-b);padding:3px 8px;border-radius:var(--r-sm);transition:background .15s}
 .btn-sched-add:hover{background:var(--accent-pale);color:var(--accent-text)}
 .svc-rows{margin-bottom:8px}
-.svc-row-s{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-lt)}
+.svc-row-s{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border-lt)}
 .svc-row-s:last-child{border-bottom:none}
-.svc-daytime{font-size:14.5px;font-weight:500;color:var(--txt);min-width:155px;flex-shrink:0}
+.svc-row-s.edited{background:var(--accent-pale);border-radius:4px;padding-left:6px;margin-left:-6px}
+.svc-row-s.verified{opacity:.5}
+.svc-row-s.verified .svc-day,.svc-row-s.verified .svc-time{text-decoration:line-through;text-decoration-color:var(--green)}
+.svc-check{width:16px;height:16px;cursor:pointer;accent-color:var(--green);flex-shrink:0}
+.svc-day,.svc-time{cursor:pointer;border-radius:4px;padding:2px 5px;transition:background .12s;font-size:14px}
+.svc-day{font-weight:500;min-width:72px}
+.svc-time{font-family:var(--font-m);font-size:13px;min-width:68px;color:var(--txt2)}
+.svc-day:hover,.svc-time:hover{background:var(--accent-pale)}
 .svc-pills{display:flex;gap:5px;flex:1;flex-wrap:wrap;align-items:center}
 .pill{padding:2px 8px;border-radius:99px;font-size:11px;font-weight:600;white-space:nowrap}
 .pill-lang{background:#EEF2FF;color:#4338CA}
 .pill-seasonal{background:var(--green-bg);color:var(--green)}
 .pill-vary{background:var(--amber-bg);color:var(--amber)}
 .pill-note{background:var(--bg);color:var(--txt3);border:1px solid var(--border)}
-.btn-row-edit{flex-shrink:0;padding:4px 10px;font-size:12px;font-weight:600;border:1px solid var(--border);border-radius:var(--r-sm);background:var(--bg);color:var(--txt2);cursor:pointer;font-family:var(--font-b);transition:border-color .15s,color .15s}
+.btn-row-edit{flex-shrink:0;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;border:1px solid var(--border);border-radius:var(--r-sm);background:var(--bg);color:var(--txt3);cursor:pointer;font-family:var(--font-b);transition:border-color .15s,color .15s;letter-spacing:1px}
 .btn-row-edit:hover{border-color:var(--primary);color:var(--primary)}
 .sched-empty{font-size:13px;color:var(--txt3);padding:4px 0 8px;font-style:italic}
+.btn-bulletin-link{font-size:11px;font-weight:600;color:var(--primary);text-decoration:none;padding:2px 8px;border-radius:var(--r-sm);background:var(--bg);border:1px solid var(--border);transition:all .15s;text-transform:none;letter-spacing:normal}
+.btn-bulletin-link:hover{background:var(--primary);color:#fff}
+
+/* Inline editing */
+.inline-edit-input,.inline-edit-select{padding:4px 8px;border:2px solid var(--accent);border-radius:var(--r-sm);font-size:13px;font-family:var(--font-b);outline:none;background:var(--accent-pale);max-width:140px}
 
 /* ── Modals ─────────────────────────────────────────────────────────── */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(26,30,38,.52);z-index:100;align-items:center;justify-content:center;padding:24px}
 .modal-overlay.open{display:flex}
-.modal{background:var(--surface);border-radius:var(--r-lg);width:100%;max-width:460px;max-height:90vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--sh-up)}
+.modal{background:var(--surface);border-radius:var(--r-lg);width:100%;max-width:460px;max-height:90vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--sh-up);animation:modalIn .2s var(--ease)}
 .modal.wide{max-width:540px}
+@keyframes modalIn{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
 .modal-hdr{padding:18px 22px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .modal-hdr h3{font-family:var(--font-d);font-size:1.15rem;color:var(--primary)}
 .modal-close{width:30px;height:30px;border-radius:50%;background:var(--bg);border:none;cursor:pointer;font-size:16px;color:var(--txt2);display:flex;align-items:center;justify-content:center;transition:background .15s}
@@ -196,6 +263,22 @@ details.card>.card-body{border-top:1px solid var(--border-lt)}
 .guide-row{display:flex;align-items:baseline;gap:6px;font-size:14px;padding:3px 0}
 .guide-row strong{color:var(--txt);min-width:80px}
 
+/* ── Toast notifications ───────────────────────────────────────────── */
+.toast-container{position:fixed;bottom:20px;right:20px;z-index:200;display:flex;flex-direction:column-reverse;gap:8px;pointer-events:none}
+.toast{pointer-events:auto;display:flex;align-items:center;gap:12px;padding:12px 18px;background:var(--txt);color:#fff;border-radius:var(--r-md);box-shadow:var(--sh-up);font-size:13.5px;font-weight:500;transform:translateY(12px);opacity:0;transition:transform .3s var(--ease),opacity .3s var(--ease)}
+.toast.show{transform:none;opacity:1}
+.toast-undo{background:none;border:1px solid rgba(255,255,255,.3);color:#fff;padding:4px 10px;border-radius:var(--r-sm);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font-b);transition:background .15s;white-space:nowrap}
+.toast-undo:hover{background:rgba(255,255,255,.15)}
+
+/* ── Click feedback ────────────────────────────────────────────────── */
+button:active:not(:disabled){transform:scale(0.97)}
+
+/* ── Reduced motion ────────────────────────────────────────────────── */
+@media(prefers-reduced-motion:reduce){
+  .edit-content>.card,.edit-content>details.card,.modal,.toast{animation:none !important}
+  *{transition-duration:0s !important}
+}
+
 /* ── Responsive ─────────────────────────────────────────────────────── */
 @media(max-width:640px){
   .sidebar{width:100%;border-right:none;border-bottom:1px solid var(--border);max-height:38vh}
@@ -203,6 +286,8 @@ details.card>.card-body{border-top:1px solid var(--border-lt)}
   .row-2{grid-template-columns:1fr}
   .row-addr{flex-wrap:wrap}
   .row-addr .state,.row-addr .zip{flex:1;width:auto}
+  .edit-hdr-urls{flex-direction:column}
+  .edit-hdr h2{max-width:200px}
 }
 </style>
 </head>
@@ -246,12 +331,12 @@ details.card>.card-body{border-top:1px solid var(--border-lt)}
       <div id="parishList"></div>
     </div>
     <div class="edit-col" id="editCol">
-      <div class="empty-state">
+      <div class="empty-state" id="emptyState">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
           <rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 12h8M8 8h5"/>
         </svg>
-        <p>Select a parish to edit</p>
-        <small>Search by name or town. Coloured dots show validation status.</small>
+        <p>Select a parish to begin editing</p>
+        <div class="shortcut-hints" id="shortcutHints"></div>
       </div>
     </div>
   </div>
@@ -304,25 +389,33 @@ details.card>.card-body{border-top:1px solid var(--border-lt)}
       <h4>Daily Review Workflow</h4>
       <ol>
         <li>Terminal: <code>node scripts/prep-review.js</code></li>
-        <li>Note the 3 parishes. Click their <strong>Bulletin URL</strong> to open it</li>
+        <li>Note the 3 parishes. Click their <strong>Bulletin URL</strong> in the header bar</li>
         <li>Download the latest bulletin PDF; copy its text</li>
         <li>Open <strong>claude.ai</strong> &rarr; paste <code>review/today-prompt.txt</code> + the bulletin text</li>
         <li>Search the sidebar here, select each parish</li>
-        <li>Update Mass times in the <strong>Schedule</strong> section &mdash; click <em>Edit</em> on any row</li>
-        <li>Expand <strong>Validation</strong> &rarr; set status to <em>manually verified</em>, set Last Checked to today</li>
+        <li>Click any <strong>day or time</strong> in the schedule to edit inline, or click <strong>&middot;&middot;&middot;</strong> for full edit</li>
+        <li>Click <strong>&#10003; Verify</strong> in the header to mark as reviewed today</li>
         <li><strong>Save Parish</strong> after each one</li>
         <li>When done &rarr; <strong>Download JSON</strong>, replace the file, commit &amp; push</li>
       </ol>
+      <h4>Keyboard Shortcuts</h4>
+      <div class="guide-row"><kbd id="kb_save"></kbd> <span>Save current parish</span></div>
+      <div class="guide-row"><kbd id="kb_dl"></kbd> <span>Download JSON</span></div>
+      <div class="guide-row"><kbd>Alt &#8593; / &#8595;</kbd> <span>Previous / Next parish</span></div>
+      <div class="guide-row"><kbd>/</kbd> <span>Focus search bar</span></div>
+      <div class="guide-row"><kbd>Esc</kbd> <span>Close any modal</span></div>
       <h4>Schedule Editing</h4>
       <ul>
-        <li>Services are grouped by type: Sunday Mass, Weekday Mass, Confession, etc.</li>
-        <li>Click <strong>Edit</strong> on any row to change its day, time, language, or notes</li>
-        <li>Click <strong>+ Add</strong> next to a group heading to add a new service in that category</li>
+        <li>Services are grouped by type with colour-coded left borders</li>
+        <li>Click a <strong>day</strong> or <strong>time</strong> to edit it inline &mdash; Enter saves, Esc cancels</li>
+        <li>Click <strong>&middot;&middot;&middot;</strong> to open the full editor for language, notes, seasonal flags, etc.</li>
+        <li>Click <strong>+ Add</strong> next to a group heading to add a new service (inherits language from group)</li>
       </ul>
       <h4>Saving Your Work</h4>
       <ul>
         <li><strong>Save Parish</strong> writes to memory only &mdash; button pulses gold when unsaved edits exist</li>
         <li><strong>Download JSON</strong> exports <em>all</em> parishes; always do this before closing</li>
+        <li>Closing the tab with unsaved changes will trigger a browser warning</li>
       </ul>
       <h4>Status Dot Guide</h4>
       <ul>
@@ -331,15 +424,15 @@ details.card>.card-body{border-top:1px solid var(--border-lt)}
         <li><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#CBD5E1;margin-right:6px;vertical-align:middle"></span><strong>Grey</strong> &mdash; never reviewed</li>
         <li><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#B91C1C;margin-right:6px;vertical-align:middle"></span><strong>Red</strong> &mdash; excluded from the app</li>
       </ul>
-      <h4>URL Audit</h4>
-      <p>Run <code>node scripts/audit-urls.js</code> to find dead or missing URLs. Fix Website and Bulletin URL here, then Download and commit.</p>
     </div>
   </div>
 </div>
 
+<!-- Toast container -->
+<div class="toast-container" id="toastContainer"></div>
+
 <script>
 // ── Password gate ──────────────────────────────────────────────────────
-// UI gate only — no server-side writes. User must still commit & push the downloaded JSON.
 const PW = 'xm2215x99=';
 function checkPassword() {
   const v = document.getElementById('pwInput').value;
@@ -394,7 +487,6 @@ const EVT_CATS     = ['fellowship','conference','volunteering','liturgical','edu
 const EVT_FREQS    = ['one_time','weekly','monthly','annual'];
 const STATES       = ['MA','CT','VT','NH','NY'];
 
-// Schedule groups — processed in order; each service matched to first group that passes
 const SCHED_GROUPS = [
   { key:'sunday',     label:'Sunday Mass',        addType:'sunday_mass',        addDay:'sunday',
     test: s => s.type === 'sunday_mass' },
@@ -414,6 +506,8 @@ const SCHED_GROUPS = [
     test: () => true }
 ];
 
+const MOD = navigator.platform.includes('Mac') ? '\u2318' : 'Ctrl+';
+
 function dotClass(vs) {
   if (['verified','manually_verified'].includes(vs)) return 'verified';
   if (['needs_verification','low_confidence'].includes(vs)) return 'needs_verification';
@@ -422,15 +516,30 @@ function dotClass(vs) {
 }
 
 // ── State ──────────────────────────────────────────────────────────────
-let editData      = null;
-let allRows       = [];
-let pendingParish = null;
-let isDirty       = false;
+let editData        = null;
+let allRows         = [];
+let pendingParish   = null;
+let isDirty         = false;
+let originalValues  = {};
+let editedSvcSet    = new Set();
+let verifiedSvcSet  = new Set();
+let undoAction      = null;
+let undoTimer       = null;
 
 // ── Boot ───────────────────────────────────────────────────────────────
 async function startApp() {
   document.getElementById('loginScreen').style.display = 'none';
   document.getElementById('app').style.display = 'flex';
+  // Populate keyboard shortcut labels
+  var kbs = document.getElementById('kb_save'); if (kbs) kbs.textContent = MOD + 'S';
+  var kbd = document.getElementById('kb_dl');   if (kbd) kbd.textContent = MOD + 'D';
+  // Populate empty state shortcut hints
+  var hints = document.getElementById('shortcutHints');
+  if (hints) hints.innerHTML =
+    '<div class="hint-row"><kbd>/</kbd><span>Focus search</span></div>' +
+    '<div class="hint-row"><kbd>' + MOD + 'S</kbd><span>Save parish</span></div>' +
+    '<div class="hint-row"><kbd>' + MOD + 'D</kbd><span>Download JSON</span></div>' +
+    '<div class="hint-row"><kbd>Alt \u2191\u2193</kbd><span>Prev / Next parish</span></div>';
   try {
     const res = await fetch('parish_data.json');
     if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -459,12 +568,13 @@ function updateStats(shown, total) {
 }
 function renderList(rows) {
   const el = document.getElementById('parishList');
+  const activeId = pendingParish ? pendingParish.id : null;
   if (!rows.length) {
     el.innerHTML = '<div style="padding:14px 13px;font-size:13px;color:var(--txt3)">No matches</div>';
     return;
   }
   el.innerHTML = rows.map(r =>
-    '<div class="parish-row" data-id="'+esc(r.id)+'" onclick="selectParish(\''+esc(r.id)+'\')">' +
+    '<div class="parish-row' + (r.id === activeId ? ' active' : '') + '" data-id="'+esc(r.id)+'" onclick="selectParish(\''+esc(r.id)+'\')">' +
       '<div class="status-dot '+dotClass(r.vs)+'"></div>' +
       '<div class="pr-text">' +
         '<div class="pr-name">' + esc(r.name) + '</div>' +
@@ -489,6 +599,8 @@ function selectParish(id) {
   if (!p) return;
   pendingParish = JSON.parse(JSON.stringify(p));
   isDirty = false;
+  editedSvcSet.clear();
+  verifiedSvcSet.clear();
   renderPanel();
   document.getElementById('editCol').scrollTop = 0;
 }
@@ -505,19 +617,41 @@ function renderPanel() {
     '<div class="edit-sticky">' +
       '<div class="edit-hdr">' +
         '<div class="edit-hdr-left">' +
-          '<h2>' + esc(p.name) + '</h2>' +
-          '<div class="edit-hdr-town">' + esc(p.town) + ', ' + esc(p.state) + ' &nbsp;&middot;&nbsp; ' + esc(p.id) + '</div>' +
+          '<div class="nav-btns">' +
+            '<button class="btn-nav" onclick="navigateParish(-1)" title="Previous parish (Alt+\u2191)">\u2039</button>' +
+            '<button class="btn-nav" onclick="navigateParish(1)" title="Next parish (Alt+\u2193)">\u203A</button>' +
+          '</div>' +
+          '<div class="edit-hdr-info">' +
+            '<h2>' + esc(p.name) + '</h2>' +
+            '<div class="edit-hdr-town">' + esc(p.town) + ', ' + esc(p.state) + ' &nbsp;&middot;&nbsp; ' + esc(p.id) + '</div>' +
+          '</div>' +
         '</div>' +
         '<div class="edit-hdr-right">' +
           '<span class="vpill ' + dotClass(vs) + '">' + vs.replace(/_/g,' ') + '</span>' +
-          '<button class="btn-del-parish" onclick="deleteParish()" title="Permanently remove this parish from the data">Delete Parish</button>' +
-          '<span class="save-flash" id="saveFlash"></span>' +
-          '<button class="btn-save" id="btnSave" onclick="saveParish()">Save Parish</button>' +
+          '<button class="btn-verify" onclick="markVerifiedToday()" title="Set status = manually verified, date = today">\u2713 Verify</button>' +
+          '<button class="btn-del-parish" onclick="deleteParish()" title="Remove this parish from working data">Delete</button>' +
+          '<button class="btn-save" id="btnSave" onclick="saveParish()">Save</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="edit-hdr-urls">' +
+        '<div class="url-hdr-grp">' +
+          '<span class="url-hdr-label">Website</span>' +
+          '<div class="url-hdr-row">' +
+            '<input id="c_website" type="url" placeholder="https://..." value="' + esc(c.website||'') + '">' +
+            '<button class="btn-hdr-open" onclick="openUrl(\'c_website\')" type="button" title="Open in new tab">\u2197</button>' +
+          '</div>' +
+        '</div>' +
+        '<div class="url-hdr-grp">' +
+          '<span class="url-hdr-label">Bulletin</span>' +
+          '<div class="url-hdr-row">' +
+            '<input id="p_bulletin" type="url" placeholder="https://..." value="' + esc(p.bulletin_url||'') + '">' +
+            '<button class="btn-hdr-open" onclick="openUrl(\'p_bulletin\')" type="button" title="Open in new tab">\u2197</button>' +
+          '</div>' +
         '</div>' +
       '</div>' +
     '</div>' +
     '<div class="edit-content">' +
-      cardIdentity(p, c) +
+      cardIdentity(p) +
       cardAddress(locs) +
       cardSchedule(p) +
       cardContact(c) +
@@ -525,10 +659,15 @@ function renderPanel() {
     '</div>';
 
   document.getElementById('editCol').innerHTML = html;
-  document.getElementById('editCol').addEventListener('input',  markDirty);
-  document.getElementById('editCol').addEventListener('change', markDirty);
+  document.getElementById('editCol').addEventListener('input',  handleInput);
+  document.getElementById('editCol').addEventListener('change', handleInput);
+  setTimeout(trackOriginals, 0);
 }
 
+function handleInput(e) {
+  markDirty();
+  checkChanged(e);
+}
 function markDirty() {
   if (!isDirty) {
     isDirty = true;
@@ -536,9 +675,23 @@ function markDirty() {
     if (b) b.classList.add('dirty');
   }
 }
+function trackOriginals() {
+  originalValues = {};
+  document.querySelectorAll('#editCol input, #editCol select, #editCol textarea').forEach(el => {
+    if (el.id) originalValues[el.id] = el.type === 'checkbox' ? String(el.checked) : el.value;
+  });
+}
+function checkChanged(e) {
+  const el = e.target;
+  if (!el.id || !(el.id in originalValues)) return;
+  const wrapper = el.closest('.f') || el.closest('.url-hdr-grp');
+  if (!wrapper) return;
+  const curr = el.type === 'checkbox' ? String(el.checked) : el.value;
+  wrapper.classList.toggle('changed', curr !== originalValues[el.id]);
+}
 
-// ── Card: Identity ─────────────────────────────────────────────────────
-function cardIdentity(p, c) {
+// ── Card: Identity (Name / Status / Town) ─────────────────────────────
+function cardIdentity(p) {
   return '<div class="card">' +
     '<div class="card-label">Identity</div>' +
     '<div class="card-body">' +
@@ -547,9 +700,6 @@ function cardIdentity(p, c) {
         fpairs('p_status','Status', PAR_STATUSES.map(s=>[s,s.replace(/_/g,' ')]), p.status||'active') +
         field('p_town','Town', p.town||'') +
       '</div>' +
-      urlGrp('c_website','Parish Website', c.website||'') +
-      urlGrp('p_bulletin','Bulletin URL', p.bulletin_url||'') +
-      '<p class="hint">Bulletin URL = the page listing all bulletins (parishesonline.com/&hellip; or church&rsquo;s own /bulletins page). This is your primary source of truth for schedule accuracy.</p>' +
     '</div>' +
   '</div>';
 }
@@ -560,7 +710,7 @@ function cardAddress(locs) {
   const sub  = locs.length > 1 ? ' &middot; ' + locs.length + ' locations' :
                (loc.name ? ' &middot; <em style="font-style:normal;font-weight:400;color:var(--txt2)">' + esc(loc.name) + '</em>' : '');
   return '<div class="card">' +
-    '<div class="card-label">Address' + sub + '</div>' +
+    '<div class="card-label"><span>Address' + sub + '</span></div>' +
     '<div class="card-body">' +
       field('loc_addr_0','Street', loc.address||'') +
       '<div class="row-addr">' +
@@ -581,8 +731,11 @@ function cardSchedule(p) {
   const evts = p.special_events || [];
   const locs = p.locations || [];
   const hasMultiLoc = locs.length > 1;
+  const bulletinUrl = p.bulletin_url;
+  const bulletinLink = bulletinUrl
+    ? '<a class="btn-bulletin-link" href="'+esc(bulletinUrl)+'" target="_blank" rel="noopener">Bulletin \u2197</a>'
+    : '';
 
-  // Assign each service to first matching group
   const assigned = new Set();
   const groups = SCHED_GROUPS.map(g => {
     const items = svcs.reduce((acc, s, i) => {
@@ -596,7 +749,7 @@ function cardSchedule(p) {
     const rows = g.items.length
       ? g.items.map(({ s, i }) => svcRowHtml(s, i, hasMultiLoc, locs)).join('')
       : '<div class="sched-empty">None</div>';
-    return '<div class="sched-group">' +
+    return '<div class="sched-group" data-group="'+g.key+'">' +
       '<div class="sched-group-hdr">' +
         '<div class="sched-group-left">' +
           '<span class="sched-group-label">' + g.label + '</span>' +
@@ -612,7 +765,7 @@ function cardSchedule(p) {
     ? evts.map((ev, i) => evtRowHtml(ev, i)).join('')
     : '<div class="sched-empty">None</div>';
 
-  const evtHtml = '<div class="sched-group">' +
+  const evtHtml = '<div class="sched-group" data-group="other">' +
     '<div class="sched-group-hdr">' +
       '<div class="sched-group-left">' +
         '<span class="sched-group-label">Special Events</span>' +
@@ -624,14 +777,14 @@ function cardSchedule(p) {
   '</div>';
 
   return '<div class="card" id="sched-card">' +
-    '<div class="card-label">Schedule &mdash; ' + svcs.length + ' services, ' + evts.length + ' events</div>' +
+    '<div class="card-label"><span>Schedule &mdash; ' + svcs.length + ' services, ' + evts.length + ' events</span>' + bulletinLink + '</div>' +
     schedHtml + evtHtml +
   '</div>';
 }
 
 function svcRowHtml(s, i, hasMultiLoc, locs) {
   const day  = DAY_LABELS[s.day] || s.day || '\u2014';
-  const time = s.time ? fmt12(s.time) : (s.times_vary ? 'times vary' : '\u2014');
+  const time = s.time ? fmt12(s.time) : (s.times_vary ? 'varies' : '\u2014');
   const locN = hasMultiLoc && s.location_id ? ((locs.find(l=>l.id===s.location_id)||{}).short_name||'') : '';
   const pills =
     (s.language && s.language !== 'en' ? '<span class="pill pill-lang">' + s.language.toUpperCase() + '</span>' : '') +
@@ -639,10 +792,15 @@ function svcRowHtml(s, i, hasMultiLoc, locs) {
     (s.times_vary ? '<span class="pill pill-vary">times vary</span>' : '') +
     (locN ? '<span class="pill pill-note">' + esc(locN) + '</span>' : '') +
     (s.notes ? '<span class="pill pill-note">' + esc(s.notes.length > 32 ? s.notes.slice(0,32)+'\u2026' : s.notes) + '</span>' : '');
-  return '<div class="svc-row-s">' +
-    '<span class="svc-daytime">' + esc(day) + ' &nbsp;' + esc(time) + '</span>' +
+  const editedCls = editedSvcSet.has(i) ? ' edited' : '';
+  const verCls = verifiedSvcSet.has(i) ? ' verified' : '';
+  return '<div class="svc-row-s'+editedCls+verCls+'">' +
+    '<input type="checkbox" class="svc-check"' + (verifiedSvcSet.has(i) ? ' checked' : '') +
+      ' onchange="quickVerifyService('+i+',this.checked)" title="Mark as verified this session">' +
+    '<span class="svc-day" onclick="inlineEditDay(this,'+i+')" title="Click to edit day">' + esc(day) + '</span>' +
+    '<span class="svc-time" onclick="inlineEditTime(this,'+i+')" title="Click to edit time">' + esc(time) + '</span>' +
     '<div class="svc-pills">' + pills + '</div>' +
-    '<button class="btn-row-edit" onclick="editService('+i+')">Edit</button>' +
+    '<button class="btn-row-edit" onclick="editService('+i+')" title="Edit all details">&middot;&middot;&middot;</button>' +
   '</div>';
 }
 
@@ -650,20 +808,20 @@ function evtRowHtml(ev, i) {
   const day  = DAY_LABELS[ev.day] || ev.day || '';
   const time = ev.time ? ' ' + fmt12(ev.time) : '';
   return '<div class="svc-row-s">' +
-    '<span class="svc-daytime">' + esc(ev.title || '(untitled)') + '</span>' +
+    '<span class="svc-day" style="cursor:default">' + esc(ev.title || '(untitled)') + '</span>' +
     '<div class="svc-pills">' +
       (day ? '<span class="pill pill-note">' + esc(day + time) + '</span>' : '') +
       (ev.frequency ? '<span class="pill pill-note">' + esc(ev.frequency.replace(/_/g,' ')) + '</span>' : '') +
       (ev.seasonal && ev.seasonal.is_seasonal ? '<span class="pill pill-seasonal">' + (ev.seasonal.season||'seasonal').replace(/_/g,' ') + '</span>' : '') +
     '</div>' +
-    '<button class="btn-row-edit" onclick="editEvent('+i+')">Edit</button>' +
+    '<button class="btn-row-edit" onclick="editEvent('+i+')" title="Edit event">&middot;&middot;&middot;</button>' +
   '</div>';
 }
 
 // ── Card: Contact (collapsed) ──────────────────────────────────────────
 function cardContact(c) {
   return '<details class="card">' +
-    '<summary>Contact &amp; Details</summary>' +
+    '<summary><span>Contact &amp; Details</span></summary>' +
     '<div class="card-body">' +
       '<div class="row-2">' +
         field('c_phone','Phone', c.phone||'') +
@@ -681,17 +839,26 @@ function cardContact(c) {
   '</details>';
 }
 
-// ── Card: Validation (collapsed) ──────────────────────────────────────
+// ── Card: Validation (collapsed, with summary) ────────────────────────
 function cardValidation(v) {
+  const vs = v.status || 'needs_verification';
+  const lc = v.last_checked || 'never';
   return '<details class="card">' +
-    '<summary>Validation &amp; Metadata</summary>' +
+    '<summary>' +
+      '<span>Validation</span>' +
+      '<span class="val-summary">' +
+        '<span class="vpill-sm '+dotClass(vs)+'">' + vs.replace(/_/g,' ') + '</span>' +
+        '<span class="val-date">' + esc(lc) + '</span>' +
+      '</span>' +
+    '</summary>' +
     '<div class="card-body">' +
-      fpairs('v_status','Review Status', VAL_STATUSES.map(s=>[s,s.replace(/_/g,' ')]), v.status||'needs_verification') +
-      '<div class="row-2">' +
+      fpairs('v_status','Review Status', VAL_STATUSES.map(s=>[s,s.replace(/_/g,' ')]), vs) +
+      '<div class="date-with-today">' +
         field('v_checked','Last Checked', v.last_checked||'', '', 'date') +
-        field('v_bulletin','Bulletin Date (YYYY-MM)', v.bulletin_date||'') +
+        '<button type="button" class="btn-today" onclick="fillToday(\'v_checked\')">Today</button>' +
       '</div>' +
-      '<p class="hint">After a bulletin review: set status to <strong>manually verified</strong> and Last Checked to today&rsquo;s date.</p>' +
+      field('v_bulletin','Bulletin Date (YYYY-MM)', v.bulletin_date||'') +
+      '<p class="hint">Tip: use the <strong>\u2713 Verify</strong> button in the header to set both status &amp; date in one click.</p>' +
     '</div>' +
   '</details>';
 }
@@ -706,7 +873,11 @@ function editService(i) {
 function addService(groupKey) {
   const g = SCHED_GROUPS.find(g => g.key === groupKey) || SCHED_GROUPS[0];
   svcModalIdx = -1;
-  openSvcModal({ type:g.addType, day:g.addDay, language:'en', time:'09:00' }, true);
+  // Smart defaults: inherit language and location from existing services in same group
+  const siblings = (pendingParish.services || []).filter(s => g.test(s));
+  const lang = siblings.length ? (siblings[0].language || 'en') : 'en';
+  const locId = siblings.length ? (siblings[0].location_id || null) : null;
+  openSvcModal({ type:g.addType, day:g.addDay, language:lang, location_id:locId, time:'09:00' }, true);
 }
 function openSvcModal(s, isNew) {
   const locs    = pendingParish.locations || [];
@@ -730,7 +901,7 @@ function openSvcModal(s, isNew) {
     locHtml +
     field('m_notes','Notes', s.notes||'') +
     '<div class="row-2">' +
-      field('m_source','Source', s.source||'') +
+      sourceDropdown(s.source||'') +
       field('m_rite','Rite (blank = Roman)', s.rite||'') +
     '</div>' +
     '<div>' +
@@ -773,18 +944,34 @@ function saveServiceModal() {
     seasonal:    { is_seasonal: isSeas, season: isSeas ? (val('m_season')||'lent') : 'year_round' }
   };
   if (!pendingParish.services) pendingParish.services = [];
-  if (svcModalIdx === -1) pendingParish.services.push(s);
-  else pendingParish.services[svcModalIdx] = s;
+  if (svcModalIdx === -1) {
+    pendingParish.services.push(s);
+    verifiedSvcSet.add(pendingParish.services.length - 1);
+  } else {
+    pendingParish.services[svcModalIdx] = s;
+    verifiedSvcSet.add(svcModalIdx);
+  }
   markDirty();
   closeSvcModal();
   refreshScheduleCard();
 }
 function deleteService() {
-  if (!confirm('Delete this service?')) return;
-  if (pendingParish.services && svcModalIdx >= 0) pendingParish.services.splice(svcModalIdx, 1);
+  if (svcModalIdx < 0 || !pendingParish.services) return;
+  const svc = JSON.parse(JSON.stringify(pendingParish.services[svcModalIdx]));
+  const idx = svcModalIdx;
+  pendingParish.services.splice(idx, 1);
+  editedSvcSet.delete(idx);
   markDirty();
   closeSvcModal();
   refreshScheduleCard();
+  showToast('Service deleted', {
+    undo: function() {
+      pendingParish.services.splice(idx, 0, svc);
+      markDirty();
+      refreshScheduleCard();
+    },
+    duration: 5000
+  });
 }
 function refreshScheduleCard() {
   const el = document.getElementById('sched-card');
@@ -859,11 +1046,21 @@ function saveEventModal() {
   refreshScheduleCard();
 }
 function deleteEvent() {
-  if (!confirm('Delete this event?')) return;
-  if (pendingParish.special_events && evtModalIdx >= 0) pendingParish.special_events.splice(evtModalIdx, 1);
+  if (evtModalIdx < 0 || !pendingParish.special_events) return;
+  const evt = JSON.parse(JSON.stringify(pendingParish.special_events[evtModalIdx]));
+  const idx = evtModalIdx;
+  pendingParish.special_events.splice(idx, 1);
   markDirty();
   closeEvtModal();
   refreshScheduleCard();
+  showToast('Event deleted', {
+    undo: function() {
+      pendingParish.special_events.splice(idx, 0, evt);
+      markDirty();
+      refreshScheduleCard();
+    },
+    duration: 5000
+  });
 }
 
 // ── HTML builders ──────────────────────────────────────────────────────
@@ -885,22 +1082,27 @@ function fpairs(id, label, pairs, selected, extraClass) {
     '<label for="'+id+'">'+label+'</label>' +
     '<select id="'+id+'" name="'+id+'">'+opts+'</select></div>';
 }
-function urlGrp(id, label, value) {
-  return '<div class="url-grp">' +
-    '<div class="f"><label for="'+id+'">'+label+'</label>' +
-    '<input id="'+id+'" name="'+id+'" type="url" value="'+esc(value)+'" placeholder="https://"></div>' +
-    '<button class="btn-open" onclick="openUrl(\''+id+'\')" type="button" title="Open in new tab">' +
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">' +
-        '<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>' +
-        '<polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>' +
-      '</svg>Open' +
-    '</button>' +
-  '</div>';
+function sourceDropdown(currentSource) {
+  var bd = (pendingParish.validation && pendingParish.validation.bulletin_date) ||
+           new Date().toISOString().slice(0, 7);
+  var now = new Date().toISOString().slice(0, 7);
+  var opts = [
+    ['bulletin_' + bd, 'Bulletin ' + bd],
+    ['website', 'Website'],
+    ['website_' + now, 'Website ' + now],
+    ['manual_verification_' + now, 'Manual verification ' + now],
+    ['phone', 'Phone call']
+  ];
+  // If current source doesn't match any known option, add it so it's not lost
+  if (currentSource && !opts.some(function(o) { return o[0] === currentSource; })) {
+    opts.push([currentSource, currentSource]);
+  }
+  return fpairs('m_source', 'Source', opts, currentSource || opts[0][0]);
 }
 function openUrl(id) {
   const u = (document.getElementById(id)||{}).value;
   if (u && u.startsWith('http')) window.open(u,'_blank','noopener');
-  else alert('Enter a valid URL first.');
+  else showToast('Enter a valid URL first');
 }
 function fmt12(t) {
   if (!t) return '';
@@ -925,7 +1127,7 @@ function saveFormToPending() {
   p.town         = val('p_town')     || p.town;
   p.bulletin_url = val('p_bulletin') || null;
 
-  // Contact (website lives in identity card)
+  // Contact (website now in header bar)
   if (!p.contact) p.contact = {};
   p.contact.website         = val('c_website')     || null;
   p.contact.phone           = val('c_phone')        || null;
@@ -952,8 +1154,6 @@ function saveFormToPending() {
   p.validation.status        = val('v_status')  || 'needs_verification';
   p.validation.last_checked  = val('v_checked') || null;
   p.validation.bulletin_date = val('v_bulletin')|| null;
-
-  // Services and special_events are updated directly via modals — no DOM read needed
 }
 
 // ── Save & download ────────────────────────────────────────────────────
@@ -962,14 +1162,9 @@ function saveParish() {
   const idx = editData.parishes.findIndex(p => p.id === pendingParish.id);
   if (idx >= 0) editData.parishes[idx] = JSON.parse(JSON.stringify(pendingParish));
   isDirty = false;
+  editedSvcSet.clear();
   const btn = document.getElementById('btnSave');
   if (btn) btn.classList.remove('dirty');
-  const flash = document.getElementById('saveFlash');
-  if (flash) {
-    flash.textContent = '\u2713 Saved';
-    flash.style.opacity = '1';
-    setTimeout(() => { flash.style.opacity = '0'; setTimeout(()=>{ flash.textContent=''; },350); }, 2200);
-  }
   // Update vpill in header
   const vs = (pendingParish.validation && pendingParish.validation.status) || 'unverified';
   const pill = document.querySelector('.vpill');
@@ -980,18 +1175,26 @@ function saveParish() {
     vs:(p.validation&&p.validation.status)||'unverified'
   }));
   filterList();
+  // Reset changed-field highlights
+  document.querySelectorAll('.f.changed,.url-hdr-grp.changed').forEach(el => el.classList.remove('changed'));
+  setTimeout(trackOriginals, 0);
+  showToast('\u2713 Parish saved');
 }
+
 function deleteParish() {
   if (!pendingParish) return;
   const name = pendingParish.name;
   const id   = pendingParish.id;
-  if (!confirm('Permanently delete "' + name + '" (' + id + ') from the working data?\n\nThis removes the record in memory. Click Download JSON afterward to make it permanent.')) return;
+  const parishCopy = JSON.parse(JSON.stringify(pendingParish));
+  const idx = editData.parishes.findIndex(p => p.id === id);
+
   editData.parishes = (editData.parishes||[]).filter(p => p.id !== id);
   allRows = allRows.filter(r => r.id !== id);
   pendingParish = null;
   isDirty = false;
   updateStats(allRows.length, allRows.length);
   renderList(allRows);
+
   document.getElementById('editCol').innerHTML =
     '<div class="empty-state">' +
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">' +
@@ -1000,7 +1203,24 @@ function deleteParish() {
       '<p style="color:var(--amber)">\u2713 "' + esc(name) + '" deleted from working data</p>' +
       '<small>Click <strong>Download JSON</strong> in the top bar to make this permanent, then replace the file and commit.</small>' +
     '</div>';
+
+  showToast('"' + name + '" deleted', {
+    undo: function() {
+      if (idx >= 0) editData.parishes.splice(idx, 0, parishCopy);
+      else editData.parishes.push(parishCopy);
+      allRows = (editData.parishes||[]).map(p => ({
+        id:p.id, name:p.name, town:p.town||'', state:p.state||'',
+        vs:(p.validation&&p.validation.status)||'unverified'
+      }));
+      updateStats(allRows.length, allRows.length);
+      filterList();
+      selectParish(id);
+      showToast('\u21A9 "' + name + '" restored');
+    },
+    duration: 5000
+  });
 }
+
 function downloadJSON() {
   if (pendingParish) saveParish();
   const blob = new Blob([JSON.stringify(editData, null, 2)], { type:'application/json' });
@@ -1008,7 +1228,197 @@ function downloadJSON() {
   const a    = Object.assign(document.createElement('a'), { href:url, download:'parish_data.json' });
   document.body.appendChild(a); a.click();
   document.body.removeChild(a); URL.revokeObjectURL(url);
+  showToast('\u2193 JSON downloaded');
 }
+
+// ── Quick-verify service (checkbox) ────────────────────────────────────
+function quickVerifyService(idx, checked) {
+  if (checked) {
+    verifiedSvcSet.add(idx);
+    var svc = pendingParish.services[idx];
+    if (svc) {
+      // Default source = bulletin + bulletin date (or current month)
+      var bd = (pendingParish.validation && pendingParish.validation.bulletin_date) ||
+               new Date().toISOString().slice(0, 7);
+      svc.source = 'bulletin_' + bd;
+    }
+    markDirty();
+  } else {
+    verifiedSvcSet.delete(idx);
+  }
+  refreshScheduleCard();
+}
+
+// ── Inline editing ────────────────────────────────────────────────────
+function inlineEditDay(el, svcIdx) {
+  const svc = pendingParish.services[svcIdx];
+  if (!svc) return;
+  const sel = document.createElement('select');
+  sel.className = 'inline-edit-select';
+  DAY_VALUES.forEach(d => {
+    const opt = document.createElement('option');
+    opt.value = d;
+    opt.textContent = DAY_LABELS[d] || d;
+    if (d === svc.day) opt.selected = true;
+    sel.appendChild(opt);
+  });
+  el.replaceWith(sel);
+  sel.focus();
+  let done = false;
+  function commit() {
+    if (done) return; done = true;
+    svc.day = sel.value;
+    editedSvcSet.add(svcIdx);
+    markDirty();
+    refreshScheduleCard();
+  }
+  function cancel() {
+    if (done) return; done = true;
+    refreshScheduleCard();
+  }
+  sel.addEventListener('change', commit);
+  sel.addEventListener('blur', function() { setTimeout(function(){ if (!done) cancel(); }, 80); });
+  sel.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') cancel();
+  });
+}
+
+function inlineEditTime(el, svcIdx) {
+  const svc = pendingParish.services[svcIdx];
+  if (!svc || svc.times_vary) return;
+  const inp = document.createElement('input');
+  inp.type = 'time';
+  inp.className = 'inline-edit-input';
+  inp.value = svc.time || '';
+  el.replaceWith(inp);
+  inp.focus();
+  let done = false;
+  function commit() {
+    if (done) return; done = true;
+    svc.time = inp.value || null;
+    editedSvcSet.add(svcIdx);
+    markDirty();
+    refreshScheduleCard();
+  }
+  function cancel() {
+    if (done) return; done = true;
+    refreshScheduleCard();
+  }
+  inp.addEventListener('blur', commit);
+  inp.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') { inp.removeEventListener('blur', commit); commit(); }
+    if (e.key === 'Escape') { inp.removeEventListener('blur', commit); cancel(); }
+  });
+}
+
+// ── Parish navigation ─────────────────────────────────────────────────
+function navigateParish(dir) {
+  if (!pendingParish) return;
+  if (isDirty) saveParish();
+  const currentIdx = allRows.findIndex(r => r.id === pendingParish.id);
+  if (currentIdx < 0) return;
+  const nextIdx = currentIdx + dir;
+  if (nextIdx < 0 || nextIdx >= allRows.length) return;
+  selectParish(allRows[nextIdx].id);
+  const row = document.querySelector('.parish-row.active');
+  if (row) row.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+}
+
+// ── Mark verified today ───────────────────────────────────────────────
+function markVerifiedToday() {
+  if (!pendingParish) return;
+  if (!pendingParish.validation) pendingParish.validation = {};
+  pendingParish.validation.status = 'manually_verified';
+  pendingParish.validation.last_checked = new Date().toISOString().slice(0, 10);
+  markDirty();
+  // Update form fields if validation section is open
+  const vs = document.getElementById('v_status');
+  const vc = document.getElementById('v_checked');
+  if (vs) vs.value = 'manually_verified';
+  if (vc) vc.value = pendingParish.validation.last_checked;
+  // Update header pill
+  const pill = document.querySelector('.vpill');
+  if (pill) { pill.className = 'vpill verified'; pill.textContent = 'manually verified'; }
+  // Update validation summary if visible
+  const smPill = document.querySelector('.vpill-sm');
+  const smDate = document.querySelector('.val-date');
+  if (smPill) { smPill.className = 'vpill-sm verified'; smPill.textContent = 'manually verified'; }
+  if (smDate) smDate.textContent = pendingParish.validation.last_checked;
+  showToast('\u2713 Marked as verified today');
+}
+
+function fillToday(fieldId) {
+  const el = document.getElementById(fieldId);
+  if (el) {
+    el.value = new Date().toISOString().slice(0, 10);
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+}
+
+// ── Toast system ──────────────────────────────────────────────────────
+function showToast(msg, opts) {
+  opts = opts || {};
+  const container = document.getElementById('toastContainer');
+  if (!container) return;
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  var html = '<span>' + msg + '</span>';
+  if (opts.undo) {
+    undoAction = opts.undo;
+    clearTimeout(undoTimer);
+    html += '<button class="toast-undo" onclick="doUndo(this)">Undo</button>';
+    undoTimer = setTimeout(function() { undoAction = null; }, opts.duration || 5000);
+  }
+  toast.innerHTML = html;
+  container.appendChild(toast);
+  requestAnimationFrame(function() { toast.classList.add('show'); });
+  var dur = opts.duration || 3000;
+  setTimeout(function() {
+    toast.classList.remove('show');
+    setTimeout(function() { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 300);
+  }, dur);
+}
+function doUndo(btn) {
+  if (undoAction) { undoAction(); undoAction = null; }
+  clearTimeout(undoTimer);
+  var toast = btn.closest('.toast');
+  if (toast && toast.parentNode) toast.parentNode.removeChild(toast);
+}
+
+// ── Keyboard shortcuts ────────────────────────────────────────────────
+document.addEventListener('keydown', function(e) {
+  // Cmd/Ctrl + S → save
+  if ((e.metaKey || e.ctrlKey) && e.key === 's') {
+    e.preventDefault();
+    if (pendingParish) saveParish();
+  }
+  // Cmd/Ctrl + D → download
+  if ((e.metaKey || e.ctrlKey) && e.key === 'd') {
+    e.preventDefault();
+    downloadJSON();
+  }
+  // Alt + Up/Down → prev/next parish
+  if (e.altKey && e.key === 'ArrowDown') { e.preventDefault(); navigateParish(1); }
+  if (e.altKey && e.key === 'ArrowUp')   { e.preventDefault(); navigateParish(-1); }
+  // / → focus search (only when not in an input)
+  if (e.key === '/' && !['INPUT','SELECT','TEXTAREA'].includes(document.activeElement.tagName)) {
+    e.preventDefault();
+    document.getElementById('parishSearch').focus();
+  }
+  // Esc → close modals
+  if (e.key === 'Escape') {
+    ['svcModal','evtModal','helpModal'].forEach(function(id) {
+      document.getElementById(id).classList.remove('open');
+    });
+    svcModalIdx = null;
+    evtModalIdx = null;
+  }
+});
+
+// ── beforeunload warning ──────────────────────────────────────────────
+window.addEventListener('beforeunload', function(e) {
+  if (isDirty) { e.preventDefault(); e.returnValue = ''; }
+});
 
 // ── Modal helpers ──────────────────────────────────────────────────────
 function closeIfBg(e, id) {
