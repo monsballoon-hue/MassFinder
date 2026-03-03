@@ -7,208 +7,346 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Source+Sans+3:wght@400;500;600&display=swap">
 <style>
-/* ── Reset & variables ──────────────────────────────────────────── */
+/* ── Reset & tokens ───────────────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%}
 :root{
-  --color-primary:#2C3E5A;
-  --color-primary-light:#3D5278;
-  --color-accent:#B8963F;
-  --color-accent-pale:#F5EDD8;
-  --color-bg:#F8F7F4;
-  --color-surface:#FFFFFF;
-  --color-text-primary:#1A1E26;
-  --color-text-secondary:#5C6370;
-  --color-text-tertiary:#747981;
-  --color-verified:#4A7C59;
-  --color-verified-bg:#EDF5F0;
-  --color-warning:#D97706;
-  --color-warning-bg:#FEF5E7;
-  --color-error:#B91C1C;
-  --color-error-bg:#FEF2F2;
-  --color-border:#E5E2DC;
-  --color-border-light:#EFECE7;
-  --font-display:'Playfair Display',Georgia,serif;
-  --font-body:'Source Sans 3',system-ui,sans-serif;
-  --radius-sm:8px;
-  --radius-md:12px;
-  --radius-lg:16px;
-  --shadow-card:0 1px 3px rgba(26,30,38,.06),0 4px 12px rgba(26,30,38,.04);
-  --shadow-elevated:0 4px 16px rgba(26,30,38,.10),0 12px 40px rgba(26,30,38,.08);
+  --primary:#2C3E5A;   --primary-lt:#3D5278;
+  --accent:#B8963F;    --accent-pale:#F5EDD8;  --accent-text:#7D6520;
+  --bg:#F8F7F4;        --surface:#FFFFFF;      --surface-hover:#F5F3EF;
+  --txt:#1A1E26;       --txt2:#5C6370;         --txt3:#9CA3AF;
+  --green:#4A7C59;     --green-bg:#EDF5F0;
+  --amber:#D97706;     --amber-bg:#FEF5E7;
+  --red:#B91C1C;       --red-bg:#FEF2F2;
+  --border:#E5E2DC;    --border-lt:#F0EDE8;
+  --font-d:'Playfair Display',Georgia,serif;
+  --font-b:'Source Sans 3',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --font-m:ui-monospace,'SF Mono','Fira Code',monospace;
+  --r-sm:8px; --r-md:12px; --r-lg:16px;
+  --sh-card:0 1px 3px rgba(26,30,38,.06),0 4px 12px rgba(26,30,38,.04);
+  --sh-up:0 4px 16px rgba(26,30,38,.10),0 12px 40px rgba(26,30,38,.08);
+  --ease:cubic-bezier(.25,.46,.45,.94);
 }
-body{font-family:var(--font-body);background:var(--color-bg);color:var(--color-text-primary);font-size:15px;line-height:1.5}
+body{font-family:var(--font-b);background:var(--bg);color:var(--txt);font-size:15px;line-height:1.5}
 
-/* ── Login screen ───────────────────────────────────────────────── */
+/* ── Login ─────────────────────────────────────────────────────────── */
 #loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px}
-.login-card{background:var(--color-surface);border-radius:var(--radius-lg);padding:40px 36px;width:100%;max-width:380px;box-shadow:var(--shadow-elevated);text-align:center}
-.login-card h1{font-family:var(--font-display);color:var(--color-primary);font-size:1.75rem;margin-bottom:6px}
-.login-card p{color:var(--color-text-secondary);margin-bottom:28px;font-size:14px}
-.login-card input{width:100%;padding:11px 14px;border:1.5px solid var(--color-border);border-radius:var(--radius-sm);font-size:15px;font-family:var(--font-body);outline:none;transition:border-color .15s}
-.login-card input:focus{border-color:var(--color-primary)}
-.login-card button{margin-top:14px;width:100%;padding:12px;background:var(--color-primary);color:#fff;border:none;border-radius:var(--radius-sm);font-size:15px;font-weight:600;cursor:pointer;font-family:var(--font-body);transition:background .15s}
-.login-card button:hover{background:var(--color-primary-light,#3D5278)}
-.login-error{margin-top:10px;color:var(--color-error);font-size:13px;min-height:18px}
+.login-card{background:var(--surface);border-radius:var(--r-lg);padding:48px 40px;width:100%;max-width:380px;box-shadow:var(--sh-up);text-align:center}
+.login-logo{width:52px;height:52px;background:var(--primary);border-radius:14px;margin:0 auto 22px;display:flex;align-items:center;justify-content:center}
+.login-logo svg{width:26px;height:26px;fill:var(--accent)}
+.login-card h1{font-family:var(--font-d);color:var(--primary);font-size:1.75rem;margin-bottom:6px}
+.login-card p{color:var(--txt2);margin-bottom:28px;font-size:14px}
+.login-card input{width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:15px;font-family:var(--font-b);outline:none;background:var(--bg);color:var(--txt);transition:border-color .15s,background .15s}
+.login-card input:focus{border-color:var(--primary);background:#fff;box-shadow:0 0 0 3px rgba(44,62,90,.08)}
+.login-card .btn-primary{margin-top:12px;width:100%;padding:13px;background:var(--primary);color:#fff;border:none;border-radius:var(--r-sm);font-size:15px;font-weight:600;cursor:pointer;font-family:var(--font-b);transition:opacity .15s}
+.login-card .btn-primary:hover{opacity:.88}
+.login-error{margin-top:10px;color:var(--red);font-size:13px;min-height:18px}
 
-/* ── App shell ──────────────────────────────────────────────────── */
-#app{display:none;height:100vh;overflow:hidden}
-.app-header{background:var(--color-primary);color:#fff;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-shrink:0}
-.app-header h1{font-family:var(--font-display);font-size:1.2rem;white-space:nowrap}
-.app-header .header-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
-.btn-download{background:var(--color-accent);color:#fff;border:none;border-radius:var(--radius-sm);padding:8px 16px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-body);white-space:nowrap}
-.btn-download:hover{opacity:.9}
-.data-meta{font-size:12px;opacity:.7;white-space:nowrap}
+/* ── App shell ─────────────────────────────────────────────────────── */
+#app{display:none;height:100vh;overflow:hidden;flex-direction:column}
 
-/* ── Two-column layout ──────────────────────────────────────────── */
-.app-body{display:flex;height:calc(100vh - 53px);overflow:hidden}
+/* App header bar */
+.app-bar{background:var(--primary);color:#fff;height:52px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-shrink:0}
+.app-bar-brand{display:flex;align-items:center;gap:9px}
+.app-bar-brand h1{font-family:var(--font-d);font-size:1.1rem;white-space:nowrap}
+.app-bar-meta{font-size:11.5px;opacity:.6;white-space:nowrap}
+.app-bar-actions{display:flex;align-items:center;gap:8px}
+.btn-icon{width:32px;height:32px;border-radius:var(--r-sm);border:none;background:rgba(255,255,255,.14);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;font-weight:700;transition:background .15s;flex-shrink:0}
+.btn-icon:hover{background:rgba(255,255,255,.26)}
+.btn-gold{height:32px;padding:0 16px;background:var(--accent);color:#fff;border:none;border-radius:var(--r-sm);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font-b);white-space:nowrap;transition:opacity .15s}
+.btn-gold:hover{opacity:.88}
 
-/* Parish list column */
-.parish-list-col{width:300px;min-width:240px;flex-shrink:0;display:flex;flex-direction:column;border-right:1px solid var(--color-border);background:var(--color-surface)}
-.parish-search-wrap{padding:12px}
-.parish-search{width:100%;padding:9px 12px;border:1.5px solid var(--color-border);border-radius:var(--radius-sm);font-size:14px;font-family:var(--font-body);outline:none}
-.parish-search:focus{border-color:var(--color-primary)}
+/* Two-column layout */
+.app-body{display:flex;flex:1;overflow:hidden}
+
+/* ── Sidebar ────────────────────────────────────────────────────────── */
+.sidebar{width:284px;min-width:220px;flex-shrink:0;display:flex;flex-direction:column;border-right:1px solid var(--border);background:var(--surface)}
+.sidebar-search-wrap{padding:11px 11px 0}
+.sidebar-search{
+  width:100%;padding:8px 12px 8px 32px;border:1.5px solid var(--border);border-radius:var(--r-sm);
+  font-size:13.5px;font-family:var(--font-b);outline:none;
+  background:var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='%239CA3AF' stroke-width='2.5'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") 10px center/13px no-repeat;
+  color:var(--txt);transition:border-color .15s,background .15s;
+}
+.sidebar-search:focus{border-color:var(--primary);background:#fff;box-shadow:0 0 0 3px rgba(44,62,90,.07)}
+.sidebar-stats{padding:6px 13px 7px;font-size:11.5px;color:var(--txt3);border-bottom:1px solid var(--border-lt)}
 #parishList{flex:1;overflow-y:auto}
-.parish-row{padding:10px 14px;cursor:pointer;border-bottom:1px solid var(--color-border-light);transition:background .1s}
-.parish-row:hover{background:var(--color-bg)}
-.parish-row.active{background:var(--color-accent-pale);border-left:3px solid var(--color-accent)}
-.parish-row.active{padding-left:11px}
-.parish-row-name{font-weight:600;font-size:14px;color:var(--color-text-primary)}
-.parish-row-sub{font-size:12px;color:var(--color-text-secondary);margin-top:1px}
-.parish-row-id{font-size:11px;color:var(--color-text-tertiary);font-family:monospace}
+.parish-row{padding:9px 12px;cursor:pointer;border-bottom:1px solid var(--border-lt);display:flex;align-items:flex-start;gap:8px;transition:background .1s}
+.parish-row:hover{background:var(--bg)}
+.parish-row.active{background:var(--accent-pale);border-left:3px solid var(--accent);padding-left:9px}
+.status-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.status-dot.verified,.status-dot.manually_verified{background:var(--green)}
+.status-dot.needs_verification,.status-dot.low_confidence{background:var(--amber)}
+.status-dot.excluded{background:var(--red)}
+.status-dot.unverified{background:#CBD5E1}
+.pr-text{flex:1;min-width:0}
+.pr-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pr-sub{font-size:11.5px;color:var(--txt2);margin-top:1px}
 
-/* Edit column */
-.edit-col{flex:1;overflow-y:auto;padding:0 0 60px}
+/* ── Edit column ────────────────────────────────────────────────────── */
+.edit-col{flex:1;overflow-y:auto;display:flex;flex-direction:column}
 
-/* ── Empty state ────────────────────────────────────────────────── */
-.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;height:60%;color:var(--color-text-tertiary);gap:10px;text-align:center;padding:24px}
-.empty-state svg{opacity:.3}
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;color:var(--txt3);gap:12px;text-align:center;padding:48px 32px}
+.empty-state svg{opacity:.22;width:52px;height:52px}
+.empty-state p{font-size:15px;color:var(--txt2)}
+.empty-state small{font-size:13px;line-height:1.6;max-width:260px;color:var(--txt3)}
 
-/* ── Edit panel sections ────────────────────────────────────────── */
-.edit-header{background:var(--color-primary);color:#fff;padding:16px 20px;position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between}
-.edit-header h2{font-family:var(--font-display);font-size:1.15rem}
-.btn-save{background:var(--color-verified);color:#fff;border:none;border-radius:var(--radius-sm);padding:8px 20px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-body);transition:background .15s}
+/* Sticky header + tab bar */
+.edit-sticky{position:sticky;top:0;z-index:10}
+.edit-hdr{background:var(--primary);color:#fff;padding:11px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.edit-hdr-left{min-width:0}
+.edit-hdr h2{font-family:var(--font-d);font-size:1.1rem;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:360px}
+.edit-hdr-town{font-size:11px;opacity:.65;margin-top:2px;font-family:var(--font-m)}
+.edit-hdr-right{display:flex;align-items:center;gap:9px;flex-shrink:0}
+
+/* Validation pill */
+.vpill{padding:3px 9px;border-radius:99px;font-size:11px;font-weight:600;letter-spacing:.01em;white-space:nowrap}
+.vpill.verified,.vpill.manually_verified{background:rgba(74,124,89,.18);color:#1f4d31;border:1px solid rgba(74,124,89,.3)}
+.vpill.needs_verification,.vpill.low_confidence{background:rgba(217,119,6,.18);color:#7c4208;border:1px solid rgba(217,119,6,.3)}
+.vpill.unverified{background:rgba(156,163,175,.18);color:#4B5563;border:1px solid rgba(156,163,175,.3)}
+.vpill.excluded{background:rgba(185,28,28,.15);color:#991B1B;border:1px solid rgba(185,28,28,.2)}
+
+/* Save button */
+.btn-save{height:32px;padding:0 16px;background:var(--green);color:#fff;border:none;border-radius:var(--r-sm);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font-b);transition:background .15s,box-shadow .4s;white-space:nowrap}
 .btn-save:hover{background:#3d6b4c}
-.save-flash{font-size:13px;color:#9fdbba;opacity:0;transition:opacity .3s;pointer-events:none}
-.section{padding:20px;border-bottom:1px solid var(--color-border)}
-.section-title{font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--color-text-secondary);margin-bottom:14px}
+.btn-save.dirty{background:var(--accent);animation:savepulse 2.4s ease infinite}
+@keyframes savepulse{0%,100%{box-shadow:0 0 0 0 rgba(184,150,63,.5)}60%{box-shadow:0 0 0 7px rgba(184,150,63,0)}}
+.save-flash{font-size:12px;color:#a8e6c0;opacity:0;transition:opacity .35s;pointer-events:none;min-width:48px;text-align:right}
 
-/* ── Form grid ──────────────────────────────────────────────────── */
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.form-grid.cols-3{grid-template-columns:1fr 1fr 1fr}
-.form-grid.cols-1{grid-template-columns:1fr}
-.field{display:flex;flex-direction:column;gap:4px}
-.field.span-2{grid-column:span 2}
-.field label{font-size:12px;font-weight:600;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.04em}
-.field input,.field select,.field textarea{padding:8px 10px;border:1.5px solid var(--color-border);border-radius:var(--radius-sm);font-size:14px;font-family:var(--font-body);outline:none;background:var(--color-surface);color:var(--color-text-primary)}
-.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--color-primary)}
-.field textarea{resize:vertical;min-height:60px}
-.check-field{display:flex;align-items:center;gap:8px;padding:8px 0}
-.check-field input{width:16px;height:16px;cursor:pointer;accent-color:var(--color-primary)}
-.check-field label{font-size:14px;cursor:pointer;color:var(--color-text-primary)}
+/* Tab bar */
+.tab-bar{display:flex;background:var(--surface);border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab-btn{flex-shrink:0;padding:10px 17px;font-size:13px;font-weight:600;color:var(--txt2);border:none;background:none;border-bottom:2.5px solid transparent;cursor:pointer;font-family:var(--font-b);white-space:nowrap;transition:color .15s,border-color .15s}
+.tab-btn:hover{color:var(--txt)}
+.tab-btn.active{color:var(--primary);border-bottom-color:var(--accent)}
 
-/* ── Location cards ─────────────────────────────────────────────── */
-.loc-card{border:1px solid var(--color-border);border-radius:var(--radius-md);margin-bottom:12px;overflow:hidden}
-.loc-card-header{padding:12px 14px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;background:var(--color-bg);user-select:none}
-.loc-card-header:hover{background:#eeecea}
+/* Tab panes */
+.tab-pane{display:none;padding-bottom:72px}
+.tab-pane.active{display:block}
+
+/* ── Sections ───────────────────────────────────────────────────────── */
+.section{padding:22px 22px 18px;border-bottom:1px solid var(--border-lt)}
+.section:last-child{border-bottom:none}
+.section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px}
+.section-title{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--txt2)}
+.section-badge{font-size:11px;background:var(--bg);color:var(--txt3);padding:2px 8px;border-radius:99px;border:1px solid var(--border)}
+
+/* ── Form helpers ───────────────────────────────────────────────────── */
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.fg.c1{grid-template-columns:1fr}
+.fg.c3{grid-template-columns:1fr 1fr 1fr}
+.f{display:flex;flex-direction:column;gap:4px}
+.f.s2{grid-column:span 2}
+.f label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--txt2)}
+.f input,.f select,.f textarea{padding:9px 11px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:14px;font-family:var(--font-b);outline:none;background:var(--surface);color:var(--txt);transition:border-color .15s,box-shadow .15s;min-height:38px}
+.f input:focus,.f select:focus,.f textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(44,62,90,.08)}
+.f textarea{resize:vertical;min-height:64px}
+.check-row{display:flex;align-items:center;gap:8px;padding:5px 0}
+.check-row input[type=checkbox]{width:15px;height:15px;cursor:pointer;accent-color:var(--primary);flex-shrink:0}
+.check-row label{font-size:14px;cursor:pointer;user-select:none}
+
+/* URL field + open button */
+.url-grp{display:flex;gap:6px;align-items:flex-end}
+.url-grp .f{flex:1}
+.btn-open{flex-shrink:0;height:38px;padding:0 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);background:var(--bg);color:var(--txt2);font-size:12.5px;font-weight:600;cursor:pointer;font-family:var(--font-b);transition:border-color .15s,color .15s;display:flex;align-items:center;gap:5px}
+.btn-open:hover{border-color:var(--primary);color:var(--primary)}
+.btn-open svg{width:11px;height:11px;flex-shrink:0}
+
+/* ── Location cards ─────────────────────────────────────────────────── */
+.loc-card{border:1px solid var(--border);border-radius:var(--r-md);margin-bottom:11px;overflow:hidden;box-shadow:var(--sh-card)}
+.loc-card-hdr{padding:11px 14px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;background:var(--bg);user-select:none;transition:background .1s}
+.loc-card-hdr:hover{background:#eeecea}
 .loc-card-name{font-weight:600;font-size:14px}
-.loc-card-addr{font-size:12px;color:var(--color-text-secondary);margin-top:2px}
-.loc-card-body{padding:14px;display:none;border-top:1px solid var(--color-border);background:var(--color-surface)}
+.loc-card-addr{font-size:12px;color:var(--txt2);margin-top:2px}
+.loc-card-body{padding:16px;display:none;border-top:1px solid var(--border);background:var(--surface)}
 .loc-card-body.open{display:block}
-.chevron{transition:transform .2s;font-size:12px;color:var(--color-text-tertiary)}
-.loc-card-header.open .chevron{transform:rotate(180deg)}
-.btn-add-loc{margin-top:4px;padding:8px 14px;border:1.5px dashed var(--color-border);border-radius:var(--radius-sm);background:transparent;font-size:13px;color:var(--color-text-secondary);cursor:pointer;font-family:var(--font-body);width:100%}
-.btn-add-loc:hover{border-color:var(--color-primary);color:var(--color-primary)}
-.btn-remove{margin-top:12px;padding:6px 12px;background:transparent;border:1px solid #fca5a5;color:var(--color-error);border-radius:var(--radius-sm);font-size:12px;cursor:pointer;font-family:var(--font-body)}
-.btn-remove:hover{background:var(--color-error-bg)}
+.chevron{font-size:10px;color:var(--txt3);transition:transform .2s}
+.loc-card-hdr.open .chevron{transform:rotate(180deg)}
 
-/* ── Service list ───────────────────────────────────────────────── */
-.svc-list{display:flex;flex-direction:column;gap:6px}
-.svc-row{border:1px solid var(--color-border);border-radius:var(--radius-sm);overflow:hidden}
-.svc-row-header{padding:9px 12px;display:flex;align-items:center;gap:10px;cursor:pointer;background:var(--color-bg);font-size:13px}
-.svc-row-header:hover{background:#eeecea}
-.svc-badge{background:var(--color-primary);color:#fff;border-radius:99px;padding:2px 8px;font-size:11px;font-weight:600;white-space:nowrap;flex-shrink:0}
-.svc-badge.mass{background:#2C3E5A}
-.svc-badge.confession{background:#4A7C59}
-.svc-badge.adoration{background:#7C4A6E}
-.svc-badge.other{background:#6B6B6B}
-.svc-meta{color:var(--color-text-secondary);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.svc-body{padding:14px;display:none;border-top:1px solid var(--color-border);background:var(--color-surface)}
+/* ── Service rows ───────────────────────────────────────────────────── */
+.svc-list{display:flex;flex-direction:column;gap:5px}
+.svc-row{border:1px solid var(--border);border-radius:var(--r-sm);overflow:hidden;box-shadow:var(--sh-card)}
+.svc-row-hdr{padding:8px 12px;display:flex;align-items:center;gap:9px;cursor:pointer;background:var(--bg);transition:background .1s}
+.svc-row-hdr:hover{background:#eeecea}
+.svc-badge{padding:3px 8px;border-radius:99px;font-size:11px;font-weight:700;white-space:nowrap;flex-shrink:0;letter-spacing:.02em}
+.svc-badge.mass      {background:#2C3E5A;color:#fff}
+.svc-badge.confession{background:#2d6040;color:#fff}
+.svc-badge.adoration {background:#5C3D78;color:#fff}
+.svc-badge.devotion  {background:#8B4565;color:#fff}
+.svc-badge.communion {background:#3D6B7A;color:#fff}
+.svc-badge.stations  {background:#6B4423;color:#fff}
+.svc-badge.triduum   {background:#4A2D6B;color:#fff}
+.svc-badge.community {background:#3D6B5C;color:#fff}
+.svc-badge.other     {background:#6B7280;color:#fff}
+.svc-meta{font-size:13px;color:var(--txt2);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.svc-tag{font-size:10.5px;background:var(--accent-pale);color:var(--accent-text);padding:2px 6px;border-radius:4px;border:1px solid rgba(184,150,63,.25);flex-shrink:0;white-space:nowrap}
+.svc-caret{font-size:10px;color:var(--txt3);flex-shrink:0}
+.svc-body{padding:16px;display:none;border-top:1px solid var(--border);background:var(--surface)}
 .svc-body.open{display:block}
-.btn-add-svc{margin-top:8px;padding:8px 14px;border:1.5px dashed var(--color-border);border-radius:var(--radius-sm);background:transparent;font-size:13px;color:var(--color-text-secondary);cursor:pointer;font-family:var(--font-body);width:100%}
-.btn-add-svc:hover{border-color:var(--color-primary);color:var(--color-primary)}
 
-/* ── Special events ─────────────────────────────────────────────── */
-.evt-row{border:1px solid var(--color-border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:6px}
-.evt-row-header{padding:9px 12px;display:flex;align-items:center;gap:8px;cursor:pointer;background:var(--color-bg);font-size:13px}
-.evt-row-header:hover{background:#eeecea}
-.evt-body{padding:14px;display:none;border-top:1px solid var(--color-border);background:var(--color-surface)}
+/* Event rows */
+.evt-row{border:1px solid var(--border);border-radius:var(--r-sm);overflow:hidden;margin-bottom:5px;box-shadow:var(--sh-card)}
+.evt-row-hdr{padding:8px 12px;display:flex;align-items:center;gap:9px;cursor:pointer;background:var(--bg);transition:background .1s}
+.evt-row-hdr:hover{background:#eeecea}
+.evt-body{padding:16px;display:none;border-top:1px solid var(--border);background:var(--surface)}
 .evt-body.open{display:block}
-.btn-add-evt{margin-top:8px;padding:8px 14px;border:1.5px dashed var(--color-border);border-radius:var(--radius-sm);background:transparent;font-size:13px;color:var(--color-text-secondary);cursor:pointer;font-family:var(--font-body);width:100%}
-.btn-add-evt:hover{border-color:var(--color-primary);color:var(--color-primary)}
 
-/* ── Proposed changes (Batch 3 hook) ───────────────────────────── */
-.proposed-empty{background:var(--color-bg);border:1.5px dashed var(--color-border);border-radius:var(--radius-md);padding:20px;text-align:center;color:var(--color-text-tertiary);font-size:13px}
+/* Add / Remove */
+.btn-add{margin-top:10px;width:100%;padding:9px 14px;border:1.5px dashed var(--border);border-radius:var(--r-sm);background:transparent;font-size:13px;color:var(--txt2);cursor:pointer;font-family:var(--font-b);transition:border-color .15s,color .15s}
+.btn-add:hover{border-color:var(--primary);color:var(--primary)}
+.btn-remove{margin-top:14px;padding:6px 12px;background:transparent;border:1px solid #fca5a5;color:var(--red);border-radius:var(--r-sm);font-size:12px;cursor:pointer;font-family:var(--font-b);transition:background .15s}
+.btn-remove:hover{background:var(--red-bg)}
 
-/* ── Responsive ─────────────────────────────────────────────────── */
-@media(max-width:600px){
-  .parish-list-col{width:100%}
+/* Proposed changes */
+.proposed-empty{background:var(--bg);border:1.5px dashed var(--border);border-radius:var(--r-md);padding:24px;text-align:center;color:var(--txt3);font-size:13px;line-height:1.7}
+
+/* Hint text */
+.hint{font-size:12px;color:var(--txt3);margin-top:7px;line-height:1.6}
+
+/* ── Help modal ─────────────────────────────────────────────────────── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(26,30,38,.52);z-index:100;align-items:center;justify-content:center;padding:24px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surface);border-radius:var(--r-lg);width:100%;max-width:540px;max-height:84vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--sh-up)}
+.modal-hdr{padding:18px 22px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.modal-hdr h3{font-family:var(--font-d);font-size:1.2rem;color:var(--primary)}
+.modal-close{width:30px;height:30px;border-radius:50%;background:var(--bg);border:none;cursor:pointer;font-size:16px;color:var(--txt2);display:flex;align-items:center;justify-content:center;transition:background .15s}
+.modal-close:hover{background:var(--border)}
+.modal-body{overflow-y:auto;padding:18px 22px 28px}
+.modal-body h4{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--txt2);margin:20px 0 9px}
+.modal-body h4:first-child{margin-top:0}
+.modal-body ol,.modal-body ul{padding-left:17px;display:flex;flex-direction:column;gap:7px}
+.modal-body li{font-size:14px;line-height:1.55}
+.modal-body code{font-family:var(--font-m);font-size:12px;background:var(--bg);padding:2px 6px;border-radius:4px;border:1px solid var(--border)}
+.modal-body p{font-size:13.5px;color:var(--txt2);margin-top:9px;line-height:1.65}
+.guide-row{display:flex;align-items:baseline;gap:6px;font-size:14px;line-height:1.5;padding:3px 0}
+.guide-row strong{color:var(--txt);min-width:60px}
+
+/* ── Responsive ─────────────────────────────────────────────────────── */
+@media(max-width:640px){
+  .sidebar{width:100%;border-right:none;border-bottom:1px solid var(--border);max-height:38vh}
   .app-body{flex-direction:column}
-  .form-grid{grid-template-columns:1fr}
-  .form-grid.cols-3{grid-template-columns:1fr 1fr}
-  .field.span-2{grid-column:span 1}
+  .fg,.fg.c3{grid-template-columns:1fr}
+  .f.s2{grid-column:span 1}
 }
 </style>
 </head>
 <body>
 
-<!-- ══ LOGIN ════════════════════════════════════════════════════════ -->
+<!-- ══ LOGIN ════════════════════════════════════════════════════════════ -->
 <div id="loginScreen">
   <div class="login-card">
+    <div class="login-logo">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="2" width="4" height="20" rx="1"/>
+        <rect x="4" y="7" width="16" height="4" rx="1"/>
+      </svg>
+    </div>
     <h1>MassFinder Admin</h1>
-    <p>Parish data editor — enter password to continue</p>
+    <p>Parish data editor &mdash; enter password to continue</p>
     <input id="pwInput" type="password" placeholder="Password" autocomplete="current-password">
-    <button onclick="checkPassword()">Enter</button>
+    <button class="btn-primary" onclick="checkPassword()">Enter</button>
     <div class="login-error" id="loginError"></div>
   </div>
 </div>
 
-<!-- ══ APP ═══════════════════════════════════════════════════════════ -->
+<!-- ══ APP ═══════════════════════════════════════════════════════════════ -->
 <div id="app">
-  <div class="app-header">
-    <h1>MassFinder Parish Admin</h1>
-    <div class="header-right">
-      <span class="data-meta" id="dataMeta"></span>
-      <button class="btn-download" onclick="downloadJSON()">⬇ Download JSON</button>
+  <div class="app-bar">
+    <div class="app-bar-brand">
+      <h1>MassFinder Admin</h1>
+      <span class="app-bar-meta" id="dataMeta"></span>
+    </div>
+    <div class="app-bar-actions">
+      <button class="btn-icon" onclick="toggleHelp()" title="How to use this panel">?</button>
+      <button class="btn-gold" onclick="downloadJSON()">&#8595; Download JSON</button>
     </div>
   </div>
 
   <div class="app-body">
-    <!-- Parish list -->
-    <div class="parish-list-col">
-      <div class="parish-search-wrap">
-        <input class="parish-search" id="parishSearch" type="search" placeholder="Search parishes…" oninput="filterList()">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-search-wrap">
+        <input class="sidebar-search" id="parishSearch" type="search" placeholder="Search parishes&hellip;" oninput="filterList()">
       </div>
+      <div class="sidebar-stats" id="sidebarStats">Loading&hellip;</div>
       <div id="parishList"></div>
     </div>
 
-    <!-- Edit panel -->
+    <!-- Edit column -->
     <div class="edit-col" id="editCol">
       <div class="empty-state">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z"/><path d="M8 12h8M8 8h5"/></svg>
-        <p>Select a parish to begin editing</p>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+          <rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 12h8M8 8h5"/>
+        </svg>
+        <p>Select a parish to edit</p>
+        <small>Search by name or town. Coloured dots show validation status.</small>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ HELP MODAL ═══════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="helpModal" onclick="closeHelpIfBg(event)">
+  <div class="modal">
+    <div class="modal-hdr">
+      <h3>How to Use Admin</h3>
+      <button class="modal-close" onclick="toggleHelp()">&#x2715;</button>
+    </div>
+    <div class="modal-body">
+
+      <h4>Daily Review Workflow</h4>
+      <ol>
+        <li>In your terminal: <code>node scripts/prep-review.js</code></li>
+        <li>Note the 3 parishes listed &mdash; open their source URLs in your browser</li>
+        <li>Open <strong>claude.ai</strong> &rarr; paste <code>review/today-prompt.txt</code></li>
+        <li>Copy any bulletin text or screenshots and include them in the chat</li>
+        <li>Back here: search the sidebar to find each parish</li>
+        <li>Switch to the <strong>Schedule</strong> tab and update times to match the bulletin</li>
+        <li>Switch to <strong>Validation</strong>, set status to <em>manually_verified</em>, set Last Checked to today</li>
+        <li>Click <strong>Save Parish</strong> after each one</li>
+        <li>When all three are done &rarr; <strong>Download JSON</strong></li>
+        <li>Replace <code>parish_data.json</code> in your repo, then commit and push</li>
+      </ol>
+
+      <h4>What Each Tab Contains</h4>
+      <div style="display:flex;flex-direction:column;gap:5px;margin-top:2px">
+        <div class="guide-row"><strong>Overview</strong> Parish name, status, bulletin URL &mdash; start here for URL fixes</div>
+        <div class="guide-row"><strong>Schedule</strong> All Mass times, confession, adoration, special events &mdash; your main editing view</div>
+        <div class="guide-row"><strong>Locations</strong> Physical buildings, addresses, and GPS coordinates</div>
+        <div class="guide-row"><strong>Contact</strong> Phone, website, office hours, social media</div>
+        <div class="guide-row"><strong>Validation</strong> Review status and date tracking</div>
+      </div>
+
+      <h4>Saving Your Work</h4>
+      <ul>
+        <li><strong>Save Parish</strong> writes changes to memory only. The button glows gold when you have unsaved edits &mdash; don&rsquo;t switch parishes without saving first.</li>
+        <li><strong>Download JSON</strong> exports <em>all</em> parishes to a file you can commit. Always download before closing the tab.</li>
+      </ul>
+
+      <h4>Status Dot Guide (sidebar)</h4>
+      <ul>
+        <li><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#4A7C59;margin-right:6px;vertical-align:middle"></span><strong>Green</strong> &mdash; verified or manually verified recently</li>
+        <li><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#D97706;margin-right:6px;vertical-align:middle"></span><strong>Amber</strong> &mdash; needs verification or low confidence</li>
+        <li><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#CBD5E1;margin-right:6px;vertical-align:middle"></span><strong>Grey</strong> &mdash; never reviewed</li>
+        <li><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#B91C1C;margin-right:6px;vertical-align:middle"></span><strong>Red</strong> &mdash; excluded from the app</li>
+      </ul>
+
+      <h4>URL Audit</h4>
+      <p>Run <code>node scripts/audit-urls.js</code> to find parishes with missing or broken website / bulletin URLs. Fix them in the <strong>Overview</strong> (bulletin URL) and <strong>Contact</strong> (website) tabs, then Download and commit.</p>
+
     </div>
   </div>
 </div>
 
 <script>
-// ── Password gate ────────────────────────────────────────────────────
-// NOTE: This is a UI gate only — no server-side writes happen here.
-// The password is visible in source; this merely prevents casual access.
+// ── Password gate ─────────────────────────────────────────────────────
+// UI gate only. No server-side writes happen here; user must commit & push.
 const PW = 'xm2215x99=';
 
 function checkPassword() {
-  const val = document.getElementById('pwInput').value;
-  if (val === PW) {
-    sessionStorage.setItem('mf_admin_auth', '1');
+  const v = document.getElementById('pwInput').value;
+  if (v === PW) {
+    sessionStorage.setItem('mf_admin_auth','1');
     document.getElementById('loginError').textContent = '';
     startApp();
   } else {
@@ -220,7 +358,7 @@ function checkPassword() {
 document.getElementById('pwInput').addEventListener('keydown', e => { if (e.key === 'Enter') checkPassword(); });
 if (sessionStorage.getItem('mf_admin_auth') === '1') startApp();
 
-// ── Constants (mirrors index.html) ───────────────────────────────────
+// ── Constants (mirrors schema + index.html) ───────────────────────────
 const SVC_TYPES = {
   sunday_mass:'Sunday Mass', daily_mass:'Daily Mass',
   confession:'Confession', adoration:'Adoration',
@@ -233,7 +371,7 @@ const SVC_TYPES = {
   holy_thursday_mass:"Mass of the Lord's Supper",
   good_friday_service:'Celebration of the Passion',
   easter_vigil_mass:'Easter Vigil', bible_study:'Bible Study',
-  gorzkie_zale:'Gorzkie Żale', mens_group:"Men's Group",
+  gorzkie_zale:'Gorzkie \u017Bale', mens_group:"Men's Group",
   social_event:'Social Event'
 };
 const DAY_VALUES = [
@@ -252,416 +390,519 @@ const DAY_LABELS = {
   good_friday:'Good Friday', holy_thursday:'Holy Thursday',
   easter_vigil:'Easter Vigil', civil_holiday:'Civil Holiday'
 };
-const SEASONS = ['year_round','lent','advent','summer','winter','academic_year','easter_season','ordinary_time','holy_week'];
-const LANG_NAMES = {en:'English',es:'Spanish',pl:'Polish',pt:'Portuguese',la:'Latin',fr:'French',vi:'Vietnamese',asl:'ASL'};
-const PARISH_STATUSES = ['active','inactive','closed','merged','excluded'];
-const VALIDATION_STATUSES = ['verified','manually_verified','low_confidence','needs_verification','unverified','excluded'];
-const LOC_TYPES = ['church','chapel','center','cathedral','shrine','school','office','rectory','hall','meeting_room','mission','other'];
-const EVT_CATEGORIES = ['fellowship','conference','volunteering','liturgical','educational','outreach','social','devotional','bible_study','recurring','one_time'];
-const EVT_FREQUENCIES = ['one_time','weekly','monthly','annual'];
-const STATES = ['MA','CT','VT','NH','NY'];
+const SEASONS       = ['year_round','lent','advent','summer','winter','academic_year','easter_season','ordinary_time','holy_week'];
+const LANG_NAMES    = {en:'English',es:'Spanish',pl:'Polish',pt:'Portuguese',la:'Latin',fr:'French',vi:'Vietnamese',asl:'ASL'};
+const PAR_STATUSES  = ['active','inactive','closed','merged','excluded'];
+const VAL_STATUSES  = ['verified','manually_verified','low_confidence','needs_verification','unverified','excluded'];
+const LOC_TYPES     = ['church','chapel','center','cathedral','shrine','school','office','rectory','hall','meeting_room','mission','other'];
+const EVT_CATS      = ['fellowship','conference','volunteering','liturgical','educational','outreach','social','devotional','bible_study','recurring','one_time'];
+const EVT_FREQS     = ['one_time','weekly','monthly','annual'];
+const STATES        = ['MA','CT','VT','NH','NY'];
 
-function svcBadgeClass(type) {
-  if (['sunday_mass','daily_mass','communion_service'].includes(type)) return 'mass';
-  if (type === 'confession') return 'confession';
-  if (['adoration','perpetual_adoration','holy_hour'].includes(type)) return 'adoration';
+function badgeClass(type) {
+  if (['sunday_mass','daily_mass'].includes(type))                                     return 'mass';
+  if (type === 'confession')                                                            return 'confession';
+  if (['adoration','perpetual_adoration','holy_hour'].includes(type))                  return 'adoration';
+  if (['rosary','divine_mercy','miraculous_medal','novena','devotion','benediction','vespers','anointing_of_sick'].includes(type)) return 'devotion';
+  if (type === 'communion_service')                                                     return 'communion';
+  if (['stations_of_cross','gorzkie_zale'].includes(type))                             return 'stations';
+  if (['holy_thursday_mass','good_friday_service','easter_vigil_mass'].includes(type)) return 'triduum';
+  if (['bible_study','mens_group','social_event'].includes(type))                      return 'community';
   return 'other';
+}
+function dotClass(vs) {
+  if (['verified','manually_verified'].includes(vs)) return 'verified';
+  if (['needs_verification','low_confidence'].includes(vs)) return 'needs_verification';
+  if (vs === 'excluded') return 'excluded';
+  return 'unverified';
 }
 
 // ── App state ─────────────────────────────────────────────────────────
-let editData = null;         // full parish_data.json in memory
-let allParishRows = [];      // [{id, name, town}]
-let pendingParish = null;    // deep clone of the parish being edited
+let editData      = null;
+let allRows       = [];
+let pendingParish = null;
+let activeTab     = 'overview';
+let isDirty       = false;
 
 // ── Boot ─────────────────────────────────────────────────────────────
 async function startApp() {
   document.getElementById('loginScreen').style.display = 'none';
   document.getElementById('app').style.display = 'flex';
-  document.getElementById('app').style.flexDirection = 'column';
-
   try {
     const res = await fetch('parish_data.json');
     if (!res.ok) throw new Error('HTTP ' + res.status);
     editData = await res.json();
-  } catch (e) {
+  } catch(e) {
     document.getElementById('editCol').innerHTML =
-      '<div class="empty-state" style="color:var(--color-error)">'+
-      '<p>Could not load parish_data.json<br><small>'+e.message+'</small><br><small>Try running from a local server or Vercel preview.</small></p></div>';
+      '<div class="empty-state" style="color:var(--red)">' +
+      '<p>Could not load parish_data.json</p>' +
+      '<small>' + esc(e.message) + '<br>Run from a local server or Vercel preview.</small></div>';
     return;
   }
-
-  // Meta line
-  const meta = editData.metadata || {};
+  const m = editData.metadata || {};
   document.getElementById('dataMeta').textContent =
-    (meta.total_parishes || '?') + ' parishes · v' + (meta.schema_version || '?') +
-    ' · validated ' + (meta.last_validated || '?');
-
-  // Build list
-  allParishRows = (editData.parishes || []).map(p => ({
-    id: p.id, name: p.name, town: p.town || '', state: p.state || ''
+    (m.total_parishes||'?') + ' parishes \u00b7 v' + (m.schema_version||'?');
+  allRows = (editData.parishes||[]).map(p => ({
+    id:p.id, name:p.name, town:p.town||'', state:p.state||'',
+    vs:(p.validation && p.validation.status)||'unverified'
   }));
-  renderList(allParishRows);
+  updateStats(allRows.length, allRows.length);
+  renderList(allRows);
 }
 
-// ── Parish list ───────────────────────────────────────────────────────
+// ── Sidebar ───────────────────────────────────────────────────────────
+function updateStats(shown, total) {
+  const el = document.getElementById('sidebarStats');
+  if (el) el.textContent = shown === total ? total + ' parishes' : shown + ' of ' + total + ' shown';
+}
 function renderList(rows) {
   const el = document.getElementById('parishList');
-  if (!rows.length) { el.innerHTML = '<div style="padding:16px;color:var(--color-text-tertiary);font-size:13px">No matches</div>'; return; }
+  if (!rows.length) {
+    el.innerHTML = '<div style="padding:14px 13px;font-size:13px;color:var(--txt3)">No matches</div>';
+    return;
+  }
   el.innerHTML = rows.map(r =>
-    '<div class="parish-row" data-id="'+r.id+'" onclick="selectParish(\''+r.id+'\')">' +
-      '<div class="parish-row-name">'+ esc(r.name) +'</div>' +
-      '<div class="parish-row-sub">'+ esc(r.town) +', '+ esc(r.state) +'</div>' +
-      '<div class="parish-row-id">'+ esc(r.id) +'</div>' +
+    '<div class="parish-row" data-id="'+esc(r.id)+'" onclick="selectParish(\''+esc(r.id)+'\')">' +
+      '<div class="status-dot '+dotClass(r.vs)+'"></div>' +
+      '<div class="pr-text">' +
+        '<div class="pr-name">' + esc(r.name) + '</div>' +
+        '<div class="pr-sub">' + esc(r.town) + ', ' + esc(r.state) + '</div>' +
+      '</div>' +
     '</div>'
   ).join('');
 }
 function filterList() {
   const q = document.getElementById('parishSearch').value.toLowerCase().trim();
-  if (!q) { renderList(allParishRows); return; }
-  renderList(allParishRows.filter(r =>
+  const filtered = q ? allRows.filter(r =>
     r.name.toLowerCase().includes(q) || r.id.toLowerCase().includes(q) || r.town.toLowerCase().includes(q)
-  ));
+  ) : allRows;
+  updateStats(filtered.length, allRows.length);
+  renderList(filtered);
 }
 
 // ── Select parish ─────────────────────────────────────────────────────
 function selectParish(id) {
   document.querySelectorAll('.parish-row').forEach(r => r.classList.toggle('active', r.dataset.id === id));
-  const parish = (editData.parishes || []).find(p => p.id === id);
-  if (!parish) return;
-  pendingParish = JSON.parse(JSON.stringify(parish));
-  renderEditPanel();
+  const p = (editData.parishes||[]).find(p => p.id === id);
+  if (!p) return;
+  pendingParish = JSON.parse(JSON.stringify(p));
+  activeTab = 'overview';
+  isDirty   = false;
+  renderPanel();
 }
 
-// ── Render edit panel ─────────────────────────────────────────────────
-function renderEditPanel() {
-  const p = pendingParish;
-  document.getElementById('editCol').innerHTML =
-    editHeader(p) +
-    sectionOverview(p) +
-    sectionLocations(p) +
-    sectionServices(p) +
-    sectionSpecialEvents(p) +
-    sectionContact(p) +
-    sectionValidation(p) +
-    sectionProposed();
+// ── Tab switching ─────────────────────────────────────────────────────
+function switchTab(name) {
+  if (isDirty) saveFormToPending();
+  activeTab = name;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('active', p.dataset.tab === name));
 }
 
-function editHeader(p) {
-  return '<div class="edit-header">' +
-    '<h2>' + esc(p.name) + '</h2>' +
-    '<div style="display:flex;align-items:center;gap:10px">' +
-      '<span class="save-flash" id="saveFlash">✓ Saved</span>' +
-      '<button class="btn-save" onclick="saveParish()">Save Parish</button>' +
-    '</div>' +
-  '</div>';
-}
+// ── Help modal ────────────────────────────────────────────────────────
+function toggleHelp() { document.getElementById('helpModal').classList.toggle('open'); }
+function closeHelpIfBg(e) { if (e.target === document.getElementById('helpModal')) toggleHelp(); }
 
-// ── Overview section ──────────────────────────────────────────────────
-function sectionOverview(p) {
-  return '<div class="section">' +
-    '<div class="section-title">Parish Overview</div>' +
-    '<div class="form-grid">' +
-      field('name', 'Parish Name', p.name || '', 'text', 'span-2') +
-      field('town', 'Town', p.town || '', 'text') +
-      field('county', 'County', p.county || '', 'text') +
-      field('state', 'State', '', 'select', '', STATES, p.state) +
-      field('zip', 'ZIP', p.zip || '', 'text') +
-      field('established', 'Established', p.established || '', 'text') +
-      fieldSelect('status', 'Status', PARISH_STATUSES, p.status || 'active') +
-      field('bulletin_url', 'Bulletin URL', p.bulletin_url || '', 'text', 'span-2') +
-    '</div>' +
-    '<div style="margin-top:12px">' +
-      checkField('is_mission', 'Is Mission Church', p.is_mission) +
-      (p.is_mission ? field('mission_of', 'Mission Of (parish name)', p.mission_of || '', 'text', 'span-2') : '') +
-    '</div>' +
-  '</div>';
-}
+// ── Render panel ──────────────────────────────────────────────────────
+function renderPanel() {
+  const p   = pendingParish;
+  const vs  = (p.validation && p.validation.status) || 'unverified';
+  const TABS = [
+    ['overview','Overview'], ['schedule','Schedule'], ['locations','Locations'],
+    ['contact','Contact'],   ['validation','Validation']
+  ];
 
-// ── Locations section ─────────────────────────────────────────────────
-function sectionLocations(p) {
-  const locs = p.locations || [];
-  let html = '<div class="section"><div class="section-title">Locations (' + locs.length + ')</div>';
-  locs.forEach((loc, idx) => {
-    html += '<div class="loc-card" id="locCard_'+idx+'">' +
-      '<div class="loc-card-header" onclick="toggleLocCard('+idx+')">' +
-        '<div><div class="loc-card-name">' + esc(loc.name || loc.id) + '</div>' +
-          '<div class="loc-card-addr">' + esc(loc.address || '⚠ No address') + '</div></div>' +
-        '<span class="chevron">▼</span>' +
-      '</div>' +
-      '<div class="loc-card-body" id="locBody_'+idx+'">' +
-        '<div class="form-grid">' +
-          field('loc_name_'+idx, 'Display Name', loc.name || '', 'text', 'span-2') +
-          field('loc_shortname_'+idx, 'Short Name', loc.short_name || '', 'text') +
-          fieldSelect('loc_type_'+idx, 'Type', LOC_TYPES, loc.type || 'church') +
-          field('loc_address_'+idx, 'Street Address', loc.address || '', 'text', 'span-2') +
-          field('loc_city_'+idx, 'City', loc.city || '', 'text') +
-          fieldSelect('loc_state_'+idx, 'State', STATES, loc.state || 'MA') +
-          field('loc_zip_'+idx, 'ZIP', loc.zip || '', 'text') +
-          field('loc_lat_'+idx, 'Latitude', loc.lat !== undefined ? loc.lat : '', 'number') +
-          field('loc_lng_'+idx, 'Longitude', loc.lng !== undefined ? loc.lng : '', 'number') +
+  const sticky =
+    '<div class="edit-sticky">' +
+      '<div class="edit-hdr">' +
+        '<div class="edit-hdr-left">' +
+          '<h2>' + esc(p.name) + '</h2>' +
+          '<div class="edit-hdr-town">' + esc(p.town) + ', ' + esc(p.state) + ' &nbsp;&middot;&nbsp; ' + esc(p.id) + '</div>' +
         '</div>' +
-        '<div style="margin-top:10px">' + checkField('loc_accessible_'+idx, 'Wheelchair Accessible', loc.is_accessible) + '</div>' +
-        '<button class="btn-remove" onclick="removeLocation('+idx+')">Remove Location</button>' +
+        '<div class="edit-hdr-right">' +
+          '<span class="vpill ' + vs + '">' + vs.replace(/_/g,' ') + '</span>' +
+          '<span class="save-flash" id="saveFlash"></span>' +
+          '<button class="btn-save" id="btnSave" onclick="saveParish()">Save Parish</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="tab-bar">' +
+        TABS.map(([id, lbl]) =>
+          '<button class="tab-btn' + (id===activeTab?' active':'') + '" data-tab="'+id+'" onclick="switchTab(\''+id+'\')">' + lbl + '</button>'
+        ).join('') +
       '</div>' +
     '</div>';
-  });
-  html += '<button class="btn-add-loc" onclick="addLocation()">+ Add Location</button></div>';
-  return html;
+
+  // All tab panes rendered to DOM simultaneously so saveFormToPending() can read any field
+  const panes =
+    pane('overview',    tabOverview(p))  +
+    pane('schedule',    tabSchedule(p))  +
+    pane('locations',   tabLocations(p)) +
+    pane('contact',     tabContact(p))   +
+    pane('validation',  tabValidation(p));
+
+  document.getElementById('editCol').innerHTML = sticky + panes;
+
+  // Mark dirty on any change
+  document.getElementById('editCol').addEventListener('input',  markDirty);
+  document.getElementById('editCol').addEventListener('change', markDirty);
 }
-function toggleLocCard(idx) {
-  const body = document.getElementById('locBody_' + idx);
-  const hdr  = body.previousElementSibling;
-  body.classList.toggle('open');
-  hdr.classList.toggle('open');
+function pane(name, content) {
+  return '<div class="tab-pane' + (name===activeTab?' active':'') + '" data-tab="'+name+'">' + content + '</div>';
+}
+function markDirty() {
+  if (!isDirty) {
+    isDirty = true;
+    const b = document.getElementById('btnSave');
+    if (b) b.classList.add('dirty');
+  }
 }
 
-// ── Services section ──────────────────────────────────────────────────
-function sectionServices(p) {
+// ── Overview tab ──────────────────────────────────────────────────────
+function tabOverview(p) {
+  return section('Parish Identity',
+    fg([
+      field('p_name','Parish Name', p.name||'', 's2'),
+      fsel('p_status','Status', PAR_STATUSES, p.status||'active'),
+      field('p_estab','Year Established', p.established||''),
+      fsel('p_state','State', STATES, p.state),
+      field('p_town','Town', p.town||''),
+      field('p_county','County', p.county||''),
+      field('p_zip','ZIP', p.zip||''),
+    ]) +
+    '<div style="margin-top:13px">' +
+      chk('p_is_mission','This is a mission church', p.is_mission) +
+      (p.is_mission ? '<div style="margin-top:10px">' + fg([field('p_mission_of','Mission of (parish name or ID)', p.mission_of||'', 's2')]) + '</div>' : '') +
+    '</div>'
+  ) +
+  section('Bulletin & Web',
+    urlGrp('p_bulletin','Bulletin Page URL', p.bulletin_url||'') +
+    '<p class="hint">Link to the page that lists all bulletins &mdash; e.g. parishesonline.com/&hellip; or the church\u2019s own /bulletins page. This is your primary source of truth for schedule changes.</p>'
+  );
+}
+
+// ── Schedule tab ──────────────────────────────────────────────────────
+function tabSchedule(p) {
+  return tabServices(p) + tabEvents(p);
+}
+function tabServices(p) {
   const svcs = p.services || [];
-  let html = '<div class="section"><div class="section-title">Services (' + svcs.length + ')</div>' +
-    '<div class="svc-list" id="svcList">';
-  svcs.forEach((s, idx) => { html += renderSvcRow(s, idx, p.locations || []); });
-  html += '</div><button class="btn-add-svc" onclick="addService()">+ Add Service</button></div>';
-  return html;
+  let rows = '';
+  svcs.forEach((s,i) => { rows += svcRow(s, i, p.locations||[]); });
+  return sectionCounted('Services', svcs.length,
+    '<div class="svc-list">' + rows + '</div>' +
+    '<button class="btn-add" onclick="addService()">+ Add Service</button>'
+  );
 }
-function renderSvcRow(s, idx, locs) {
-  const typeLabel = SVC_TYPES[s.type] || s.type;
-  const dayLabel  = s.day ? (DAY_LABELS[s.day] || s.day) : '—';
-  const timeLabel = s.time ? fmt12(s.time) : (s.times_vary ? 'times vary' : '—');
-  const locName   = s.location_id ? ((locs.find(l => l.id === s.location_id) || {}).short_name || s.location_id) : '';
-  const metaParts = [dayLabel, timeLabel, locName].filter(Boolean);
+function svcRow(s, i, locs) {
+  const lbl  = SVC_TYPES[s.type] || s.type;
+  const day  = s.day ? (DAY_LABELS[s.day]||s.day) : '\u2014';
+  const time = s.time ? fmt12(s.time) : (s.times_vary ? 'times vary' : '\u2014');
+  const loc  = s.location_id ? ((locs.find(l=>l.id===s.location_id)||{}).short_name||'') : '';
+  const meta = [day, time, loc].filter(Boolean).join(' \u00b7 ');
+  const seas = s.seasonal && s.seasonal.is_seasonal;
   return '<div class="svc-row">' +
-    '<div class="svc-row-header" onclick="toggleSvcRow('+idx+')">' +
-      '<span class="svc-badge '+svcBadgeClass(s.type)+'">' + esc(typeLabel) + '</span>' +
-      '<span class="svc-meta">' + esc(metaParts.join(' · ')) + (s.seasonal && s.seasonal.is_seasonal ? ' 🍂' : '') + '</span>' +
-      '<span style="font-size:11px;color:var(--color-text-tertiary)">▼</span>' +
+    '<div class="svc-row-hdr" onclick="toggleEl(\'svcBody_'+i+'\')">' +
+      '<span class="svc-badge '+badgeClass(s.type)+'">' + esc(lbl) + '</span>' +
+      '<span class="svc-meta">' + esc(meta) + '</span>' +
+      (seas ? '<span class="svc-tag">' + esc((s.seasonal.season||'').replace(/_/g,' ')) + '</span>' : '') +
+      '<span class="svc-caret">\u25be</span>' +
     '</div>' +
-    renderSvcBody(s, idx) +
+    svcBody(s, i) +
   '</div>';
 }
-function renderSvcBody(s, idx) {
-  const locs = pendingParish.locations || [];
-  const locOpts = [['', '(no specific location)'], ...locs.map(l => [l.id, l.name || l.id])];
-  return '<div class="svc-body" id="svcBody_'+idx+'">' +
-    '<div class="form-grid cols-3">' +
-      fieldSelectPairs('svc_type_'+idx, 'Service Type', Object.entries(SVC_TYPES), s.type || '') +
-      fieldSelectPairs('svc_day_'+idx, 'Day', DAY_VALUES.map(d => [d, DAY_LABELS[d] || d]), s.day || '') +
-      fieldSelectPairs('svc_lang_'+idx, 'Language', Object.entries(LANG_NAMES), s.language || 'en') +
+function svcBody(s, i) {
+  const locs    = pendingParish.locations || [];
+  const locOpts = [['','(no specific location)'], ...locs.map(l=>[l.id, l.name||l.id])];
+  const isSeas  = !!(s.seasonal && s.seasonal.is_seasonal);
+  return '<div class="svc-body" id="svcBody_'+i+'">' +
+    fg3([
+      fpairs('svc_type_'+i,'Service Type', Object.entries(SVC_TYPES), s.type||''),
+      fpairs('svc_day_'+i, 'Day', DAY_VALUES.map(d=>[d, DAY_LABELS[d]||d]), s.day||''),
+      fpairs('svc_lang_'+i,'Language', Object.entries(LANG_NAMES), s.language||'en'),
+    ]) +
+    '<div style="margin-top:13px">' +
+    fg([
+      field('svc_time_'+i,    'Start Time',           s.time||'',        '', 'time'),
+      field('svc_endtime_'+i, 'End Time (optional)',   s.end_time||'',    '', 'time'),
+      fpairs('svc_locid_'+i,  'Location', locOpts,     s.location_id||''),
+      field('svc_source_'+i,  'Source',                s.source||''),
+      field('svc_rite_'+i,    'Rite (blank = Roman)',  s.rite||''),
+      field('svc_id_'+i,      'Service ID',            s.id||''),
+    ]) + '</div>' +
+    '<div style="margin-top:12px">' + field('svc_notes_'+i, 'Notes', s.notes||'', 's2') + '</div>' +
+    '<div style="margin-top:10px;display:flex;gap:20px;flex-wrap:wrap">' +
+      chk('svc_tv_'+i,  'Times vary (check bulletin)',  s.times_vary) +
+      chk('svc_sea_'+i, 'Seasonal only',                isSeas) +
     '</div>' +
-    '<div class="form-grid">' +
-      field('svc_time_'+idx, 'Start Time', s.time || '', 'time') +
-      field('svc_endtime_'+idx, 'End Time', s.end_time || '', 'time') +
-      fieldSelectPairs('svc_locid_'+idx, 'Location', locOpts, s.location_id || '') +
-      field('svc_source_'+idx, 'Source', s.source || '', 'text') +
-      field('svc_rite_'+idx, 'Rite (if non-Roman)', s.rite || '', 'text') +
-      field('svc_id_'+idx, 'Service ID', s.id || '', 'text') +
+    '<div id="svcSeas_'+i+'" style="margin-top:10px;display:'+(isSeas?'block':'none')+'">' +
+      fsel('svc_season_'+i,'Active Season', SEASONS, (s.seasonal&&s.seasonal.season)||'lent') +
     '</div>' +
-    '<div class="form-grid cols-1">' +
-      field('svc_notes_'+idx, 'Notes', s.notes || '', 'text') +
-    '</div>' +
-    '<div style="margin-top:8px;display:flex;gap:16px;flex-wrap:wrap">' +
-      checkField('svc_timesvary_'+idx, 'Times vary (check bulletin)', s.times_vary) +
-      checkField('svc_seasonal_'+idx, 'Seasonal', s.seasonal && s.seasonal.is_seasonal) +
-    '</div>' +
-    '<div id="svcSeasonalMore_'+idx+'" style="margin-top:10px;display:' + ((s.seasonal && s.seasonal.is_seasonal) ? 'block' : 'none') + '">' +
-      fieldSelect('svc_season_'+idx, 'Season', SEASONS, (s.seasonal && s.seasonal.season) || 'lent') +
-    '</div>' +
-    '<button class="btn-remove" onclick="removeService('+idx+')">Remove Service</button>' +
+    '<button class="btn-remove" onclick="removeService('+i+')">Remove Service</button>' +
   '</div>';
 }
-function toggleSvcRow(idx) {
-  document.getElementById('svcBody_' + idx).classList.toggle('open');
-}
-
-// ── Special events section ────────────────────────────────────────────
-function sectionSpecialEvents(p) {
+function tabEvents(p) {
   const evts = p.special_events || [];
-  let html = '<div class="section"><div class="section-title">Special Events (' + evts.length + ')</div>';
-  evts.forEach((ev, idx) => { html += renderEvtRow(ev, idx); });
-  html += '<button class="btn-add-evt" onclick="addEvent()">+ Add Event</button></div>';
-  return html;
+  let rows = '';
+  evts.forEach((ev,i) => { rows += evtRow(ev, i); });
+  return sectionCounted('Special Events', evts.length,
+    rows + '<button class="btn-add" onclick="addEvent()">+ Add Event</button>'
+  );
 }
-function renderEvtRow(ev, idx) {
+function evtRow(ev, i) {
   return '<div class="evt-row">' +
-    '<div class="evt-row-header" onclick="toggleEvtRow('+idx+')">' +
-      '<span class="svc-badge other">' + esc(ev.category || 'event') + '</span>' +
-      '<span class="svc-meta">' + esc(ev.title || ev.id) + (ev.frequency ? ' · ' + ev.frequency : '') + '</span>' +
-      '<span style="font-size:11px;color:var(--color-text-tertiary)">▼</span>' +
+    '<div class="evt-row-hdr" onclick="toggleEl(\'evtBody_'+i+'\')">' +
+      '<span class="svc-badge other">' + esc(ev.category||'event') + '</span>' +
+      '<span class="svc-meta">' + esc(ev.title||ev.id) + (ev.frequency?' \u00b7 '+ev.frequency.replace(/_/g,' '):'') + '</span>' +
+      '<span class="svc-caret">\u25be</span>' +
     '</div>' +
-    '<div class="evt-body" id="evtBody_'+idx+'">' +
-      '<div class="form-grid">' +
-        field('evt_title_'+idx, 'Title', ev.title || '', 'text', 'span-2') +
-        fieldSelect('evt_cat_'+idx, 'Category', EVT_CATEGORIES, ev.category || 'social') +
-        fieldSelect('evt_freq_'+idx, 'Frequency', EVT_FREQUENCIES, ev.frequency || 'one_time') +
-        fieldSelectPairs('evt_day_'+idx, 'Day', DAY_VALUES.map(d => [d, DAY_LABELS[d] || d]), ev.day || '') +
-        field('evt_time_'+idx, 'Time', ev.time || '', 'text') +
-        field('evt_notes_'+idx, 'Notes', ev.notes || '', 'text', 'span-2') +
-        field('evt_source_'+idx, 'Source', ev.source || '', 'text') +
-        field('evt_id_'+idx, 'Event ID', ev.id || '', 'text') +
+    '<div class="evt-body" id="evtBody_'+i+'">' +
+      fg([
+        field('evt_title_'+i, 'Title', ev.title||'', 's2'),
+        fsel('evt_cat_'+i,   'Category',  EVT_CATS,  ev.category||'social'),
+        fsel('evt_freq_'+i,  'Frequency', EVT_FREQS, ev.frequency||'one_time'),
+        fpairs('evt_day_'+i, 'Day / Recurrence', DAY_VALUES.map(d=>[d,DAY_LABELS[d]||d]), ev.day||''),
+        field('evt_time_'+i,  'Time',   ev.time||''),
+        field('evt_notes_'+i, 'Notes',  ev.notes||'',  's2'),
+        field('evt_src_'+i,   'Source', ev.source||''),
+        field('evt_id_'+i,    'Event ID', ev.id||''),
+      ]) +
+      '<div style="margin-top:10px">' + chk('evt_sea_'+i, 'Seasonal only', ev.seasonal&&ev.seasonal.is_seasonal) + '</div>' +
+      '<div id="evtSeas_'+i+'" style="margin-top:10px;display:'+((ev.seasonal&&ev.seasonal.is_seasonal)?'block':'none')+'">' +
+        fsel('evt_season_'+i,'Active Season', SEASONS, (ev.seasonal&&ev.seasonal.season)||'lent') +
       '</div>' +
-      '<div style="margin-top:8px">' + checkField('evt_seasonal_'+idx, 'Seasonal', ev.seasonal && ev.seasonal.is_seasonal) + '</div>' +
-      '<div id="evtSeasonalMore_'+idx+'" style="margin-top:10px;display:' + ((ev.seasonal && ev.seasonal.is_seasonal) ? 'block' : 'none') + '">' +
-        fieldSelect('evt_season_'+idx, 'Season', SEASONS, (ev.seasonal && ev.seasonal.season) || 'lent') +
-      '</div>' +
-      '<button class="btn-remove" onclick="removeEvent('+idx+')">Remove Event</button>' +
+      '<button class="btn-remove" onclick="removeEvent('+i+')">Remove Event</button>' +
     '</div>' +
   '</div>';
 }
-function toggleEvtRow(idx) {
-  document.getElementById('evtBody_' + idx).classList.toggle('open');
+
+// ── Locations tab ─────────────────────────────────────────────────────
+function tabLocations(p) {
+  const locs = p.locations || [];
+  let html = sectionCounted('Locations', locs.length, '', false);
+  // Open section manually so we can inject cards
+  let inner = '';
+  locs.forEach((loc, i) => {
+    inner +=
+      '<div class="loc-card">' +
+        '<div class="loc-card-hdr" onclick="toggleLocCard('+i+')">' +
+          '<div>' +
+            '<div class="loc-card-name">' + esc(loc.name || loc.id) + '</div>' +
+            '<div class="loc-card-addr">' + esc(
+              loc.address ? loc.address + (loc.city ? ', ' + loc.city : '') : '\u26a0 No address on file'
+            ) + '</div>' +
+          '</div>' +
+          '<span class="chevron">\u25be</span>' +
+        '</div>' +
+        '<div class="loc-card-body" id="locBody_'+i+'">' +
+          fg([
+            field('loc_name_'+i,  'Display Name',               loc.name||'',       's2'),
+            field('loc_sn_'+i,    'Short Name (for labels)',     loc.short_name||''),
+            fsel ('loc_type_'+i,  'Type', LOC_TYPES,            loc.type||'church'),
+            field('loc_addr_'+i,  'Street Address',             loc.address||'',    's2'),
+            field('loc_city_'+i,  'City',                       loc.city||''),
+            fsel ('loc_st_'+i,    'State', STATES,              loc.state||'MA'),
+            field('loc_zip_'+i,   'ZIP',                        loc.zip||''),
+            field('loc_lat_'+i,   'Latitude',                   loc.lat!==undefined?loc.lat:'', '', 'number'),
+            field('loc_lng_'+i,   'Longitude',                  loc.lng!==undefined?loc.lng:'', '', 'number'),
+          ]) +
+          '<div style="margin-top:11px">' + chk('loc_acc_'+i,'Wheelchair accessible', loc.is_accessible) + '</div>' +
+          '<button class="btn-remove" onclick="removeLocation('+i+')">Remove Location</button>' +
+        '</div>' +
+      '</div>';
+  });
+  return '<div class="section">' +
+    '<div class="section-hdr"><span class="section-title">Locations</span><span class="section-badge">'+locs.length+'</span></div>' +
+    inner +
+    '<button class="btn-add" onclick="addLocation()">+ Add Location</button>' +
+  '</div>';
+}
+function toggleLocCard(i) {
+  const b = document.getElementById('locBody_'+i);
+  b.classList.toggle('open');
+  b.previousElementSibling.classList.toggle('open');
 }
 
-// ── Contact section ───────────────────────────────────────────────────
-function sectionContact(p) {
+// ── Contact tab ───────────────────────────────────────────────────────
+function tabContact(p) {
   const c = p.contact || {};
-  return '<div class="section">' +
-    '<div class="section-title">Contact</div>' +
-    '<div class="form-grid">' +
-      field('c_phone', 'Phone', c.phone || '', 'text') +
-      field('c_phone2', 'Secondary Phone', c.phone_secondary || '', 'text') +
-      field('c_website', 'Website', c.website || '', 'text', 'span-2') +
-      field('c_emails', 'Emails (comma-separated)', (c.emails || []).join(', '), 'text', 'span-2') +
-      field('c_hours', 'Office Hours', c.office_hours || '', 'text', 'span-2') +
-      field('c_office_addr', 'Office Address', c.office_address || '', 'text', 'span-2') +
-      field('c_instagram', 'Instagram', c.instagram || '', 'text') +
-      field('c_facebook', 'Facebook', c.facebook || '', 'text') +
-      field('c_notes', 'Notes', c.notes || '', 'text', 'span-2') +
-    '</div>' +
-  '</div>';
+  return section('Phone',
+    fg([
+      field('c_phone',  'Phone',           c.phone||''),
+      field('c_phone2', 'Secondary Phone', c.phone_secondary||''),
+    ])
+  ) +
+  section('Web Presence',
+    urlGrp('c_website', 'Parish Website', c.website||'') +
+    '<div class="fg c1" style="margin-top:13px">' +
+      field('c_emails', 'Email(s) \u2014 comma-separated', (c.emails||[]).join(', '), 's2') +
+    '</div>'
+  ) +
+  section('Office',
+    fg([
+      field('c_hours',      'Office Hours',   c.office_hours||'',    's2'),
+      field('c_office_addr','Office Address', c.office_address||'', 's2'),
+    ])
+  ) +
+  section('Social Media',
+    fg([
+      field('c_instagram', 'Instagram', c.instagram||''),
+      field('c_facebook',  'Facebook',  c.facebook||''),
+      field('c_notes',     'Notes',     c.notes||'',  's2'),
+    ])
+  );
 }
 
-// ── Validation section ────────────────────────────────────────────────
-function sectionValidation(p) {
+// ── Validation tab ────────────────────────────────────────────────────
+function tabValidation(p) {
   const v = p.validation || {};
-  return '<div class="section">' +
-    '<div class="section-title">Validation</div>' +
-    '<div class="form-grid">' +
-      fieldSelect('v_status', 'Status', VALIDATION_STATUSES, v.status || 'needs_verification') +
-      field('v_checked', 'Last Checked', v.last_checked || '', 'date') +
-      field('v_bulletin', 'Bulletin Date (YYYY-MM)', v.bulletin_date || '', 'text') +
+  return section('Review Status',
+    fg([
+      fsel('v_status',  'Status',                   VAL_STATUSES, v.status||'needs_verification'),
+      field('v_checked','Last Checked',              v.last_checked||'',  '', 'date'),
+      field('v_bulletin','Bulletin Date (YYYY-MM)',  v.bulletin_date||''),
+    ]) +
+    '<p class="hint">After reviewing from the bulletin, set Status to <strong>manually_verified</strong> and Last Checked to today\u2019s date.</p>'
+  ) +
+  '<div class="section">' +
+    '<div class="section-hdr">' +
+      '<span class="section-title">Proposed Changes</span>' +
+      '<span style="font-size:11px;color:var(--txt3)">AI review \u00b7 coming soon</span>' +
+    '</div>' +
+    '<div class="proposed-empty">No proposed changes for this parish.<br>' +
+      '<span style="font-size:12px">Future: paste Claude\u2019s JSON response here to see a diff.</span>' +
     '</div>' +
   '</div>';
 }
 
-// ── Proposed changes (Batch 3 placeholder) ────────────────────────────
-function sectionProposed() {
+// ── HTML builders ─────────────────────────────────────────────────────
+function esc(s) {
+  if (s===null||s===undefined) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function section(title, content) {
+  return '<div class="section"><div class="section-hdr"><span class="section-title">' + title + '</span></div>' + content + '</div>';
+}
+function sectionCounted(title, count, content) {
   return '<div class="section">' +
-    '<div class="section-title">Proposed Changes <span style="font-size:11px;font-weight:400;color:var(--color-text-tertiary);text-transform:none;letter-spacing:0">(Batch 3 — AI-assisted review)</span></div>' +
-    '<div class="proposed-empty">No proposed changes for this parish.<br><span style="font-size:12px">The automated Claude validation workflow will surface suggested updates here.</span></div>' +
-  '</div>';
+    '<div class="section-hdr"><span class="section-title">' + title + '</span><span class="section-badge">' + count + '</span></div>' +
+    content + '</div>';
 }
-
-// ── Form helpers ──────────────────────────────────────────────────────
-function esc(str) {
-  if (str === null || str === undefined) return '';
-  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+function fg(fields) {
+  return '<div class="fg">' + fields.join('') + '</div>';
 }
-function field(id, label, value, type, extraClass, opts, selectedVal) {
-  if (type === 'select') return fieldSelect(id, label, opts || [], selectedVal || value, extraClass);
-  const rows = type === 'textarea' ? ' rows="3"' : '';
-  const tag  = type === 'textarea' ? 'textarea' : 'input';
-  const val  = type === 'textarea' ? '' : ' value="'+esc(value)+'"';
-  const inner = type === 'textarea' ? esc(value) + '</textarea>' : '>';
-  return '<div class="field'+(extraClass?' '+extraClass:'')+'">' +
-    '<label for="'+id+'">'+label+'</label>' +
-    '<'+tag+' id="'+id+'" name="'+id+'"'+(type !== 'textarea' ? ' type="'+type+'"' : '')+val+rows+inner+
-  '</div>';
+function fg3(fields) {
+  return '<div class="fg c3">' + fields.join('') + '</div>';
 }
-function fieldSelect(id, label, opts, selected, extraClass) {
-  const options = opts.map(o => '<option value="'+esc(o)+'"'+(o===selected?' selected':'')+'>'+esc(o)+'</option>').join('');
-  return '<div class="field'+(extraClass?' '+extraClass:'')+'">' +
-    '<label for="'+id+'">'+label+'</label>' +
-    '<select id="'+id+'" name="'+id+'">'+options+'</select>' +
-  '</div>';
+function field(id, label, value, extraClass, type) {
+  const t   = type || 'text';
+  const cls = extraClass ? ' ' + extraClass : '';
+  return '<div class="f'+cls+'"><label for="'+id+'">'+label+'</label><input id="'+id+'" name="'+id+'" type="'+t+'" value="'+esc(value)+'"></div>';
 }
-function fieldSelectPairs(id, label, pairs, selected, extraClass) {
-  const options = pairs.map(p => '<option value="'+esc(p[0])+'"'+(p[0]===selected?' selected':'')+'>'+esc(p[1])+'</option>').join('');
-  return '<div class="field'+(extraClass?' '+extraClass:'')+'">' +
-    '<label for="'+id+'">'+label+'</label>' +
-    '<select id="'+id+'" name="'+id+'">'+options+'</select>' +
-  '</div>';
+function fsel(id, label, opts, selected, extraClass) {
+  const cls     = extraClass ? ' ' + extraClass : '';
+  const options = opts.map(o =>
+    '<option value="'+esc(o)+'"'+(o===selected?' selected':'')+'>'+esc(String(o).replace(/_/g,' '))+'</option>'
+  ).join('');
+  return '<div class="f'+cls+'"><label for="'+id+'">'+label+'</label><select id="'+id+'" name="'+id+'">'+options+'</select></div>';
 }
-function checkField(id, label, checked) {
-  return '<div class="check-field">' +
-    '<input type="checkbox" id="'+id+'" name="'+id+'"'+(checked?' checked':'')+
-    ' onchange="onCheckChange(this)">' +
+function fpairs(id, label, pairs, selected, extraClass) {
+  const cls     = extraClass ? ' ' + extraClass : '';
+  const options = pairs.map(p =>
+    '<option value="'+esc(p[0])+'"'+(p[0]===selected?' selected':'')+'>'+esc(p[1])+'</option>'
+  ).join('');
+  return '<div class="f'+cls+'"><label for="'+id+'">'+label+'</label><select id="'+id+'" name="'+id+'">'+options+'</select></div>';
+}
+function chk(id, label, checked) {
+  return '<div class="check-row">' +
+    '<input type="checkbox" id="'+id+'" name="'+id+'"'+(checked?' checked':'')+' onchange="onChkChange(this)">' +
     '<label for="'+id+'">'+label+'</label>' +
   '</div>';
 }
-function onCheckChange(el) {
+function urlGrp(id, label, value) {
+  return '<div class="url-grp">' +
+    '<div class="f"><label for="'+id+'">'+label+'</label>' +
+    '<input id="'+id+'" name="'+id+'" type="url" value="'+esc(value)+'" placeholder="https://"></div>' +
+    '<button class="btn-open" onclick="openUrl(\''+id+'\')" type="button" title="Open in new tab">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">' +
+        '<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>' +
+        '<polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>' +
+      '</svg>Open' +
+    '</button>' +
+  '</div>';
+}
+function openUrl(id) {
+  const u = (document.getElementById(id)||{}).value;
+  if (u && u.startsWith('http')) window.open(u,'_blank','noopener');
+  else alert('Enter a valid URL first.');
+}
+function toggleEl(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+function onChkChange(el) {
   const id = el.id;
-  // Toggle seasonal sub-fields for services/events
-  const svcMatch = id.match(/^svc_seasonal_(\d+)$/);
-  if (svcMatch) {
-    document.getElementById('svcSeasonalMore_' + svcMatch[1]).style.display = el.checked ? 'block' : 'none';
-  }
-  const evtMatch = id.match(/^evt_seasonal_(\d+)$/);
-  if (evtMatch) {
-    document.getElementById('evtSeasonalMore_' + evtMatch[1]).style.display = el.checked ? 'block' : 'none';
-  }
+  const sm = id.match(/^svc_sea_(\d+)$/);
+  if (sm) document.getElementById('svcSeas_'+sm[1]).style.display = el.checked?'block':'none';
+  const em = id.match(/^evt_sea_(\d+)$/);
+  if (em) document.getElementById('evtSeas_'+em[1]).style.display = el.checked?'block':'none';
 }
 function fmt12(t) {
   if (!t) return '';
-  const [h, m] = t.split(':').map(Number);
-  const suffix = h >= 12 ? 'PM' : 'AM';
-  const h12 = h % 12 || 12;
-  return h12 + ':' + String(m).padStart(2,'0') + ' ' + suffix;
+  const [h,m] = t.split(':').map(Number);
+  return (h%12||12) + ':' + String(m).padStart(2,'0') + ' ' + (h>=12?'PM':'AM');
 }
 
-// ── Add / remove helpers ──────────────────────────────────────────────
+// ── Add / Remove ──────────────────────────────────────────────────────
 function addLocation() {
+  saveFormToPending();
   pendingParish.locations = pendingParish.locations || [];
-  pendingParish.locations.push({ id:'new-location-' + Date.now(), name:'', lat:42.0, lng:-72.5 });
-  saveFormToPending();
-  renderEditPanel();
-  // Open the new card
-  const idx = pendingParish.locations.length - 1;
-  setTimeout(() => toggleLocCard(idx), 50);
+  pendingParish.locations.push({ id:'loc-'+Date.now(), name:'', lat:42.0, lng:-72.5 });
+  renderPanel();
+  setTimeout(() => toggleLocCard(pendingParish.locations.length - 1), 40);
 }
-function removeLocation(idx) {
-  if (!confirm('Remove location "' + (pendingParish.locations[idx].name || pendingParish.locations[idx].id) + '"?')) return;
+function removeLocation(i) {
+  if (!confirm('Remove this location?')) return;
   saveFormToPending();
-  pendingParish.locations.splice(idx, 1);
-  renderEditPanel();
+  pendingParish.locations.splice(i, 1);
+  renderPanel();
 }
 function addService() {
+  saveFormToPending();
   pendingParish.services = pendingParish.services || [];
   const now = new Date();
   pendingParish.services.push({
-    id: pendingParish.id + '-new-' + now.getTime(),
-    type: 'sunday_mass', day: 'sunday', time: '09:00',
-    end_time: null, location_id: null, language: 'en', notes: null,
-    source: 'bulletin_' + now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0'),
-    seasonal: { is_seasonal: false, season: 'year_round' }
+    id: pendingParish.id+'-new-'+now.getTime(),
+    type:'sunday_mass', day:'sunday', time:'09:00',
+    end_time:null, location_id:null, language:'en', notes:null,
+    source:'bulletin_'+now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0'),
+    seasonal:{ is_seasonal:false, season:'year_round' }
   });
-  saveFormToPending();
-  renderEditPanel();
-  const idx = pendingParish.services.length - 1;
-  setTimeout(() => toggleSvcRow(idx), 50);
+  activeTab = 'schedule';
+  renderPanel();
+  setTimeout(() => toggleEl('svcBody_'+(pendingParish.services.length-1)), 40);
 }
-function removeService(idx) {
+function removeService(i) {
   if (!confirm('Remove this service?')) return;
   saveFormToPending();
-  pendingParish.services.splice(idx, 1);
-  renderEditPanel();
+  pendingParish.services.splice(i, 1);
+  renderPanel();
 }
 function addEvent() {
+  saveFormToPending();
   pendingParish.special_events = pendingParish.special_events || [];
   pendingParish.special_events.push({
-    id: pendingParish.id + '-evt-' + Date.now(),
-    title: '', category: 'social', frequency: 'one_time',
-    seasonal: { is_seasonal: false, season: 'year_round' }
+    id: pendingParish.id+'-evt-'+Date.now(),
+    title:'', category:'social', frequency:'one_time',
+    seasonal:{ is_seasonal:false, season:'year_round' }
   });
-  saveFormToPending();
-  renderEditPanel();
-  const idx = pendingParish.special_events.length - 1;
-  setTimeout(() => toggleEvtRow(idx), 50);
+  activeTab = 'schedule';
+  renderPanel();
+  setTimeout(() => toggleEl('evtBody_'+(pendingParish.special_events.length-1)), 40);
 }
-function removeEvent(idx) {
+function removeEvent(i) {
   if (!confirm('Remove this event?')) return;
   saveFormToPending();
-  pendingParish.special_events.splice(idx, 1);
-  renderEditPanel();
+  pendingParish.special_events.splice(i, 1);
+  renderPanel();
 }
 
 // ── Read form → pendingParish ─────────────────────────────────────────
@@ -676,62 +917,62 @@ function saveFormToPending() {
   const p = pendingParish;
 
   // Overview
-  p.name         = val('name')         || p.name;
-  p.town         = val('town')         || p.town;
-  p.county       = val('county')       || null;
-  p.state        = val('state')        || p.state;
-  p.zip          = val('zip')          || null;
-  p.established  = val('established')  || null;
-  p.status       = val('status')       || 'active';
-  p.bulletin_url = val('bulletin_url') || null;
-  p.is_mission   = !!val('is_mission');
-  p.mission_of   = p.is_mission ? (val('mission_of') || null) : null;
+  p.name         = val('p_name')       || p.name;
+  p.town         = val('p_town')       || p.town;
+  p.county       = val('p_county')     || null;
+  p.state        = val('p_state')      || p.state;
+  p.zip          = val('p_zip')        || null;
+  p.established  = val('p_estab')      || null;
+  p.status       = val('p_status')     || 'active';
+  p.bulletin_url = val('p_bulletin')   || null;
+  p.is_mission   = !!val('p_is_mission');
+  p.mission_of   = p.is_mission ? (val('p_mission_of') || null) : null;
 
   // Locations
-  (p.locations || []).forEach((loc, idx) => {
-    loc.name         = val('loc_name_'+idx)      || loc.name;
-    loc.short_name   = val('loc_shortname_'+idx) || null;
-    loc.type         = val('loc_type_'+idx)      || 'church';
-    loc.address      = val('loc_address_'+idx)   || null;
-    loc.city         = val('loc_city_'+idx)      || null;
-    loc.state        = val('loc_state_'+idx)     || 'MA';
-    loc.zip          = val('loc_zip_'+idx)       || null;
-    const lat = parseFloat(document.getElementById('loc_lat_'+idx) && document.getElementById('loc_lat_'+idx).value);
-    const lng = parseFloat(document.getElementById('loc_lng_'+idx) && document.getElementById('loc_lng_'+idx).value);
-    if (!isNaN(lat)) loc.lat = lat;
-    if (!isNaN(lng)) loc.lng = lng;
-    loc.is_accessible = val('loc_accessible_'+idx);
+  (p.locations || []).forEach((loc, i) => {
+    loc.name        = val('loc_name_'+i) || loc.name;
+    loc.short_name  = val('loc_sn_'+i)   || null;
+    loc.type        = val('loc_type_'+i) || 'church';
+    loc.address     = val('loc_addr_'+i) || null;
+    loc.city        = val('loc_city_'+i) || null;
+    loc.state       = val('loc_st_'+i)   || 'MA';
+    loc.zip         = val('loc_zip_'+i)  || null;
+    const latEl = document.getElementById('loc_lat_'+i);
+    const lngEl = document.getElementById('loc_lng_'+i);
+    if (latEl && latEl.value.trim()) { const n = parseFloat(latEl.value); if (!isNaN(n)) loc.lat = n; }
+    if (lngEl && lngEl.value.trim()) { const n = parseFloat(lngEl.value); if (!isNaN(n)) loc.lng = n; }
+    loc.is_accessible = val('loc_acc_'+i);
   });
 
   // Services
-  (p.services || []).forEach((s, idx) => {
-    s.type       = val('svc_type_'+idx)    || s.type;
-    s.day        = val('svc_day_'+idx)     || null;
-    s.language   = val('svc_lang_'+idx)    || 'en';
-    s.time       = val('svc_time_'+idx)    || null;
-    s.end_time   = val('svc_endtime_'+idx) || null;
-    s.location_id= val('svc_locid_'+idx)   || null;
-    s.source     = val('svc_source_'+idx)  || null;
-    s.rite       = val('svc_rite_'+idx)    || null;
-    s.id         = val('svc_id_'+idx)      || s.id;
-    s.notes      = val('svc_notes_'+idx)   || null;
-    s.times_vary = !!val('svc_timesvary_'+idx);
-    const isSeasonal = !!val('svc_seasonal_'+idx);
-    s.seasonal   = { is_seasonal: isSeasonal, season: (isSeasonal ? (val('svc_season_'+idx) || 'lent') : 'year_round') };
+  (p.services || []).forEach((s, i) => {
+    s.type        = val('svc_type_'+i)  || s.type;
+    s.day         = val('svc_day_'+i)   || null;
+    s.language    = val('svc_lang_'+i)  || 'en';
+    s.time        = val('svc_time_'+i)  || null;
+    s.end_time    = val('svc_endtime_'+i) || null;
+    s.location_id = val('svc_locid_'+i) || null;
+    s.source      = val('svc_source_'+i)|| null;
+    s.rite        = val('svc_rite_'+i)  || null;
+    s.id          = val('svc_id_'+i)    || s.id;
+    s.notes       = val('svc_notes_'+i) || null;
+    s.times_vary  = !!val('svc_tv_'+i);
+    const isSea   = !!val('svc_sea_'+i);
+    s.seasonal    = { is_seasonal:isSea, season: isSea ? (val('svc_season_'+i)||'lent') : 'year_round' };
   });
 
   // Special events
-  (p.special_events || []).forEach((ev, idx) => {
-    ev.title     = val('evt_title_'+idx)  || null;
-    ev.category  = val('evt_cat_'+idx)    || null;
-    ev.frequency = val('evt_freq_'+idx)   || null;
-    ev.day       = val('evt_day_'+idx)    || null;
-    ev.time      = val('evt_time_'+idx)   || null;
-    ev.notes     = val('evt_notes_'+idx)  || null;
-    ev.source    = val('evt_source_'+idx) || null;
-    ev.id        = val('evt_id_'+idx)     || ev.id;
-    const isSeasonal = !!val('evt_seasonal_'+idx);
-    ev.seasonal  = { is_seasonal: isSeasonal, season: (isSeasonal ? (val('evt_season_'+idx) || 'lent') : 'year_round') };
+  (p.special_events || []).forEach((ev, i) => {
+    ev.title    = val('evt_title_'+i)  || null;
+    ev.category = val('evt_cat_'+i)   || null;
+    ev.frequency= val('evt_freq_'+i)  || null;
+    ev.day      = val('evt_day_'+i)   || null;
+    ev.time     = val('evt_time_'+i)  || null;
+    ev.notes    = val('evt_notes_'+i) || null;
+    ev.source   = val('evt_src_'+i)   || null;
+    ev.id       = val('evt_id_'+i)    || ev.id;
+    const isSea = !!val('evt_sea_'+i);
+    ev.seasonal = { is_seasonal:isSea, season: isSea ? (val('evt_season_'+i)||'lent') : 'year_round' };
   });
 
   // Contact
@@ -744,44 +985,46 @@ function saveFormToPending() {
   c.instagram       = val('c_instagram')   || null;
   c.facebook        = val('c_facebook')    || null;
   c.notes           = val('c_notes')       || null;
-  const emailsRaw = val('c_emails');
-  c.emails = emailsRaw ? emailsRaw.split(',').map(e => e.trim()).filter(Boolean) : [];
+  const raw = val('c_emails');
+  c.emails = raw ? raw.split(',').map(e=>e.trim()).filter(Boolean) : [];
   p.contact = c;
 
   // Validation
   const v = p.validation || {};
-  v.status       = val('v_status')  || 'needs_verification';
-  v.last_checked = val('v_checked') || null;
-  v.bulletin_date= val('v_bulletin')|| null;
+  v.status        = val('v_status')   || 'needs_verification';
+  v.last_checked  = val('v_checked')  || null;
+  v.bulletin_date = val('v_bulletin') || null;
   if (v.status || v.last_checked) p.validation = v;
 }
 
-// ── Save parish back to editData ──────────────────────────────────────
+// ── Save parish ───────────────────────────────────────────────────────
 function saveParish() {
   saveFormToPending();
   const idx = editData.parishes.findIndex(p => p.id === pendingParish.id);
   if (idx >= 0) editData.parishes[idx] = JSON.parse(JSON.stringify(pendingParish));
-  // Flash
+  isDirty = false;
+  const btn = document.getElementById('btnSave');
+  if (btn) btn.classList.remove('dirty');
   const flash = document.getElementById('saveFlash');
   if (flash) {
+    flash.textContent = '\u2713 Saved';
     flash.style.opacity = '1';
-    setTimeout(() => { flash.style.opacity = '0'; }, 2000);
+    setTimeout(() => { flash.style.opacity = '0'; setTimeout(()=>{ flash.textContent=''; }, 350); }, 2200);
   }
-  // Refresh list row name in case it changed
-  allParishRows = editData.parishes.map(p => ({ id:p.id, name:p.name, town:p.town||'', state:p.state||'' }));
+  // Refresh sidebar (name or validation status may have changed)
+  allRows = editData.parishes.map(p => ({
+    id:p.id, name:p.name, town:p.town||'', state:p.state||'',
+    vs:(p.validation&&p.validation.status)||'unverified'
+  }));
   filterList();
 }
 
 // ── Download JSON ─────────────────────────────────────────────────────
 function downloadJSON() {
-  // Auto-save current parish first
   if (pendingParish) saveParish();
-  const json   = JSON.stringify(editData, null, 2);
-  const blob   = new Blob([json], { type: 'application/json' });
-  const url    = URL.createObjectURL(blob);
-  const a      = document.createElement('a');
-  a.href       = url;
-  a.download   = 'parish_data.json';
+  const blob = new Blob([JSON.stringify(editData, null, 2)], { type:'application/json' });
+  const url  = URL.createObjectURL(blob);
+  const a    = Object.assign(document.createElement('a'), { href:url, download:'parish_data.json' });
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
