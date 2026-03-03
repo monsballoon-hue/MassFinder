@@ -66,7 +66,7 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--txt);font-size:1
   color:var(--txt);transition:border-color .15s,background .15s;
 }
 .sidebar-search:focus{border-color:var(--primary);background:#fff;box-shadow:0 0 0 3px rgba(44,62,90,.07)}
-.sidebar-stats{padding:6px 13px 7px;font-size:11.5px;color:var(--txt3);border-bottom:1px solid var(--border-lt);display:flex;align-items:center;justify-content:space-between}
+.sidebar-stats{padding:8px 13px 9px;font-size:13px;color:var(--txt3);border-bottom:1px solid var(--border-lt);display:flex;align-items:center;justify-content:space-between}
 #parishList{flex:1;overflow-y:auto}
 .parish-row{padding:9px 12px;cursor:pointer;border-bottom:1px solid var(--border-lt);display:flex;align-items:flex-start;gap:8px;transition:background .1s,transform .08s}
 .parish-row:hover{background:var(--bg)}
@@ -272,32 +272,35 @@ details.card>.card-body{border-top:1px solid var(--border-lt)}
 
 /* ── Group completion ─────────────────────────────────────────────── */
 .sched-group.all-verified{opacity:.55;border-left-color:var(--green) !important;transition:opacity .3s,border-left-color .3s}
-.sched-progress{font-size:11px;font-weight:600;padding:1px 7px;border-radius:99px;margin-left:6px}
+.sched-progress{font-size:12px;font-weight:600;padding:2px 9px;border-radius:99px;margin-left:6px}
 .sched-progress.complete{background:var(--green-bg);color:var(--green)}
 .sched-progress.partial{background:var(--bg);color:var(--txt3);border:1px solid var(--border)}
 
 /* ── Staleness badges ────────────────────────────────────────────── */
-.stale-badge{font-size:10px;font-weight:700;padding:1px 5px;border-radius:4px;margin-left:4px;display:inline-block}
+.stale-badge{font-size:12px;font-weight:700;padding:2px 8px;border-radius:4px;margin-left:5px;display:inline-block}
 .stale-badge.hot{background:var(--red-bg);color:var(--red)}
 .stale-badge.warm{background:var(--amber-bg);color:var(--amber)}
 .stale-badge.cool{background:var(--green-bg);color:var(--green)}
 
 /* ── Sidebar sort toggle ────────────────────────────────────────── */
-.sort-toggle{background:none;border:1px solid var(--border);border-radius:var(--r-sm);padding:2px 8px;font-size:11px;font-weight:600;cursor:pointer;color:var(--txt2);font-family:var(--font-b);transition:border-color .15s,color .15s}
+.sort-toggle{background:none;border:1px solid var(--border);border-radius:var(--r-sm);padding:4px 10px;font-size:13px;font-weight:600;cursor:pointer;color:var(--txt2);font-family:var(--font-b);transition:border-color .15s,color .15s}
 .sort-toggle:hover{border-color:var(--primary);color:var(--primary)}
 
 /* ── Parish progress bar ────────────────────────────────────────── */
-.pr-progress{height:3px;background:var(--border-lt);border-radius:2px;margin-top:4px}
-.pr-progress-fill{height:100%;background:var(--green);border-radius:2px;transition:width .3s}
-.pr-progress-text{font-size:10px;color:var(--txt3);margin-top:1px}
+.pr-progress{height:5px;background:var(--border-lt);border-radius:3px;margin-top:5px}
+.pr-progress-fill{height:100%;border-radius:3px;transition:width .3s}
+.pr-progress-fill.fill-partial{background:var(--accent)}
+.pr-progress-fill.fill-complete{background:var(--green)}
+.pr-progress-text{font-size:12px;color:var(--txt3);margin-top:2px;font-weight:500}
+.pr-progress-text.complete{color:var(--green);font-weight:700}
 
 /* ── Bulk verify ─────────────────────────────────────────────────── */
 .parish-row.selected{background:var(--accent-pale);border-left:3px solid var(--accent);padding-left:9px}
 .parish-row.selected .status-dot{box-shadow:0 0 0 2px var(--accent)}
 .bulk-bar{padding:10px 12px;background:var(--primary);color:#fff;display:none;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.15);gap:8px}
 .bulk-bar.show{display:flex}
-.bulk-bar span{font-size:13px;font-weight:500}
-.bulk-bar button{height:30px;padding:0 14px;border:none;border-radius:var(--r-sm);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font-b)}
+.bulk-bar span{font-size:14px;font-weight:600}
+.bulk-bar button{height:32px;padding:0 16px;border:none;border-radius:var(--r-sm);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font-b)}
 .btn-bulk-verify{background:var(--green);color:#fff}
 .btn-bulk-clear{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3) !important}
 
@@ -311,6 +314,10 @@ details.card>.card-body{border-top:1px solid var(--border-lt)}
 /* ── Export/Import buttons ───────────────────────────────────────── */
 .btn-secondary-bar{height:32px;padding:0 14px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:var(--r-sm);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font-b);white-space:nowrap;transition:background .15s}
 .btn-secondary-bar:hover{background:rgba(255,255,255,.25)}
+
+/* ── Parish complete indicator ────────────────────────────────────── */
+.parish-row.all-done{background:var(--green-bg);border-left:3px solid var(--green);padding-left:9px}
+.parish-row.all-done .pr-name{color:var(--green)}
 
 /* ── Click feedback ────────────────────────────────────────────────── */
 button:active:not(:disabled){transform:scale(0.97)}
@@ -478,6 +485,29 @@ button:active:not(:disabled){transform:scale(0.97)}
         <li><strong>Shift+click</strong> parish rows to multi-select, then <strong>Verify All</strong> to mark them all as verified today</li>
         <li>Progress bars show verified/total services for parishes you&rsquo;ve visited this session</li>
         <li><strong>Quick Scan</strong> (header button or <kbd>Alt Q</kbd>) hides all cards except Schedule for speed</li>
+      </ul>
+      <h4>Import / Export Workflow</h4>
+      <p>Use this to edit from any machine (e.g. work PC) without needing Git.</p>
+      <ol>
+        <li>Open admin from Vercel preview on any browser. Verify and save parishes as normal</li>
+        <li>Click <strong>Export Changes</strong> &mdash; downloads a small JSON with only the parishes you touched</li>
+        <li>Email the file to yourself (or Dropbox, iCloud, etc.)</li>
+        <li>At home: open admin, click <strong>Import</strong>, select the file &rarr; parishes merge in</li>
+        <li>Click <strong>Download JSON</strong> to get the full updated file, then commit &amp; push</li>
+      </ol>
+      <h4>Batching Multiple Days</h4>
+      <ul>
+        <li>You can accumulate export files all week and import them at once on the weekend</li>
+        <li>Import them <strong>one at a time in chronological order</strong> (oldest first)</li>
+        <li>If you edit the same parish on different days, the latest file wins (full replacement per parish)</li>
+        <li>This is safe as long as you&rsquo;re the only editor &mdash; each day&rsquo;s export already includes prior edits</li>
+      </ul>
+      <h4>Limitations</h4>
+      <ul>
+        <li>Export only tracks parishes you <strong>saved</strong> this session &mdash; always Save before Export</li>
+        <li>Tracking resets on page refresh (export first!) &mdash; the data itself is fine</li>
+        <li>Import cannot add new parishes &mdash; only updates existing ones by matching parish ID</li>
+        <li>Everything runs client-side: no data is sent to any server. VPN/monitoring only sees the initial page load</li>
       </ul>
       <h4>Status Dot Guide</h4>
       <ul>
@@ -762,8 +792,12 @@ function renderList(rows) {
       if (prog) {
         const p = JSON.parse(prog);
         const pct = p.total > 0 ? Math.round(p.verified / p.total * 100) : 0;
-        progHtml = '<div class="pr-progress"><div class="pr-progress-fill" style="width:'+pct+'%"></div></div>' +
-          '<span class="pr-progress-text">' + p.verified + '/' + p.total + ' verified</span>';
+        const isDone = pct === 100 && p.total > 0;
+        const fillCls = isDone ? 'fill-complete' : 'fill-partial';
+        const txtCls = isDone ? 'pr-progress-text complete' : 'pr-progress-text';
+        progHtml = '<div class="pr-progress"><div class="pr-progress-fill '+fillCls+'" style="width:'+pct+'%"></div></div>' +
+          '<span class="'+txtCls+'">' + (isDone ? '\u2713 ' : '') + p.verified + '/' + p.total + ' verified</span>';
+        if (isDone) cls += ' all-done';
       }
     } catch(e){}
     return '<div class="'+cls+'" data-id="'+esc(r.id)+'" onclick="handleParishRowClick(event,\''+esc(r.id)+'\')">' +
@@ -1218,6 +1252,7 @@ function saveServiceModal() {
   }
   markDirty();
   persistVerified();
+  updateParishProgress();
   closeSvcModal();
   refreshScheduleCard();
 }
@@ -1549,6 +1584,7 @@ function quickVerifyService(idx, checked) {
     verifiedSvcSet.delete(idx);
   }
   persistVerified();
+  updateParishProgress();
   refreshScheduleCard();
 }
 function persistVerified() {
@@ -1556,6 +1592,59 @@ function persistVerified() {
   try {
     sessionStorage.setItem('mf_verified_' + pendingParish.id, JSON.stringify(Array.from(verifiedSvcSet)));
   } catch(e){}
+}
+var _completionToastShown = {};
+function updateParishProgress() {
+  if (!pendingParish) return;
+  var total = (pendingParish.services || []).length;
+  var verified = verifiedSvcSet.size;
+  if (total === 0) return;
+  try {
+    sessionStorage.setItem('mf_progress_' + pendingParish.id,
+      JSON.stringify({ verified: verified, total: total }));
+  } catch(e){}
+  // Update sidebar row in-place
+  var row = document.querySelector('.parish-row[data-id="' + pendingParish.id + '"]');
+  if (row) {
+    var pct = Math.round(verified / total * 100);
+    var isDone = pct === 100;
+    // Update or create progress bar
+    var bar = row.querySelector('.pr-progress');
+    var txt = row.querySelector('.pr-progress-text');
+    if (!bar) {
+      var prText = row.querySelector('.pr-text');
+      if (prText) {
+        bar = document.createElement('div');
+        bar.className = 'pr-progress';
+        bar.innerHTML = '<div class="pr-progress-fill ' + (isDone ? 'fill-complete' : 'fill-partial') + '" style="width:' + pct + '%"></div>';
+        prText.appendChild(bar);
+        txt = document.createElement('span');
+        txt.className = isDone ? 'pr-progress-text complete' : 'pr-progress-text';
+        txt.textContent = (isDone ? '\u2713 ' : '') + verified + '/' + total + ' verified';
+        prText.appendChild(txt);
+      }
+    } else {
+      var fill = bar.querySelector('.pr-progress-fill');
+      if (fill) {
+        fill.style.width = pct + '%';
+        fill.className = 'pr-progress-fill ' + (isDone ? 'fill-complete' : 'fill-partial');
+      }
+      if (txt) {
+        txt.className = isDone ? 'pr-progress-text complete' : 'pr-progress-text';
+        txt.textContent = (isDone ? '\u2713 ' : '') + verified + '/' + total + ' verified';
+      }
+    }
+    // Toggle all-done class
+    if (isDone) row.classList.add('all-done');
+    else row.classList.remove('all-done');
+  }
+  // 100% completion toast (once per parish per session)
+  if (verified === total && !_completionToastShown[pendingParish.id]) {
+    _completionToastShown[pendingParish.id] = true;
+    showToast('\u2713 All ' + total + ' services verified for ' + (pendingParish.name || 'this parish') + '!');
+  }
+  // Reset if they uncheck something
+  if (verified < total) { _completionToastShown[pendingParish.id] = false; }
 }
 
 // ── Inline editing ────────────────────────────────────────────────────
