@@ -66,7 +66,7 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--txt);font-size:1
   color:var(--txt);transition:border-color .15s,background .15s;
 }
 .sidebar-search:focus{border-color:var(--primary);background:#fff;box-shadow:0 0 0 3px rgba(44,62,90,.07)}
-.sidebar-stats{padding:6px 13px 7px;font-size:11.5px;color:var(--txt3);border-bottom:1px solid var(--border-lt)}
+.sidebar-stats{padding:6px 13px 7px;font-size:11.5px;color:var(--txt3);border-bottom:1px solid var(--border-lt);display:flex;align-items:center;justify-content:space-between}
 #parishList{flex:1;overflow-y:auto}
 .parish-row{padding:9px 12px;cursor:pointer;border-bottom:1px solid var(--border-lt);display:flex;align-items:flex-start;gap:8px;transition:background .1s,transform .08s}
 .parish-row:hover{background:var(--bg)}
@@ -270,6 +270,48 @@ details.card>.card-body{border-top:1px solid var(--border-lt)}
 .toast-undo{background:none;border:1px solid rgba(255,255,255,.3);color:#fff;padding:4px 10px;border-radius:var(--r-sm);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font-b);transition:background .15s;white-space:nowrap}
 .toast-undo:hover{background:rgba(255,255,255,.15)}
 
+/* ── Group completion ─────────────────────────────────────────────── */
+.sched-group.all-verified{opacity:.55;border-left-color:var(--green) !important;transition:opacity .3s,border-left-color .3s}
+.sched-progress{font-size:11px;font-weight:600;padding:1px 7px;border-radius:99px;margin-left:6px}
+.sched-progress.complete{background:var(--green-bg);color:var(--green)}
+.sched-progress.partial{background:var(--bg);color:var(--txt3);border:1px solid var(--border)}
+
+/* ── Staleness badges ────────────────────────────────────────────── */
+.stale-badge{font-size:10px;font-weight:700;padding:1px 5px;border-radius:4px;margin-left:4px;display:inline-block}
+.stale-badge.hot{background:var(--red-bg);color:var(--red)}
+.stale-badge.warm{background:var(--amber-bg);color:var(--amber)}
+.stale-badge.cool{background:var(--green-bg);color:var(--green)}
+
+/* ── Sidebar sort toggle ────────────────────────────────────────── */
+.sort-toggle{background:none;border:1px solid var(--border);border-radius:var(--r-sm);padding:2px 8px;font-size:11px;font-weight:600;cursor:pointer;color:var(--txt2);font-family:var(--font-b);transition:border-color .15s,color .15s}
+.sort-toggle:hover{border-color:var(--primary);color:var(--primary)}
+
+/* ── Parish progress bar ────────────────────────────────────────── */
+.pr-progress{height:3px;background:var(--border-lt);border-radius:2px;margin-top:4px}
+.pr-progress-fill{height:100%;background:var(--green);border-radius:2px;transition:width .3s}
+.pr-progress-text{font-size:10px;color:var(--txt3);margin-top:1px}
+
+/* ── Bulk verify ─────────────────────────────────────────────────── */
+.parish-row.selected{background:var(--accent-pale);border-left:3px solid var(--accent);padding-left:9px}
+.parish-row.selected .status-dot{box-shadow:0 0 0 2px var(--accent)}
+.bulk-bar{padding:10px 12px;background:var(--primary);color:#fff;display:none;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.15);gap:8px}
+.bulk-bar.show{display:flex}
+.bulk-bar span{font-size:13px;font-weight:500}
+.bulk-bar button{height:30px;padding:0 14px;border:none;border-radius:var(--r-sm);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font-b)}
+.btn-bulk-verify{background:var(--green);color:#fff}
+.btn-bulk-clear{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3) !important}
+
+/* ── Quick scan mode ─────────────────────────────────────────────── */
+.quick-scan .edit-content>.card:not(#sched-card){display:none}
+.quick-scan .edit-hdr-urls{display:none}
+.btn-scan{height:34px;padding:0 14px;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.3);color:#fff;border-radius:var(--r-sm);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font-b);white-space:nowrap;transition:background .15s}
+.btn-scan:hover{background:rgba(255,255,255,.22)}
+.btn-scan.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* ── Export/Import buttons ───────────────────────────────────────── */
+.btn-secondary-bar{height:32px;padding:0 14px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:var(--r-sm);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font-b);white-space:nowrap;transition:background .15s}
+.btn-secondary-bar:hover{background:rgba(255,255,255,.25)}
+
 /* ── Click feedback ────────────────────────────────────────────────── */
 button:active:not(:disabled){transform:scale(0.97)}
 
@@ -319,6 +361,9 @@ button:active:not(:disabled){transform:scale(0.97)}
     </div>
     <div class="app-bar-actions">
       <button class="btn-icon" onclick="toggleHelp()" title="How to use this panel">?</button>
+      <button class="btn-secondary-bar" id="btnImport" onclick="document.getElementById('importFile').click()" title="Import a changes file">&#8593;&nbsp;Import</button>
+      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importChanges(event)">
+      <button class="btn-secondary-bar" id="btnExport" onclick="exportChanges()" title="Export only parishes edited this session" style="display:none">&#8595;&nbsp;Export Changes</button>
       <button class="btn-gold" onclick="downloadJSON()">&#8595;&nbsp;Download JSON</button>
     </div>
   </div>
@@ -329,6 +374,13 @@ button:active:not(:disabled){transform:scale(0.97)}
       </div>
       <div class="sidebar-stats" id="sidebarStats">Loading&hellip;</div>
       <div id="parishList"></div>
+      <div class="bulk-bar" id="bulkBar">
+        <span id="bulkCount">0 selected</span>
+        <div style="display:flex;gap:6px">
+          <button class="btn-bulk-clear" onclick="clearBulkSelection()">Clear</button>
+          <button class="btn-bulk-verify" onclick="bulkVerify()">&#10003; Verify All</button>
+        </div>
+      </div>
     </div>
     <div class="edit-col" id="editCol">
       <div class="empty-state" id="emptyState">
@@ -402,8 +454,9 @@ button:active:not(:disabled){transform:scale(0.97)}
       <div class="guide-row"><kbd id="kb_save"></kbd> <span>Save current parish</span></div>
       <div class="guide-row"><kbd id="kb_dl"></kbd> <span>Download JSON</span></div>
       <div class="guide-row"><kbd>Alt &#8593; / &#8595;</kbd> <span>Previous / Next parish</span></div>
+      <div class="guide-row"><kbd>Alt Q</kbd> <span>Toggle Quick Scan mode</span></div>
       <div class="guide-row"><kbd>/</kbd> <span>Focus search bar</span></div>
-      <div class="guide-row"><kbd>Esc</kbd> <span>Close any modal</span></div>
+      <div class="guide-row"><kbd>Esc</kbd> <span>Close any modal / clear selection</span></div>
       <h4>Schedule Editing</h4>
       <ul>
         <li>Services are grouped by type with colour-coded left borders</li>
@@ -414,8 +467,17 @@ button:active:not(:disabled){transform:scale(0.97)}
       <h4>Saving Your Work</h4>
       <ul>
         <li><strong>Save Parish</strong> writes to memory only &mdash; button pulses gold when unsaved edits exist</li>
-        <li><strong>Download JSON</strong> exports <em>all</em> parishes; always do this before closing</li>
+        <li><strong>Download JSON</strong> exports <em>all</em> parishes; use at end of session</li>
+        <li><strong>Export Changes</strong> exports only parishes you edited this session (patch file)</li>
+        <li><strong>Import</strong> merges a previously exported changes file into current data</li>
         <li>Closing the tab with unsaved changes will trigger a browser warning</li>
+      </ul>
+      <h4>Sidebar &amp; Bulk Actions</h4>
+      <ul>
+        <li>Click the sort button to cycle: <strong>Priority</strong> (stalest first), <strong>A&rarr;Z</strong>, or <strong>Status</strong></li>
+        <li><strong>Shift+click</strong> parish rows to multi-select, then <strong>Verify All</strong> to mark them all as verified today</li>
+        <li>Progress bars show verified/total services for parishes you&rsquo;ve visited this session</li>
+        <li><strong>Quick Scan</strong> (header button or <kbd>Alt Q</kbd>) hides all cards except Schedule for speed</li>
       </ul>
       <h4>Status Dot Guide</h4>
       <ul>
@@ -465,6 +527,15 @@ const SVC_TYPES = {
   easter_vigil_mass:'Easter Vigil', bible_study:'Bible Study',
   gorzkie_zale:'Gorzkie \u017Bale', mens_group:"Men's Group", social_event:'Social Event'
 };
+const SVC_TYPE_GROUPS = [
+  { label:'Mass',       types:['sunday_mass','daily_mass','communion_service'] },
+  { label:'Sacraments', types:['confession','anointing_of_sick'] },
+  { label:'Adoration',  types:['adoration','perpetual_adoration','holy_hour','benediction'] },
+  { label:'Devotions',  types:['rosary','stations_of_cross','divine_mercy','miraculous_medal',
+                                'novena','devotion','gorzkie_zale','vespers'] },
+  { label:'Triduum',    types:['holy_thursday_mass','good_friday_service','easter_vigil_mass'] },
+  { label:'Community',  types:['bible_study','mens_group','social_event'] }
+];
 const DAY_VALUES = [
   'sunday','monday','tuesday','wednesday','thursday','friday','saturday',
   'daily','weekday','first_friday','first_saturday','first_sunday',
@@ -526,6 +597,77 @@ let editedSvcSet    = new Set();
 let verifiedSvcSet  = new Set();
 let undoAction      = null;
 let undoTimer       = null;
+let sidebarSort     = 'priority';
+let touchedParishIds = new Set();
+let quickScanMode   = false;
+let bulkSelection   = new Set();
+
+// ── Priority scoring (ported from scripts/prep-review.js) ──────────────
+function computeEaster(year) {
+  const a = year % 19, b = Math.floor(year / 100), c = year % 100;
+  const d = Math.floor(b / 4), e = b % 4;
+  const f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3);
+  const h = (19 * a + b - d - g + 15) % 30;
+  const i = Math.floor(c / 4), k = c % 4;
+  const l = (32 + 2 * e + 2 * i - h - k) % 7;
+  const m = Math.floor((a + 11 * h + 22 * l) / 451);
+  const month = Math.floor((h + l - 7 * m + 114) / 31);
+  const day   = ((h + l - 7 * m + 114) % 31) + 1;
+  return new Date(Date.UTC(year, month - 1, day));
+}
+function getSeasonalMultiplier(date) {
+  const year = date.getUTCFullYear(), easter = computeEaster(year), dayMs = 86400000;
+  function addDays(d, n) { return new Date(d.getTime() + n * dayMs); }
+  function between(d, s, e) { return d >= s && d <= e; }
+  const ashWed = addDays(easter, -46), palmSun = addDays(easter, -7), easterEnd = addDays(easter, 14);
+  const summerS = new Date(Date.UTC(year,4,15)), summerE = new Date(Date.UTC(year,5,15));
+  const fallS = new Date(Date.UTC(year,7,15)), fallE = new Date(Date.UTC(year,8,7));
+  const advS = new Date(Date.UTC(year,10,8)), advE = new Date(Date.UTC(year,10,29));
+  const xmasS = new Date(Date.UTC(year,11,1)), xmasE = new Date(Date.UTC(year,11,26));
+  if (between(date, easter, easterEnd)) return 0.6;
+  if (between(date, new Date(Date.UTC(year,5,15)), new Date(Date.UTC(year,6,15)))) return 0.6;
+  if (between(date, new Date(Date.UTC(year,8,7)), new Date(Date.UTC(year,9,1)))) return 0.6;
+  if (between(date, xmasE, new Date(Date.UTC(year+1,0,10)))) return 0.6;
+  if (between(date, palmSun, easter)) return 2.0;
+  if (between(date, xmasS, xmasE)) return 2.0;
+  if (between(date, addDays(ashWed,-21), ashWed)) return 1.8;
+  if (between(date, addDays(palmSun,-14), palmSun)) return 1.8;
+  if (between(date, summerS, summerE)) return 1.5;
+  if (between(date, fallS, fallE)) return 1.5;
+  if (between(date, advS, advE)) return 1.5;
+  if (between(date, ashWed, palmSun)) return 1.3;
+  return 1.0;
+}
+function latestSourceDate(services) {
+  let latest = null;
+  for (const s of services || []) {
+    if (!s.source) continue;
+    const m = s.source.match(/(\d{4}-\d{2}(?:-\d{2})?)/);
+    if (!m) continue;
+    const raw = m[1].length === 7 ? m[1] + '-01' : m[1];
+    const d = new Date(raw + 'T00:00:00Z');
+    if (!isNaN(d.getTime()) && (!latest || d > latest)) latest = d;
+  }
+  return latest;
+}
+function parishScore(parish) {
+  const today = new Date();
+  const todayUTC = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()));
+  const mult = getSeasonalMultiplier(todayUTC);
+  const checkedStr = parish.validation && parish.validation.last_checked;
+  const checked = checkedStr ? new Date(checkedStr + 'T00:00:00Z') : null;
+  const sourced = latestSourceDate(parish.services);
+  const lastDate = checked || sourced;
+  let staleness, daysSince;
+  if (!lastDate) {
+    staleness = 100; daysSince = -1;
+  } else {
+    daysSince = Math.round((todayUTC - lastDate) / 86400000);
+    staleness = Math.min(daysSince, 60) / 60 * 100;
+  }
+  const hasBulletin = !!(parish.bulletin_url || (parish.contact && parish.contact.website));
+  return { score: staleness * mult + (hasBulletin ? 15 : 0), daysSince: daysSince };
+}
 
 // ── Boot ───────────────────────────────────────────────────────────────
 async function startApp() {
@@ -554,10 +696,16 @@ async function startApp() {
   const m = editData.metadata || {};
   document.getElementById('dataMeta').textContent =
     (m.total_parishes||'?') + ' parishes \u00b7 v' + (m.schema_version||'?');
-  allRows = (editData.parishes||[]).map(p => ({
-    id:p.id, name:p.name, town:p.town||'', state:p.state||'',
-    vs:(p.validation && p.validation.status)||'unverified'
-  }));
+  allRows = (editData.parishes||[]).map(p => {
+    const sc = parishScore(p);
+    return {
+      id:p.id, name:p.name, town:p.town||'', state:p.state||'',
+      vs:(p.validation && p.validation.status)||'unverified',
+      score:sc.score, daysSince:sc.daysSince,
+      svcCount:(p.services||[]).length
+    };
+  });
+  sortRows(allRows);
   updateStats(allRows.length, allRows.length);
   renderList(allRows);
 }
@@ -565,7 +713,26 @@ async function startApp() {
 // ── Sidebar ────────────────────────────────────────────────────────────
 function updateStats(shown, total) {
   const el = document.getElementById('sidebarStats');
-  if (el) el.textContent = shown === total ? total + ' parishes' : shown + ' of ' + total + ' shown';
+  if (!el) return;
+  const sortLabels = { priority:'\u21AF Priority', alpha:'A\u2192Z Name', status:'\u25CF Status' };
+  el.innerHTML = '<span>' + (shown === total ? total + ' parishes' : shown + ' of ' + total + ' shown') + '</span>' +
+    '<button class="sort-toggle" onclick="cycleSidebarSort()" title="Change sort order">' + sortLabels[sidebarSort] + '</button>';
+}
+function cycleSidebarSort() {
+  const modes = ['priority','alpha','status'];
+  sidebarSort = modes[(modes.indexOf(sidebarSort) + 1) % modes.length];
+  sortRows(allRows);
+  filterList();
+}
+function sortRows(rows) {
+  if (sidebarSort === 'priority') {
+    rows.sort((a,b) => b.score - a.score);
+  } else if (sidebarSort === 'alpha') {
+    rows.sort((a,b) => a.name.localeCompare(b.name));
+  } else if (sidebarSort === 'status') {
+    const order = { unverified:0, needs_verification:1, low_confidence:2, manually_verified:3, verified:4, excluded:5 };
+    rows.sort((a,b) => (order[a.vs]||0) - (order[b.vs]||0) || a.name.localeCompare(b.name));
+  }
 }
 function renderList(rows) {
   const el = document.getElementById('parishList');
@@ -574,21 +741,105 @@ function renderList(rows) {
     el.innerHTML = '<div style="padding:14px 13px;font-size:13px;color:var(--txt3)">No matches</div>';
     return;
   }
-  el.innerHTML = rows.map(r =>
-    '<div class="parish-row' + (r.id === activeId ? ' active' : '') + '" data-id="'+esc(r.id)+'" onclick="selectParish(\''+esc(r.id)+'\')">' +
+  el.innerHTML = rows.map(r => {
+    const isActive = r.id === activeId;
+    const isSelected = bulkSelection.has(r.id);
+    let cls = 'parish-row';
+    if (isActive) cls += ' active';
+    if (isSelected) cls += ' selected';
+    // Staleness badge (priority mode only)
+    let badge = '';
+    if (sidebarSort === 'priority') {
+      if (r.daysSince < 0) badge = '<span class="stale-badge hot">??</span>';
+      else if (r.daysSince > 30) badge = '<span class="stale-badge hot">' + r.daysSince + 'd</span>';
+      else if (r.daysSince > 14) badge = '<span class="stale-badge warm">' + r.daysSince + 'd</span>';
+      else badge = '<span class="stale-badge cool">' + r.daysSince + 'd</span>';
+    }
+    // Progress bar from sessionStorage
+    let progHtml = '';
+    try {
+      const prog = sessionStorage.getItem('mf_progress_' + r.id);
+      if (prog) {
+        const p = JSON.parse(prog);
+        const pct = p.total > 0 ? Math.round(p.verified / p.total * 100) : 0;
+        progHtml = '<div class="pr-progress"><div class="pr-progress-fill" style="width:'+pct+'%"></div></div>' +
+          '<span class="pr-progress-text">' + p.verified + '/' + p.total + ' verified</span>';
+      }
+    } catch(e){}
+    return '<div class="'+cls+'" data-id="'+esc(r.id)+'" onclick="handleParishRowClick(event,\''+esc(r.id)+'\')">' +
       '<div class="status-dot '+dotClass(r.vs)+'"></div>' +
       '<div class="pr-text">' +
         '<div class="pr-name">' + esc(r.name) + '</div>' +
-        '<div class="pr-sub">' + esc(r.town) + ', ' + esc(r.state) + '</div>' +
+        '<div class="pr-sub">' + esc(r.town) + ', ' + esc(r.state) + badge + '</div>' +
+        progHtml +
       '</div>' +
-    '</div>'
-  ).join('');
+    '</div>';
+  }).join('');
+}
+function handleParishRowClick(e, id) {
+  if (e.shiftKey) {
+    e.preventDefault();
+    if (bulkSelection.has(id)) bulkSelection.delete(id);
+    else bulkSelection.add(id);
+    updateBulkBar();
+    filterList();
+    return;
+  }
+  if (bulkSelection.size > 0) { clearBulkSelection(); }
+  selectParish(id);
+}
+function updateBulkBar() {
+  const bar = document.getElementById('bulkBar');
+  const cnt = document.getElementById('bulkCount');
+  if (!bar) return;
+  if (bulkSelection.size > 0) {
+    bar.classList.add('show');
+    cnt.textContent = bulkSelection.size + ' selected';
+  } else {
+    bar.classList.remove('show');
+  }
+}
+function clearBulkSelection() {
+  bulkSelection.clear();
+  updateBulkBar();
+  filterList();
+}
+function bulkVerify() {
+  const today = new Date().toISOString().slice(0, 10);
+  let count = 0;
+  bulkSelection.forEach(id => {
+    const p = (editData.parishes||[]).find(p => p.id === id);
+    if (!p) return;
+    if (!p.validation) p.validation = {};
+    p.validation.status = 'manually_verified';
+    p.validation.last_checked = today;
+    count++;
+  });
+  // Refresh allRows
+  allRows = (editData.parishes||[]).map(p => {
+    const sc = parishScore(p);
+    return {
+      id:p.id, name:p.name, town:p.town||'', state:p.state||'',
+      vs:(p.validation && p.validation.status)||'unverified',
+      score:sc.score, daysSince:sc.daysSince,
+      svcCount:(p.services||[]).length
+    };
+  });
+  sortRows(allRows);
+  clearBulkSelection();
+  showToast('\u2713 ' + count + ' parishes marked as verified today');
+  // Re-render current panel if open
+  if (pendingParish) {
+    const updated = (editData.parishes||[]).find(p => p.id === pendingParish.id);
+    if (updated) { pendingParish = JSON.parse(JSON.stringify(updated)); renderPanel(); }
+  }
 }
 function filterList() {
   const q = document.getElementById('parishSearch').value.toLowerCase().trim();
   const filtered = q ? allRows.filter(r =>
     r.name.toLowerCase().includes(q) || r.id.toLowerCase().includes(q) || r.town.toLowerCase().includes(q)
-  ) : allRows;
+  ) : allRows.slice();
+  sortRows(filtered);
   updateStats(filtered.length, allRows.length);
   renderList(filtered);
 }
@@ -602,6 +853,11 @@ function selectParish(id) {
   isDirty = false;
   editedSvcSet.clear();
   verifiedSvcSet.clear();
+  // Restore verified services from sessionStorage
+  try {
+    const stored = sessionStorage.getItem('mf_verified_' + id);
+    if (stored) JSON.parse(stored).forEach(i => verifiedSvcSet.add(i));
+  } catch(e){}
   renderPanel();
   document.getElementById('editCol').scrollTop = 0;
 }
@@ -630,6 +886,7 @@ function renderPanel() {
         '<div class="edit-hdr-right">' +
           '<span class="vpill ' + dotClass(vs) + '">' + vs.replace(/_/g,' ') + '</span>' +
           '<button class="btn-verify" onclick="markVerifiedToday()" title="Set status = manually verified, date = today">\u2713 Verify</button>' +
+          '<button class="btn-scan'+(quickScanMode?' active':'')+'" onclick="toggleQuickScan()" title="Quick Scan: show only Schedule (Alt+Q)">Scan</button>' +
           '<button class="btn-del-parish" onclick="deleteParish()" title="Remove this parish from working data">Delete</button>' +
           '<button class="btn-save" id="btnSave" onclick="saveParish()">Save</button>' +
         '</div>' +
@@ -750,11 +1007,18 @@ function cardSchedule(p) {
     const rows = g.items.length
       ? g.items.map(({ s, i }) => svcRowHtml(s, i, hasMultiLoc, locs)).join('')
       : '<div class="sched-empty">None</div>';
-    return '<div class="sched-group" data-group="'+g.key+'">' +
+    const verCount = g.items.filter(({i}) => verifiedSvcSet.has(i)).length;
+    const totalCount = g.items.length;
+    const allDone = totalCount > 0 && verCount === totalCount;
+    const progressBadge = totalCount > 0
+      ? '<span class="sched-progress '+(allDone?'complete':'partial')+'">'+(allDone?'\u2713 ':'')+verCount+'/'+totalCount+'</span>'
+      : '';
+    return '<div class="sched-group'+(allDone?' all-verified':'')+'" data-group="'+g.key+'">' +
       '<div class="sched-group-hdr">' +
         '<div class="sched-group-left">' +
           '<span class="sched-group-label">' + g.label + '</span>' +
-          (g.items.length ? '<span class="sched-count">' + g.items.length + '</span>' : '') +
+          (totalCount ? '<span class="sched-count">' + totalCount + '</span>' : '') +
+          progressBadge +
         '</div>' +
         '<button class="btn-sched-add" onclick="addService(\''+g.key+'\')">+ Add</button>' +
       '</div>' +
@@ -890,7 +1154,7 @@ function openSvcModal(s, isNew) {
     : '';
 
   document.getElementById('svcModalBody').innerHTML =
-    fpairs('m_type','Service Type', Object.entries(SVC_TYPES), s.type||'sunday_mass') +
+    svcTypeDropdown('m_type', s.type||'sunday_mass') +
     '<div class="row-2">' +
       fpairs('m_day','Day', DAY_VALUES.map(d=>[d,DAY_LABELS[d]||d]), s.day||'sunday') +
       fpairs('m_lang','Language', Object.entries(LANG_NAMES), s.language||'en') +
@@ -953,6 +1217,7 @@ function saveServiceModal() {
     verifiedSvcSet.add(svcModalIdx);
   }
   markDirty();
+  persistVerified();
   closeSvcModal();
   refreshScheduleCard();
 }
@@ -1100,6 +1365,18 @@ function sourceDropdown(currentSource) {
   }
   return fpairs('m_source', 'Source', opts, currentSource || opts[0][0]);
 }
+function svcTypeDropdown(id, selected) {
+  var html = '<div class="f"><label for="'+id+'">Service Type</label><select id="'+id+'" name="'+id+'">';
+  SVC_TYPE_GROUPS.forEach(function(g) {
+    html += '<optgroup label="'+esc(g.label)+'">';
+    g.types.forEach(function(t) {
+      html += '<option value="'+esc(t)+'"'+(t===selected?' selected':'')+'>'+esc(SVC_TYPES[t]||t)+'</option>';
+    });
+    html += '</optgroup>';
+  });
+  html += '</select></div>';
+  return html;
+}
 function openUrl(id) {
   const u = (document.getElementById(id)||{}).value;
   if (u && u.startsWith('http')) window.open(u,'_blank','noopener');
@@ -1166,15 +1443,33 @@ function saveParish() {
   editedSvcSet.clear();
   const btn = document.getElementById('btnSave');
   if (btn) btn.classList.remove('dirty');
+  // Track touched parishes for export
+  touchedParishIds.add(pendingParish.id);
+  const expBtn = document.getElementById('btnExport');
+  if (expBtn) expBtn.style.display = '';
+  // Store progress in sessionStorage
+  try {
+    const total = (pendingParish.services||[]).length;
+    const verified = verifiedSvcSet.size;
+    sessionStorage.setItem('mf_progress_' + pendingParish.id, JSON.stringify({verified:verified, total:total}));
+    // Clear verified set from sessionStorage (committed to data)
+    sessionStorage.removeItem('mf_verified_' + pendingParish.id);
+  } catch(e){}
   // Update vpill in header
   const vs = (pendingParish.validation && pendingParish.validation.status) || 'unverified';
   const pill = document.querySelector('.vpill');
   if (pill) { pill.className = 'vpill ' + dotClass(vs); pill.textContent = vs.replace(/_/g,' '); }
-  // Refresh sidebar (status dot or name may have changed)
-  allRows = (editData.parishes||[]).map(p => ({
-    id:p.id, name:p.name, town:p.town||'', state:p.state||'',
-    vs:(p.validation&&p.validation.status)||'unverified'
-  }));
+  // Refresh sidebar with scores
+  allRows = (editData.parishes||[]).map(p => {
+    const sc = parishScore(p);
+    return {
+      id:p.id, name:p.name, town:p.town||'', state:p.state||'',
+      vs:(p.validation&&p.validation.status)||'unverified',
+      score:sc.score, daysSince:sc.daysSince,
+      svcCount:(p.services||[]).length
+    };
+  });
+  sortRows(allRows);
   filterList();
   // Reset changed-field highlights
   document.querySelectorAll('.f.changed,.url-hdr-grp.changed').forEach(el => el.classList.remove('changed'));
@@ -1191,6 +1486,7 @@ function deleteParish() {
 
   editData.parishes = (editData.parishes||[]).filter(p => p.id !== id);
   allRows = allRows.filter(r => r.id !== id);
+  touchedParishIds.delete(id);
   pendingParish = null;
   isDirty = false;
   updateStats(allRows.length, allRows.length);
@@ -1209,10 +1505,16 @@ function deleteParish() {
     undo: function() {
       if (idx >= 0) editData.parishes.splice(idx, 0, parishCopy);
       else editData.parishes.push(parishCopy);
-      allRows = (editData.parishes||[]).map(p => ({
-        id:p.id, name:p.name, town:p.town||'', state:p.state||'',
-        vs:(p.validation&&p.validation.status)||'unverified'
-      }));
+      allRows = (editData.parishes||[]).map(p => {
+        const sc = parishScore(p);
+        return {
+          id:p.id, name:p.name, town:p.town||'', state:p.state||'',
+          vs:(p.validation&&p.validation.status)||'unverified',
+          score:sc.score, daysSince:sc.daysSince,
+          svcCount:(p.services||[]).length
+        };
+      });
+      sortRows(allRows);
       updateStats(allRows.length, allRows.length);
       filterList();
       selectParish(id);
@@ -1238,7 +1540,6 @@ function quickVerifyService(idx, checked) {
     verifiedSvcSet.add(idx);
     var svc = pendingParish.services[idx];
     if (svc) {
-      // Default source = bulletin + bulletin date (or current month)
       var bd = (pendingParish.validation && pendingParish.validation.bulletin_date) ||
                new Date().toISOString().slice(0, 7);
       svc.source = 'bulletin_' + bd;
@@ -1247,7 +1548,14 @@ function quickVerifyService(idx, checked) {
   } else {
     verifiedSvcSet.delete(idx);
   }
+  persistVerified();
   refreshScheduleCard();
+}
+function persistVerified() {
+  if (!pendingParish) return;
+  try {
+    sessionStorage.setItem('mf_verified_' + pendingParish.id, JSON.stringify(Array.from(verifiedSvcSet)));
+  } catch(e){}
 }
 
 // ── Inline editing ────────────────────────────────────────────────────
@@ -1386,6 +1694,82 @@ function doUndo(btn) {
   if (toast && toast.parentNode) toast.parentNode.removeChild(toast);
 }
 
+// ── Quick Scan mode ──────────────────────────────────────────────────
+function toggleQuickScan() {
+  quickScanMode = !quickScanMode;
+  const col = document.getElementById('editCol');
+  if (col) col.classList.toggle('quick-scan', quickScanMode);
+  const btn = document.querySelector('.btn-scan');
+  if (btn) btn.classList.toggle('active', quickScanMode);
+}
+
+// ── Export / Import changes ─────────────────────────────────────────
+function exportChanges() {
+  if (!touchedParishIds.size) { showToast('No parishes edited this session'); return; }
+  if (pendingParish && isDirty) saveParish();
+  const patches = [];
+  touchedParishIds.forEach(id => {
+    const p = (editData.parishes||[]).find(p => p.id === id);
+    if (p) patches.push({ id: p.id, parish: JSON.parse(JSON.stringify(p)) });
+  });
+  const payload = {
+    date: new Date().toISOString().slice(0, 10),
+    count: patches.length,
+    patches: patches
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type:'application/json' });
+  const url  = URL.createObjectURL(blob);
+  const a    = Object.assign(document.createElement('a'), {
+    href:url, download:'changes_' + payload.date + '.json'
+  });
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
+  showToast('\u2193 Exported ' + patches.length + ' parish changes');
+}
+function importChanges(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!data.patches || !Array.isArray(data.patches)) {
+        showToast('Invalid changes file — missing patches array');
+        return;
+      }
+      let merged = 0;
+      data.patches.forEach(patch => {
+        const idx = editData.parishes.findIndex(p => p.id === patch.id);
+        if (idx >= 0) {
+          editData.parishes[idx] = patch.parish;
+          merged++;
+        }
+      });
+      // Refresh allRows
+      allRows = (editData.parishes||[]).map(p => {
+        const sc = parishScore(p);
+        return {
+          id:p.id, name:p.name, town:p.town||'', state:p.state||'',
+          vs:(p.validation&&p.validation.status)||'unverified',
+          score:sc.score, daysSince:sc.daysSince,
+          svcCount:(p.services||[]).length
+        };
+      });
+      sortRows(allRows);
+      filterList();
+      if (pendingParish) {
+        const updated = editData.parishes.find(p => p.id === pendingParish.id);
+        if (updated) { pendingParish = JSON.parse(JSON.stringify(updated)); renderPanel(); }
+      }
+      showToast('\u2713 Merged ' + merged + ' parishes from ' + (data.date||'file'));
+    } catch(err) {
+      showToast('Error reading file: ' + err.message);
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = ''; // reset so same file can be re-imported
+}
+
 // ── Keyboard shortcuts ────────────────────────────────────────────────
 document.addEventListener('keydown', function(e) {
   // Cmd/Ctrl + S → save
@@ -1401,13 +1785,16 @@ document.addEventListener('keydown', function(e) {
   // Alt + Up/Down → prev/next parish
   if (e.altKey && e.key === 'ArrowDown') { e.preventDefault(); navigateParish(1); }
   if (e.altKey && e.key === 'ArrowUp')   { e.preventDefault(); navigateParish(-1); }
+  // Alt + Q → Quick Scan toggle
+  if (e.altKey && (e.key === 'q' || e.key === 'Q')) { e.preventDefault(); toggleQuickScan(); }
   // / → focus search (only when not in an input)
   if (e.key === '/' && !['INPUT','SELECT','TEXTAREA'].includes(document.activeElement.tagName)) {
     e.preventDefault();
     document.getElementById('parishSearch').focus();
   }
-  // Esc → close modals
+  // Esc → close modals or clear bulk selection
   if (e.key === 'Escape') {
+    if (bulkSelection.size > 0) { clearBulkSelection(); return; }
     ['svcModal','evtModal','helpModal'].forEach(function(id) {
       document.getElementById(id).classList.remove('open');
     });
