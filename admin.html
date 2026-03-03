@@ -432,6 +432,9 @@ button:active:not(:disabled){transform:scale(0.97)}
 <div class="toast-container" id="toastContainer"></div>
 
 <script>
+// ── Platform detection (must be before startApp can be called) ─────────
+const MOD = navigator.platform.includes('Mac') ? '\u2318' : 'Ctrl+';
+
 // ── Password gate ──────────────────────────────────────────────────────
 const PW = 'xm2215x99=';
 function checkPassword() {
@@ -505,8 +508,6 @@ const SCHED_GROUPS = [
   { key:'other',      label:'Other',               addType:'communion_service',  addDay:'sunday',
     test: () => true }
 ];
-
-const MOD = navigator.platform.includes('Mac') ? '\u2318' : 'Ctrl+';
 
 function dotClass(vs) {
   if (['verified','manually_verified'].includes(vs)) return 'verified';
