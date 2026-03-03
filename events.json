@@ -1,11 +1,17 @@
 {
   "metadata": {
     "version": "1.0",
-    "description": "MassFinder Events \u2014 standalone events data (YC, Community, etc.)",
-    "last_updated": "2026-02-28",
+    "description": "MassFinder Events — standalone events data (YC, Community, etc.)",
+    "last_updated": "2026-03-03",
     "categories": {
       "yc": "Young & Catholic Events",
-      "community": "Community Events"
+      "community": "Community Events",
+      "social": "Social Events",
+      "fellowship": "Fellowship & Groups",
+      "educational": "Educational Events",
+      "liturgical": "Liturgical Events",
+      "devotional": "Devotional Events",
+      "volunteering": "Volunteer & Service"
     },
     "notes": "Extracted from parish_data.json yc_events. parish_id links back to parish_data.json parishes."
   },
@@ -441,6 +447,1032 @@
       "tags": [
         "young adults"
       ]
+    },
+    {
+      "id": "parish_001-evt-coffee",
+      "category": "social",
+      "title": "Coffee Hour",
+      "parish_id": "parish_001",
+      "date": null,
+      "day": "sunday",
+      "time": "10:45",
+      "frequency": "weekly",
+      "notes": "Following 9:45am Sunday Mass at St. Mary's",
+      "seasonal": {
+        "is_seasonal": false,
+        "season": "year_round"
+      }
+    },
+    {
+      "id": "parish_001-evt-bitter",
+      "category": "liturgical",
+      "title": "Bitter Lamentations",
+      "parish_id": "parish_001",
+      "date": null,
+      "day": "wednesday",
+      "time": "18:00",
+      "frequency": "one_time",
+      "notes": "Wed Apr 1, St. Stanislaus. Confession following until 7:30pm.",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "holy_week"
+      }
+    },
+    {
+      "id": "parish_001-evt-baskets",
+      "category": "liturgical",
+      "title": "Blessing of Easter Baskets",
+      "parish_id": "parish_001",
+      "date": null,
+      "day": "saturday",
+      "time": "10:00",
+      "frequency": "one_time",
+      "notes": "Holy Saturday Apr 4, St. Stanislaus",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "holy_week"
+      }
+    },
+    {
+      "id": "parish_003-evt-lectio",
+      "category": "educational",
+      "title": "Lectio Divina & Scripture Discussion",
+      "parish_id": "parish_003",
+      "date": null,
+      "day": "sunday",
+      "time": "09:00",
+      "frequency": "weekly",
+      "notes": "Sunday & Tuesday Every Month (Coffee & Doughnut)",
+      "seasonal": {
+        "is_seasonal": false,
+        "season": "year_round"
+      }
+    },
+    {
+      "id": "parish_003-evt-mens",
+      "category": "fellowship",
+      "title": "Men's Group",
+      "parish_id": "parish_003",
+      "date": null,
+      "day": "saturday",
+      "time": "08:30",
+      "frequency": "monthly",
+      "notes": "1st & 3rd Saturday. Parish Center Lower Classroom.",
+      "seasonal": {
+        "is_seasonal": false,
+        "season": "year_round"
+      }
+    },
+    {
+      "id": "parish_004-evt-retreat",
+      "category": "fellowship",
+      "title": "Spring Retreat: Strength in Service",
+      "parish_id": "parish_004",
+      "date": null,
+      "day": "friday",
+      "time": "15:30",
+      "frequency": "one_time",
+      "notes": "Mar 6–8. Departs Newman Center 3:30pm Fri, returns ~2pm Sun. St. Methodios Retreat Center, Contoocook NH. $50 incl. food, housing, t-shirt.",
+      "seasonal": {
+        "is_seasonal": false,
+        "season": "year_round"
+      }
+    },
+    {
+      "id": "parish_004-evt-mission-es",
+      "category": "educational",
+      "title": "Lenten Mission I (Spanish)",
+      "parish_id": "parish_004",
+      "date": null,
+      "day": "saturday",
+      "time": "09:00",
+      "frequency": "one_time",
+      "notes": "Sat Mar 14, St. Brigid's Church, 9am–12pm.",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      }
+    },
+    {
+      "id": "parish_004-evt-mission-en",
+      "category": "educational",
+      "title": "Lenten Mission II (English)",
+      "parish_id": "parish_004",
+      "date": null,
+      "day": "friday",
+      "time": "18:00",
+      "frequency": "one_time",
+      "notes": "Fri Mar 27, Newman Catholic Center. Speaker: Andrew MacDonald.",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      }
+    },
+    {
+      "id": "parish_004-evt-cleaning",
+      "category": "volunteering",
+      "title": "Spring Community Service — Church Cleaning",
+      "parish_id": "parish_004",
+      "date": null,
+      "day": "saturday",
+      "time": "10:00",
+      "frequency": "one_time",
+      "notes": "Sat Mar 28, St. Brigid's, 10am–noon.",
+      "seasonal": {
+        "is_seasonal": false,
+        "season": "year_round"
+      }
+    },
+    {
+      "id": "parish_004-evt-lenten-series",
+      "category": "educational",
+      "title": "Weekly Lenten Series by Dcn. Tom",
+      "parish_id": "parish_004",
+      "date": null,
+      "day": "tuesday",
+      "time": null,
+      "frequency": "weekly",
+      "notes": "Following 8am Mass. Monsignor Lane Pastoral Center Library. Theme: Sunday Gospels of Lent.",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      }
+    },
+    {
+      "id": "parish_004-evt-soup",
+      "category": "social",
+      "title": "Soup & Stations",
+      "parish_id": "parish_004",
+      "date": null,
+      "day": "friday",
+      "time": "19:00",
+      "frequency": "weekly",
+      "notes": "Fridays of Lent, St. Brigid Pastoral Center Kitchen. Homemade soup & fellowship.",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      }
+    },
+    {
+      "id": "parish_005-evt-african",
+      "category": "fellowship",
+      "title": "African Nights",
+      "parish_id": "parish_005",
+      "date": null,
+      "day": "first_sunday",
+      "time": "16:30",
+      "frequency": "monthly",
+      "notes": "1st Sunday of the month. Academic year only.",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "academic_year"
+      }
+    },
+    {
+      "id": "parish_007-evt-bake",
+      "category": "social",
+      "title": "Martha/Mary Bake Sale",
+      "parish_id": "parish_007",
+      "date": null,
+      "day": "saturday",
+      "time": null,
+      "frequency": "one_time",
+      "notes": "Weekend of Mar 7–8 after all Masses. Proceeds to heating bills.",
+      "seasonal": {
+        "is_seasonal": false,
+        "season": "year_round"
+      }
+    },
+    {
+      "id": "parish_007-evt-bookclub",
+      "category": "educational",
+      "title": "Book Club: The Three Ordinary Voices of God",
+      "parish_id": "parish_007",
+      "date": null,
+      "day": "tuesday",
+      "time": "18:00",
+      "frequency": "one_time",
+      "notes": "Tue May 5, 6–7pm, Columbia Hall.",
+      "seasonal": {
+        "is_seasonal": false,
+        "season": "year_round"
+      }
+    },
+    {
+      "id": "parish_007-evt-mission-1",
+      "category": "educational",
+      "title": "Lenten Mission: Walk in Faith — Nights 1 & 2",
+      "parish_id": "parish_007",
+      "date": null,
+      "day": "monday",
+      "time": "18:00",
+      "frequency": "one_time",
+      "notes": "Mar 16 & 17, St. Patrick's. 6pm Rosary & Confession, 7pm Mass.",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      }
+    },
+    {
+      "id": "parish_007-evt-mission-2",
+      "category": "educational",
+      "title": "Lenten Mission: Walk in Faith — Nights 3 & 4",
+      "parish_id": "parish_007",
+      "date": null,
+      "day": "wednesday",
+      "time": "18:00",
+      "frequency": "one_time",
+      "notes": "Mar 18 & 19, St. Christopher's. 6pm Rosary & Confession, 7pm Mass.",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      }
+    },
+    {
+      "id": "parish_010-evt-holyhour-wed",
+      "category": "liturgical",
+      "title": "Holy Hour",
+      "parish_id": "parish_010",
+      "date": null,
+      "day": "wednesday",
+      "time": "15:00",
+      "frequency": "one_time",
+      "notes": "Wednesdays Feb 4, 11, 18, 25. 3–4pm.",
+      "seasonal": {
+        "is_seasonal": false,
+        "season": "year_round"
+      }
+    },
+    {
+      "id": "parish_010-evt-holyhour-sun",
+      "category": "liturgical",
+      "title": "Holy Hour",
+      "parish_id": "parish_010",
+      "date": null,
+      "day": "sunday",
+      "time": "15:00",
+      "frequency": "monthly",
+      "notes": "2nd & 4th Sunday 3–4pm. Note: Feb 22 Adoration begins 3:30pm.",
+      "seasonal": {
+        "is_seasonal": false,
+        "season": "year_round"
+      }
+    },
+    {
+      "id": "parish_012-evt-coffee",
+      "category": "social",
+      "title": "Coffee & Donuts",
+      "parish_id": "parish_012",
+      "date": null,
+      "day": "sunday",
+      "time": "10:00",
+      "frequency": "weekly",
+      "notes": "After 9am Sunday Mass, church hall.",
+      "seasonal": {
+        "is_seasonal": false,
+        "season": "year_round"
+      }
+    },
+    {
+      "id": "parish_012-evt-mission",
+      "category": "educational",
+      "title": "Lenten Mission of Hope 2026",
+      "parish_id": "parish_012",
+      "date": null,
+      "day": "monday",
+      "time": "18:30",
+      "frequency": "one_time",
+      "notes": "Mar 23–25 (Mon–Wed), 6:30pm, Ste. Rose de Lima Church. With Fr. James Nolte.",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      }
+    },
+    {
+      "id": "parish_016-evt-dinner",
+      "category": "social",
+      "title": "Corned Beef Dinner",
+      "parish_id": "parish_016",
+      "date": null,
+      "day": "saturday",
+      "time": "17:00",
+      "frequency": "one_time",
+      "notes": "Sat Mar 14, St. Agnes Academy. 50/50 Raffle & Entertainment. Parish Fundraising Committee.",
+      "seasonal": {
+        "is_seasonal": false,
+        "season": "year_round"
+      }
+    },
+    {
+      "id": "parish_017-evt-divine-mercy-group",
+      "category": "liturgical",
+      "title": "Divine Mercy Prayer Group",
+      "parish_id": "parish_017",
+      "date": "2026-02-25",
+      "time": "18:30",
+      "frequency": "weekly",
+      "notes": "Chaplet of Divine Mercy, Rosary, Confession, Exposition & Benediction. Wednesday evenings.",
+      "source": "manual_verification_2026-02",
+      "validated": true
+    },
+    {
+      "id": "parish_018-evt-candle-prayer-mar04",
+      "category": "liturgical",
+      "title": "Candlelight Prayer Service",
+      "parish_id": "parish_018",
+      "date": "2026-03-04",
+      "time": "19:00",
+      "frequency": "one_time",
+      "notes": "Snow date: Wednesday March 11 at 7:00 PM",
+      "source": "manual_verification_2026-02",
+      "validated": true
+    },
+    {
+      "id": "parish_018-evt-rosary-20260315",
+      "category": "liturgical",
+      "title": "Rosary",
+      "parish_id": "parish_018",
+      "date": "2026-03-15",
+      "time": "19:30",
+      "frequency": "one_time",
+      "notes": "Sunday March 15, 7:30 PM in the Church",
+      "source": "manual_verification_2026-02",
+      "validated": true
+    },
+    {
+      "id": "parish_018-evt-coffee-mar08",
+      "category": "social",
+      "title": "Coffee & Donuts",
+      "parish_id": "parish_018",
+      "date": "2026-03-08",
+      "time": null,
+      "frequency": "one_time",
+      "notes": "Following the 8 AM and 10 AM Masses on March 8",
+      "source": "manual_verification_2026-02",
+      "validated": true
+    },
+    {
+      "id": "parish_018-evt-easter-bunny-mar22",
+      "category": "social",
+      "title": "Breakfast with the Easter Bunny",
+      "parish_id": "parish_018",
+      "date": "2026-03-22",
+      "time": "08:30",
+      "end_time": "12:00",
+      "frequency": "one_time",
+      "notes": "Sunday March 22, 8:30 AM - 12 Noon",
+      "source": "manual_verification_2026-02",
+      "validated": true
+    },
+    {
+      "id": "parish_019-evt-dinner-saints-mar14",
+      "category": "social",
+      "title": "Dinner with the Saints",
+      "parish_id": "parish_019",
+      "date": "2026-03-14",
+      "time": "17:00",
+      "end_time": "19:00",
+      "frequency": "one_time",
+      "notes": "Corned beef & cabbage dinner — Saturday March 14",
+      "source": "manual_verification_2026-02",
+      "validated": true
+    },
+    {
+      "id": "parish_039-evt-bake",
+      "category": "social",
+      "title": "Martha/Mary Bake Sale",
+      "parish_id": "parish_039",
+      "date": null,
+      "day": "saturday",
+      "time": null,
+      "frequency": "one_time",
+      "notes": "Weekend Mar 7–8, after all Masses. Proceeds to heating bills. (Also at St. Christopher's)",
+      "seasonal": {
+        "is_seasonal": false,
+        "season": "year_round"
+      }
+    },
+    {
+      "id": "parish_039-evt-bookclub",
+      "category": "educational",
+      "title": "Book Club: The Three Ordinary Voices of God",
+      "parish_id": "parish_039",
+      "date": null,
+      "day": "tuesday",
+      "time": "18:00",
+      "frequency": "one_time",
+      "notes": "Tue May 5, 6–7pm, Columbia Hall.",
+      "seasonal": {
+        "is_seasonal": false,
+        "season": "year_round"
+      }
+    },
+    {
+      "id": "parish_039-evt-mission",
+      "category": "educational",
+      "title": "Lenten Mission: Walk in Faith — Nights 1 & 2",
+      "parish_id": "parish_039",
+      "date": null,
+      "day": "monday",
+      "time": "18:00",
+      "frequency": "one_time",
+      "notes": "Mar 16 & 17, St. Patrick's. 6pm Rosary & Confession, 7pm Mass.",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      }
+    },
+    {
+      "id": "parish_044-se-bible-lent",
+      "category": "educational",
+      "title": "Lenten Bible Study",
+      "parish_id": "parish_044",
+      "date": null,
+      "day": "thursday",
+      "time": "17:30",
+      "frequency": "weekly",
+      "notes": "Lenten Thursdays only",
+      "source": "manual_verification_2026-02",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      },
+      "validated": true
+    },
+    {
+      "id": "parish_044-se-supper-lent",
+      "category": "social",
+      "title": "Simple Supper",
+      "parish_id": "parish_044",
+      "date": null,
+      "day": "friday",
+      "time": "17:30",
+      "frequency": "weekly",
+      "notes": "Lenten Fridays only",
+      "source": "manual_verification_2026-02",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      },
+      "validated": true
+    },
+    {
+      "id": "parish_048-se-rosary-sodality",
+      "category": "devotional",
+      "title": "Rosary Sodality",
+      "parish_id": "parish_048",
+      "date": null,
+      "day": "wednesday",
+      "time": "09:30",
+      "frequency": "monthly",
+      "notes": "2nd Wednesday of each month, 9:30 AM in Parish Center Chapel",
+      "source": "manual_verification_2026-02",
+      "seasonal": {
+        "is_seasonal": false,
+        "season": "year_round"
+      },
+      "validated": true
+    },
+    {
+      "id": "parish_052-social-coffee",
+      "category": "social",
+      "title": "Coffee & Doughnuts",
+      "parish_id": "parish_052",
+      "date": null,
+      "day": "sunday",
+      "time": null,
+      "notes": "After 9 AM Sunday Mass — recurring social"
+    },
+    {
+      "id": "parish_052-group-mens",
+      "category": "community",
+      "title": "Men's Group",
+      "parish_id": "parish_052",
+      "date": null,
+      "day": "monday",
+      "time": "18:30",
+      "notes": "Weekly",
+      "location": "Rectory"
+    },
+    {
+      "id": "parish_052-group-bible",
+      "category": "community",
+      "title": "Mill River Bible Study",
+      "parish_id": "parish_052",
+      "date": null,
+      "day": "wednesday",
+      "time": "11:00",
+      "notes": "Weekly",
+      "location": "Parish Hall"
+    },
+    {
+      "id": "parish_052-group-wwp",
+      "category": "community",
+      "title": "Walking with Purpose Women's Study",
+      "parish_id": "parish_052",
+      "date": null,
+      "day": "wednesday",
+      "time": "17:15",
+      "notes": "Weekly",
+      "location": "Parish Hall"
+    },
+    {
+      "id": "parish_063-evt-lenten-evening-of-prayer",
+      "category": "devotional",
+      "title": "Lenten Evening of Prayer",
+      "parish_id": "parish_063",
+      "date": null,
+      "day": "monday",
+      "time": null,
+      "notes": "Confession from 6:15 - 6:45 | Mass @ 7pm followed by Anointing of the Sick",
+      "frequency": "one_time",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      }
+    },
+    {
+      "id": "parish_071-evt-firstfri-mar6",
+      "category": "community",
+      "title": "",
+      "parish_id": "parish_071",
+      "date": "2026-03-06",
+      "time": "08:00",
+      "notes": "First Friday: Confessions, Stations of the Cross, Mass",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      }
+    },
+    {
+      "id": "parish_077-retreat-mar18",
+      "category": "community",
+      "title": "",
+      "parish_id": "parish_077",
+      "date": "2026-03-18",
+      "time": null,
+      "notes": "Lenten Retreat: 5pm Confession, 6pm Mass, reflection until 8pm. Speaker: Fr. Brad Milunski",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      }
+    },
+    {
+      "id": "parish_077-retreat-mar19",
+      "category": "community",
+      "title": "",
+      "parish_id": "parish_077",
+      "date": "2026-03-19",
+      "time": null,
+      "notes": "Lenten Retreat: 5pm Confession, 6pm Mass, reflection until 8pm. Speaker: Fr. Stanislaus Achu",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      }
+    },
+    {
+      "id": "parish_078-lenten-feb25",
+      "category": "community",
+      "title": "",
+      "parish_id": "parish_078",
+      "date": "2026-02-25",
+      "time": "18:30",
+      "notes": "OLBS Lenten Series 'Hope Lives' — Speakers Brian & Susan Middleton",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      }
+    },
+    {
+      "id": "parish_078-lenten-mar11",
+      "category": "community",
+      "title": "",
+      "parish_id": "parish_078",
+      "date": "2026-03-11",
+      "time": "18:30",
+      "notes": "OLBS Lenten Series 'Hope Lives'",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      }
+    },
+    {
+      "id": "parish_078-lenten-mar18",
+      "category": "community",
+      "title": "",
+      "parish_id": "parish_078",
+      "date": "2026-03-18",
+      "time": "18:30",
+      "notes": "OLBS Lenten Series 'Hope Lives' — Healing Mass",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      }
+    },
+    {
+      "id": "parish_078-lenten-mar25",
+      "category": "community",
+      "title": "",
+      "parish_id": "parish_078",
+      "date": "2026-03-25",
+      "time": "18:30",
+      "notes": "OLBS Lenten Series 'Hope Lives'",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      }
+    },
+    {
+      "id": "parish_080-retreat-mar16",
+      "category": "community",
+      "title": "",
+      "parish_id": "parish_080",
+      "date": "2026-03-16",
+      "time": null,
+      "notes": "Lenten Retreat: 5pm Confession, 6pm Mass, reflection until 8pm. Fr. Paul with Deacon Kevin.",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      }
+    },
+    {
+      "id": "parish_080-retreat-mar17",
+      "category": "community",
+      "title": "",
+      "parish_id": "parish_080",
+      "date": "2026-03-17",
+      "time": null,
+      "notes": "Lenten Retreat: 5pm Confession, 6pm Mass, reflection with Deacon Paul Briere until 8pm.",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      }
+    },
+    {
+      "id": "shrine_001-evt-relics",
+      "category": "community",
+      "title": "",
+      "parish_id": "shrine_001",
+      "date": "2026-02-28",
+      "time": "10:30",
+      "end_time": "12:30",
+      "notes": "Veneration of 9 unique and rarely seen relics of the Passion of Our Lord — St. Faustina Center",
+      "location_id": "divine-mercy-shrine-stockbridge",
+      "language": "en",
+      "source": "shrine_website",
+      "validated": true
+    },
+    {
+      "id": "pf2-evt-mens",
+      "category": "fellowship",
+      "title": "Men's Faith Group",
+      "parish_id": "parish_104",
+      "date": null,
+      "day": "thursday",
+      "time": "06:00",
+      "frequency": "weekly",
+      "notes": "Breakfast and discussion in parish center",
+      "seasonal": {
+        "is_seasonal": false,
+        "season": "year_round"
+      }
+    },
+    {
+      "id": "pf4-evt-fish",
+      "category": "social",
+      "title": "Lenten Fish Fry",
+      "parish_id": "parish_106",
+      "date": null,
+      "day": "friday",
+      "time": "17:00",
+      "frequency": "weekly",
+      "notes": "Parish hall, $12/plate",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      }
+    },
+    {
+      "id": "parish_084-evt-legion-of-mary",
+      "category": "devotional",
+      "title": "Legion of Mary",
+      "parish_id": "parish_084",
+      "date": null,
+      "day": "tuesday",
+      "time": "14:00",
+      "frequency": "weekly",
+      "notes": "Room 5",
+      "source": "bulletin_2026-02",
+      "seasonal": {
+        "is_seasonal": false,
+        "season": "year_round"
+      }
+    },
+    {
+      "id": "parish_086-evt-coffee-donuts",
+      "category": "fellowship",
+      "title": "Coffee, Donuts & Home Baked Goodies",
+      "parish_id": "parish_086",
+      "date": "2026-03-08",
+      "time": "11:00",
+      "frequency": "one_time",
+      "notes": "Father Weaver Hall; after 10:00AM Mass",
+      "source": "bulletin_2026-02",
+      "seasonal": {
+        "is_seasonal": false,
+        "season": "year_round"
+      }
+    },
+    {
+      "id": "parish_087-evt-holy-spirit-prayer",
+      "category": "devotional",
+      "title": "Our Lady of the Holy Spirit Prayer Group",
+      "parish_id": "parish_087",
+      "date": null,
+      "day": "tuesday",
+      "time": "18:00",
+      "end_time": "20:00",
+      "frequency": "weekly",
+      "notes": "St. Nicholas Classroom",
+      "source": "bulletin_2026-02",
+      "seasonal": {
+        "is_seasonal": false,
+        "season": "year_round"
+      }
+    },
+    {
+      "id": "parish_087-evt-souls-purgatory",
+      "category": "devotional",
+      "title": "Souls in Purgatory Prayer Group",
+      "parish_id": "parish_087",
+      "date": null,
+      "day": "tuesday",
+      "time": "15:45",
+      "frequency": "weekly",
+      "notes": "Classroom #3",
+      "source": "bulletin_2026-02",
+      "seasonal": {
+        "is_seasonal": false,
+        "season": "year_round"
+      }
+    },
+    {
+      "id": "parish_087-evt-spanish-charismatic",
+      "category": "devotional",
+      "title": "Spanish Charismatic Prayer Group",
+      "parish_id": "parish_087",
+      "date": null,
+      "day": "thursday",
+      "time": "18:30",
+      "frequency": "monthly",
+      "notes": "2nd and 4th Thursday; Classroom #2",
+      "language": "es",
+      "source": "bulletin_2026-02",
+      "seasonal": {
+        "is_seasonal": false,
+        "season": "year_round"
+      }
+    },
+    {
+      "id": "parish_092-evt-lenten-fish-fry",
+      "category": "fellowship",
+      "title": "Lenten Fish Fry",
+      "parish_id": "parish_092",
+      "date": null,
+      "day": "friday",
+      "time": "17:00",
+      "end_time": "19:00",
+      "frequency": "weekly",
+      "notes": "St. Charles Social Center",
+      "source": "bulletin_2026-02",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      }
+    },
+    {
+      "id": "parish_094-evt-ignis-dei",
+      "category": "devotional",
+      "title": "Ignis Dei Prayer Group",
+      "parish_id": "parish_094",
+      "date": null,
+      "day": "wednesday",
+      "time": "18:30",
+      "end_time": "20:30",
+      "frequency": "monthly",
+      "notes": "Last Wednesday of the month; Franciscan Center Library",
+      "source": "bulletin_2026-02",
+      "seasonal": {
+        "is_seasonal": false,
+        "season": "year_round"
+      }
+    },
+    {
+      "id": "parish_094-evt-mens-group",
+      "category": "fellowship",
+      "title": "Parish Catholic Men's Group",
+      "parish_id": "parish_094",
+      "date": null,
+      "day": "saturday",
+      "time": "08:45",
+      "end_time": "11:00",
+      "frequency": "monthly",
+      "notes": "Every other Saturday after 8AM Mass; Parish Center Library",
+      "source": "bulletin_2026-02",
+      "seasonal": {
+        "is_seasonal": false,
+        "season": "year_round"
+      }
+    },
+    {
+      "id": "parish_094-evt-womens-group",
+      "category": "fellowship",
+      "title": "St. Joseph Parish Women's Group",
+      "parish_id": "parish_094",
+      "date": null,
+      "day": "tuesday",
+      "time": "19:00",
+      "end_time": "20:30",
+      "frequency": "monthly",
+      "notes": "4th Tuesday of each month",
+      "source": "bulletin_2026-02",
+      "seasonal": {
+        "is_seasonal": false,
+        "season": "year_round"
+      }
+    },
+    {
+      "id": "parish_094-evt-friendship-in-christ",
+      "category": "social",
+      "title": "Friendship in Christ Group",
+      "parish_id": "parish_094",
+      "date": null,
+      "day": "tuesday",
+      "time": "18:00",
+      "end_time": "20:00",
+      "frequency": "monthly",
+      "notes": "First Tuesday; Youth Group Room; young adults with special needs ages 18+",
+      "source": "bulletin_2026-02",
+      "seasonal": {
+        "is_seasonal": false,
+        "season": "year_round"
+      }
+    },
+    {
+      "id": "parish_094-evt-life-league",
+      "category": "devotional",
+      "title": "Our Lady of Angels Life League",
+      "parish_id": "parish_094",
+      "date": null,
+      "time": "09:00",
+      "frequency": "monthly",
+      "notes": "Franciscan Center Meeting Room; check parish for schedule",
+      "source": "bulletin_2026-02",
+      "seasonal": {
+        "is_seasonal": false,
+        "season": "year_round"
+      }
+    },
+    {
+      "id": "parish_095-evt-soup-stations",
+      "category": "fellowship",
+      "title": "Soup & Stations",
+      "parish_id": "parish_095",
+      "date": null,
+      "day": "friday",
+      "time": "17:45",
+      "end_time": "18:45",
+      "frequency": "weekly",
+      "notes": "Social Center; meatless soup and bread meal followed by Stations of the Cross",
+      "source": "bulletin_2026-02",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      }
+    },
+    {
+      "id": "parish_096-evt-lenten-soup-supper",
+      "category": "fellowship",
+      "title": "Lenten Soup Supper",
+      "parish_id": "parish_096",
+      "date": null,
+      "day": "friday",
+      "time": "17:45",
+      "frequency": "weekly",
+      "notes": "Parish Center; followed by Stations of the Cross",
+      "source": "bulletin_2026-02",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      }
+    },
+    {
+      "id": "parish_097-evt-soup-for-soul",
+      "category": "fellowship",
+      "title": "Soup for the Soul",
+      "parish_id": "parish_097",
+      "date": null,
+      "day": "wednesday",
+      "time": "18:00",
+      "frequency": "weekly",
+      "notes": "St. Gabriel Church Hall; Lenten readings and discussion led by Dcn. Carl; Feb 18-Mar 25",
+      "source": "bulletin_2026-02",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      }
+    },
+    {
+      "id": "parish_097-evt-feast-day-dinner",
+      "category": "fellowship",
+      "title": "St. Joseph Feast Day Mass and Dinner",
+      "parish_id": "parish_097",
+      "date": "2026-03-19",
+      "time": "16:00",
+      "frequency": "one_time",
+      "notes": "St. Joseph Church; Mass 4PM, Dinner 5PM; $10/person, $25/family",
+      "source": "bulletin_2026-02",
+      "seasonal": {
+        "is_seasonal": false,
+        "season": "year_round"
+      }
+    },
+    {
+      "id": "parish_097-evt-coffee-hour",
+      "category": "fellowship",
+      "title": "Parish Coffee Hour",
+      "parish_id": "parish_097",
+      "date": null,
+      "day": "sunday",
+      "time": null,
+      "frequency": "weekly",
+      "notes": "St. Gabriel Church Hall; after 7:30AM Mass & Rosary and after 11:30AM Mass",
+      "source": "bulletin_2026-02",
+      "seasonal": {
+        "is_seasonal": false,
+        "season": "year_round"
+      }
+    },
+    {
+      "id": "parish_098-evt-bible-study",
+      "category": "devotional",
+      "title": "Bible Study",
+      "parish_id": "parish_098",
+      "date": null,
+      "day": "sunday",
+      "time": "18:30",
+      "end_time": "19:30",
+      "frequency": "weekly",
+      "notes": "St. Robert's Hall classroom",
+      "source": "bulletin_2026-02",
+      "seasonal": {
+        "is_seasonal": false,
+        "season": "year_round"
+      }
+    },
+    {
+      "id": "parish_080-evt-movie-night-at-sp&c-",
+      "category": "social",
+      "title": "Movie Night at SP&C Social Center. Light meal provided. Contact Maryanne 896-1950.",
+      "parish_id": "parish_080",
+      "day": "thursday",
+      "time": "18:00",
+      "frequency": "weekly",
+      "notes": "Movie Night at SP&C Social Center. Light meal provided. Contact Maryanne 896-1950.",
+      "location_id": "st-peter-and-st-casimir-church-westfield"
+    },
+    {
+      "id": "parish_006-mens-wed-1930",
+      "category": "community",
+      "title": "Men of St. Joseph in the Office Conference Room",
+      "parish_id": "parish_006",
+      "day": "wednesday",
+      "time": "19:30",
+      "end_time": "20:30",
+      "notes": "Men of St. Joseph in the Office Conference Room",
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_006-mens-sat-0700",
+      "category": "community",
+      "title": "That Man is You! (Pine Room)",
+      "parish_id": "parish_006",
+      "day": "saturday",
+      "time": "07:00",
+      "end_time": "08:00",
+      "notes": "That Man is You! (Pine Room)",
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_078-mens-sat-0830",
+      "category": "community",
+      "title": "That Man Is You men's group. Starting again March 7. Contact Deacon Andrew Hogan 413-297-5000.",
+      "parish_id": "parish_078",
+      "day": "saturday",
+      "time": "08:30",
+      "end_time": "10:30",
+      "notes": "That Man Is You men's group. Starting again March 7. Contact Deacon Andrew Hogan 413-297-5000.",
+      "source": "bulletin_2026-02"
     }
   ]
 }

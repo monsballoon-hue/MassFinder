@@ -872,8 +872,8 @@ let advancedFilters={types:[],days:[],languages:[]},tempAdvanced={types:[],days:
 const DAY_ORDER=['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
 const DAY_NAMES={sunday:'Sunday',monday:'Monday',tuesday:'Tuesday',wednesday:'Wednesday',thursday:'Thursday',friday:'Friday',saturday:'Saturday'};
 const LANG_NAMES={en:'English',es:'Spanish',pl:'Polish',pt:'Portuguese',la:'Latin',fr:'French',vi:'Vietnamese',asl:'ASL'};
-const SVC={sunday_mass:'Sunday Mass',daily_mass:'Daily Mass',confession:'Confession',adoration:'Adoration',perpetual_adoration:'Perpetual Adoration',holy_hour:'Holy Hour',communion_service:'Communion Service (no priest)',rosary:'Rosary',stations_of_cross:'Stations of the Cross',divine_mercy:'Divine Mercy Chaplet',miraculous_medal:'Miraculous Medal',novena:'Novena',devotion:'Devotion',vespers:'Vespers',anointing_of_sick:'Anointing of the Sick',holy_thursday_mass:"Mass of the Lord's Supper",good_friday_service:'Celebration of the Passion',easter_vigil_mass:'Easter Vigil',palm_sunday_mass:'Palm Sunday Mass',easter_sunday_mass:'Easter Sunday Mass',bible_study:'Bible Study',book_club:'Book Club',gorzkie_zale:'Gorzkie Żale',mens_group:"Men's Group",womens_group:"Women's Group",youth_group:'Youth Group',choir:'Choir',volunteer:'Volunteer / Service',prayer_group:'Prayer Group',social_event:'Social Event'};
-const SERVICE_CATEGORIES={'Mass':['sunday_mass','daily_mass','communion_service'],'Sacraments':['confession','anointing_of_sick'],'Adoration':['adoration','perpetual_adoration','holy_hour'],'Prayer & Devotion':['rosary','stations_of_cross','divine_mercy','miraculous_medal','novena','devotion','vespers','gorzkie_zale','prayer_group'],'Community':['bible_study','book_club','mens_group','womens_group','youth_group','choir','volunteer','social_event'],'Holy Week':['holy_thursday_mass','good_friday_service','easter_vigil_mass','palm_sunday_mass','easter_sunday_mass']};
+const SVC={sunday_mass:'Sunday Mass',daily_mass:'Daily Mass',confession:'Confession',adoration:'Adoration',perpetual_adoration:'Perpetual Adoration',holy_hour:'Holy Hour',communion_service:'Communion Service (no priest)',rosary:'Rosary',stations_of_cross:'Stations of the Cross',divine_mercy:'Divine Mercy Chaplet',miraculous_medal:'Miraculous Medal',novena:'Novena',devotion:'Devotion',vespers:'Vespers',anointing_of_sick:'Anointing of the Sick',holy_thursday_mass:"Mass of the Lord's Supper",good_friday_service:'Celebration of the Passion',easter_vigil_mass:'Easter Vigil',palm_sunday_mass:'Palm Sunday Mass',easter_sunday_mass:'Easter Sunday Mass',bible_study:'Bible Study',gorzkie_zale:'Gorzkie Żale',prayer_group:'Prayer Group',benediction:'Benediction'};
+const SERVICE_CATEGORIES={'Mass':['sunday_mass','daily_mass','communion_service'],'Sacraments':['confession','anointing_of_sick'],'Adoration':['adoration','perpetual_adoration','holy_hour'],'Prayer & Devotion':['rosary','stations_of_cross','divine_mercy','miraculous_medal','novena','devotion','vespers','gorzkie_zale','prayer_group','bible_study','benediction'],'Holy Week':['holy_thursday_mass','good_friday_service','easter_vigil_mass','palm_sunday_mass','easter_sunday_mass']};
 
 // Favorites
 function loadFav(){try{favorites=JSON.parse(localStorage.getItem('mf_fav')||'[]')}catch{favorites=[]}}
@@ -1108,7 +1108,7 @@ function renderCards(){
 
 // Detail Panel
 function renderCommunityEvents(p){
-  const evts=p.special_events||[];
+  const evts=eventsData.filter(e=>e.parish_id===p.id&&e.category!=='yc');
   if(!evts.length)return '';
   const today=getNow().toISOString().slice(0,10);
 
@@ -1263,7 +1263,7 @@ function openDetail(id){
     {k:'mass',t:'Mass Schedule',ic:'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5',types:MASS_TYPES},
     {k:'conf',t:'Sacraments',ic:'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',types:['confession','anointing_of_sick']},
     {k:'ador',t:'Adoration & Holy Hour',ic:'M12 3v18m-6-6l6 6 6-6',types:['adoration','perpetual_adoration','holy_hour']},
-    {k:'devot',t:'Prayer & Devotion',ic:'M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15z',types:['rosary','stations_of_cross','divine_mercy','miraculous_medal','novena','devotion','vespers','gorzkie_zale','bible_study','mens_group','social_event']},
+    {k:'devot',t:'Prayer & Devotion',ic:'M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15z',types:['rosary','stations_of_cross','divine_mercy','miraculous_medal','novena','devotion','vespers','gorzkie_zale','bible_study','benediction']},
     {k:'hw',t:'Holy Week',ic:'M12 2v20M2 12h20',types:['holy_thursday_mass','good_friday_service','easter_vigil_mass','palm_sunday_mass','easter_sunday_mass']},
   ];
 
@@ -1384,7 +1384,7 @@ function closeAllPanels(){
 }
 
 // Event type display names
-const EVT_TYPES={adoration:'Adoration',devotion:'Devotion',sunday_mass:'Mass',daily_mass:'Mass',retreat:'Retreat',mission:'Mission',concert:'Concert',pilgrimage:'Pilgrimage',social_event:'Social',bible_study:'Bible Study'};
+const EVT_TYPES={adoration:'Adoration',devotion:'Devotion',sunday_mass:'Mass',daily_mass:'Mass',retreat:'Retreat',mission:'Mission',concert:'Concert',pilgrimage:'Pilgrimage',bible_study:'Bible Study'};
 
 function openEventDetail(eventId){
   const evt=eventsData.find(e=>e.id===eventId)||ycEvents.find(e=>e.id===eventId);
@@ -2649,11 +2649,9 @@ function renderMore(){
 
   // ── What's Happening: unified YC + Community events ────────────────────
   const upcoming=getUpcomingYC();
-  const allCommunityEvents=[];
-  allParishes.forEach(p=>{
-    (p.special_events||[]).forEach(e=>{
-      allCommunityEvents.push({...e,parishName:p.name,parishId:p.id});
-    });
+  const allCommunityEvents=eventsData.filter(e=>e.category!=='yc').map(e=>{
+    const p=allParishes.find(x=>x.id===e.parish_id);
+    return {...e,parishName:p?p.name:'',parishId:e.parish_id};
   });
   const hasAnyEvents=upcoming.length||allCommunityEvents.length;
   const whSection=document.getElementById('whatsHappeningSection');
@@ -2934,7 +2932,7 @@ async function init(){
       const evtResp=await fetch('events.json',{signal:AbortSignal.timeout(5000)});
       if(evtResp.ok){
         const evtData=await evtResp.json();
-        eventsData=(evtData.events||[]).sort((a,b)=>a.date.localeCompare(b.date)||(a.time||'').localeCompare(b.time||''));
+        eventsData=(evtData.events||[]).sort((a,b)=>(a.date||'9999').localeCompare(b.date||'9999')||(a.time||'').localeCompare(b.time||''));
         // Use events.json YC events as canonical source if available
         const ycFromFile=eventsData.filter(e=>e.category==='yc');
         if(ycFromFile.length)ycEvents=ycFromFile;

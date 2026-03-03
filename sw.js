@@ -1,8 +1,9 @@
-const CACHE_NAME = 'massfinder-v2_20260303_01';
+const CACHE_NAME = 'massfinder-v2_20260303_02';
 const SHELL_ASSETS = [
   '/',
   '/index.html',
   '/parish_data.json',
+  '/events.json',
   '/manifest.json',
   '/icon-192.png',
   '/icon-512.png',
@@ -47,8 +48,8 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // For parish_data.json: stale-while-revalidate
-  if (url.pathname.endsWith('parish_data.json')) {
+  // For data files: stale-while-revalidate
+  if (url.pathname.endsWith('parish_data.json') || url.pathname.endsWith('events.json')) {
     event.respondWith(
       caches.open(CACHE_NAME).then(cache =>
         cache.match(event.request).then(cached => {
