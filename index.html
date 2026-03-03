@@ -866,7 +866,7 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 <script>
 let allParishes=[],filteredParishes=[],userLat=null,userLng=null,currentSort='name',currentFilter='all',searchQuery='',favorites=[],ycEvents=[],eventsData=[];
 let keepParishIds=new Set();
-function displayName(name,id){if(!id||!keepParishIds.has(id))return name.replace(/ Parish$/,' Church');return name}
+function displayName(name,id){if(id&&keepParishIds.has(id))return name;return name.replace(/ (Church|Parish)$/,'')}
 let advancedFilters={types:[],days:[],languages:[]},tempAdvanced={types:[],days:[],languages:[]};
 const DAY_ORDER=['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
 const DAY_NAMES={sunday:'Sunday',monday:'Monday',tuesday:'Tuesday',wednesday:'Wednesday',thursday:'Thursday',friday:'Friday',saturday:'Saturday'};
@@ -2392,7 +2392,7 @@ function formatReading(raw){
 // DEVOTIONAL CONTENT
 // ============================================================
 const DEVOTIONAL_GUIDES=[
-  {icon:'⛪',title:'The Sunday Obligation',body:`
+  {icon:'⛪',title:'The Sunday Obligation',findLabel:'Mass',filter:'weekend',body:`
 <p>The Catholic Church teaches that attending Mass on Sundays and Holy Days of Obligation is a serious duty for every baptized Catholic. This obligation flows from the Third Commandment — "Remember to keep holy the Lord's Day" — and from the Church's own precepts.</p>
 <p><strong>CCC 2180:</strong> "On Sundays and other holy days of obligation, the faithful are bound to participate in the Mass." The Sunday Eucharist is the foundation of Christian life and the heart of the Church's week.</p>
 <p><strong>CCC 2181:</strong> "Those who deliberately fail in this obligation commit a grave sin." Missing Mass without a serious reason is considered a mortal sin requiring Confession before receiving Communion again.</p>
@@ -2469,23 +2469,48 @@ const DEVOTIONAL_GUIDES=[
   <div class="conf-act-label">Act of Contrition</div>
   <div class="conf-act-text">O my God, I am heartily sorry for having offended Thee, and I detest all my sins because I dread the loss of heaven and the pains of hell; but most of all because they offend Thee, my God, who art all good and deserving of all my love. I firmly resolve, with the help of Thy grace, to confess my sins, to do penance, and to amend my life. Amen.</div>
 </div>
-  `,filter:'confession'},
+  `,findLabel:'Confession',filter:'confession'},
+  {icon:'🌿',title:'Lent',findLabel:'Lent',filter:'lent',body:`
+<p><strong>Lent</strong> is the 40-day liturgical season of prayer, fasting, and almsgiving that prepares Catholics for Easter — the celebration of Christ's Resurrection. It begins on <strong>Ash Wednesday</strong> and ends on the evening of <strong>Holy Thursday</strong>, the start of the Sacred Paschal Triduum.</p>
+<p>The 40 days recall Christ's 40 days of fasting in the desert before beginning His public ministry (Matthew 4:1–11). Sundays are not counted among the 40 days of penance, as every Sunday is a celebration of the Resurrection.</p>
+<h4>The Three Pillars of Lent</h4>
+<p>The Church calls the faithful to three practices during Lent, rooted in Christ's teaching in the Sermon on the Mount (Matthew 6:1–18):</p>
+<ul>
+<li><strong>Prayer</strong> — Deepening one's relationship with God through daily prayer, Scripture, Adoration, the Rosary, Stations of the Cross, or other devotions. Many parishes add weekday Masses, evening prayer services, and Lenten missions during this season.</li>
+<li><strong>Fasting</strong> — A discipline of self-denial that sharpens spiritual awareness. The Church requires fasting on Ash Wednesday and Good Friday (one full meal and two smaller meals that together do not equal the full meal) for those aged 18–59. Abstinence from meat is required on all Fridays of Lent for those aged 14 and older (CCC 1438; USCCB).</li>
+<li><strong>Almsgiving</strong> — Giving to those in need as a concrete expression of charity. Many parishes participate in Catholic Relief Services' Rice Bowl or organize local drives for food, clothing, or financial support.</li>
+</ul>
+<h4>Key Lenten Observances</h4>
+<ul>
+<li><strong>Ash Wednesday</strong> — Ashes are placed on the forehead with the words "Remember that you are dust, and to dust you shall return" or "Repent, and believe in the Gospel." It is a day of fasting and abstinence. Ash Wednesday is not a Holy Day of Obligation, yet it is one of the most widely attended liturgies of the year.</li>
+<li><strong>Fridays of Lent</strong> — All Catholics aged 14+ are required to abstain from meat. Many parishes hold Stations of the Cross, fish fries, or other communal gatherings on Friday evenings.</li>
+<li><strong>Sacrament of Reconciliation</strong> — Confession is strongly emphasized during Lent. Many parishes offer extended confession hours, penance services, and communal reconciliation events. The Church requires Catholics to confess mortal sins at least once a year, and Lent is the traditional season for this (CCC 1457).</li>
+<li><strong>Laetare Sunday</strong> — The Fourth Sunday of Lent, a brief respite in the penitential season. The priest may wear rose-colored vestments, and the mood lightens slightly as Easter draws nearer.</li>
+</ul>
+<h4>Holy Week</h4>
+<p>The final week of Lent intensifies the Church's focus on Christ's Passion:</p>
+<ul>
+<li><strong>Palm Sunday</strong> — Commemorates Christ's triumphant entry into Jerusalem. Palms are blessed and distributed. The Passion narrative is read in full.</li>
+<li><strong>Holy Thursday</strong> — The Mass of the Lord's Supper commemorates the institution of the Eucharist and the priesthood, and includes the washing of feet. Lent ends on this evening as the Sacred Triduum begins.</li>
+<li><strong>Good Friday</strong> — The Passion of the Lord. There is no Mass on this day. The liturgy includes the reading of the Passion, veneration of the Cross, and Holy Communion from hosts consecrated the day before. It is a day of fasting and abstinence.</li>
+<li><strong>Holy Saturday</strong> — A day of quiet vigil at the Lord's tomb. The Easter Vigil, celebrated after nightfall, is the most important liturgy of the entire year — the Church welcomes new members through Baptism, Confirmation, and First Eucharist, and proclaims the Resurrection.</li>
+</ul>
+<h4>From the Catechism</h4>
+<p><strong>CCC 540:</strong> "By the solemn forty days of Lent the Church unites herself each year to the mystery of Jesus in the desert."</p>
+<p><strong>CCC 1438:</strong> "The seasons and days of penance in the course of the liturgical year (Lent, and each Friday in memory of the death of the Lord) are intense moments of the Church's penitential practice."</p>
+<p><strong>CCC 1095:</strong> Lent is a time when the Church "re-reads and re-lives the great events of salvation history" as a preparation for the Easter sacraments.</p>
+  `},
   {icon:'🕊️',title:'The Traditional Latin Mass',body:`
 <p>The Traditional Latin Mass — also known as the <em>Extraordinary Form</em> or the <em>Usus Antiquior</em> — is the form of the Roman Rite that was the universal norm before the liturgical reforms of the Second Vatican Council (1962–1965). It is celebrated entirely in Latin, with the priest facing the altar (<em>ad orientem</em>) for much of the liturgy.</p>
 <p>Key differences from the Ordinary Form (the standard Mass most Catholics attend): the prayers are from the 1962 Roman Missal, the congregation participates primarily through interior prayer and sung responses, and the structure includes prayers like the <strong>Last Gospel</strong> and the <strong>Prayers at the Foot of the Altar</strong> that are not part of the newer form.</p>
 <p>Catholics who attend the Traditional Latin Mass do so for a variety of reasons, including its contemplative character, its continuity with centuries of Catholic worship, and its rich musical tradition of Gregorian chant and polyphony. The Mass fulfills the Sunday obligation. Missals with Latin-English translations are usually available at the church to help you follow along.</p>
-  `,filter:'latin'},
+  `,findLabel:'Latin Mass',filter:'latin'},
   {icon:'📿',title:'Devotions',isGroup:true,children:[
-    {icon:'✝️',title:'Stations of the Cross',body:`
-<p>The Stations of the Cross are 14 moments from Christ's Passion and death, traditionally prayed by moving through a series of images or carvings placed around the walls of a church. The practice originated as a way for people who could not travel to Jerusalem to walk the Via Dolorosa spiritually.</p>
-<p>The 14 stations: <strong>1.</strong> Jesus is condemned to death. <strong>2.</strong> Jesus takes up His cross. <strong>3.</strong> He falls the first time. <strong>4.</strong> He meets His Mother. <strong>5.</strong> Simon of Cyrene helps carry the cross. <strong>6.</strong> Veronica wipes His face. <strong>7.</strong> He falls a second time. <strong>8.</strong> He meets the women of Jerusalem. <strong>9.</strong> He falls a third time. <strong>10.</strong> He is stripped of His garments. <strong>11.</strong> He is nailed to the cross. <strong>12.</strong> He dies on the cross. <strong>13.</strong> He is taken down. <strong>14.</strong> He is laid in the tomb.</p>
-<p>Stations are prayed most often on Fridays during Lent, either privately or as a parish group. They typically take 20–30 minutes. Many parishes hold them at noon or in the early evening. Look for them under the Lent chip filter on the Find tab.</p>
-    `,filter:'lent'},
     {icon:'🕯️',title:'Eucharistic Adoration',body:`
 <p><strong>Eucharistic Adoration</strong> is time spent in prayer before the Blessed Sacrament — the consecrated host — which Catholics believe is truly the Body of Christ. The host is placed in a vessel called a monstrance and displayed on the altar. You simply sit, kneel, or stand in its presence.</p>
 <p>There's no required prayer or posture. Many people read Scripture, pray the Rosary, journal, or simply sit in silence. Adoration chapels are typically quiet spaces open for individual prayer, sometimes for extended hours.</p>
 <p>If a parish offers <strong>Perpetual Adoration</strong>, it means the chapel is open 24 hours a day, 7 days a week, kept continuous by volunteers who sign up for hourly slots. Many people find regular Adoration to be the most transformative spiritual practice of their week.</p>
-    `,filter:'adoration'},
+    `,findLabel:'Adoration',filter:'adoration'},
     {icon:'🌊',title:'Divine Mercy Chaplet',body:`
 <p>The Divine Mercy Chaplet is a short prayer given to St. Faustina Kowalska in the 1930s, centred on trust in God's mercy. It is prayed on ordinary Rosary beads and takes about 10–15 minutes.</p>
 <p>Begin with one <strong>Our Father</strong>, one <strong>Hail Mary</strong>, and the <strong>Apostles' Creed</strong>. On each large bead, pray: <em>"Eternal Father, I offer You the Body and Blood, Soul and Divinity of Your dearly beloved Son, Our Lord Jesus Christ, in atonement for our sins and those of the whole world."</em> On each small bead: <em>"For the sake of His sorrowful Passion, have mercy on us and on the whole world."</em> Conclude with: <em>"Holy God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world"</em> — said three times.</p>
@@ -2505,6 +2530,26 @@ const DEVOTIONAL_GUIDES=[
 <p><strong>Gorzkie Żale</strong> (pronounced <em>GOSH-kyeh ZAH-leh</em>, meaning "Bitter Lamentations") is a traditional Polish Lenten devotion dating to the early 18th century. It is a sung meditation on the Passion of Christ, structured in three parts that reflect on Christ's suffering, His trial, and His death on the cross.</p>
 <p>The devotion is typically held on Sunday afternoons during Lent, often followed by Benediction of the Blessed Sacrament. It combines hymns, prayers, and readings in a format unique to the Polish Catholic tradition. Gorzkie Żale holds a place in Polish Catholic life similar to the Stations of the Cross in other traditions.</p>
 <p>In Western New England, parishes with Polish heritage continue this devotion as a cherished link between faith and cultural identity. The service is usually about 30–40 minutes and is sung partly or entirely in Polish.</p>
+    `},
+    {icon:'✝️',title:'Stations of the Cross',findLabel:'Stations of the Cross',filter:'lent',body:`
+<p>The Stations of the Cross are 14 moments from Christ's Passion and death, traditionally prayed by moving through a series of images or carvings placed around the walls of a church. The practice originated as a way for people who could not travel to Jerusalem to walk the Via Dolorosa spiritually.</p>
+<ol class="stations-list">
+<li>Jesus is condemned to death</li>
+<li>Jesus takes up His cross</li>
+<li>He falls the first time</li>
+<li>He meets His Mother</li>
+<li>Simon of Cyrene helps carry the cross</li>
+<li>Veronica wipes His face</li>
+<li>He falls a second time</li>
+<li>He meets the women of Jerusalem</li>
+<li>He falls a third time</li>
+<li>He is stripped of His garments</li>
+<li>He is nailed to the cross</li>
+<li>He dies on the cross</li>
+<li>He is taken down</li>
+<li>He is laid in the tomb</li>
+</ol>
+<p>Stations are prayed most often on Fridays during Lent, either privately or as a parish group. They typically take 20–30 minutes. Many parishes hold them at noon or in the early evening.</p>
     `},
   ]},
 ];
@@ -2592,31 +2637,12 @@ function renderMore(){
   (function(){
     const grid=document.getElementById('aboutStatGrid');
     if(!grid)return;
-    const churchCount=allParishes.reduce((n,p)=>n+(p.locations||[]).length,0);
     const svcCount=allParishes.reduce((n,p)=>n+(p.services||[]).length,0);
-    // Avg freshness (days since last_checked)
-    const now=new Date();
-    let freshTotal=0,freshN=0;
-    allParishes.forEach(p=>{
-      if(p.validation&&p.validation.last_checked){
-        freshTotal+=Math.floor((now-new Date(p.validation.last_checked))/(864e5));
-        freshN++;
-      }
-    });
-    const avgFresh=freshN?Math.round(freshTotal/freshN):0;
-    const freshLabel=avgFresh<=1?'today':avgFresh+' days';
-    // % verified
-    let verCount=0;
-    allParishes.forEach(p=>{
-      const s=p.validation&&p.validation.status;
-      if(s==='verified'||s==='manually_verified')verCount++;
-    });
-    const verPct=allParishes.length?Math.round(verCount/allParishes.length*100):0;
     grid.innerHTML=
-      '<div class="stat-card"><div class="stat-value">'+churchCount+'</div><div class="stat-label">Churches</div></div>'
+      '<div class="stat-card"><div class="stat-value">'+allParishes.length+'</div><div class="stat-label">Parishes</div></div>'
       +'<div class="stat-card"><div class="stat-value">'+svcCount.toLocaleString()+'</div><div class="stat-label">Services</div></div>'
-      +'<div class="stat-card"><div class="stat-value">'+freshLabel+'</div><div class="stat-label">Avg. Freshness</div></div>'
-      +'<div class="stat-card"><div class="stat-value">'+verPct+'%</div><div class="stat-label">Verified</div></div>';
+      +'<div class="stat-card"><div class="stat-value">'+langCount.size+'</div><div class="stat-label">Languages</div></div>'
+      +'<div class="stat-card"><div class="stat-value">4</div><div class="stat-label">States</div></div>';
   })();
 
   // ── What's Happening: unified YC + Community events ────────────────────
@@ -2700,7 +2726,7 @@ function renderMore(){
     const chevSvg='<svg class="devot-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>';
     function renderGuide(g,sub){
       const cls='devot-card'+(sub?' devot-sub':'');
-      const findLink=g.filter?'<div class="devot-find-link" onclick="switchTab(\'panelFind\',document.querySelector(\'[data-tab=panelFind]\'));document.querySelector(\'[data-filter='+g.filter+']\')?.click()">Find '+g.title.split(' ').pop()+' near me →</div>':'';
+      const findLink=g.filter?'<div class="devot-find-link" onclick="switchTab(\'panelFind\',document.querySelector(\'[data-tab=panelFind]\'));document.querySelector(\'[data-filter='+g.filter+']\')?.click()">Find '+(g.findLabel||g.title)+' near me →</div>':'';
       return '<details class="'+cls+'"><summary><span class="devot-icon">'+g.icon+'</span><span class="devot-title">'+esc(g.title)+'</span>'+chevSvg+'</summary>'
         +'<div class="devot-body">'+g.body+findLink+'</div>'
         +'</details>';
@@ -2717,8 +2743,7 @@ function renderMore(){
   }
 
   // Footer
-  var stateSet=new Set();allParishes.forEach(function(p){if(p.state)stateSet.add(p.state)});
-  document.getElementById('moreFooter').innerHTML='MassFinder v2.0<br>'+allParishes.length+' parishes · '+langCount.size+' languages · '+stateSet.size+' states';
+  document.getElementById('moreFooter').innerHTML='MassFinder v2';
 
   // Trigger readings fetch async (also populates saint card)
   fetchReadings();
