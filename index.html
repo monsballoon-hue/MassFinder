@@ -866,7 +866,7 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 <script>
 let allParishes=[],filteredParishes=[],userLat=null,userLng=null,currentSort='name',currentFilter='all',searchQuery='',favorites=[],ycEvents=[],eventsData=[];
 let keepParishIds=new Set();
-function displayName(name,id){if(!id||!keepParishIds.has(id))return name.replace(/ Parish$/,' Church');return name}
+function displayName(name,id){if(id&&keepParishIds.has(id))return name;return name.replace(/ (Church|Parish)$/,'')}
 let advancedFilters={types:[],days:[],languages:[]},tempAdvanced={types:[],days:[],languages:[]};
 const DAY_ORDER=['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
 const DAY_NAMES={sunday:'Sunday',monday:'Monday',tuesday:'Tuesday',wednesday:'Wednesday',thursday:'Thursday',friday:'Friday',saturday:'Saturday'};
@@ -2392,7 +2392,7 @@ function formatReading(raw){
 // DEVOTIONAL CONTENT
 // ============================================================
 const DEVOTIONAL_GUIDES=[
-  {icon:'⛪',title:'The Sunday Obligation',body:`
+  {icon:'⛪',title:'The Sunday Obligation',findLabel:'Mass',filter:'weekend',body:`
 <p>The Catholic Church teaches that attending Mass on Sundays and Holy Days of Obligation is a serious duty for every baptized Catholic. This obligation flows from the Third Commandment — "Remember to keep holy the Lord's Day" — and from the Church's own precepts.</p>
 <p><strong>CCC 2180:</strong> "On Sundays and other holy days of obligation, the faithful are bound to participate in the Mass." The Sunday Eucharist is the foundation of Christian life and the heart of the Church's week.</p>
 <p><strong>CCC 2181:</strong> "Those who deliberately fail in this obligation commit a grave sin." Missing Mass without a serious reason is considered a mortal sin requiring Confession before receiving Communion again.</p>
@@ -2469,23 +2469,38 @@ const DEVOTIONAL_GUIDES=[
   <div class="conf-act-label">Act of Contrition</div>
   <div class="conf-act-text">O my God, I am heartily sorry for having offended Thee, and I detest all my sins because I dread the loss of heaven and the pains of hell; but most of all because they offend Thee, my God, who art all good and deserving of all my love. I firmly resolve, with the help of Thy grace, to confess my sins, to do penance, and to amend my life. Amen.</div>
 </div>
-  `,filter:'confession'},
-  {icon:'✝️',title:'Stations of the Cross',body:`
+  `,findLabel:'Confession',filter:'confession'},
+  {icon:'✝️',title:'Stations of the Cross',findLabel:'Stations of the Cross',body:`
 <p>The Stations of the Cross are 14 moments from Christ's Passion and death, traditionally prayed by moving through a series of images or carvings placed around the walls of a church. The practice originated as a way for people who could not travel to Jerusalem to walk the Via Dolorosa spiritually.</p>
-<p>The 14 stations: <strong>1.</strong> Jesus is condemned to death. <strong>2.</strong> Jesus takes up His cross. <strong>3.</strong> He falls the first time. <strong>4.</strong> He meets His Mother. <strong>5.</strong> Simon of Cyrene helps carry the cross. <strong>6.</strong> Veronica wipes His face. <strong>7.</strong> He falls a second time. <strong>8.</strong> He meets the women of Jerusalem. <strong>9.</strong> He falls a third time. <strong>10.</strong> He is stripped of His garments. <strong>11.</strong> He is nailed to the cross. <strong>12.</strong> He dies on the cross. <strong>13.</strong> He is taken down. <strong>14.</strong> He is laid in the tomb.</p>
+<ol class="stations-list">
+<li>Jesus is condemned to death</li>
+<li>Jesus takes up His cross</li>
+<li>He falls the first time</li>
+<li>He meets His Mother</li>
+<li>Simon of Cyrene helps carry the cross</li>
+<li>Veronica wipes His face</li>
+<li>He falls a second time</li>
+<li>He meets the women of Jerusalem</li>
+<li>He falls a third time</li>
+<li>He is stripped of His garments</li>
+<li>He is nailed to the cross</li>
+<li>He dies on the cross</li>
+<li>He is taken down</li>
+<li>He is laid in the tomb</li>
+</ol>
 <p>Stations are prayed most often on Fridays during Lent, either privately or as a parish group. They typically take 20–30 minutes. Many parishes hold them at noon or in the early evening. Look for them under the Lent chip filter on the Find tab.</p>
   `,filter:'lent'},
   {icon:'🕊️',title:'The Traditional Latin Mass',body:`
 <p>The Traditional Latin Mass — also known as the <em>Extraordinary Form</em> or the <em>Usus Antiquior</em> — is the form of the Roman Rite that was the universal norm before the liturgical reforms of the Second Vatican Council (1962–1965). It is celebrated entirely in Latin, with the priest facing the altar (<em>ad orientem</em>) for much of the liturgy.</p>
 <p>Key differences from the Ordinary Form (the standard Mass most Catholics attend): the prayers are from the 1962 Roman Missal, the congregation participates primarily through interior prayer and sung responses, and the structure includes prayers like the <strong>Last Gospel</strong> and the <strong>Prayers at the Foot of the Altar</strong> that are not part of the newer form.</p>
 <p>Catholics who attend the Traditional Latin Mass do so for a variety of reasons, including its contemplative character, its continuity with centuries of Catholic worship, and its rich musical tradition of Gregorian chant and polyphony. The Mass fulfills the Sunday obligation. Missals with Latin-English translations are usually available at the church to help you follow along.</p>
-  `,filter:'latin'},
+  `,findLabel:'Latin Mass',filter:'latin'},
   {icon:'📿',title:'Devotions',isGroup:true,children:[
     {icon:'🕯️',title:'Eucharistic Adoration',body:`
 <p><strong>Eucharistic Adoration</strong> is time spent in prayer before the Blessed Sacrament — the consecrated host — which Catholics believe is truly the Body of Christ. The host is placed in a vessel called a monstrance and displayed on the altar. You simply sit, kneel, or stand in its presence.</p>
 <p>There's no required prayer or posture. Many people read Scripture, pray the Rosary, journal, or simply sit in silence. Adoration chapels are typically quiet spaces open for individual prayer, sometimes for extended hours.</p>
 <p>If a parish offers <strong>Perpetual Adoration</strong>, it means the chapel is open 24 hours a day, 7 days a week, kept continuous by volunteers who sign up for hourly slots. Many people find regular Adoration to be the most transformative spiritual practice of their week.</p>
-    `,filter:'adoration'},
+    `,findLabel:'Adoration',filter:'adoration'},
     {icon:'🌊',title:'Divine Mercy Chaplet',body:`
 <p>The Divine Mercy Chaplet is a short prayer given to St. Faustina Kowalska in the 1930s, centred on trust in God's mercy. It is prayed on ordinary Rosary beads and takes about 10–15 minutes.</p>
 <p>Begin with one <strong>Our Father</strong>, one <strong>Hail Mary</strong>, and the <strong>Apostles' Creed</strong>. On each large bead, pray: <em>"Eternal Father, I offer You the Body and Blood, Soul and Divinity of Your dearly beloved Son, Our Lord Jesus Christ, in atonement for our sins and those of the whole world."</em> On each small bead: <em>"For the sake of His sorrowful Passion, have mercy on us and on the whole world."</em> Conclude with: <em>"Holy God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world"</em> — said three times.</p>
@@ -2681,7 +2696,7 @@ function renderMore(){
     const chevSvg='<svg class="devot-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>';
     function renderGuide(g,sub){
       const cls='devot-card'+(sub?' devot-sub':'');
-      const findLink=g.filter?'<div class="devot-find-link" onclick="switchTab(\'panelFind\',document.querySelector(\'[data-tab=panelFind]\'));document.querySelector(\'[data-filter='+g.filter+']\')?.click()">Find '+g.title.split(' ').pop()+' near me →</div>':'';
+      const findLink=g.filter?'<div class="devot-find-link" onclick="switchTab(\'panelFind\',document.querySelector(\'[data-tab=panelFind]\'));document.querySelector(\'[data-filter='+g.filter+']\')?.click()">Find '+(g.findLabel||g.title)+' near me →</div>':'';
       return '<details class="'+cls+'"><summary><span class="devot-icon">'+g.icon+'</span><span class="devot-title">'+esc(g.title)+'</span>'+chevSvg+'</summary>'
         +'<div class="devot-body">'+g.body+findLink+'</div>'
         +'</details>';
@@ -2698,7 +2713,7 @@ function renderMore(){
   }
 
   // Footer
-  document.getElementById('moreFooter').innerHTML='MassFinder v2.0<br>'+allParishes.length+' churches · '+langCount.size+' languages · 4 states';
+  document.getElementById('moreFooter').innerHTML='MassFinder v2';
 
   // Trigger readings fetch async (also populates saint card)
   fetchReadings();
