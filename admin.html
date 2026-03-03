@@ -317,6 +317,33 @@ details.card>.card-body{border-top:1px solid var(--border-lt)}
 .btn-secondary-bar{height:32px;padding:0 14px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:var(--r-sm);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font-b);white-space:nowrap;transition:background .15s}
 .btn-secondary-bar:hover{background:rgba(255,255,255,.25)}
 
+/* ── Flag for review ─────────────────────────────────────────────── */
+.btn-flag{height:34px;padding:0 14px;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.3);color:#fff;border-radius:var(--r-sm);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font-b);white-space:nowrap;transition:background .15s}
+.btn-flag:hover{background:rgba(255,255,255,.22)}
+.btn-flag.flagged{background:var(--amber);border-color:var(--amber);color:#fff}
+.flag-note-row{background:rgba(217,119,6,.15);padding:6px 22px 8px;display:none;align-items:center;gap:8px;border-top:1px solid rgba(217,119,6,.2)}
+.flag-note-row.show{display:flex}
+.flag-note-row input{flex:1;padding:7px 12px;border:1.5px solid rgba(217,119,6,.4);border-radius:var(--r-sm);background:rgba(255,255,255,.1);color:#fff;font-size:13px;font-family:var(--font-b);outline:none}
+.flag-note-row input::placeholder{color:rgba(255,255,255,.4)}
+.flag-note-row .flag-note-label{font-size:11px;color:rgba(255,255,255,.6);font-weight:600;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+.flag-note-row button{padding:4px 10px;border:1px solid rgba(255,255,255,.3);border-radius:var(--r-sm);background:rgba(255,255,255,.1);color:#fff;font-size:12px;cursor:pointer;font-weight:600}
+.pr-flag{color:var(--amber);font-size:13px;margin-left:4px;font-weight:700}
+.status-dot.has-flag{box-shadow:0 0 0 2.5px var(--amber)}
+
+/* ── Completeness badge ─────────────────────────────────────────── */
+.pr-completeness{font-size:11px;font-weight:700;padding:1px 6px;border-radius:4px;margin-left:auto;flex-shrink:0}
+.pr-completeness.hi{background:var(--green-bg);color:var(--green)}
+.pr-completeness.mid{background:var(--amber-bg);color:var(--amber)}
+.pr-completeness.lo{background:var(--red-bg);color:var(--red)}
+
+/* ── Stats modal ────────────────────────────────────────────────── */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stat-card{padding:14px;background:var(--bg);border-radius:var(--r-sm);text-align:center}
+.stat-card .stat-val{font-size:28px;font-weight:700;color:var(--primary);line-height:1.2}
+.stat-card .stat-label{font-size:12px;color:var(--txt2);margin-top:4px}
+.stat-bar{height:8px;background:var(--border-lt);border-radius:4px;margin-top:12px;overflow:hidden}
+.stat-bar-fill{height:100%;background:var(--green);border-radius:4px;transition:width .5s}
+
 /* ── Parish complete indicator ────────────────────────────────────── */
 .parish-row.all-done{background:var(--green-bg);border-left:3px solid var(--green);padding-left:9px}
 .parish-row.all-done .pr-name{color:var(--green)}
@@ -369,6 +396,7 @@ button:active:not(:disabled){transform:scale(0.97)}
       <span class="app-bar-meta" id="dataMeta"></span>
     </div>
     <div class="app-bar-actions">
+      <button class="btn-icon" onclick="showStatsModal()" title="View statistics dashboard" style="font-size:16px">&equiv;</button>
       <button class="btn-icon" onclick="toggleHelp()" title="How to use this panel">?</button>
       <button class="btn-secondary-bar" id="btnImport" onclick="document.getElementById('importFile').click()" title="Import a changes file">&#8593;&nbsp;Import</button>
       <input type="file" id="importFile" accept=".json" style="display:none" onchange="importChanges(event)">
@@ -412,7 +440,10 @@ button:active:not(:disabled){transform:scale(0.97)}
     </div>
     <div class="modal-body" id="svcModalBody"></div>
     <div class="modal-footer">
-      <button id="m_delete" class="btn-danger" onclick="deleteService()">Delete</button>
+      <div style="display:flex;gap:6px">
+        <button id="m_delete" class="btn-danger" onclick="deleteService()">Delete</button>
+        <button id="m_dup" class="btn-secondary" onclick="duplicateService()">Duplicate</button>
+      </div>
       <div class="modal-footer-right">
         <button class="btn-secondary" onclick="closeSvcModal()">Cancel</button>
         <button class="btn-primary-sm" onclick="saveServiceModal()">Save Service</button>
@@ -519,6 +550,17 @@ button:active:not(:disabled){transform:scale(0.97)}
         <li><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#B91C1C;margin-right:6px;vertical-align:middle"></span><strong>Red</strong> &mdash; excluded from the app</li>
       </ul>
     </div>
+  </div>
+</div>
+
+<!-- ══ STATS MODAL ════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="statsModal" onclick="closeIfBg(event,'statsModal')">
+  <div class="modal wide">
+    <div class="modal-hdr">
+      <h3>Dashboard</h3>
+      <button class="modal-close" onclick="document.getElementById('statsModal').classList.remove('open')">&#x2715;</button>
+    </div>
+    <div class="modal-body" id="statsModalBody"></div>
   </div>
 </div>
 
@@ -702,7 +744,33 @@ function parishScore(parish) {
     staleness = Math.min(daysSince, 60) / 60 * 100;
   }
   const hasBulletin = !!(parish.bulletin_url || (parish.contact && parish.contact.website));
-  return { score: staleness * mult + (hasBulletin ? 15 : 0), daysSince: daysSince };
+  const isFlagged = !!(parish.validation && parish.validation.flagged);
+  return { score: staleness * mult + (hasBulletin ? 15 : 0) + (isFlagged ? 30 : 0), daysSince: daysSince };
+}
+function completenessScore(p) {
+  var checks = [
+    !!(p.bulletin_url),
+    !!(p.contact && p.contact.website),
+    !!(p.contact && p.contact.phone),
+    !!(p.locations && p.locations[0] && p.locations[0].address),
+    (p.services||[]).some(function(s){ return s.type === 'sunday_mass'; }),
+    (p.services||[]).some(function(s){ return s.type === 'confession'; }),
+    (p.services||[]).some(function(s){ return s.type === 'daily_mass'; }),
+    !!(p.validation && p.validation.last_checked)
+  ];
+  var have = checks.filter(Boolean).length;
+  return Math.round(have / checks.length * 100);
+}
+function buildRow(p) {
+  var sc = parishScore(p);
+  return {
+    id:p.id, name:p.name, town:p.town||'', state:p.state||'',
+    vs:(p.validation && p.validation.status)||'unverified',
+    flagged:!!(p.validation && p.validation.flagged),
+    completeness:completenessScore(p),
+    score:sc.score, daysSince:sc.daysSince,
+    svcCount:(p.services||[]).length
+  };
 }
 
 // ── Boot ───────────────────────────────────────────────────────────────
@@ -732,15 +800,7 @@ async function startApp() {
   const m = editData.metadata || {};
   document.getElementById('dataMeta').textContent =
     (m.total_parishes||'?') + ' parishes \u00b7 v' + (m.schema_version||'?');
-  allRows = (editData.parishes||[]).map(p => {
-    const sc = parishScore(p);
-    return {
-      id:p.id, name:p.name, town:p.town||'', state:p.state||'',
-      vs:(p.validation && p.validation.status)||'unverified',
-      score:sc.score, daysSince:sc.daysSince,
-      svcCount:(p.services||[]).length
-    };
-  });
+  allRows = (editData.parishes||[]).map(buildRow);
   sortRows(allRows);
   updateStats(allRows.length, allRows.length);
   renderList(allRows);
@@ -750,12 +810,17 @@ async function startApp() {
 function updateStats(shown, total) {
   const el = document.getElementById('sidebarStats');
   if (!el) return;
-  const sortLabels = { priority:'\u21AF Priority', alpha:'A\u2192Z Name', status:'\u25CF Status' };
-  el.innerHTML = '<span>' + (shown === total ? total + ' parishes' : shown + ' of ' + total + ' shown') + '</span>' +
-    '<button class="sort-toggle" onclick="cycleSidebarSort()" title="Change sort order">' + sortLabels[sidebarSort] + '</button>';
+  const flagCount = allRows.filter(function(r){ return r.flagged; }).length;
+  const flagText = flagCount > 0 ? ' \u00b7 <span style="color:var(--amber);font-weight:600">' + flagCount + ' flagged</span>' : '';
+  const sortLabels = { priority:'\u21AF Priority', alpha:'A\u2192Z Name', status:'\u25CF Status', flagged:'\u2691 Flagged' };
+  el.innerHTML = '<span>' + (shown === total ? total + ' parishes' : shown + ' of ' + total + ' shown') + flagText + '</span>' +
+    '<div style="display:flex;gap:6px;align-items:center">' +
+      '<button class="sort-toggle" onclick="jumpToRandom()" title="Jump to random unverified parish">\u2684</button>' +
+      '<button class="sort-toggle" onclick="cycleSidebarSort()" title="Change sort order">' + sortLabels[sidebarSort] + '</button>' +
+    '</div>';
 }
 function cycleSidebarSort() {
-  const modes = ['priority','alpha','status'];
+  const modes = ['priority','alpha','status','flagged'];
   sidebarSort = modes[(modes.indexOf(sidebarSort) + 1) % modes.length];
   sortRows(allRows);
   filterList();
@@ -768,6 +833,8 @@ function sortRows(rows) {
   } else if (sidebarSort === 'status') {
     const order = { unverified:0, needs_verification:1, low_confidence:2, manually_verified:3, verified:4, excluded:5 };
     rows.sort((a,b) => (order[a.vs]||0) - (order[b.vs]||0) || a.name.localeCompare(b.name));
+  } else if (sidebarSort === 'flagged') {
+    rows.sort((a,b) => (b.flagged?1:0) - (a.flagged?1:0) || b.score - a.score);
   }
 }
 function renderList(rows) {
@@ -806,10 +873,15 @@ function renderList(rows) {
         if (isDone) cls += ' all-done';
       }
     } catch(e){}
+    // Flag icon
+    var flagIcon = r.flagged ? '<span class="pr-flag" title="Flagged for review">\u2691</span>' : '';
+    // Completeness badge
+    var compCls = r.completeness >= 75 ? 'hi' : r.completeness >= 50 ? 'mid' : 'lo';
+    var compBadge = '<span class="pr-completeness '+compCls+'">' + r.completeness + '%</span>';
     return '<div class="'+cls+'" data-id="'+esc(r.id)+'" onclick="handleParishRowClick(event,\''+esc(r.id)+'\')">' +
-      '<div class="status-dot '+dotClass(r.vs)+'"></div>' +
-      '<div class="pr-text">' +
-        '<div class="pr-name">' + esc(r.name) + '</div>' +
+      '<div class="status-dot '+dotClass(r.vs)+(r.flagged?' has-flag':'')+'"></div>' +
+      '<div class="pr-text" style="display:flex;align-items:flex-start;gap:0;flex-direction:column;flex:1;min-width:0">' +
+        '<div style="display:flex;align-items:center;width:100%"><div class="pr-name">' + esc(r.name) + flagIcon + '</div>' + compBadge + '</div>' +
         '<div class="pr-sub">' + esc(r.town) + ', ' + esc(r.state) + badge + '</div>' +
         progHtml +
       '</div>' +
@@ -856,15 +928,7 @@ function bulkVerify() {
     count++;
   });
   // Refresh allRows
-  allRows = (editData.parishes||[]).map(p => {
-    const sc = parishScore(p);
-    return {
-      id:p.id, name:p.name, town:p.town||'', state:p.state||'',
-      vs:(p.validation && p.validation.status)||'unverified',
-      score:sc.score, daysSince:sc.daysSince,
-      svcCount:(p.services||[]).length
-    };
-  });
+  allRows = (editData.parishes||[]).map(buildRow);
   sortRows(allRows);
   clearBulkSelection();
   showToast('\u2713 ' + count + ' parishes marked as verified today');
@@ -909,6 +973,7 @@ function renderPanel() {
   const c  = p.contact || {};
   const v  = p.validation || {};
   const locs = p.locations || [];
+  const isFlagged = !!(v.flagged);
 
   const html =
     '<div class="edit-sticky">' +
@@ -926,7 +991,9 @@ function renderPanel() {
         '<div class="edit-hdr-right">' +
           '<span class="vpill ' + dotClass(vs) + '">' + vs.replace(/_/g,' ') + '</span>' +
           '<button class="btn-verify" onclick="markVerifiedToday()" title="Set status = manually verified, date = today">\u2713 Verify</button>' +
+          '<button class="btn-flag'+(isFlagged?' flagged':'')+'" onclick="toggleFlag()" title="Flag this parish for later review">'+(isFlagged?'\u2691 Flagged':'\u2690 Flag')+'</button>' +
           '<button class="btn-scan'+(quickScanMode?' active':'')+'" onclick="toggleQuickScan()" title="Quick Scan: show only Schedule (Alt+Q)">Scan</button>' +
+          '<button class="btn-del-parish" onclick="skipParish()" title="Skip to next parish without saving (Alt+S)">Skip \u203A</button>' +
           '<button class="btn-del-parish" onclick="deleteParish()" title="Remove this parish from working data">Delete</button>' +
           '<button class="btn-save" id="btnSave" onclick="saveParish()">Save</button>' +
         '</div>' +
@@ -946,6 +1013,11 @@ function renderPanel() {
             '<button class="btn-hdr-open" onclick="openUrl(\'p_bulletin\')" type="button" title="Open in new tab">\u2197</button>' +
           '</div>' +
         '</div>' +
+      '</div>' +
+      '<div class="flag-note-row'+(isFlagged?' show':'')+'" id="flagNoteRow">' +
+        '<span class="flag-note-label">\u2691 Note</span>' +
+        '<input id="flag_note" type="text" placeholder="Why flagged? (optional)" value="'+esc(v.flag_note||'')+'">' +
+        '<button onclick="clearFlag()">Unflag</button>' +
       '</div>' +
     '</div>' +
     '<div class="edit-content">' +
@@ -990,6 +1062,7 @@ function checkChanged(e) {
 
 // ── Card: Identity (Name / Status / Town) ─────────────────────────────
 function cardIdentity(p) {
+  var c = p.contact || {};
   return '<div class="card">' +
     '<div class="card-label">Identity</div>' +
     '<div class="card-body">' +
@@ -998,6 +1071,8 @@ function cardIdentity(p) {
         fpairs('p_status','Status', PAR_STATUSES.map(s=>[s,s.replace(/_/g,' ')]), p.status||'active') +
         field('p_town','Town', p.town||'') +
       '</div>' +
+      '<div class="f"><label for="c_notes">Admin Notes</label>' +
+        '<textarea id="c_notes" rows="2" placeholder="Internal notes about this parish...">' + esc(c.notes||'') + '</textarea></div>' +
     '</div>' +
   '</div>';
 }
@@ -1163,6 +1238,9 @@ function cardValidation(v) {
         '<button type="button" class="btn-today" onclick="fillToday(\'v_checked\')">Today</button>' +
       '</div>' +
       field('v_bulletin','Bulletin Date (YYYY-MM)', v.bulletin_date||'') +
+      '<div class="check-row"><input type="checkbox" id="v_flagged"'+(v.flagged?' checked':'')+' onchange="toggleFlagFromCheckbox(this.checked)">' +
+        '<label for="v_flagged" style="color:var(--amber);font-weight:600">\u2691 Flagged for later review</label></div>' +
+      (v.flag_note ? '<p class="hint" style="color:var(--amber)">\u2691 ' + esc(v.flag_note) + '</p>' : '') +
       '<p class="hint">Tip: use the <strong>\u2713 Verify</strong> button in the header to set both status &amp; date in one click.</p>' +
     '</div>' +
   '</details>';
@@ -1222,6 +1300,7 @@ function openSvcModal(s, isNew) {
 
   document.getElementById('svcModalTitle').textContent = isNew ? 'Add Service' : 'Edit Service';
   document.getElementById('m_delete').style.display    = isNew ? 'none' : '';
+  document.getElementById('m_dup').style.display       = isNew ? 'none' : '';
   document.getElementById('svcModal').classList.add('open');
 }
 function toggleSvcSeason() {
@@ -1473,6 +1552,14 @@ function saveFormToPending() {
   p.validation.status        = val('v_status')  || 'needs_verification';
   p.validation.last_checked  = val('v_checked') || null;
   p.validation.bulletin_date = val('v_bulletin')|| null;
+  // Persist flag note (flag itself is set directly on pendingParish by toggleFlag)
+  var flagNote = val('flag_note');
+  if (p.validation.flagged) {
+    p.validation.flag_note = flagNote || null;
+  } else {
+    delete p.validation.flagged;
+    delete p.validation.flag_note;
+  }
 }
 
 // ── Save & download ────────────────────────────────────────────────────
@@ -1498,15 +1585,7 @@ function saveParish() {
   const pill = document.querySelector('.vpill');
   if (pill) { pill.className = 'vpill ' + dotClass(vs); pill.textContent = vs.replace(/_/g,' '); }
   // Refresh sidebar with scores
-  allRows = (editData.parishes||[]).map(p => {
-    const sc = parishScore(p);
-    return {
-      id:p.id, name:p.name, town:p.town||'', state:p.state||'',
-      vs:(p.validation&&p.validation.status)||'unverified',
-      score:sc.score, daysSince:sc.daysSince,
-      svcCount:(p.services||[]).length
-    };
-  });
+  allRows = (editData.parishes||[]).map(buildRow);
   sortRows(allRows);
   filterList();
   // Reset changed-field highlights
@@ -1543,15 +1622,7 @@ function deleteParish() {
     undo: function() {
       if (idx >= 0) editData.parishes.splice(idx, 0, parishCopy);
       else editData.parishes.push(parishCopy);
-      allRows = (editData.parishes||[]).map(p => {
-        const sc = parishScore(p);
-        return {
-          id:p.id, name:p.name, town:p.town||'', state:p.state||'',
-          vs:(p.validation&&p.validation.status)||'unverified',
-          score:sc.score, daysSince:sc.daysSince,
-          svcCount:(p.services||[]).length
-        };
-      });
+      allRows = (editData.parishes||[]).map(buildRow);
       sortRows(allRows);
       updateStats(allRows.length, allRows.length);
       filterList();
@@ -1731,6 +1802,15 @@ function markVerifiedToday() {
   if (!pendingParish.validation) pendingParish.validation = {};
   pendingParish.validation.status = 'manually_verified';
   pendingParish.validation.last_checked = new Date().toISOString().slice(0, 10);
+  // Cascade verification to all child services
+  var cascadeSrc = 'bulletin_' + (pendingParish.validation.bulletin_date ||
+                   new Date().toISOString().slice(0, 7));
+  (pendingParish.services || []).forEach(function(svc, idx) {
+    svc.source = cascadeSrc;
+    verifiedSvcSet.add(idx);
+  });
+  persistVerified();
+  updateParishProgress();
   markDirty();
   // Update form fields if validation section is open
   const vs = document.getElementById('v_status');
@@ -1745,7 +1825,10 @@ function markVerifiedToday() {
   const smDate = document.querySelector('.val-date');
   if (smPill) { smPill.className = 'vpill-sm verified'; smPill.textContent = 'manually verified'; }
   if (smDate) smDate.textContent = pendingParish.validation.last_checked;
-  showToast('\u2713 Marked as verified today');
+  // Refresh schedule card to show all checkboxes as verified
+  refreshScheduleCard();
+  var svcCount = (pendingParish.services || []).length;
+  showToast('\u2713 Verified — ' + svcCount + ' service' + (svcCount !== 1 ? 's' : '') + ' updated');
 }
 
 function fillToday(fieldId) {
@@ -1754,6 +1837,136 @@ function fillToday(fieldId) {
     el.value = new Date().toISOString().slice(0, 10);
     el.dispatchEvent(new Event('input', { bubbles: true }));
   }
+}
+
+// ── Flag for review ──────────────────────────────────────────────────
+function toggleFlag() {
+  if (!pendingParish) return;
+  if (!pendingParish.validation) pendingParish.validation = {};
+  var wasFlagged = !!pendingParish.validation.flagged;
+  if (wasFlagged) {
+    clearFlag();
+  } else {
+    pendingParish.validation.flagged = true;
+    markDirty();
+    var noteRow = document.getElementById('flagNoteRow');
+    if (noteRow) noteRow.classList.add('show');
+    var btn = document.querySelector('.btn-flag');
+    if (btn) { btn.classList.add('flagged'); btn.innerHTML = '\u2691 Flagged'; }
+    var cb = document.getElementById('v_flagged');
+    if (cb) cb.checked = true;
+    setTimeout(function() {
+      var inp = document.getElementById('flag_note');
+      if (inp) inp.focus();
+    }, 50);
+    showToast('\u2691 Flagged for review');
+  }
+}
+function clearFlag() {
+  if (!pendingParish) return;
+  if (!pendingParish.validation) pendingParish.validation = {};
+  pendingParish.validation.flagged = false;
+  pendingParish.validation.flag_note = null;
+  markDirty();
+  renderPanel();
+  showToast('Flag removed');
+}
+function toggleFlagFromCheckbox(checked) {
+  if (!pendingParish) return;
+  if (!pendingParish.validation) pendingParish.validation = {};
+  pendingParish.validation.flagged = checked;
+  if (!checked) pendingParish.validation.flag_note = null;
+  markDirty();
+  var btn = document.querySelector('.btn-flag');
+  if (btn) { btn.classList.toggle('flagged', checked); btn.innerHTML = checked ? '\u2691 Flagged' : '\u2690 Flag'; }
+  var noteRow = document.getElementById('flagNoteRow');
+  if (noteRow) noteRow.classList.toggle('show', checked);
+}
+
+// ── Skip parish ─────────────────────────────────────────────────────
+function skipParish() {
+  isDirty = false;
+  editedSvcSet.clear();
+  verifiedSvcSet.clear();
+  var btn = document.getElementById('btnSave');
+  if (btn) btn.classList.remove('dirty');
+  // Restore original data (discard pending changes)
+  if (pendingParish) {
+    var orig = (editData.parishes||[]).find(function(p){ return p.id === pendingParish.id; });
+    if (orig) pendingParish = JSON.parse(JSON.stringify(orig));
+  }
+  navigateParish(1);
+}
+
+// ── Jump to random unverified ───────────────────────────────────────
+function jumpToRandom() {
+  var candidates = allRows.filter(function(r) {
+    return r.vs === 'unverified' || r.vs === 'needs_verification' || r.vs === 'low_confidence';
+  });
+  if (!candidates.length) {
+    showToast('No unverified parishes remaining');
+    return;
+  }
+  var pick = candidates[Math.floor(Math.random() * candidates.length)];
+  selectParish(pick.id);
+  var row = document.querySelector('.parish-row.active');
+  if (row) row.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  showToast('\u2684 Random: ' + pick.name);
+}
+
+// ── Duplicate service ───────────────────────────────────────────────
+function duplicateService() {
+  if (svcModalIdx < 0 || !pendingParish || !pendingParish.services) return;
+  var orig = pendingParish.services[svcModalIdx];
+  if (!orig) return;
+  var clone = JSON.parse(JSON.stringify(orig));
+  clone.id = pendingParish.id + '-' + (clone.type||'svc') + '-' + Date.now();
+  pendingParish.services.push(clone);
+  markDirty();
+  closeSvcModal();
+  refreshScheduleCard();
+  showToast('\u2398 Service duplicated');
+}
+
+// ── Statistics dashboard ────────────────────────────────────────────
+function showStatsModal() {
+  var ps = editData.parishes || [];
+  var total = ps.length;
+  var verified = ps.filter(function(p){ var s = p.validation && p.validation.status; return s === 'verified' || s === 'manually_verified'; }).length;
+  var unverified = ps.filter(function(p){ return !p.validation || p.validation.status === 'unverified'; }).length;
+  var needsVer = ps.filter(function(p){ return p.validation && p.validation.status === 'needs_verification'; }).length;
+  var flagged = ps.filter(function(p){ return p.validation && p.validation.flagged; }).length;
+  var noBulletin = ps.filter(function(p){ return !p.bulletin_url; }).length;
+  var noConfession = ps.filter(function(p){ return !(p.services||[]).some(function(s){ return s.type === 'confession'; }); }).length;
+  var noSunday = ps.filter(function(p){ return !(p.services||[]).some(function(s){ return s.type === 'sunday_mass'; }); }).length;
+  // Avg staleness
+  var staleSum = 0, staleCount = 0;
+  ps.forEach(function(p) {
+    if (p.validation && p.validation.last_checked) {
+      var d = Math.round((new Date() - new Date(p.validation.last_checked)) / 86400000);
+      staleSum += d; staleCount++;
+    }
+  });
+  var avgStale = staleCount > 0 ? Math.round(staleSum / staleCount) : '??';
+  var pct = total > 0 ? Math.round(verified / total * 100) : 0;
+
+  document.getElementById('statsModalBody').innerHTML =
+    '<div class="stat-grid">' +
+      '<div class="stat-card"><div class="stat-val">' + verified + '/' + total + '</div><div class="stat-label">Verified</div></div>' +
+      '<div class="stat-card"><div class="stat-val">' + unverified + '</div><div class="stat-label">Unverified</div></div>' +
+      '<div class="stat-card"><div class="stat-val">' + needsVer + '</div><div class="stat-label">Needs Review</div></div>' +
+      '<div class="stat-card"><div class="stat-val" style="color:var(--amber)">' + flagged + '</div><div class="stat-label">Flagged</div></div>' +
+      '<div class="stat-card"><div class="stat-val">' + avgStale + 'd</div><div class="stat-label">Avg Staleness</div></div>' +
+      '<div class="stat-card"><div class="stat-val">' + noBulletin + '</div><div class="stat-label">No Bulletin URL</div></div>' +
+      '<div class="stat-card"><div class="stat-val">' + noConfession + '</div><div class="stat-label">No Confession</div></div>' +
+      '<div class="stat-card"><div class="stat-val">' + noSunday + '</div><div class="stat-label">No Sunday Mass</div></div>' +
+    '</div>' +
+    '<div style="margin-top:16px">' +
+      '<div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:var(--txt2);margin-bottom:6px">' +
+        '<span>Verification Progress</span><span>' + pct + '%</span></div>' +
+      '<div class="stat-bar"><div class="stat-bar-fill" style="width:' + pct + '%"></div></div>' +
+    '</div>';
+  document.getElementById('statsModal').classList.add('open');
 }
 
 // ── Toast system ──────────────────────────────────────────────────────
@@ -1846,15 +2059,7 @@ function importChanges(event) {
         }
       });
       // Refresh allRows
-      allRows = (editData.parishes||[]).map(p => {
-        const sc = parishScore(p);
-        return {
-          id:p.id, name:p.name, town:p.town||'', state:p.state||'',
-          vs:(p.validation&&p.validation.status)||'unverified',
-          score:sc.score, daysSince:sc.daysSince,
-          svcCount:(p.services||[]).length
-        };
-      });
+      allRows = (editData.parishes||[]).map(buildRow);
       sortRows(allRows);
       filterList();
       if (pendingParish) {
@@ -1887,6 +2092,10 @@ document.addEventListener('keydown', function(e) {
   if (e.altKey && e.key === 'ArrowUp')   { e.preventDefault(); navigateParish(-1); }
   // Alt + Q → Quick Scan toggle
   if (e.altKey && (e.key === 'q' || e.key === 'Q')) { e.preventDefault(); toggleQuickScan(); }
+  // Alt + S → Skip parish
+  if (e.altKey && (e.key === 's' || e.key === 'S') && !(e.metaKey||e.ctrlKey)) { e.preventDefault(); skipParish(); }
+  // Alt + R → Random unverified
+  if (e.altKey && (e.key === 'r' || e.key === 'R')) { e.preventDefault(); jumpToRandom(); }
   // / → focus search (only when not in an input)
   if (e.key === '/' && !['INPUT','SELECT','TEXTAREA'].includes(document.activeElement.tagName)) {
     e.preventDefault();
@@ -1895,7 +2104,7 @@ document.addEventListener('keydown', function(e) {
   // Esc → close modals or clear bulk selection
   if (e.key === 'Escape') {
     if (bulkSelection.size > 0) { clearBulkSelection(); return; }
-    ['svcModal','evtModal','helpModal'].forEach(function(id) {
+    ['svcModal','evtModal','helpModal','statsModal'].forEach(function(id) {
       document.getElementById(id).classList.remove('open');
     });
     svcModalIdx = null;

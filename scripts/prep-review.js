@@ -150,7 +150,8 @@ function score(parish, queue, today, multiplier) {
   }
 
   const hasBulletin = !!(parish.bulletin_url || (parish.contact && parish.contact.website));
-  const isFlagged   = !!(queue.flags && queue.flags[parish.id]);
+  const isFlagged   = !!(queue.flags && queue.flags[parish.id]) ||
+                      !!(parish.validation && parish.validation.flagged);
 
   return (staleness * multiplier)
     + (hasBulletin ? 15 : 0)
