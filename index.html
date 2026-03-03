@@ -1184,7 +1184,16 @@ function renderCommunityEvents(p){
 
 function openDetail(id){
   const p=allParishes.find(x=>x.id===id);if(!p)return;
-  const fav=isFav(p.id),ver=isVer(p),v=p.validation||{},loc0=p.locations&&p.locations[0],dist=getDist(p),ct=p.contact||{};
+  const fav=isFav(p.id),ver=isVer(p),v=p.validation||{},dist=getDist(p),ct=p.contact||{};
+  // Primary location = location with the most services tied to it
+  const loc0=(function(){
+    const locs=p.locations||[];if(locs.length<=1)return locs[0]||null;
+    const counts={};locs.forEach(function(l){counts[l.id]=0;});
+    (p.services||[]).forEach(function(s){if(s.location_id&&counts[s.location_id]!==undefined)counts[s.location_id]++;});
+    var best=locs[0],bestN=counts[locs[0].id]||0;
+    for(var i=1;i<locs.length;i++){var n=counts[locs[i].id]||0;if(n>bestN){best=locs[i];bestN=n;}}
+    return best;
+  })();
   const mapUrl=loc0?getMapsUrl(loc0.address||loc0.name):'';
   const domain=ct.website?ct.website.replace(/^https?:\/\//,'').replace(/\/.*/,''):'';
 
@@ -1274,7 +1283,7 @@ function openDetail(id){
     +'</div>'
     +p.locations.map(function(l){
       var addr=[l.address,l.city,l.state].filter(Boolean).join(', ');
-      var dirUrl=(l.lat&&l.lng)?getMapsUrlCoords(l.lat,l.lng,l.name||addr):(addr?getMapsUrl(addr):'');
+      var dirUrl=addr?getMapsUrl(addr):(l.name?getMapsUrl(l.name):'');
       return '<div class="loc-site-card">'
         +'<div class="loc-site-info">'
         +'<div class="loc-site-name">'+esc(l.short_name||l.name)+'</div>'

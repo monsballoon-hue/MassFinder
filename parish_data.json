@@ -161,7 +161,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_001-smass-sun-0800-st",
@@ -176,7 +176,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_001-smass-sun-0945-st",
@@ -191,7 +191,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_001-dmass-mon-0900-acad-st",
@@ -206,7 +206,7 @@
             "is_seasonal": true,
             "season": "academic_year"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_001-dmass-mon-0830-summ-notre",
@@ -216,7 +216,7 @@
           "end_time": null,
           "language": "en",
           "notes": null,
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "rite": null,
           "times_vary": false,
           "location_id": "notre-dame-church-adams",
@@ -238,7 +238,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_001-ador-tue-0900-notre",
@@ -253,7 +253,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_001-comm-fri-0830-notre",
@@ -263,7 +263,7 @@
           "end_time": null,
           "language": "en",
           "notes": null,
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "rite": null,
           "times_vary": false,
           "location_id": "notre-dame-church-adams",
@@ -285,7 +285,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_001-conf-sat-1430-notre",
@@ -300,7 +300,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_001-rosary-wkday-0800",
@@ -310,7 +310,7 @@
           "end_time": null,
           "language": "en",
           "notes": "Before Daily Mass, Monday–Friday",
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "rite": null,
           "times_vary": false,
           "location_id": null,
@@ -332,7 +332,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_001-dmass-wed-0830-st",
@@ -346,7 +346,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "day": "wednesday"
         },
         {
@@ -361,7 +361,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "day": "thursday"
         },
         {
@@ -372,7 +372,7 @@
           "end_time": "10:00",
           "language": "en",
           "notes": "Following 8:30 AM Mass",
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "rite": null,
           "times_vary": false,
           "location_id": "st-marys-church-adams",
@@ -393,7 +393,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "day": "thursday"
         },
         {
@@ -404,7 +404,7 @@
           "end_time": null,
           "language": "en",
           "notes": "Wednesdays of Lent",
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "rite": null,
           "times_vary": false,
           "location_id": "st-marys-church-adams",
@@ -421,7 +421,7 @@
           "end_time": "19:00",
           "language": "en",
           "notes": "Wednesdays of Lent",
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "rite": null,
           "times_vary": false,
           "location_id": "st-marys-church-adams",
@@ -443,7 +443,7 @@
             "is_seasonal": true,
             "season": "lent"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_001-htmass-Holy-1900-hw-st",
@@ -453,7 +453,7 @@
           "end_time": null,
           "language": "en",
           "notes": "No Daily Mass (Alter of roses and Benediction at 10pm)",
-          "source": "manual_verification_2026-02",
+          "source": "bulletin_2026-03",
           "rite": null,
           "times_vary": false,
           "location_id": "st-marys-church-adams",
@@ -470,7 +470,7 @@
           "end_time": null,
           "language": "en",
           "notes": null,
-          "source": "manual_verification_2026-02",
+          "source": "bulletin_2026-03",
           "rite": null,
           "times_vary": false,
           "location_id": "st-stanislaus-church-adams",
@@ -491,7 +491,7 @@
             "is_seasonal": true,
             "season": "holy_week"
           },
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "end_time": null
         },
         {
@@ -502,7 +502,7 @@
           "end_time": null,
           "language": "en",
           "notes": "Following Daily Mass",
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "rite": null,
           "times_vary": false,
           "location_id": null,
@@ -522,7 +522,7 @@
           "id": "parish_001-ador-wed-lent",
           "end_time": null,
           "language": "en",
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "type": "adoration",
@@ -535,7 +535,7 @@
           "id": "parish_001-ador-thu-lent",
           "end_time": null,
           "language": "en",
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "type": "adoration",
@@ -548,7 +548,7 @@
           "id": "parish_001-ador-fri-lent",
           "end_time": null,
           "language": "en",
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "type": "divine_mercy",
@@ -563,7 +563,7 @@
           "id": "parish_001-devot-fri-1500-lent-st",
           "end_time": null,
           "language": "en",
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_001-daily_mass-1772538231238",
@@ -573,7 +573,7 @@
           "end_time": null,
           "language": "en",
           "notes": null,
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "rite": null,
           "times_vary": false,
           "location_id": "st-marys-church-adams",
@@ -584,9 +584,9 @@
         },
         {
           "id": "parish_001-easter_vigil_mass-1772538528850",
-          "type": "easter_vigil_mass",
-          "day": "easter_vigil",
-          "time": "19:30",
+          "type": "palm_sunday_mass",
+          "day": "palm_sunday",
+          "time": "16:00",
           "end_time": null,
           "language": "en",
           "notes": null,
@@ -594,6 +594,40 @@
           "rite": null,
           "times_vary": false,
           "location_id": "notre-dame-church-adams",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          }
+        },
+        {
+          "id": "parish_001-palm_sunday_mass-1772539373096",
+          "type": "palm_sunday_mass",
+          "day": "palm_sunday",
+          "time": "08:00",
+          "end_time": null,
+          "language": "en",
+          "notes": null,
+          "source": "bulletin_2026-02",
+          "rite": null,
+          "times_vary": false,
+          "location_id": "st-stanislaus-church-adams",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          }
+        },
+        {
+          "id": "parish_001-palm_sunday_mass-1772539406413",
+          "type": "palm_sunday_mass",
+          "day": "palm_sunday",
+          "time": "09:45",
+          "end_time": null,
+          "language": "en",
+          "notes": null,
+          "source": "bulletin_2026-02",
+          "rite": null,
+          "times_vary": false,
+          "location_id": "st-marys-church-adams",
           "seasonal": {
             "is_seasonal": true,
             "season": "holy_week"
