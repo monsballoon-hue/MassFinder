@@ -567,11 +567,12 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .devot-body ol { padding-left: var(--space-5); margin-bottom: var(--space-3); }
 .devot-body ol li { margin-bottom: var(--space-2); }
 .devot-find-link { display: inline-flex; align-items: center; gap: var(--space-2); margin-top: var(--space-3); color: var(--color-info); font-weight: var(--weight-semibold); cursor: pointer; font-size: var(--text-sm); }
-.devot-group-body { padding: var(--space-2) var(--space-3) var(--space-3); background: var(--color-bg); border-top: 1px solid var(--color-border-light); }
-.devot-sub { margin-bottom: var(--space-2); }
+.devot-group-body { padding: var(--space-3) var(--space-4) var(--space-4); background: var(--color-bg); border-top: 1px solid var(--color-border-light); }
+.devot-sub { margin-bottom: var(--space-2); border: 1px solid var(--color-border-light); border-radius: var(--radius-md); overflow: hidden; }
 .devot-sub:last-child { margin-bottom: 0; }
-.devot-sub summary { padding: var(--space-3); min-height: 44px; }
-.devot-sub .devot-body { padding: 0 var(--space-3) var(--space-4); }
+.devot-sub summary { padding: var(--space-3) var(--space-4); min-height: 44px; background: var(--color-surface-hover); }
+.devot-sub[open] summary { border-bottom: 1px solid var(--color-border-light); }
+.devot-sub .devot-body { padding: var(--space-3) var(--space-4) var(--space-4); }
 
 /* WHAT'S HAPPENING — two-column equal layout */
 .wh-grid { display: grid; grid-template-columns: 1fr 1px 1fr; gap: 0 var(--space-4); margin-top: var(--space-2); }
@@ -1097,7 +1098,7 @@ function renderCards(){
       +'<div class="card-top"><div class="card-name-row"><h3 class="card-name">'+esc(displayName(p.name,p.id))+'</h3>'+(ver?checkSvg:'')+'</div>'
       +'<div class="card-right">'+(dist!==null?'<span class="card-distance">'+fmtDist(dist)+'</span>':'')
       +'<button class="card-fav'+(fav?' is-fav':'')+'" onclick="toggleFav(\''+p.id+"',event)\" aria-label=\"Favorite\"><svg viewBox=\"0 0 24 24\" fill=\""+(fav?'currentColor':'none')+"\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z\"/></svg></button>"
-      +'</div></div><div class="card-town">'+esc(p.town)+', '+esc(p.county)+' County</div>'+nh
+      +'</div></div><div class="card-town">'+esc(p.town)+', '+esc(p.state)+'</div>'+nh
       +'</article>';
   });
 
@@ -1224,7 +1225,7 @@ function openDetail(id){
     :'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>';
 
   let chtml='<div class="detail-contact">';
-  if(loc0)chtml+='<div class="contact-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><a href="'+mapUrl+'" target="_blank" rel="noopener">'+esc(loc0.address||(loc0.city+', '+loc0.state))+'</a></div>';
+  if(p.staff&&p.staff.length)chtml+='<div class="contact-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>'+esc(p.staff[0])+'</span></div>';
   if(ct.phone)chtml+='<div class="contact-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><a href="tel:'+ct.phone+'">'+esc(ct.phone)+'</a></div>';
   // Show website as text link ONLY when bulletin URL takes the button (so website isn't lost)
   if(bulletinUrl&&ct.website)chtml+='<div class="contact-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><a href="'+esc(ct.website)+'" target="_blank" rel="noopener">'+esc(domain)+'</a></div>';
@@ -2030,7 +2031,7 @@ function initMap(){
 
       let popupHtml='<div class="popup-card" onclick="closeMapPopup();openDetail(\''+p.id+'\')">';
       popupHtml+='<div class="popup-name">'+esc(displayName(p.name,p.id))+'</div>';
-      popupHtml+='<div class="popup-town">'+esc(p.town)+', '+esc(p.county)+' County</div>';
+      popupHtml+='<div class="popup-town">'+esc(p.town)+', '+esc(p.state)+'</div>';
       if(next){
         popupHtml+='<div class="popup-next"><span class="popup-time">'+next.timeFormatted+'</span>';
         popupHtml+='<span class="popup-label">'+(SVC[next.service.type]||next.service.type)+'</span></div>';
@@ -2136,7 +2137,7 @@ function renderSaved(){
       +'<div class="card-top"><div class="card-name-row"><h3 class="card-name">'+esc(displayName(p.name,p.id))+'</h3>'+(ver?checkSvg:'')+'</div>'
       +'<div class="card-right">'+(dist!==null?'<span class="card-distance">'+fmtDist(dist)+'</span>':'')
       +'<button class="card-fav is-fav" onclick="toggleFav(\''+p.id+"',event);renderSaved()\" aria-label=\"Remove from favorites\"><svg viewBox=\"0 0 24 24\" fill=\"currentColor\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z\"/></svg></button>"
-      +'</div></div><div class="card-town">'+esc(p.town)+', '+esc(p.county)+' County</div>'+nh
+      +'</div></div><div class="card-town">'+esc(p.town)+', '+esc(p.state)+'</div>'+nh
       +'</article>';
   }).join('');
   el.innerHTML=html;
@@ -2391,6 +2392,42 @@ function formatReading(raw){
 // DEVOTIONAL CONTENT
 // ============================================================
 const DEVOTIONAL_GUIDES=[
+  {icon:'⛪',title:'The Sunday Obligation',body:`
+<p>The Catholic Church teaches that attending Mass on Sundays and Holy Days of Obligation is a serious duty for every baptized Catholic. This obligation flows from the Third Commandment — "Remember to keep holy the Lord's Day" — and from the Church's own precepts.</p>
+<p><strong>CCC 2180:</strong> "On Sundays and other holy days of obligation, the faithful are bound to participate in the Mass." The Sunday Eucharist is the foundation of Christian life and the heart of the Church's week.</p>
+<p><strong>CCC 2181:</strong> "Those who deliberately fail in this obligation commit a grave sin." Missing Mass without a serious reason is considered a mortal sin requiring Confession before receiving Communion again.</p>
+<p><strong>CCC 1166–1167:</strong> Sunday is the pre-eminent day for the celebration of the Eucharist because it is the day of the Resurrection. "The Sunday celebration of the Lord's Day and his Eucharist is at the heart of the Church's life."</p>
+<p>The obligation is fulfilled by attending any valid Catholic Mass — either on Sunday itself or the Saturday evening vigil (typically 4:00 PM or later).</p>
+<details class="conf-exam">
+  <summary>What Counts as a Serious Reason to Miss <svg style="width:16px;height:16px;flex-shrink:0;transition:transform 0.2s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></summary>
+  <div class="conf-exam-body">
+    <p>Legitimate reasons for missing Sunday Mass include:</p>
+    <ul>
+      <li>Illness or physical inability to attend</li>
+      <li>Caring for the sick, infants, or those who cannot be left alone</li>
+      <li>Severe weather or dangerous travel conditions</li>
+      <li>Required work that cannot be rescheduled (e.g., healthcare, emergency services)</li>
+      <li>Dispensation granted by your pastor or bishop</li>
+    </ul>
+    <p>When in doubt, speak with your priest. A general rule: if you are well enough to go to a restaurant or a social event, you are well enough for Mass.</p>
+  </div>
+</details>
+<details class="conf-exam">
+  <summary>Holy Days of Obligation (U.S.) <svg style="width:16px;height:16px;flex-shrink:0;transition:transform 0.2s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></summary>
+  <div class="conf-exam-body">
+    <p>In the United States, Catholics are also required to attend Mass on these six Holy Days (USCCB):</p>
+    <ul>
+      <li><strong>January 1</strong> — Solemnity of Mary, Mother of God</li>
+      <li><strong>40 days after Easter</strong> — Ascension of the Lord (in some dioceses transferred to the following Sunday)</li>
+      <li><strong>August 15</strong> — Assumption of the Blessed Virgin Mary</li>
+      <li><strong>November 1</strong> — All Saints' Day</li>
+      <li><strong>December 8</strong> — Immaculate Conception of the Blessed Virgin Mary</li>
+      <li><strong>December 25</strong> — Nativity of the Lord (Christmas)</li>
+    </ul>
+    <p>When January 1, August 15, or November 1 falls on a Saturday or Monday, the obligation is typically dispensed by the U.S. bishops. A vigil Mass the evening before fulfills the obligation for any Holy Day.</p>
+  </div>
+</details>
+  `},
   {icon:'☩',title:'How to go to Confession',body:`
 <p>Confession — also called the Sacrament of Reconciliation — is how Catholics receive God's forgiveness for sins committed after Baptism. It is required for mortal sins and strongly recommended for all sins. If you've been away for a long time, a gentle priest will be happy to help you through it.</p>
 <p>The basic steps:</p>
@@ -2433,17 +2470,17 @@ const DEVOTIONAL_GUIDES=[
   <div class="conf-act-text">O my God, I am heartily sorry for having offended Thee, and I detest all my sins because I dread the loss of heaven and the pains of hell; but most of all because they offend Thee, my God, who art all good and deserving of all my love. I firmly resolve, with the help of Thy grace, to confess my sins, to do penance, and to amend my life. Amen.</div>
 </div>
   `,filter:'confession'},
-  {icon:'✝️',title:'Stations of the Cross',body:`
-<p>The Stations of the Cross are 14 moments from Christ's Passion and death, traditionally prayed by moving through a series of images or carvings placed around the walls of a church. The practice originated as a way for people who could not travel to Jerusalem to walk the Via Dolorosa spiritually.</p>
-<p>The 14 stations: <strong>1.</strong> Jesus is condemned to death. <strong>2.</strong> Jesus takes up His cross. <strong>3.</strong> He falls the first time. <strong>4.</strong> He meets His Mother. <strong>5.</strong> Simon of Cyrene helps carry the cross. <strong>6.</strong> Veronica wipes His face. <strong>7.</strong> He falls a second time. <strong>8.</strong> He meets the women of Jerusalem. <strong>9.</strong> He falls a third time. <strong>10.</strong> He is stripped of His garments. <strong>11.</strong> He is nailed to the cross. <strong>12.</strong> He dies on the cross. <strong>13.</strong> He is taken down. <strong>14.</strong> He is laid in the tomb.</p>
-<p>Stations are prayed most often on Fridays during Lent, either privately or as a parish group. They typically take 20–30 minutes. Many parishes hold them at noon or in the early evening. Look for them under the Lent chip filter on the Find tab.</p>
-  `,filter:'lent'},
   {icon:'🕊️',title:'The Traditional Latin Mass',body:`
 <p>The Traditional Latin Mass — also known as the <em>Extraordinary Form</em> or the <em>Usus Antiquior</em> — is the form of the Roman Rite that was the universal norm before the liturgical reforms of the Second Vatican Council (1962–1965). It is celebrated entirely in Latin, with the priest facing the altar (<em>ad orientem</em>) for much of the liturgy.</p>
 <p>Key differences from the Ordinary Form (the standard Mass most Catholics attend): the prayers are from the 1962 Roman Missal, the congregation participates primarily through interior prayer and sung responses, and the structure includes prayers like the <strong>Last Gospel</strong> and the <strong>Prayers at the Foot of the Altar</strong> that are not part of the newer form.</p>
 <p>Catholics who attend the Traditional Latin Mass do so for a variety of reasons, including its contemplative character, its continuity with centuries of Catholic worship, and its rich musical tradition of Gregorian chant and polyphony. The Mass fulfills the Sunday obligation. Missals with Latin-English translations are usually available at the church to help you follow along.</p>
   `,filter:'latin'},
   {icon:'📿',title:'Devotions',isGroup:true,children:[
+    {icon:'✝️',title:'Stations of the Cross',body:`
+<p>The Stations of the Cross are 14 moments from Christ's Passion and death, traditionally prayed by moving through a series of images or carvings placed around the walls of a church. The practice originated as a way for people who could not travel to Jerusalem to walk the Via Dolorosa spiritually.</p>
+<p>The 14 stations: <strong>1.</strong> Jesus is condemned to death. <strong>2.</strong> Jesus takes up His cross. <strong>3.</strong> He falls the first time. <strong>4.</strong> He meets His Mother. <strong>5.</strong> Simon of Cyrene helps carry the cross. <strong>6.</strong> Veronica wipes His face. <strong>7.</strong> He falls a second time. <strong>8.</strong> He meets the women of Jerusalem. <strong>9.</strong> He falls a third time. <strong>10.</strong> He is stripped of His garments. <strong>11.</strong> He is nailed to the cross. <strong>12.</strong> He dies on the cross. <strong>13.</strong> He is taken down. <strong>14.</strong> He is laid in the tomb.</p>
+<p>Stations are prayed most often on Fridays during Lent, either privately or as a parish group. They typically take 20–30 minutes. Many parishes hold them at noon or in the early evening. Look for them under the Lent chip filter on the Find tab.</p>
+    `,filter:'lent'},
     {icon:'🕯️',title:'Eucharistic Adoration',body:`
 <p><strong>Eucharistic Adoration</strong> is time spent in prayer before the Blessed Sacrament — the consecrated host — which Catholics believe is truly the Body of Christ. The host is placed in a vessel called a monstrance and displayed on the altar. You simply sit, kneel, or stand in its presence.</p>
 <p>There's no required prayer or posture. Many people read Scripture, pray the Rosary, journal, or simply sit in silence. Adoration chapels are typically quiet spaces open for individual prayer, sometimes for extended hours.</p>
@@ -2555,12 +2592,31 @@ function renderMore(){
   (function(){
     const grid=document.getElementById('aboutStatGrid');
     if(!grid)return;
+    const churchCount=allParishes.reduce((n,p)=>n+(p.locations||[]).length,0);
     const svcCount=allParishes.reduce((n,p)=>n+(p.services||[]).length,0);
+    // Avg freshness (days since last_checked)
+    const now=new Date();
+    let freshTotal=0,freshN=0;
+    allParishes.forEach(p=>{
+      if(p.validation&&p.validation.last_checked){
+        freshTotal+=Math.floor((now-new Date(p.validation.last_checked))/(864e5));
+        freshN++;
+      }
+    });
+    const avgFresh=freshN?Math.round(freshTotal/freshN):0;
+    const freshLabel=avgFresh<=1?'today':avgFresh+' days';
+    // % verified
+    let verCount=0;
+    allParishes.forEach(p=>{
+      const s=p.validation&&p.validation.status;
+      if(s==='verified'||s==='manually_verified')verCount++;
+    });
+    const verPct=allParishes.length?Math.round(verCount/allParishes.length*100):0;
     grid.innerHTML=
-      '<div class="stat-card"><div class="stat-value">'+allParishes.length+'</div><div class="stat-label">Parishes</div></div>'
+      '<div class="stat-card"><div class="stat-value">'+churchCount+'</div><div class="stat-label">Churches</div></div>'
       +'<div class="stat-card"><div class="stat-value">'+svcCount.toLocaleString()+'</div><div class="stat-label">Services</div></div>'
-      +'<div class="stat-card"><div class="stat-value">'+langCount.size+'</div><div class="stat-label">Languages</div></div>'
-      +'<div class="stat-card"><div class="stat-value">4</div><div class="stat-label">States</div></div>';
+      +'<div class="stat-card"><div class="stat-value">'+freshLabel+'</div><div class="stat-label">Avg. Freshness</div></div>'
+      +'<div class="stat-card"><div class="stat-value">'+verPct+'%</div><div class="stat-label">Verified</div></div>';
   })();
 
   // ── What's Happening: unified YC + Community events ────────────────────
@@ -2661,7 +2717,8 @@ function renderMore(){
   }
 
   // Footer
-  document.getElementById('moreFooter').innerHTML='MassFinder v2.0<br>'+allParishes.length+' churches · '+langCount.size+' languages · 4 states';
+  var stateSet=new Set();allParishes.forEach(function(p){if(p.state)stateSet.add(p.state)});
+  document.getElementById('moreFooter').innerHTML='MassFinder v2.0<br>'+allParishes.length+' parishes · '+langCount.size+' languages · '+stateSet.size+' states';
 
   // Trigger readings fetch async (also populates saint card)
   fetchReadings();

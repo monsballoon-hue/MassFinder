@@ -1673,7 +1673,7 @@
       "validation": {
         "status": "manually_verified",
         "last_checked": "2026-03-03",
-        "bulletin_date": "2026/03"
+        "bulletin_date": "2026-03"
       },
       "county": "Hampshire",
       "clergy": [
@@ -4352,7 +4352,8 @@
           },
           "id": "parish_016-dmass-mf-0645-lent-st",
           "end_time": null,
-          "language": "en"
+          "language": "en",
+          "source": "bulletin_2026-02"
         },
         {
           "type": "stations_of_cross",
@@ -4366,7 +4367,8 @@
           },
           "id": "parish_016-stations-fri-1800-lent-st",
           "end_time": null,
-          "language": "en"
+          "language": "en",
+          "source": "bulletin_2026-02"
         }
       ],
       "validation": {
@@ -6425,7 +6427,8 @@
           },
           "id": "parish_022-stations-mon-1800-lent-blesse",
           "end_time": null,
-          "language": "en"
+          "language": "en",
+          "source": "bulletin_2026-02"
         },
         {
           "type": "stations_of_cross",
@@ -6438,7 +6441,8 @@
           },
           "id": "parish_022-stations-fri-1130-lent-holy",
           "end_time": null,
-          "language": "en"
+          "language": "en",
+          "source": "bulletin_2026-02"
         }
       ],
       "validation": {
@@ -11370,7 +11374,8 @@
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
-          }
+          },
+          "source": "bulletin_2026-03"
         }
       ],
       "validation": {
@@ -19605,7 +19610,7 @@
           "zip": "01089",
           "lat": 42.1055,
           "lng": -72.6415,
-          "short_name": ""
+          "short_name": null
         }
       ],
       "contact": {
@@ -19954,7 +19959,7 @@
           "zip": "01085",
           "lat": 42.1252,
           "lng": -72.7498,
-          "short_name": ""
+          "short_name": null
         }
       ],
       "contact": {
@@ -20211,7 +20216,7 @@
           "mailing": "P.O. Box 489, Westfield MA 01086",
           "lat": 42.128,
           "lng": -72.761,
-          "short_name": ""
+          "short_name": null
         }
       ],
       "contact": {
@@ -20811,7 +20816,7 @@
           "zip": "01085",
           "lat": 42.1248,
           "lng": -72.7475,
-          "short_name": ""
+          "short_name": null
         }
       ],
       "contact": {
