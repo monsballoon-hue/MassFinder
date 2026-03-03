@@ -97,6 +97,8 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--txt);font-size:1
 .vpill.needs_verification,.vpill.low_confidence{background:rgba(217,119,6,.18);color:#7c4208;border:1px solid rgba(217,119,6,.3)}
 .vpill.unverified{background:rgba(156,163,175,.18);color:#4B5563;border:1px solid rgba(156,163,175,.3)}
 .vpill.excluded{background:rgba(185,28,28,.15);color:#991B1B;border:1px solid rgba(185,28,28,.2)}
+.btn-del-parish{height:32px;padding:0 12px;background:transparent;border:1px solid rgba(185,28,28,.4);color:#fca5a5;border-radius:var(--r-sm);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font-b);white-space:nowrap;transition:background .15s,border-color .15s,color .15s}
+.btn-del-parish:hover{background:rgba(185,28,28,.25);border-color:#fca5a5;color:#fff}
 .btn-save{height:32px;padding:0 16px;background:var(--green);color:#fff;border:none;border-radius:var(--r-sm);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font-b);transition:background .15s,box-shadow .4s;white-space:nowrap}
 .btn-save:hover{background:#3d6b4c}
 .btn-save.dirty{background:var(--accent);animation:savepulse 2.4s ease infinite}
@@ -508,6 +510,7 @@ function renderPanel() {
         '</div>' +
         '<div class="edit-hdr-right">' +
           '<span class="vpill ' + dotClass(vs) + '">' + vs.replace(/_/g,' ') + '</span>' +
+          '<button class="btn-del-parish" onclick="deleteParish()" title="Permanently remove this parish from the data">Delete Parish</button>' +
           '<span class="save-flash" id="saveFlash"></span>' +
           '<button class="btn-save" id="btnSave" onclick="saveParish()">Save Parish</button>' +
         '</div>' +
@@ -977,6 +980,26 @@ function saveParish() {
     vs:(p.validation&&p.validation.status)||'unverified'
   }));
   filterList();
+}
+function deleteParish() {
+  if (!pendingParish) return;
+  const name = pendingParish.name;
+  const id   = pendingParish.id;
+  if (!confirm('Permanently delete "' + name + '" (' + id + ') from the working data?\n\nThis removes the record in memory. Click Download JSON afterward to make it permanent.')) return;
+  editData.parishes = (editData.parishes||[]).filter(p => p.id !== id);
+  allRows = allRows.filter(r => r.id !== id);
+  pendingParish = null;
+  isDirty = false;
+  updateStats(allRows.length, allRows.length);
+  renderList(allRows);
+  document.getElementById('editCol').innerHTML =
+    '<div class="empty-state">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">' +
+        '<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 12h8M8 8h5"/>' +
+      '</svg>' +
+      '<p style="color:var(--amber)">\u2713 "' + esc(name) + '" deleted from working data</p>' +
+      '<small>Click <strong>Download JSON</strong> in the top bar to make this permanent, then replace the file and commit.</small>' +
+    '</div>';
 }
 function downloadJSON() {
   if (pendingParish) saveParish();
