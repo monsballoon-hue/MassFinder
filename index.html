@@ -2470,17 +2470,17 @@ const DEVOTIONAL_GUIDES=[
   <div class="conf-act-text">O my God, I am heartily sorry for having offended Thee, and I detest all my sins because I dread the loss of heaven and the pains of hell; but most of all because they offend Thee, my God, who art all good and deserving of all my love. I firmly resolve, with the help of Thy grace, to confess my sins, to do penance, and to amend my life. Amen.</div>
 </div>
   `,filter:'confession'},
+  {icon:'✝️',title:'Stations of the Cross',body:`
+<p>The Stations of the Cross are 14 moments from Christ's Passion and death, traditionally prayed by moving through a series of images or carvings placed around the walls of a church. The practice originated as a way for people who could not travel to Jerusalem to walk the Via Dolorosa spiritually.</p>
+<p>The 14 stations: <strong>1.</strong> Jesus is condemned to death. <strong>2.</strong> Jesus takes up His cross. <strong>3.</strong> He falls the first time. <strong>4.</strong> He meets His Mother. <strong>5.</strong> Simon of Cyrene helps carry the cross. <strong>6.</strong> Veronica wipes His face. <strong>7.</strong> He falls a second time. <strong>8.</strong> He meets the women of Jerusalem. <strong>9.</strong> He falls a third time. <strong>10.</strong> He is stripped of His garments. <strong>11.</strong> He is nailed to the cross. <strong>12.</strong> He dies on the cross. <strong>13.</strong> He is taken down. <strong>14.</strong> He is laid in the tomb.</p>
+<p>Stations are prayed most often on Fridays during Lent, either privately or as a parish group. They typically take 20–30 minutes. Many parishes hold them at noon or in the early evening. Look for them under the Lent chip filter on the Find tab.</p>
+  `,filter:'lent'},
   {icon:'🕊️',title:'The Traditional Latin Mass',body:`
 <p>The Traditional Latin Mass — also known as the <em>Extraordinary Form</em> or the <em>Usus Antiquior</em> — is the form of the Roman Rite that was the universal norm before the liturgical reforms of the Second Vatican Council (1962–1965). It is celebrated entirely in Latin, with the priest facing the altar (<em>ad orientem</em>) for much of the liturgy.</p>
 <p>Key differences from the Ordinary Form (the standard Mass most Catholics attend): the prayers are from the 1962 Roman Missal, the congregation participates primarily through interior prayer and sung responses, and the structure includes prayers like the <strong>Last Gospel</strong> and the <strong>Prayers at the Foot of the Altar</strong> that are not part of the newer form.</p>
 <p>Catholics who attend the Traditional Latin Mass do so for a variety of reasons, including its contemplative character, its continuity with centuries of Catholic worship, and its rich musical tradition of Gregorian chant and polyphony. The Mass fulfills the Sunday obligation. Missals with Latin-English translations are usually available at the church to help you follow along.</p>
   `,filter:'latin'},
   {icon:'📿',title:'Devotions',isGroup:true,children:[
-    {icon:'✝️',title:'Stations of the Cross',body:`
-<p>The Stations of the Cross are 14 moments from Christ's Passion and death, traditionally prayed by moving through a series of images or carvings placed around the walls of a church. The practice originated as a way for people who could not travel to Jerusalem to walk the Via Dolorosa spiritually.</p>
-<p>The 14 stations: <strong>1.</strong> Jesus is condemned to death. <strong>2.</strong> Jesus takes up His cross. <strong>3.</strong> He falls the first time. <strong>4.</strong> He meets His Mother. <strong>5.</strong> Simon of Cyrene helps carry the cross. <strong>6.</strong> Veronica wipes His face. <strong>7.</strong> He falls a second time. <strong>8.</strong> He meets the women of Jerusalem. <strong>9.</strong> He falls a third time. <strong>10.</strong> He is stripped of His garments. <strong>11.</strong> He is nailed to the cross. <strong>12.</strong> He dies on the cross. <strong>13.</strong> He is taken down. <strong>14.</strong> He is laid in the tomb.</p>
-<p>Stations are prayed most often on Fridays during Lent, either privately or as a parish group. They typically take 20–30 minutes. Many parishes hold them at noon or in the early evening. Look for them under the Lent chip filter on the Find tab.</p>
-    `,filter:'lent'},
     {icon:'🕯️',title:'Eucharistic Adoration',body:`
 <p><strong>Eucharistic Adoration</strong> is time spent in prayer before the Blessed Sacrament — the consecrated host — which Catholics believe is truly the Body of Christ. The host is placed in a vessel called a monstrance and displayed on the altar. You simply sit, kneel, or stand in its presence.</p>
 <p>There's no required prayer or posture. Many people read Scripture, pray the Rosary, journal, or simply sit in silence. Adoration chapels are typically quiet spaces open for individual prayer, sometimes for extended hours.</p>
@@ -2592,31 +2592,12 @@ function renderMore(){
   (function(){
     const grid=document.getElementById('aboutStatGrid');
     if(!grid)return;
-    const churchCount=allParishes.reduce((n,p)=>n+(p.locations||[]).length,0);
     const svcCount=allParishes.reduce((n,p)=>n+(p.services||[]).length,0);
-    // Avg freshness (days since last_checked)
-    const now=new Date();
-    let freshTotal=0,freshN=0;
-    allParishes.forEach(p=>{
-      if(p.validation&&p.validation.last_checked){
-        freshTotal+=Math.floor((now-new Date(p.validation.last_checked))/(864e5));
-        freshN++;
-      }
-    });
-    const avgFresh=freshN?Math.round(freshTotal/freshN):0;
-    const freshLabel=avgFresh<=1?'today':avgFresh+' days';
-    // % verified
-    let verCount=0;
-    allParishes.forEach(p=>{
-      const s=p.validation&&p.validation.status;
-      if(s==='verified'||s==='manually_verified')verCount++;
-    });
-    const verPct=allParishes.length?Math.round(verCount/allParishes.length*100):0;
     grid.innerHTML=
-      '<div class="stat-card"><div class="stat-value">'+churchCount+'</div><div class="stat-label">Churches</div></div>'
+      '<div class="stat-card"><div class="stat-value">'+allParishes.length+'</div><div class="stat-label">Parishes</div></div>'
       +'<div class="stat-card"><div class="stat-value">'+svcCount.toLocaleString()+'</div><div class="stat-label">Services</div></div>'
-      +'<div class="stat-card"><div class="stat-value">'+freshLabel+'</div><div class="stat-label">Avg. Freshness</div></div>'
-      +'<div class="stat-card"><div class="stat-value">'+verPct+'%</div><div class="stat-label">Verified</div></div>';
+      +'<div class="stat-card"><div class="stat-value">'+langCount.size+'</div><div class="stat-label">Languages</div></div>'
+      +'<div class="stat-card"><div class="stat-value">4</div><div class="stat-label">States</div></div>';
   })();
 
   // ── What's Happening: unified YC + Community events ────────────────────
@@ -2717,8 +2698,7 @@ function renderMore(){
   }
 
   // Footer
-  var stateSet=new Set();allParishes.forEach(function(p){if(p.state)stateSet.add(p.state)});
-  document.getElementById('moreFooter').innerHTML='MassFinder v2.0<br>'+allParishes.length+' parishes · '+langCount.size+' languages · '+stateSet.size+' states';
+  document.getElementById('moreFooter').innerHTML='MassFinder v2.0<br>'+allParishes.length+' churches · '+langCount.size+' languages · 4 states';
 
   // Trigger readings fetch async (also populates saint card)
   fetchReadings();
