@@ -1,0 +1,15 @@
+{
+  "_note": "Log corrections here after each review session. Claude reads this file to improve future parsing accuracy. Add entries using the format below.",
+  "_format": {
+    "date": "YYYY-MM-DD",
+    "parish_id": "parish_XXX",
+    "parish_name": "Full parish name",
+    "error_type": "MISSED_ENTIRELY | WRONG_FIELD | WRONG_FORMAT | HALLUCINATED | GRABBED_IRRELEVANT",
+    "description": "What Claude got wrong and what the correct value is",
+    "example": {
+      "wrong": "what Claude returned",
+      "correct": "what the actual value should be"
+    }
+  },
+  "corrections": []
+}

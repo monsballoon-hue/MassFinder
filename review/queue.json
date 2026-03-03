@@ -1,0 +1,6 @@
+{
+  "_note": "Tracks parish review history. Edit 'flags' to manually prioritize a parish. Do not edit 'history' by hand — it is updated by scripts/prep-review.js.",
+  "last_run": null,
+  "history": {},
+  "flags": {}
+}
