@@ -2644,13 +2644,14 @@ function renderMore(){
       }
       if(v&&v.status==='verified')verCount++;
     });
-    const avgFresh=checkedCount?Math.round(totalDays/checkedCount):'-';
+    const avgDays=checkedCount?Math.round(totalDays/checkedCount):null;
+    const avgLabel=avgDays===null?'-':avgDays<=1?'Today':avgDays<7?'~'+avgDays+' days':avgDays<30?'~'+Math.round(avgDays/7)+' wks':'~'+Math.round(avgDays/30)+' mo';
     const verPct=allParishes.length?Math.round(verCount/allParishes.length*100):0;
     grid.innerHTML=
       '<div class="stat-card"><div class="stat-value">'+allParishes.length+'</div><div class="stat-label">Churches</div></div>'
       +'<div class="stat-card"><div class="stat-value">'+svcCount.toLocaleString()+'</div><div class="stat-label">Services</div></div>'
-      +'<div class="stat-card"><div class="stat-value">'+avgFresh+'d</div><div class="stat-label">Avg. Freshness</div></div>'
-      +'<div class="stat-card"><div class="stat-value">'+verPct+'%</div><div class="stat-label">Verified</div></div>';
+      +'<div class="stat-card"><div class="stat-value">'+avgLabel+'</div><div class="stat-label">Last Checked</div></div>'
+      +'<div class="stat-card"><div class="stat-value">'+verPct+'%</div><div class="stat-label">Accuracy</div></div>';
   })();
 
   // ── What's Happening: unified YC + Community events ────────────────────
