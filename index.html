@@ -335,6 +335,7 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .schedule-location { font-size: var(--text-sm); color: var(--color-text-secondary); }
 .schedule-note { font-size: var(--text-xs); color: var(--color-text-tertiary); font-style: italic; margin-top: 2px; }
 .schedule-lang-badge { display: inline-block; font-size: 11px; font-weight: var(--weight-medium); padding: 1px 6px; border-radius: var(--radius-full); color: #1E40AF; background: #DBEAFE; margin-left: var(--space-2); }
+.schedule-season-badge { display: inline-flex; align-items: center; gap: 2px; font-size: 11px; font-weight: var(--weight-medium); padding: 1px 7px; border-radius: var(--radius-full); color: #4D7C0F; background: #ECFCCB; margin-left: var(--space-2); letter-spacing: 0.01em; }
 .schedule-appt { font-size: var(--text-sm); color: var(--color-text-tertiary); font-style: italic; padding: var(--space-2) 0; }
 .schedule-day.first-friday { border-left: 3px solid #B91C1C; padding-left: var(--space-3); margin-left: calc(-1 * var(--space-1)); }
 .schedule-day.first-friday .schedule-day-label { color: #B91C1C; }
@@ -1796,6 +1797,7 @@ function renderSched(svcs,locL,ml,sectionTypes){
     const tStr=s.end_time?fmt12(s.time)+' – '+fmt12(s.end_time):fmt12(s.time);
     const lb=s.language&&s.language!=='en'?'<span class="schedule-lang-badge">'+(LANG_NAMES[s.language]||s.language)+'</span>':'';
     const rb=s.rite==='tridentine'?'<span class="schedule-lang-badge">TLM</span>':'';
+    const sb=s.seasonal&&s.seasonal.season==='lent'?'<span class="schedule-season-badge">🌿 Lent</span>':'';
     const loc=ml&&s.location_id&&locL[s.location_id]?locL[s.location_id]:'';
     const tl=SVC[s.type]||s.type;
     const note=extraNote||cleanNote(s)||'';
@@ -1829,7 +1831,7 @@ function renderSched(svcs,locL,ml,sectionTypes){
       if(recLabel)meta+='<div class="schedule-note" style="font-weight:var(--weight-medium);color:var(--color-accent-text)">'+esc(recLabel)+'</div>';
     }
 
-    return '<div class="schedule-row"><div class="schedule-time">'+tStr+lb+rb+'</div><div class="schedule-meta">'+meta+'</div></div>';
+    return '<div class="schedule-row"><div class="schedule-time">'+tStr+lb+rb+sb+'</div><div class="schedule-meta">'+meta+'</div></div>';
   }
 
   // === Helper: clean redundant notes ===
