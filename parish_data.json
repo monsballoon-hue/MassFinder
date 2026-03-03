@@ -136,7 +136,12 @@
           "office@acparishes.org"
         ],
         "website": "https://www.acparishes.org",
-        "office_hours": "Mon - Wed, 9:00 a.m. - 1:00 p.m. (St. Mary the Assumption, Cheshire)"
+        "office_hours": "Mon - Wed, 9:00 a.m. - 1:00 p.m. (St. Mary the Assumption, Cheshire)",
+        "phone_secondary": null,
+        "office_address": null,
+        "instagram": null,
+        "facebook": null,
+        "notes": null
       },
       "staff": [
         "pastor",
@@ -209,14 +214,16 @@
           "day": "monday",
           "time": "08:30",
           "end_time": null,
-          "location_id": "notre-dame-church-adams",
           "language": "en",
-          "notes": "Summer schedule",
+          "notes": null,
+          "source": "bulletin_2026-02",
+          "rite": null,
+          "times_vary": false,
+          "location_id": "notre-dame-church-adams",
           "seasonal": {
             "is_seasonal": true,
             "season": "summer"
-          },
-          "source": "bulletin_2026-02"
+          }
         },
         {
           "id": "parish_001-dmass-tue-0830-notre",
@@ -254,14 +261,16 @@
           "day": "friday",
           "time": "08:30",
           "end_time": null,
-          "location_id": "notre-dame-church-adams",
           "language": "en",
           "notes": null,
+          "source": "bulletin_2026-02",
+          "rite": null,
+          "times_vary": false,
+          "location_id": "notre-dame-church-adams",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
+          }
         },
         {
           "id": "parish_001-ador-fri-0900-notre",
@@ -299,14 +308,16 @@
           "day": "weekday",
           "time": "08:00",
           "end_time": null,
-          "location_id": null,
           "language": "en",
-          "notes": "Before Daily Mass/Communion Service, Monday–Friday",
+          "notes": "Before Daily Mass, Monday–Friday",
+          "source": "bulletin_2026-02",
+          "rite": null,
+          "times_vary": false,
+          "location_id": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
+          }
         },
         {
           "id": "parish_001-divmerc-fri-1500-st",
@@ -356,17 +367,19 @@
         {
           "id": "parish_001-ador-wed-0900-st",
           "type": "adoration",
+          "day": "wednesday",
           "time": "09:00",
           "end_time": "10:00",
-          "location_id": "st-marys-church-adams",
           "language": "en",
           "notes": "Following 8:30 AM Mass",
+          "source": "bulletin_2026-02",
+          "rite": null,
+          "times_vary": false,
+          "location_id": "st-marys-church-adams",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
-          },
-          "source": "bulletin_2026-02",
-          "day": "wednesday"
+          }
         },
         {
           "id": "parish_001-ador-thu-0900-st",
@@ -389,14 +402,16 @@
           "day": "wednesday",
           "time": "18:00",
           "end_time": null,
-          "location_id": "st-marys-church-adams",
           "language": "en",
           "notes": "Wednesdays of Lent",
+          "source": "bulletin_2026-02",
+          "rite": null,
+          "times_vary": false,
+          "location_id": "st-marys-church-adams",
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
-          },
-          "source": "bulletin_2026-02"
+          }
         },
         {
           "id": "parish_001-conf-wed-1830-lent-st",
@@ -404,14 +419,16 @@
           "day": "wednesday",
           "time": "18:30",
           "end_time": "19:00",
-          "location_id": "st-marys-church-adams",
           "language": "en",
-          "notes": "Wednesdays of Lent — last confession before Easter on Wed Apr 1",
+          "notes": "Wednesdays of Lent",
+          "source": "bulletin_2026-02",
+          "rite": null,
+          "times_vary": false,
+          "location_id": "st-marys-church-adams",
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
-          },
-          "source": "bulletin_2026-02"
+          }
         },
         {
           "id": "parish_001-stations-fri-1545-lent-st",
@@ -433,30 +450,34 @@
           "type": "holy_thursday_mass",
           "day": "holy_thursday",
           "time": "19:00",
-          "location_id": "st-marys-church-adams",
+          "end_time": null,
           "language": "en",
-          "notes": null,
+          "notes": "No Daily Mass (Alter of roses and Benediction at 10pm)",
+          "source": "manual_verification_2026-02",
+          "rite": null,
+          "times_vary": false,
+          "location_id": "st-marys-church-adams",
           "seasonal": {
             "is_seasonal": true,
             "season": "holy_week"
-          },
-          "source": "manual_verification_2026-02",
-          "end_time": null
+          }
         },
         {
           "id": "parish_001-gfsvc-Good-1900-hw-st",
           "type": "good_friday_service",
           "day": "good_friday",
           "time": "19:00",
-          "location_id": "st-stanislaus-church-adams",
+          "end_time": null,
           "language": "en",
           "notes": null,
+          "source": "manual_verification_2026-02",
+          "rite": null,
+          "times_vary": false,
+          "location_id": "st-stanislaus-church-adams",
           "seasonal": {
             "is_seasonal": true,
             "season": "holy_week"
-          },
-          "source": "manual_verification_2026-02",
-          "end_time": null
+          }
         },
         {
           "id": "parish_001-evmass-East-1930-hw-notre",
@@ -470,20 +491,25 @@
             "is_seasonal": true,
             "season": "holy_week"
           },
-          "source": "manual_verification_2026-02",
+          "source": "bulletin_2026-02",
           "end_time": null
         },
         {
+          "id": "parish_001-ador-tue-lent",
           "type": "adoration",
           "day": "tuesday",
+          "time": null,
+          "end_time": null,
+          "language": "en",
           "notes": "Following Daily Mass",
+          "source": "bulletin_2026-02",
+          "rite": null,
+          "times_vary": false,
+          "location_id": null,
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
-          },
-          "id": "parish_001-ador-tue-lent",
-          "end_time": null,
-          "language": "en"
+          }
         },
         {
           "type": "adoration",
@@ -495,7 +521,8 @@
           },
           "id": "parish_001-ador-wed-lent",
           "end_time": null,
-          "language": "en"
+          "language": "en",
+          "source": "bulletin_2026-02"
         },
         {
           "type": "adoration",
@@ -507,7 +534,8 @@
           },
           "id": "parish_001-ador-thu-lent",
           "end_time": null,
-          "language": "en"
+          "language": "en",
+          "source": "bulletin_2026-02"
         },
         {
           "type": "adoration",
@@ -519,7 +547,8 @@
           },
           "id": "parish_001-ador-fri-lent",
           "end_time": null,
-          "language": "en"
+          "language": "en",
+          "source": "bulletin_2026-02"
         },
         {
           "type": "divine_mercy",
@@ -533,23 +562,59 @@
           },
           "id": "parish_001-devot-fri-1500-lent-st",
           "end_time": null,
-          "language": "en"
+          "language": "en",
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_001-daily_mass-1772538231238",
+          "type": "daily_mass",
+          "day": "monday",
+          "time": "08:30",
+          "end_time": null,
+          "language": "en",
+          "notes": null,
+          "source": "bulletin_2026-02",
+          "rite": null,
+          "times_vary": false,
+          "location_id": "st-marys-church-adams",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          }
+        },
+        {
+          "id": "parish_001-easter_vigil_mass-1772538528850",
+          "type": "easter_vigil_mass",
+          "day": "easter_vigil",
+          "time": "19:30",
+          "end_time": null,
+          "language": "en",
+          "notes": null,
+          "source": "bulletin_2026-02",
+          "rite": null,
+          "times_vary": false,
+          "location_id": "notre-dame-church-adams",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          }
         }
       ],
       "validation": {
-        "status": "verified",
-        "last_checked": "2026-02-21",
-        "bulletin_date": "2026-02"
+        "status": "manually_verified",
+        "last_checked": "2026-03-03",
+        "bulletin_date": "2026-03"
       },
       "special_events": [
         {
           "id": "parish_001-evt-coffee",
           "title": "Coffee Hour",
           "category": "social",
+          "frequency": "weekly",
           "day": "sunday",
           "time": "10:45",
-          "frequency": "weekly",
           "notes": "Following 9:45am Sunday Mass at St. Mary's",
+          "source": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
@@ -3075,7 +3140,12 @@
           "info@stanthonychicopee.com"
         ],
         "website": "https://stanthonyma.org",
-        "office_hours": "Tues. - Fri. 10:00 a.m. - 2:00 p.m."
+        "office_hours": "Tues. - Fri. 10:00 a.m. - 2:00 p.m.",
+        "phone_secondary": null,
+        "office_address": null,
+        "instagram": null,
+        "facebook": "stanthonychicopee",
+        "notes": null
       },
       "staff": [
         "pastor",
@@ -3095,7 +3165,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_011-smass-sat-1730-es",
@@ -3110,7 +3180,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_011-smass-sun-1000",
@@ -3125,7 +3195,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_011-smass-sun-1130-pl",
@@ -3140,7 +3210,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_011-dmass-tue-1800",
@@ -3154,7 +3224,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02",
+          "source": "bulletin_2026-03",
           "day": "tuesday"
         },
         {
@@ -3163,14 +3233,16 @@
           "day": "friday",
           "time": "10:00",
           "end_time": "16:00",
-          "location_id": null,
           "language": "en",
           "notes": "Chapel",
+          "source": "website_2026-02",
+          "rite": null,
+          "times_vary": false,
+          "location_id": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
-          },
-          "source": "website_2026-02"
+          }
         },
         {
           "id": "parish_011-divmerc-fri-1500",
@@ -3178,14 +3250,16 @@
           "day": "friday",
           "time": "15:00",
           "end_time": null,
-          "location_id": null,
           "language": "en",
           "notes": "Divine Mercy Chaplet during adoration",
+          "source": "website_2026-02",
+          "rite": null,
+          "times_vary": false,
+          "location_id": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
-          },
-          "source": "website_2026-02"
+          }
         },
         {
           "id": "parish_011-novena-tue-1830",
@@ -3193,44 +3267,96 @@
           "day": "tuesday",
           "time": "18:30",
           "end_time": null,
-          "location_id": null,
           "language": "en",
-          "notes": "Novena to St. Anthony of Padua",
+          "notes": "Novena to St. Anthony of Padua (after 6pm mass)",
+          "source": "website_2026-02",
+          "rite": null,
+          "times_vary": false,
+          "location_id": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
-          },
-          "source": "website_2026-02"
+          }
         },
         {
           "id": "parish_011-rosary-daily-1530",
           "type": "rosary",
-          "day": "daily",
+          "day": "saturday",
           "time": "15:30",
           "end_time": "16:00",
+          "language": "en",
+          "notes": "30 min before each weekend Mass",
+          "source": "website_2026-02",
+          "rite": null,
+          "times_vary": false,
+          "location_id": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          }
+        },
+        {
+          "id": "parish_011-daily_mass-1772537211918",
+          "type": "daily_mass",
+          "day": "wednesday",
+          "time": "18:00",
+          "end_time": null,
+          "language": "en",
+          "notes": null,
+          "source": "website_2026-02",
+          "rite": null,
+          "times_vary": false,
+          "location_id": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          }
+        },
+        {
+          "id": "parish_011-daily_mass-1772537214701",
+          "type": "daily_mass",
+          "time": "18:00",
+          "end_time": null,
           "location_id": null,
           "language": "en",
-          "notes": "30 min before each Mass",
+          "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02",
-          "time_is_inferred": true
+          "source": "bulletin_2026-03",
+          "day": "thursday"
+        },
+        {
+          "id": "parish_011-daily_mass-1772537228600",
+          "type": "daily_mass",
+          "time": "18:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03",
+          "day": "friday"
         }
       ],
       "validation": {
-        "status": "low_confidence",
-        "last_checked": "2026-02-21",
+        "status": "manually_verified",
+        "last_checked": "2026-03-03",
         "confidence_reason": "No bulletin available — data sourced from website only. Schedule may not be current.",
         "sources": [
           "website_2026-02 — https://stanthonyma.org"
-        ]
+        ],
+        "bulletin_date": null
       },
       "county": "Hampden",
       "clergy": [],
       "is_accessible": null,
-      "special_events": []
+      "special_events": [],
+      "bulletin_url": null
     },
     {
       "id": "parish_012",

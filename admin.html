@@ -227,6 +227,8 @@ details.card>.card-body{border-top:1px solid var(--border-lt)}
 .pill-lang{background:#EEF2FF;color:#4338CA}
 .pill-seasonal{background:var(--green-bg);color:var(--green)}
 .pill-vary{background:var(--amber-bg);color:var(--amber)}
+.loc-addr-preview{font-size:12px;color:var(--txt3);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.loc-rows{margin-bottom:4px}
 .pill-note{background:var(--bg);color:var(--txt3);border:1px solid var(--border)}
 .btn-row-edit{flex-shrink:0;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;border:1.5px solid var(--border);border-radius:var(--r-sm);background:var(--bg);color:var(--txt2);cursor:pointer;font-family:var(--font-b);transition:border-color .15s,color .15s;letter-spacing:1px}
 .btn-row-edit:hover{border-color:var(--primary);color:var(--primary)}
@@ -470,6 +472,24 @@ button:active:not(:disabled){transform:scale(0.97)}
   </div>
 </div>
 
+<!-- ══ LOCATION MODAL ═════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="locModal" onclick="closeIfBg(event,'locModal')">
+  <div class="modal">
+    <div class="modal-hdr">
+      <h3 id="locModalTitle">Edit Location</h3>
+      <button class="modal-close" onclick="closeLocModal()">&#x2715;</button>
+    </div>
+    <div class="modal-body" id="locModalBody"></div>
+    <div class="modal-footer">
+      <button id="ml_delete" class="btn-danger" onclick="deleteLocation()">Delete</button>
+      <div class="modal-footer-right">
+        <button class="btn-secondary" onclick="closeLocModal()">Cancel</button>
+        <button class="btn-primary-sm" onclick="saveLocationModal()">Save Location</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ══ HELP MODAL ═════════════════════════════════════════════════════════ -->
 <div class="modal-overlay" id="helpModal" onclick="closeIfBg(event,'helpModal')">
   <div class="modal wide">
@@ -598,7 +618,8 @@ const SVC_TYPES = {
   miraculous_medal:'Miraculous Medal', novena:'Novena', devotion:'Devotion',
   vespers:'Vespers', anointing_of_sick:'Anointing of the Sick', benediction:'Benediction',
   holy_thursday_mass:"Mass of the Lord's Supper", good_friday_service:'Celebration of the Passion',
-  easter_vigil_mass:'Easter Vigil', bible_study:'Bible Study',
+  easter_vigil_mass:'Easter Vigil', palm_sunday_mass:'Palm Sunday Mass',
+  easter_sunday_mass:'Easter Sunday Mass', bible_study:'Bible Study',
   gorzkie_zale:'Gorzkie \u017Bale', mens_group:"Men's Group", social_event:'Social Event'
 };
 const SVC_TYPE_GROUPS = [
@@ -607,14 +628,14 @@ const SVC_TYPE_GROUPS = [
   { label:'Adoration',  types:['adoration','perpetual_adoration','holy_hour','benediction'] },
   { label:'Devotions',  types:['rosary','stations_of_cross','divine_mercy','miraculous_medal',
                                 'novena','devotion','gorzkie_zale','vespers'] },
-  { label:'Triduum',    types:['holy_thursday_mass','good_friday_service','easter_vigil_mass'] },
+  { label:'Triduum',    types:['holy_thursday_mass','good_friday_service','easter_vigil_mass','palm_sunday_mass','easter_sunday_mass'] },
   { label:'Community',  types:['bible_study','mens_group','social_event'] }
 ];
 const DAY_VALUES = [
   'sunday','monday','tuesday','wednesday','thursday','friday','saturday',
   'daily','weekday','first_friday','first_saturday','first_sunday',
   'first_thursday','fourth_friday','holyday','holyday_eve','lent',
-  'good_friday','holy_thursday','easter_vigil','civil_holiday'
+  'good_friday','holy_thursday','easter_vigil','palm_sunday','easter_sunday','civil_holiday'
 ];
 const DAY_LABELS = {
   sunday:'Sunday', monday:'Monday', tuesday:'Tuesday', wednesday:'Wednesday',
@@ -624,7 +645,8 @@ const DAY_LABELS = {
   first_thursday:'1st Thursday', fourth_friday:'4th Friday',
   holyday:'Holy Day', holyday_eve:'Holy Day Eve', lent:'Lent',
   good_friday:'Good Friday', holy_thursday:'Holy Thursday',
-  easter_vigil:'Easter Vigil', civil_holiday:'Civil Holiday'
+  easter_vigil:'Easter Vigil', palm_sunday:'Palm Sunday',
+  easter_sunday:'Easter Sunday', civil_holiday:'Civil Holiday'
 };
 const SEASONS      = ['year_round','lent','advent','summer','winter','academic_year','easter_season','ordinary_time','holy_week'];
 const LANG_NAMES   = {en:'English',es:'Spanish',pl:'Polish',pt:'Portuguese',la:'Latin',fr:'French',vi:'Vietnamese',asl:'ASL'};
@@ -651,7 +673,7 @@ const SCHED_GROUPS = [
   { key:'devotions',  label:'Devotions',           addType:'rosary',             addDay:'friday',
     test: s => ['rosary','divine_mercy','miraculous_medal','novena','devotion','benediction','vespers','anointing_of_sick','stations_of_cross','gorzkie_zale'].includes(s.type) },
   { key:'triduum',    label:'Triduum & Holy Week', addType:'holy_thursday_mass', addDay:'holy_thursday',
-    test: s => ['holy_thursday_mass','good_friday_service','easter_vigil_mass'].includes(s.type) },
+    test: s => ['holy_thursday_mass','good_friday_service','easter_vigil_mass','palm_sunday_mass','easter_sunday_mass'].includes(s.type) },
   { key:'community',  label:'Community',           addType:'bible_study',        addDay:'sunday',
     test: s => ['bible_study','mens_group','social_event'].includes(s.type) },
   { key:'other',      label:'Other',               addType:'communion_service',  addDay:'sunday',
@@ -1022,7 +1044,7 @@ function renderPanel() {
     '</div>' +
     '<div class="edit-content">' +
       cardIdentity(p) +
-      cardAddress(locs) +
+      cardLocations(locs) +
       cardSchedule(p) +
       cardContact(c) +
       cardValidation(v) +
@@ -1077,24 +1099,27 @@ function cardIdentity(p) {
   '</div>';
 }
 
-// ── Card: Address (primary location) ──────────────────────────────────
-function cardAddress(locs) {
-  const loc  = locs[0] || {};
-  const sub  = locs.length > 1 ? ' &middot; ' + locs.length + ' locations' :
-               (loc.name ? ' &middot; <em style="font-style:normal;font-weight:400;color:var(--txt2)">' + esc(loc.name) + '</em>' : '');
-  return '<div class="card">' +
-    '<div class="card-label"><span>Address' + sub + '</span></div>' +
-    '<div class="card-body">' +
-      field('loc_addr_0','Street', loc.address||'') +
-      '<div class="row-addr">' +
-        '<div class="f city"><label for="loc_city_0">City</label>' +
-          '<input id="loc_city_0" name="loc_city_0" type="text" value="'+esc(loc.city||'')+'"></div>' +
-        fpairs('loc_st_0','State', STATES.map(s=>[s,s]), loc.state||'MA', 'state') +
-        '<div class="f zip"><label for="loc_zip_0">ZIP</label>' +
-          '<input id="loc_zip_0" name="loc_zip_0" type="text" value="'+esc(loc.zip||'')+'"></div>' +
-      '</div>' +
-      (locs.length > 1 ? '<p class="hint">'+locs.length+' locations on file &mdash; additional locations are preserved in the JSON. Only the primary is shown here.</p>' : '') +
+// ── Card: Locations ───────────────────────────────────────────────────
+function cardLocations(locs) {
+  var rows = (locs || []).map(function(loc, i) { return locRowHtml(loc, i); }).join('');
+  return '<div class="card" id="loc-card">' +
+    '<div class="card-label"><span>Locations &middot; ' + (locs||[]).length + '</span>' +
+      '<button class="btn-sched-add" onclick="addLocation()">+ Add</button></div>' +
+    '<div class="card-body" style="padding-top:8px">' +
+      '<div class="loc-rows">' + (rows || '<div class="sched-empty">No locations</div>') + '</div>' +
     '</div>' +
+  '</div>';
+}
+function locRowHtml(loc, i) {
+  var typePill = loc.type ? '<span class="pill pill-note">' + esc(loc.type.replace(/_/g,' ')) + '</span>' : '';
+  var addrParts = [loc.address, loc.city, loc.state].filter(Boolean);
+  var addrText = addrParts.join(', ');
+  var accessPill = loc.is_accessible ? '<span class="pill pill-note">\u267F</span>' : '';
+  return '<div class="svc-row-s" onclick="editLocation('+i+')" style="cursor:pointer">' +
+    '<span class="svc-day" style="cursor:pointer;flex:0 0 auto;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + esc(loc.short_name || loc.name || loc.id || 'Location '+(i+1)) + '</span>' +
+    '<div class="svc-pills">' + typePill + accessPill + '</div>' +
+    '<span class="loc-addr-preview">' + esc(addrText || 'No address') + '</span>' +
+    '<button class="btn-row-edit" onclick="event.stopPropagation();editLocation('+i+')" title="Edit location">&middot;&middot;&middot;</button>' +
   '</div>';
 }
 
@@ -1538,14 +1563,7 @@ function saveFormToPending() {
   const rawEmails = val('c_emails');
   p.contact.emails = rawEmails ? rawEmails.split(',').map(e=>e.trim()).filter(Boolean) : [];
 
-  // Address (primary location)
-  if (p.locations && p.locations[0]) {
-    const loc  = p.locations[0];
-    loc.address = val('loc_addr_0') || null;
-    loc.city    = val('loc_city_0') || null;
-    loc.state   = val('loc_st_0')   || 'MA';
-    loc.zip     = val('loc_zip_0')  || null;
-  }
+  // Locations: saved directly via location modal — no inline fields to read
 
   // Validation
   if (!p.validation) p.validation = {};
@@ -1928,6 +1946,101 @@ function duplicateService() {
   showToast('\u2398 Service duplicated');
 }
 
+// ── Location modal ──────────────────────────────────────────────────
+var locModalIdx = null;
+
+function editLocation(i) {
+  locModalIdx = i;
+  openLocModal((pendingParish.locations || [])[i] || {}, false);
+}
+function addLocation() {
+  locModalIdx = -1;
+  openLocModal({}, true);
+}
+function openLocModal(loc, isNew) {
+  document.getElementById('locModalBody').innerHTML =
+    field('ml_name', 'Location Name', loc.name || '') +
+    field('ml_short', 'Short Name (for badges)', loc.short_name || '') +
+    fpairs('ml_type', 'Type', LOC_TYPES.map(function(t){ return [t, t.replace(/_/g,' ')]; }), loc.type || 'church') +
+    field('ml_addr', 'Street Address', loc.address || '') +
+    '<div class="row-addr">' +
+      '<div class="f city"><label for="ml_city">City</label>' +
+        '<input id="ml_city" name="ml_city" type="text" value="' + esc(loc.city || '') + '"></div>' +
+      fpairs('ml_st', 'State', STATES.map(function(s){ return [s,s]; }), loc.state || 'MA', 'state') +
+      '<div class="f zip"><label for="ml_zip">ZIP</label>' +
+        '<input id="ml_zip" name="ml_zip" type="text" value="' + esc(loc.zip || '') + '"></div>' +
+    '</div>' +
+    '<div class="check-row" style="margin:10px 0"><input type="checkbox" id="ml_access"' +
+      (loc.is_accessible ? ' checked' : '') + '>' +
+      '<label for="ml_access">Wheelchair accessible</label></div>' +
+    field('ml_access_notes', 'Accessibility Notes', loc.accessibility_notes || '') +
+    field('ml_notes', 'Notes', loc.notes || '') +
+    field('ml_id', 'Location ID', loc.id || '');
+
+  document.getElementById('locModalTitle').textContent = isNew ? 'Add Location' : 'Edit Location';
+  document.getElementById('ml_delete').style.display = isNew ? 'none' : '';
+  document.getElementById('locModal').classList.add('open');
+}
+function saveLocationModal() {
+  var existing = locModalIdx >= 0 ? ((pendingParish.locations || [])[locModalIdx] || {}) : {};
+  var loc = {
+    id:                  val('ml_id') || (pendingParish.id + '-loc-' + Date.now()),
+    name:                val('ml_name') || '',
+    short_name:          val('ml_short') || null,
+    type:                val('ml_type') || 'church',
+    address:             val('ml_addr') || null,
+    city:                val('ml_city') || null,
+    state:               val('ml_st') || 'MA',
+    zip:                 val('ml_zip') || null,
+    is_accessible:       !!(document.getElementById('ml_access') && document.getElementById('ml_access').checked),
+    accessibility_notes: val('ml_access_notes') || null,
+    notes:               val('ml_notes') || null,
+    lat:                 existing.lat || 0,
+    lng:                 existing.lng || 0
+  };
+  if (!pendingParish.locations) pendingParish.locations = [];
+  if (locModalIdx === -1) {
+    pendingParish.locations.push(loc);
+  } else {
+    pendingParish.locations[locModalIdx] = loc;
+  }
+  markDirty();
+  closeLocModal();
+  refreshLocCard();
+  showToast(locModalIdx === -1 ? 'Location added' : 'Location updated');
+}
+function deleteLocation() {
+  if (locModalIdx < 0 || !pendingParish || !pendingParish.locations) return;
+  var locId = pendingParish.locations[locModalIdx].id;
+  var inUse = (pendingParish.services || []).some(function(s) { return s.location_id === locId; });
+  if (inUse && !confirm('Services reference this location. Delete anyway?')) return;
+  var saved = JSON.parse(JSON.stringify(pendingParish.locations[locModalIdx]));
+  var idx = locModalIdx;
+  pendingParish.locations.splice(idx, 1);
+  markDirty();
+  closeLocModal();
+  refreshLocCard();
+  showToast('Location deleted', {
+    undo: function() {
+      pendingParish.locations.splice(idx, 0, saved);
+      markDirty();
+      refreshLocCard();
+    },
+    duration: 5000
+  });
+}
+function closeLocModal() {
+  document.getElementById('locModal').classList.remove('open');
+  locModalIdx = null;
+}
+function refreshLocCard() {
+  var el = document.getElementById('loc-card');
+  if (!el) { renderPanel(); return; }
+  var tmp = document.createElement('div');
+  tmp.innerHTML = cardLocations(pendingParish.locations || []);
+  el.replaceWith(tmp.firstChild);
+}
+
 // ── Statistics dashboard ────────────────────────────────────────────
 function showStatsModal() {
   var ps = editData.parishes || [];
@@ -2104,7 +2217,7 @@ document.addEventListener('keydown', function(e) {
   // Esc → close modals or clear bulk selection
   if (e.key === 'Escape') {
     if (bulkSelection.size > 0) { clearBulkSelection(); return; }
-    ['svcModal','evtModal','helpModal','statsModal'].forEach(function(id) {
+    ['svcModal','evtModal','locModal','helpModal','statsModal'].forEach(function(id) {
       document.getElementById(id).classList.remove('open');
     });
     svcModalIdx = null;
