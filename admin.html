@@ -228,6 +228,7 @@ details.card>.card-body{border-top:1px solid var(--border-lt)}
 .pill-seasonal{background:var(--green-bg);color:var(--green)}
 .pill-vary{background:var(--amber-bg);color:var(--amber)}
 .loc-addr-preview{font-size:12px;color:var(--txt3);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sched-hint{font-size:12px;color:var(--accent);padding:2px 0 6px;min-height:18px}
 .loc-rows{margin-bottom:4px}
 .pill-note{background:var(--bg);color:var(--txt3);border:1px solid var(--border)}
 .btn-row-edit{flex-shrink:0;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;border:1.5px solid var(--border);border-radius:var(--r-sm);background:var(--bg);color:var(--txt2);cursor:pointer;font-family:var(--font-b);transition:border-color .15s,color .15s;letter-spacing:1px}
@@ -1232,7 +1233,7 @@ function cardSchedule(p) {
 
 function svcRowHtml(s, i, hasMultiLoc, locs) {
   const day  = DAY_LABELS[s.day] || s.day || '\u2014';
-  const time = s.time ? fmt12(s.time) : (s.times_vary ? 'varies' : '\u2014');
+  const time = s.time ? fmt12(s.time) + (s.end_time ? ' \u2013 ' + fmt12(s.end_time) : '') : (s.times_vary ? 'varies' : '\u2014');
   const locN = hasMultiLoc && s.location_id ? ((locs.find(l=>l.id===s.location_id)||{}).short_name||'') : '';
   const pills =
     (s.language && s.language !== 'en' ? '<span class="pill pill-lang">' + s.language.toUpperCase() + '</span>' : '') +
@@ -1349,6 +1350,7 @@ function openSvcModal(s, isNew) {
       field('m_time','Start Time', s.time||'', '', 'time') +
       field('m_endtime','End Time (optional)', s.end_time||'', '', 'time') +
     '</div>' +
+    field('m_date','Specific Date (one-off only)', s.date||'', '', 'date') +
     locHtml +
     field('m_notes','Notes', s.notes||'') +
     '<div class="row-2">' +
@@ -1390,9 +1392,10 @@ function saveServiceModal() {
     day:         val('m_day')     || null,
     time:        val('m_time')    || null,
     end_time:    val('m_endtime') || null,
+    date:        val('m_date')   || null,
     language:    val('m_lang')    || 'en',
     notes:       val('m_notes')   || null,
-    source:      val('m_source')  || null,
+    source:      val('m_source')  || ('bulletin_' + ((pendingParish.validation && pendingParish.validation.bulletin_date) || new Date().toISOString().slice(0,7))),
     rite:        val('m_rite')    || null,
     times_vary:  !!(document.getElementById('m_tv') && document.getElementById('m_tv').checked),
     location_id: val('m_locid')   || null,
@@ -1458,8 +1461,13 @@ function openEvtModal(ev, isNew) {
       fpairs('me_freq','Frequency', EVT_FREQS.map(f=>[f,f.replace(/_/g,' ')]), ev.frequency||'one_time') +
     '</div>' +
     '<div class="row-2">' +
-      fpairs('me_day','Day / Recurrence', [['','\u2014'],...DAY_VALUES.map(d=>[d,DAY_LABELS[d]||d])], ev.day||'') +
-      field('me_time','Time', ev.time||'') +
+      fpairs('me_day','Day', [['','\u2014'],...DAY_VALUES.map(d=>[d,DAY_LABELS[d]||d])], ev.day||'') +
+      field('me_date','Specific Date', ev.date||'', '', 'date') +
+    '</div>' +
+    '<div id="me_sched_hint" class="sched-hint"></div>' +
+    '<div class="row-2">' +
+      field('me_time','Start Time', ev.time||'', '', 'time') +
+      field('me_etime','End Time', ev.end_time||'', '', 'time') +
     '</div>' +
     field('me_notes','Notes', ev.notes||'') +
     field('me_src','Source', ev.source||'') +
@@ -1476,6 +1484,24 @@ function openEvtModal(ev, isNew) {
   document.getElementById('evtModalTitle').textContent = isNew ? 'Add Special Event' : 'Edit Special Event';
   document.getElementById('me_delete').style.display   = isNew ? 'none' : '';
   document.getElementById('evtModal').classList.add('open');
+  // Smart hint updates
+  updateEvtSchedHint();
+  var dayEl = document.getElementById('me_day');
+  var dateEl = document.getElementById('me_date');
+  var freqEl = document.getElementById('me_freq');
+  if (dayEl) dayEl.addEventListener('change', updateEvtSchedHint);
+  if (dateEl) dateEl.addEventListener('change', updateEvtSchedHint);
+  if (freqEl) freqEl.addEventListener('change', updateEvtSchedHint);
+}
+function updateEvtSchedHint() {
+  var el = document.getElementById('me_sched_hint');
+  if (!el) return;
+  var day = val('me_day'), date = val('me_date'), freq = val('me_freq');
+  if (date && !day) el.textContent = 'One-time event on ' + date;
+  else if (day && !date && freq && freq !== 'one_time') el.textContent = 'Recurring every ' + (DAY_LABELS[day]||day) + ' (' + freq.replace(/_/g,' ') + ')';
+  else if (day && date) el.textContent = 'Specific date: ' + date + ' (falls on ' + (DAY_LABELS[day]||day) + ')';
+  else if (day) el.textContent = 'Every ' + (DAY_LABELS[day]||day);
+  else el.textContent = '';
 }
 function toggleEvtSeason() {
   const el = document.getElementById('me_sea_row');
@@ -1493,7 +1519,9 @@ function saveEventModal() {
     category: val('me_cat')   || null,
     frequency:val('me_freq')  || null,
     day:      val('me_day')   || null,
+    date:     val('me_date')  || null,
     time:     val('me_time')  || null,
+    end_time: val('me_etime') || null,
     notes:    val('me_notes') || null,
     source:   val('me_src')   || null,
     seasonal: { is_seasonal: isSeas, season: isSeas ? (val('me_season')||'lent') : 'year_round' }
@@ -1618,7 +1646,8 @@ function saveFormToPending() {
   if (!p.validation) p.validation = {};
   p.validation.status        = val('v_status')  || 'needs_verification';
   p.validation.last_checked  = val('v_checked') || null;
-  p.validation.bulletin_date = val('v_bulletin')|| null;
+  var rawBulletin = val('v_bulletin');
+  p.validation.bulletin_date = rawBulletin ? rawBulletin.replace(/\//g, '-') : null;
   // Persist flag note (flag itself is set directly on pendingParish by toggleFlag)
   var flagNote = val('flag_note');
   if (p.validation.flagged) {
@@ -1700,8 +1729,71 @@ function deleteParish() {
   });
 }
 
+/* ── Sanitize data before export ─────────────────────────────────────── */
+function sanitizeForExport(data) {
+  // Nullable string fields: empty string → null
+  function ns(v) { return (typeof v === 'string' && v.trim() === '') ? null : v; }
+
+  (data.parishes || []).forEach(function(p) {
+    // Parish-level nullable strings
+    ['county','zip','established','mission_of','bulletin_url'].forEach(function(f) { if (f in p) p[f] = ns(p[f]); });
+
+    // Contact
+    if (p.contact) {
+      ['phone','phone_secondary','website','office_hours','office_address',
+       'instagram','facebook','notes','bulletin_url_note','mailing_address'].forEach(function(f) {
+        if (f in p.contact) p.contact[f] = ns(p.contact[f]);
+      });
+      // Filter empty emails
+      if (p.contact.emails) p.contact.emails = p.contact.emails.filter(Boolean);
+    }
+
+    // Validation
+    if (p.validation) {
+      // Normalize bulletin_date separators: / → -
+      if (typeof p.validation.bulletin_date === 'string') {
+        p.validation.bulletin_date = p.validation.bulletin_date.replace(/\//g, '-').trim() || null;
+      }
+      // Normalize last_checked separators: / → -
+      if (typeof p.validation.last_checked === 'string') {
+        p.validation.last_checked = p.validation.last_checked.replace(/\//g, '-').trim() || null;
+      }
+    }
+
+    // Locations
+    (p.locations || []).forEach(function(l) {
+      ['short_name','address','city','zip','mailing','office_hours',
+       'accessibility_notes','notes'].forEach(function(f) { if (f in l) l[f] = ns(l[f]); });
+    });
+
+    // Services
+    (p.services || []).forEach(function(s) {
+      ['notes','title','category','rite','location_id','location',
+       'language_note','end_time','end_date','date','effective_date','note_expires'].forEach(function(f) {
+        if (f in s) s[f] = ns(s[f]);
+      });
+      // day: empty string → null
+      if (s.day === '') s.day = null;
+      // source: must be non-empty string — fallback to bulletin date
+      if (!s.source || s.source.trim() === '') {
+        s.source = 'bulletin_' + ((p.validation && p.validation.bulletin_date) || new Date().toISOString().slice(0, 7));
+      }
+    });
+
+    // Special events
+    (p.special_events || []).forEach(function(e) {
+      ['title','type','category','day','date','time','end_time','frequency',
+       'language','location','location_id','notes','source'].forEach(function(f) {
+        if (f in e) e[f] = ns(e[f]);
+      });
+    });
+  });
+  return data;
+}
+
 function downloadJSON() {
   if (pendingParish) saveParish();
+  sanitizeForExport(editData);
   const blob = new Blob([JSON.stringify(editData, null, 2)], { type:'application/json' });
   const url  = URL.createObjectURL(blob);
   const a    = Object.assign(document.createElement('a'), { href:url, download:'parish_data.json' });
@@ -2038,7 +2130,7 @@ function saveLocationModal() {
   var loc = {
     id:                  val('ml_id') || genLocationId(val('ml_name'), val('ml_city')),
     name:                val('ml_name') || '',
-    short_name:          val('ml_short') || null,
+    short_name:          val('ml_short') || (existing.short_name || null),
     type:                val('ml_type') || 'church',
     address:             val('ml_addr') || null,
     city:                val('ml_city') || null,
