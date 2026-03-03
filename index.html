@@ -2633,11 +2633,24 @@ function renderMore(){
     const grid=document.getElementById('aboutStatGrid');
     if(!grid)return;
     const svcCount=allParishes.reduce((n,p)=>n+(p.services||[]).length,0);
+    const today=getNow();
+    let totalDays=0,checkedCount=0,verCount=0;
+    allParishes.forEach(p=>{
+      const v=p.validation;
+      if(v&&v.last_checked){
+        const d=new Date(v.last_checked+'T00:00:00');
+        totalDays+=Math.max(0,Math.floor((today-d)/(1000*60*60*24)));
+        checkedCount++;
+      }
+      if(v&&v.status==='verified')verCount++;
+    });
+    const avgFresh=checkedCount?Math.round(totalDays/checkedCount):'-';
+    const verPct=allParishes.length?Math.round(verCount/allParishes.length*100):0;
     grid.innerHTML=
-      '<div class="stat-card"><div class="stat-value">'+allParishes.length+'</div><div class="stat-label">Parishes</div></div>'
+      '<div class="stat-card"><div class="stat-value">'+allParishes.length+'</div><div class="stat-label">Churches</div></div>'
       +'<div class="stat-card"><div class="stat-value">'+svcCount.toLocaleString()+'</div><div class="stat-label">Services</div></div>'
-      +'<div class="stat-card"><div class="stat-value">'+langCount.size+'</div><div class="stat-label">Languages</div></div>'
-      +'<div class="stat-card"><div class="stat-value">4</div><div class="stat-label">States</div></div>';
+      +'<div class="stat-card"><div class="stat-value">'+avgFresh+'d</div><div class="stat-label">Avg. Freshness</div></div>'
+      +'<div class="stat-card"><div class="stat-value">'+verPct+'%</div><div class="stat-label">Verified</div></div>';
   })();
 
   // ── What's Happening: unified YC + Community events ────────────────────
