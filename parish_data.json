@@ -11531,7 +11531,7 @@
     },
     {
       "id": "parish_043",
-      "name": "St. Patrick Parish",
+      "name": "St. Patrick",
       "town": "Northfield",
       "state": "MA",
       "zip": "01360",
@@ -11544,7 +11544,7 @@
           "id": "st-patrick-church-northfield",
           "name": "St. Patrick Church",
           "type": "church",
-          "address": "82 Main Street, 01360",
+          "address": "82 Main Street",
           "city": "Northfield",
           "state": "MA",
           "zip": "01360",
@@ -11555,10 +11555,17 @@
         }
       ],
       "contact": {
-        "phone": "413-498-5039",
+        "phone": "(413) 498-2728",
         "emails": [
           "stpatrickschurch0317@gmail.com"
-        ]
+        ],
+        "website": "https://www.facebook.com/StPatricksNorthfield/",
+        "phone_secondary": null,
+        "office_hours": null,
+        "office_address": null,
+        "instagram": null,
+        "facebook": "StPatricksNorthfield",
+        "notes": null
       },
       "staff": [
         "pastor",
@@ -11656,16 +11663,16 @@
           "day": "thursday",
           "time": "08:00",
           "end_time": null,
-          "location_id": "st-patrick-church-northfield",
           "language": "en",
-          "notes": null,
+          "notes": "Communion Service",
+          "source": "pdf",
+          "rite": null,
+          "times_vary": false,
+          "location_id": null,
           "seasonal": {
             "is_seasonal": false,
-            "season": "year_round",
-            "start_date": null,
-            "end_date": null
-          },
-          "source": "pdf"
+            "season": "year_round"
+          }
         },
         {
           "id": "parish_043-conf-sat-1515",
@@ -11673,28 +11680,47 @@
           "day": "saturday",
           "time": "15:15",
           "end_time": "15:50",
-          "location_id": "st-patrick-church-northfield",
           "language": "en",
           "notes": null,
+          "source": "pdf",
+          "rite": null,
+          "times_vary": false,
+          "location_id": null,
           "seasonal": {
             "is_seasonal": false,
-            "season": "year_round",
-            "start_date": null,
-            "end_date": null
-          },
-          "source": "pdf"
+            "season": "year_round"
+          }
+        },
+        {
+          "id": "parish_043-devotion-1772513696329",
+          "type": "devotion",
+          "day": "first_saturday",
+          "time": "10:00",
+          "end_time": null,
+          "language": "en",
+          "notes": "First Saturday",
+          "source": "bulletin_2026-03",
+          "rite": null,
+          "times_vary": false,
+          "location_id": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          }
         }
       ],
       "validation": {
-        "status": "needs_verification",
-        "last_checked": "2026-02-26",
+        "status": "low_confidence",
+        "last_checked": "2026-03-03",
         "pdf_version": "Jan 20, 2026",
-        "exclusion_reason": "Possibly closed. No website or bulletin available. Excluded from master file per user decision 2026-02-21."
+        "exclusion_reason": "Possibly closed. No website or bulletin available. Excluded from master file per user decision 2026-02-21.",
+        "bulletin_date": null
       },
       "county": "Franklin",
       "clergy": [],
       "is_accessible": null,
-      "special_events": []
+      "special_events": [],
+      "bulletin_url": null
     },
     {
       "id": "parish_044",
@@ -22062,174 +22088,6 @@
       "validation": {
         "status": "verified",
         "last_checked": "2026-02-22",
-        "source": "bulletin_2026-02",
-        "recommended_action": null
-      },
-      "is_accessible": true
-    },
-    {
-      "id": "parish_105",
-      "name": "St. Brendan the Navigator Parish",
-      "town": "Southampton",
-      "state": "MA",
-      "zip": "01073",
-      "established": "1920",
-      "is_mission": false,
-      "mission_of": null,
-      "status": "active",
-      "locations": [
-        {
-          "id": "st-brendan-southampton",
-          "name": "St. Brendan Church",
-          "type": "church",
-          "address": "42 College Highway, Southampton, MA 01073",
-          "city": "Southampton",
-          "state": "MA",
-          "zip": "01073",
-          "is_accessible": true,
-          "lat": 42.229,
-          "lng": -72.73,
-          "short_name": "St. Brendan's"
-        }
-      ],
-      "contact": {
-        "phone": "413-555-0303",
-        "emails": [
-          "info@stbrendanparish.org"
-        ],
-        "website": "https://www.stbrendanparish.org",
-        "office_hours": "Tue-Fri 9:00 AM - 1:00 PM"
-      },
-      "staff": [
-        "pastor"
-      ],
-      "county": "Hampshire",
-      "services": [
-        {
-          "id": "pf3-smass-sat-1630",
-          "type": "sunday_mass",
-          "day": "saturday",
-          "time": "16:30",
-          "end_time": null,
-          "location_id": "st-brendan-southampton",
-          "language": "en",
-          "notes": "Vigil Mass",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "pf3-smass-sun-0900",
-          "type": "sunday_mass",
-          "day": "sunday",
-          "time": "09:00",
-          "end_time": null,
-          "location_id": "st-brendan-southampton",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "pf3-smass-sun-1100",
-          "type": "sunday_mass",
-          "day": "sunday",
-          "time": "11:00",
-          "end_time": null,
-          "location_id": "st-brendan-southampton",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "pf3-dmass-tue-0900",
-          "type": "daily_mass",
-          "day": "tuesday",
-          "time": "09:00",
-          "end_time": null,
-          "location_id": "st-brendan-southampton",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "pf3-dmass-thu-0900",
-          "type": "daily_mass",
-          "day": "thursday",
-          "time": "09:00",
-          "end_time": null,
-          "location_id": "st-brendan-southampton",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "pf3-conf-sat-1545",
-          "type": "confession",
-          "day": "saturday",
-          "time": "15:45",
-          "end_time": "16:15",
-          "location_id": "st-brendan-southampton",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "pf3-ador-thu-0930",
-          "type": "adoration",
-          "day": "thursday",
-          "time": "09:30",
-          "end_time": "12:00",
-          "location_id": "st-brendan-southampton",
-          "language": "en",
-          "notes": "Following morning Mass",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "pf3-stations-fri-1830",
-          "type": "stations_of_cross",
-          "day": "friday",
-          "time": "18:30",
-          "end_time": null,
-          "location_id": "st-brendan-southampton",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          },
-          "source": "bulletin_2026-02"
-        }
-      ],
-      "special_events": [],
-      "validation": {
-        "status": "verified",
-        "last_checked": "2026-02-18",
         "source": "bulletin_2026-02",
         "recommended_action": null
       },
