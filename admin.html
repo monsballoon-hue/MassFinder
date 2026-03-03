@@ -657,6 +657,49 @@ const EVT_CATS     = ['fellowship','conference','volunteering','liturgical','edu
 const EVT_FREQS    = ['one_time','weekly','monthly','annual'];
 const STATES       = ['MA','CT','VT','NH','NY'];
 
+// ── Auto-ID generation ───────────────────────────────────────────────
+const SVC_TYPE_ABBR = {
+  sunday_mass:'smass', daily_mass:'dmass', confession:'conf', adoration:'ador',
+  perpetual_adoration:'pador', holy_hour:'hh', communion_service:'comm',
+  rosary:'rosary', stations_of_cross:'stations', divine_mercy:'divmerc',
+  miraculous_medal:'mirac', novena:'novena', devotion:'devot', vespers:'vespers',
+  anointing_of_sick:'anoint', benediction:'bened',
+  holy_thursday_mass:'htmass', good_friday_service:'gfsvc', easter_vigil_mass:'evmass',
+  palm_sunday_mass:'psmass', easter_sunday_mass:'esmass',
+  bible_study:'bible', gorzkie_zale:'gorzkie', mens_group:'mens', social_event:'social'
+};
+const DAY_ABBR = {
+  sunday:'sun', monday:'mon', tuesday:'tue', wednesday:'wed', thursday:'thu',
+  friday:'fri', saturday:'sat', daily:'daily', weekday:'wkday',
+  first_friday:'1fri', first_saturday:'1sat', first_sunday:'1sun',
+  first_thursday:'1thu', fourth_friday:'4fri',
+  holyday:'holyday', holyday_eve:'holyeve', lent:'lent',
+  good_friday:'goodfri', holy_thursday:'holyth', easter_vigil:'evig',
+  palm_sunday:'palmsun', easter_sunday:'eastsun', civil_holiday:'civil'
+};
+function slugify(s, maxLen) {
+  return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0, maxLen||30);
+}
+function genServiceId(parishId, type, day, time, locId) {
+  var ta = SVC_TYPE_ABBR[type] || slugify(type).slice(0,6);
+  var da = DAY_ABBR[day] || slugify(day).slice(0,4);
+  var tm = (time||'').replace(':','');
+  var locSlug = '';
+  if (locId && pendingParish && pendingParish.locations) {
+    var loc = pendingParish.locations.find(function(l){ return l.id === locId; });
+    if (loc) locSlug = '-' + slugify(loc.short_name || loc.name).split('-')[0];
+  }
+  return parishId + '-' + ta + '-' + da + '-' + tm + locSlug;
+}
+function genLocationId(name, city) {
+  var n = slugify(name, 50);
+  var c = slugify(city, 20);
+  return c ? n + '-' + c : n;
+}
+function genEventId(parishId, title) {
+  return parishId + '-evt-' + slugify(title);
+}
+
 const SCHED_GROUPS = [
   { key:'sunday',     label:'Sunday Mass',        addType:'sunday_mass',        addDay:'sunday',
     test: s => s.type === 'sunday_mass' },
@@ -1321,7 +1364,10 @@ function openSvcModal(s, isNew) {
     '<div id="m_sea_row" style="display:'+(isSeas?'block':'none')+'">' +
       fpairs('m_season','Active Season', SEASONS.map(s=>[s,s.replace(/_/g,' ')]), (s.seasonal&&s.seasonal.season)||'lent') +
     '</div>' +
-    field('m_id','Service ID', s.id||'');
+    '<div class="f"><label>Service ID</label>' +
+    '<input id="m_id" name="m_id" type="text" value="'+esc(s.id||'')+'"' +
+    (isNew ? ' readonly style="opacity:.6;cursor:default" placeholder="Auto-generated on save"' : '') +
+    '></div>';
 
   document.getElementById('svcModalTitle').textContent = isNew ? 'Add Service' : 'Edit Service';
   document.getElementById('m_delete').style.display    = isNew ? 'none' : '';
@@ -1339,7 +1385,7 @@ function closeSvcModal() {
 function saveServiceModal() {
   const isSeas = !!(document.getElementById('m_sea') && document.getElementById('m_sea').checked);
   const s = {
-    id:          val('m_id') || (pendingParish.id + '-' + (val('m_type')||'svc') + '-' + Date.now()),
+    id:          val('m_id') || genServiceId(pendingParish.id, val('m_type'), val('m_day'), val('m_time'), val('m_locid')),
     type:        val('m_type')    || 'sunday_mass',
     day:         val('m_day')     || null,
     time:        val('m_time')    || null,
@@ -1422,7 +1468,10 @@ function openEvtModal(ev, isNew) {
     '<div id="me_sea_row" style="display:'+(isSeas?'block':'none')+'">' +
       fpairs('me_season','Active Season', SEASONS.map(s=>[s,s.replace(/_/g,' ')]), (ev.seasonal&&ev.seasonal.season)||'lent') +
     '</div>' +
-    field('me_id','Event ID', ev.id||'');
+    '<div class="f"><label>Event ID</label>' +
+    '<input id="me_id" name="me_id" type="text" value="'+esc(ev.id||'')+'"' +
+    (isNew ? ' readonly style="opacity:.6;cursor:default" placeholder="Auto-generated on save"' : '') +
+    '></div>';
 
   document.getElementById('evtModalTitle').textContent = isNew ? 'Add Special Event' : 'Edit Special Event';
   document.getElementById('me_delete').style.display   = isNew ? 'none' : '';
@@ -1439,7 +1488,7 @@ function closeEvtModal() {
 function saveEventModal() {
   const isSeas = !!(document.getElementById('me_sea') && document.getElementById('me_sea').checked);
   const ev = {
-    id:       val('me_id')    || (pendingParish.id + '-evt-' + Date.now()),
+    id:       val('me_id')    || genEventId(pendingParish.id, val('me_title')),
     title:    val('me_title') || null,
     category: val('me_cat')   || null,
     frequency:val('me_freq')  || null,
@@ -1938,7 +1987,7 @@ function duplicateService() {
   var orig = pendingParish.services[svcModalIdx];
   if (!orig) return;
   var clone = JSON.parse(JSON.stringify(orig));
-  clone.id = pendingParish.id + '-' + (clone.type||'svc') + '-' + Date.now();
+  clone.id = genServiceId(pendingParish.id, clone.type, clone.day, clone.time, clone.location_id) + '-dup';
   pendingParish.services.push(clone);
   markDirty();
   closeSvcModal();
@@ -1975,7 +2024,10 @@ function openLocModal(loc, isNew) {
       '<label for="ml_access">Wheelchair accessible</label></div>' +
     field('ml_access_notes', 'Accessibility Notes', loc.accessibility_notes || '') +
     field('ml_notes', 'Notes', loc.notes || '') +
-    field('ml_id', 'Location ID', loc.id || '');
+    '<div class="f"><label>Location ID</label>' +
+    '<input id="ml_id" name="ml_id" type="text" value="' + esc(loc.id || '') + '"' +
+    (isNew ? ' readonly style="opacity:.6;cursor:default" placeholder="Auto-generated on save"' : '') +
+    '></div>';
 
   document.getElementById('locModalTitle').textContent = isNew ? 'Add Location' : 'Edit Location';
   document.getElementById('ml_delete').style.display = isNew ? 'none' : '';
@@ -1984,7 +2036,7 @@ function openLocModal(loc, isNew) {
 function saveLocationModal() {
   var existing = locModalIdx >= 0 ? ((pendingParish.locations || [])[locModalIdx] || {}) : {};
   var loc = {
-    id:                  val('ml_id') || (pendingParish.id + '-loc-' + Date.now()),
+    id:                  val('ml_id') || genLocationId(val('ml_name'), val('ml_city')),
     name:                val('ml_name') || '',
     short_name:          val('ml_short') || null,
     type:                val('ml_type') || 'church',

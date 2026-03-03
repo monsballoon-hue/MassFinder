@@ -138,6 +138,13 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .results-sort:hover { background: var(--color-surface-hover); }
 .results-sort svg { width: 14px; height: 14px; }
 
+/* REFRESH BUTTON */
+.results-refresh { color: var(--color-text-tertiary); padding: var(--space-2); border-radius: var(--radius-sm); min-height: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; }
+.results-refresh:hover { background: var(--color-surface-hover); }
+.results-refresh svg { width: 16px; height: 16px; transition: transform 0.3s ease; }
+.results-refresh.spinning svg { animation: spin 0.8s linear infinite; }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
 /* LOCATION PROMPT */
 /* MORE TAB INSTALL CARD */
 .more-install-card { background: var(--color-surface); border-radius: var(--radius-md); padding: var(--space-5); box-shadow: var(--shadow-card); border-left: 3px solid var(--color-primary); position: relative; margin-bottom: var(--space-4); }
@@ -674,6 +681,9 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 
   <div class="results-info">
     <span id="resultsCount" class="results-count"></span>
+    <button id="refreshBtn" class="results-refresh" onclick="refreshApp()" title="Refresh data &amp; location">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+    </button>
     <button class="results-sort" onclick="toggleSort()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 5h10M11 9h7M11 13h4M3 17l3 3 3-3M6 18V4"/></svg>
       <span id="sortLabel">By name</span>
@@ -983,7 +993,7 @@ function sortParishes(){
   });
   else filteredParishes.sort((a,b)=>a.parish.name.localeCompare(b.parish.name));
 }
-function toggleSort(){const m=['name','proximity','next_service'];currentSort=m[(m.indexOf(currentSort)+1)%m.length];if(currentSort==='proximity'&&userLat===null){requestLocation();return}updateSortLabel();filterParishes();renderCards()}
+function toggleSort(){const m=['name','proximity','next_service'];currentSort=m[(m.indexOf(currentSort)+1)%m.length];if(currentSort==='proximity'){if(userLat===null){requestLocation();return}refreshLocation()}updateSortLabel();filterParishes();renderCards()}
 function updateSortLabel(){document.getElementById('sortLabel').textContent={name:'By name',proximity:'By distance',next_service:'By next service'}[currentSort]||'By name'}
 
 
@@ -1936,6 +1946,7 @@ function switchTab(id,btn){
   btn.classList.add('active');btn.setAttribute('aria-selected','true');
   if(id==='panelMap'&&!mapInitialized){initMap();mapInitialized=true}
   if(id==='panelMap'&&mapInitialized&&window._map){setTimeout(()=>window._map.invalidateSize(),100)}
+  if(id==='panelMap'){refreshLocation(function(ok){if(ok&&window._map&&userLat!==null)window._map.setView([userLat,userLng],13)})}
   if(id==='panelSaved')renderSaved();
   if(id==='panelMore'&&!window._moreRendered){renderMore();window._moreRendered=true}
 }
@@ -2036,8 +2047,8 @@ function initMap(){
       btn.title='My location';
       L.DomEvent.on(btn,'click',function(e){
         L.DomEvent.stopPropagation(e);
-        if(userLat!==null){map.setView([userLat,userLng],13)}
-        else{requestLocation();setTimeout(()=>{if(userLat!==null)map.setView([userLat,userLng],13)},2000)}
+        refreshLocation(function(ok){if(ok&&userLat!==null)map.setView([userLat,userLng],13)});
+        if(userLat!==null)map.setView([userLat,userLng],13);
       });
       return btn;
     }
@@ -2699,6 +2710,42 @@ function initLocation(){
       }
     }).catch(function(){});
   }
+}
+
+// ── Refresh helpers ─────────────────────────────────────────────────
+function refreshLocation(cb){
+  if(!navigator.geolocation){if(cb)cb(false);return}
+  navigator.geolocation.getCurrentPosition(function(pos){
+    userLat=pos.coords.latitude;userLng=pos.coords.longitude;
+    saveLocationCookie();
+    if(currentSort==='proximity'){filterParishes();renderCards()}
+    if(cb)cb(true);
+  },function(){
+    if(cb)cb(false);
+  },{enableHighAccuracy:true,timeout:10000,maximumAge:0});
+}
+
+function refreshApp(){
+  var btn=document.getElementById('refreshBtn');
+  if(btn)btn.classList.add('spinning');
+  // 1. Refresh location
+  refreshLocation(function(){
+    // 2. Refresh parish data from network (bypass cache)
+    fetch('parish_data.json',{cache:'no-store'}).then(function(r){
+      if(!r.ok)throw new Error('fetch failed');
+      return r.json();
+    }).then(function(data){
+      allParishes=data.parishes||[];
+      filterParishes();renderCards();
+      // Update service worker cache
+      if('caches' in window)caches.open('massfinder-v2_2').then(function(c){c.put(new Request('parish_data.json'),new Response(JSON.stringify(data),{headers:{'Content-Type':'application/json'}}))}).catch(function(){});
+      showToast('Data refreshed');
+    }).catch(function(){
+      showToast('Could not refresh — check connection');
+    }).finally(function(){
+      if(btn)btn.classList.remove('spinning');
+    });
+  });
 }
 
 // Focus trap for modals (B5)
