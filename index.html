@@ -138,6 +138,13 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .results-sort:hover { background: var(--color-surface-hover); }
 .results-sort svg { width: 14px; height: 14px; }
 
+/* REFRESH BUTTON */
+.results-refresh { color: var(--color-text-tertiary); padding: var(--space-2); border-radius: var(--radius-sm); min-height: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; }
+.results-refresh:hover { background: var(--color-surface-hover); }
+.results-refresh svg { width: 16px; height: 16px; transition: transform 0.3s ease; }
+.results-refresh.spinning svg { animation: spin 0.8s linear infinite; }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
 /* LOCATION PROMPT */
 /* MORE TAB INSTALL CARD */
 .more-install-card { background: var(--color-surface); border-radius: var(--radius-md); padding: var(--space-5); box-shadow: var(--shadow-card); border-left: 3px solid var(--color-primary); position: relative; margin-bottom: var(--space-4); }
@@ -329,6 +336,11 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .schedule-note { font-size: var(--text-xs); color: var(--color-text-tertiary); font-style: italic; margin-top: 2px; }
 .schedule-lang-badge { display: inline-block; font-size: 11px; font-weight: var(--weight-medium); padding: 1px 6px; border-radius: var(--radius-full); color: #1E40AF; background: #DBEAFE; margin-left: var(--space-2); }
 .schedule-appt { font-size: var(--text-sm); color: var(--color-text-tertiary); font-style: italic; padding: var(--space-2) 0; }
+.schedule-day.first-friday { border-left: 3px solid #B91C1C; padding-left: var(--space-3); margin-left: calc(-1 * var(--space-1)); }
+.schedule-day.first-friday .schedule-day-label { color: #B91C1C; }
+.schedule-day.first-saturday { border-left: 3px solid #2563EB; padding-left: var(--space-3); margin-left: calc(-1 * var(--space-1)); }
+.schedule-day.first-saturday .schedule-day-label { color: #2563EB; }
+.schedule-day-subtitle { font-size: var(--text-xs); color: var(--color-text-tertiary); font-weight: var(--weight-normal); font-style: italic; margin-bottom: var(--space-1); }
 
 /* Verify prompt */
 .verify-prompt { margin-top: var(--space-6); padding: var(--space-4); background: var(--color-bg); border-radius: var(--radius-md); text-align: center; }
@@ -591,6 +603,18 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .schedule-loc-badge { display: inline-flex; align-items: center; font-size: 11px; font-weight: var(--weight-semibold); color: var(--color-primary); background: var(--color-info-bg); border: 1px solid rgba(52,120,198,0.2); padding: 2px 8px; border-radius: var(--radius-full); margin-top: 3px; }
 
 
+/* WORSHIP SITES SECTION (multi-location detail panel) */
+.loc-sites { margin: var(--space-3) 0; }
+.loc-sites-hdr { display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2); }
+.loc-sites-title { font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.05em; }
+.loc-site-card { display: flex; align-items: center; justify-content: space-between; padding: var(--space-3) var(--space-4); background: var(--color-info-bg); border-radius: var(--radius-md); margin-bottom: var(--space-2); }
+.loc-site-card:last-child { margin-bottom: 0; }
+.loc-site-info { flex: 1; min-width: 0; }
+.loc-site-name { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-primary); }
+.loc-site-addr { font-size: var(--text-xs); color: var(--color-text-secondary); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.loc-site-dir { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: var(--radius-full); background: white; border: 1px solid var(--color-border-light); flex-shrink: 0; margin-left: var(--space-3); color: var(--color-primary); transition: background var(--transition-fast); text-decoration: none; }
+.loc-site-dir:hover { background: var(--color-surface-hover); }
+
 /* SAINT OF THE DAY */
 .saint-card { background: var(--color-surface); border-radius: var(--radius-md); padding: var(--space-5); box-shadow: var(--shadow-card); border-left: 3px solid var(--color-accent); }
 .saint-feast { font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--color-accent-text); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: var(--space-2); }
@@ -657,6 +681,9 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 
   <div class="results-info">
     <span id="resultsCount" class="results-count"></span>
+    <button id="refreshBtn" class="results-refresh" onclick="refreshApp()" title="Refresh data &amp; location">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+    </button>
     <button class="results-sort" onclick="toggleSort()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 5h10M11 9h7M11 13h4M3 17l3 3 3-3M6 18V4"/></svg>
       <span id="sortLabel">By name</span>
@@ -843,8 +870,8 @@ let advancedFilters={types:[],days:[],languages:[]},tempAdvanced={types:[],days:
 const DAY_ORDER=['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
 const DAY_NAMES={sunday:'Sunday',monday:'Monday',tuesday:'Tuesday',wednesday:'Wednesday',thursday:'Thursday',friday:'Friday',saturday:'Saturday'};
 const LANG_NAMES={en:'English',es:'Spanish',pl:'Polish',pt:'Portuguese',la:'Latin',fr:'French',vi:'Vietnamese',asl:'ASL'};
-const SVC={sunday_mass:'Sunday Mass',daily_mass:'Daily Mass',confession:'Confession',adoration:'Adoration',perpetual_adoration:'Perpetual Adoration',holy_hour:'Holy Hour',communion_service:'Communion Service (no priest)',rosary:'Rosary',stations_of_cross:'Stations of the Cross',divine_mercy:'Divine Mercy Chaplet',miraculous_medal:'Miraculous Medal',novena:'Novena',devotion:'Devotion',vespers:'Vespers',anointing_of_sick:'Anointing of the Sick',holy_thursday_mass:"Mass of the Lord's Supper",good_friday_service:'Celebration of the Passion',easter_vigil_mass:'Easter Vigil',bible_study:'Bible Study',gorzkie_zale:'Gorzkie Żale',mens_group:"Men's Group",social_event:'Social Event'};
-const SERVICE_CATEGORIES={'Mass':['sunday_mass','daily_mass','communion_service'],'Sacraments':['confession','anointing_of_sick'],'Adoration':['adoration','perpetual_adoration','holy_hour'],'Prayer & Devotion':['rosary','stations_of_cross','divine_mercy','miraculous_medal','novena','devotion','vespers','gorzkie_zale','bible_study','mens_group','social_event'],'Holy Week':['holy_thursday_mass','good_friday_service','easter_vigil_mass']};
+const SVC={sunday_mass:'Sunday Mass',daily_mass:'Daily Mass',confession:'Confession',adoration:'Adoration',perpetual_adoration:'Perpetual Adoration',holy_hour:'Holy Hour',communion_service:'Communion Service (no priest)',rosary:'Rosary',stations_of_cross:'Stations of the Cross',divine_mercy:'Divine Mercy Chaplet',miraculous_medal:'Miraculous Medal',novena:'Novena',devotion:'Devotion',vespers:'Vespers',anointing_of_sick:'Anointing of the Sick',holy_thursday_mass:"Mass of the Lord's Supper",good_friday_service:'Celebration of the Passion',easter_vigil_mass:'Easter Vigil',palm_sunday_mass:'Palm Sunday Mass',easter_sunday_mass:'Easter Sunday Mass',bible_study:'Bible Study',gorzkie_zale:'Gorzkie Żale',mens_group:"Men's Group",social_event:'Social Event'};
+const SERVICE_CATEGORIES={'Mass':['sunday_mass','daily_mass','communion_service'],'Sacraments':['confession','anointing_of_sick'],'Adoration':['adoration','perpetual_adoration','holy_hour'],'Prayer & Devotion':['rosary','stations_of_cross','divine_mercy','miraculous_medal','novena','devotion','vespers','gorzkie_zale','bible_study','mens_group','social_event'],'Holy Week':['holy_thursday_mass','good_friday_service','easter_vigil_mass','palm_sunday_mass','easter_sunday_mass']};
 
 // Favorites
 function loadFav(){try{favorites=JSON.parse(localStorage.getItem('mf_fav')||'[]')}catch{favorites=[]}}
@@ -966,7 +993,7 @@ function sortParishes(){
   });
   else filteredParishes.sort((a,b)=>a.parish.name.localeCompare(b.parish.name));
 }
-function toggleSort(){const m=['name','proximity','next_service'];currentSort=m[(m.indexOf(currentSort)+1)%m.length];if(currentSort==='proximity'&&userLat===null){requestLocation();return}updateSortLabel();filterParishes();renderCards()}
+function toggleSort(){const m=['name','proximity','next_service'];currentSort=m[(m.indexOf(currentSort)+1)%m.length];if(currentSort==='proximity'){if(userLat===null){requestLocation();return}refreshLocation()}updateSortLabel();filterParishes();renderCards()}
 function updateSortLabel(){document.getElementById('sortLabel').textContent={name:'By name',proximity:'By distance',next_service:'By next service'}[currentSort]||'By name'}
 
 
@@ -1167,7 +1194,16 @@ function renderCommunityEvents(p){
 
 function openDetail(id){
   const p=allParishes.find(x=>x.id===id);if(!p)return;
-  const fav=isFav(p.id),ver=isVer(p),v=p.validation||{},loc0=p.locations&&p.locations[0],dist=getDist(p),ct=p.contact||{};
+  const fav=isFav(p.id),ver=isVer(p),v=p.validation||{},dist=getDist(p),ct=p.contact||{};
+  // Primary location = location with the most services tied to it
+  const loc0=(function(){
+    const locs=p.locations||[];if(locs.length<=1)return locs[0]||null;
+    const counts={};locs.forEach(function(l){counts[l.id]=0;});
+    (p.services||[]).forEach(function(s){if(s.location_id&&counts[s.location_id]!==undefined)counts[s.location_id]++;});
+    var best=locs[0],bestN=counts[locs[0].id]||0;
+    for(var i=1;i<locs.length;i++){var n=counts[locs[i].id]||0;if(n>bestN){best=locs[i];bestN=n;}}
+    return best;
+  })();
   const mapUrl=loc0?getMapsUrl(loc0.address||loc0.name):'';
   const domain=ct.website?ct.website.replace(/^https?:\/\//,'').replace(/\/.*/,''):'';
 
@@ -1218,17 +1254,23 @@ function openDetail(id){
   const ml=(p.locations||[]).length>1;
 
   // Accordion sections
+  const FIRST_DEVOTION_DAYS=['first_friday','first_saturday'];
+  const MASS_TYPES=['sunday_mass','daily_mass','communion_service'];
+  function isFirstDevotionMass(s){return FIRST_DEVOTION_DAYS.includes(s.day)&&MASS_TYPES.includes(s.type);}
   const secs=[
-    {k:'mass',t:'Mass Schedule',ic:'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5',types:['sunday_mass','daily_mass','communion_service']},
+    {k:'mass',t:'Mass Schedule',ic:'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5',types:MASS_TYPES},
     {k:'conf',t:'Sacraments',ic:'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',types:['confession','anointing_of_sick']},
     {k:'ador',t:'Adoration & Holy Hour',ic:'M12 3v18m-6-6l6 6 6-6',types:['adoration','perpetual_adoration','holy_hour']},
     {k:'devot',t:'Prayer & Devotion',ic:'M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15z',types:['rosary','stations_of_cross','divine_mercy','miraculous_medal','novena','devotion','vespers','gorzkie_zale','bible_study','mens_group','social_event']},
-    {k:'hw',t:'Holy Week',ic:'M12 2v20M2 12h20',types:['holy_thursday_mass','good_friday_service','easter_vigil_mass']},
+    {k:'hw',t:'Holy Week',ic:'M12 2v20M2 12h20',types:['holy_thursday_mass','good_friday_service','easter_vigil_mass','palm_sunday_mass','easter_sunday_mass']},
   ];
 
   let secHtml='';
   for(const sec of secs){
-    const svcs=p.services.filter(s=>sec.types.includes(s.type));
+    // First Friday/Saturday Masses route to Devotions; non-mass first fri/sat stay in their normal section
+    const svcs=sec.k==='devot'
+      ? p.services.filter(s=>sec.types.includes(s.type)||isFirstDevotionMass(s))
+      : p.services.filter(s=>sec.types.includes(s.type)&&!isFirstDevotionMass(s));
     if(!svcs.length)continue;
     // Count only services with times for badge (no-time = by appointment, shouldn't inflate count)
     // But if ALL are no-time (e.g. Holy Week TBD), show total so badge isn't 0
@@ -1242,11 +1284,26 @@ function openDetail(id){
       +'</button><div class="accordion-body'+(isFirst?' open':'')+'"><div class="accordion-body-inner">'+renderSched(svcs,locL,ml,sec.types)+'</div></div></div>';
   }
 
-  // Multi-loc note — promoted to a visible legend strip
+  // Multi-loc note — location cards with addresses and directions
   let mlNote='';
-  if(ml)mlNote='<div style="margin:var(--space-2) 0;padding:var(--space-3) var(--space-4);background:var(--color-info-bg);border-radius:var(--radius-md);display:flex;flex-wrap:wrap;gap:var(--space-2);align-items:center">'
-    +'<span style="font-size:var(--text-xs);font-weight:var(--weight-semibold);color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:0.05em;flex-shrink:0">Worship sites</span>'
-    +p.locations.map(l=>'<span style="font-size:var(--text-xs);font-weight:var(--weight-semibold);color:var(--color-primary);background:white;border:1px solid rgba(52,120,198,0.2);padding:2px 10px;border-radius:var(--radius-full)">'+esc(l.short_name||l.name)+'</span>').join('')
+  if(ml)mlNote='<div class="loc-sites">'
+    +'<div class="loc-sites-hdr">'
+    +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:18px;height:18px;color:var(--color-primary-muted);flex-shrink:0"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>'
+    +'<span class="loc-sites-title">Worship Sites</span>'
+    +'</div>'
+    +p.locations.map(function(l){
+      var addr=[l.address,l.city,l.state].filter(Boolean).join(', ');
+      var dirUrl=addr?getMapsUrl(addr):(l.name?getMapsUrl(l.name):'');
+      return '<div class="loc-site-card">'
+        +'<div class="loc-site-info">'
+        +'<div class="loc-site-name">'+esc(l.short_name||l.name)+'</div>'
+        +(addr?'<div class="loc-site-addr">'+esc(addr)+'</div>':'')
+        +'</div>'
+        +(dirUrl?'<a class="loc-site-dir" href="'+dirUrl+'" target="_blank" rel="noopener" title="Get directions">'
+          +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:16px;height:16px"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>'
+          +'</a>':'')
+        +'</div>';
+    }).join('')
     +'</div>';
 
   // Community events section
@@ -1549,7 +1606,7 @@ function addMoreEventToCal(idx){
 function renderSched(svcs,locL,ml,sectionTypes){
   const dayGrp={},appt=[];
   const WEEKDAYS=['monday','tuesday','wednesday','thursday','friday'];
-  const specLabels={weekday:'Weekdays',daily:'Daily',first_friday:'First Friday',first_saturday:'First Saturday',first_sunday:'First Sunday',first_thursday:'First Thursday',holyday:'Holy Days',holyday_eve:'Holy Day Eve',Holy_Thursday:'Holy Thursday',Good_Friday:'Good Friday',Easter_Vigil:'Easter Vigil',civil_holiday:'Civil Holidays'};
+  const specLabels={weekday:'Weekdays',daily:'Daily',first_friday:'First Friday',first_saturday:'First Saturday',first_sunday:'First Sunday',first_thursday:'First Thursday',holyday:'Holy Days',holyday_eve:'Holy Day Eve',Holy_Thursday:'Holy Thursday',Good_Friday:'Good Friday',Easter_Vigil:'Easter Vigil',Palm_Sunday:'Palm Sunday',Easter_Sunday:'Easter Sunday',civil_holiday:'Civil Holidays'};
   // Determine if we should suppress type labels (when section has only 1 type or all types are the same category)
   const secTypes=sectionTypes||[];
   const isSingleTypeSection=secTypes.length===1;
@@ -1676,7 +1733,10 @@ function renderSched(svcs,locL,ml,sectionTypes){
     if(!ss||!ss.length)return'';
     ss.sort((a,b)=>(toMin(a.time)||0)-(toMin(b.time)||0));
     const merged=mergeSameTime(ss);
-    let h='<div class="schedule-day"><div class="schedule-day-label">'+esc(label)+'</div>';
+    const dayCls=day==='first_friday'?' first-friday':day==='first_saturday'?' first-saturday':'';
+    const sub=day==='first_friday'?'<div class="schedule-day-subtitle">Devotion to the Sacred Heart of Jesus</div>'
+      :day==='first_saturday'?'<div class="schedule-day-subtitle">Devotion to the Immaculate Heart of Mary</div>':'';
+    let h='<div class="schedule-day'+dayCls+'"><div class="schedule-day-label">'+esc(label)+'</div>'+sub;
     for(const s of merged){
       h+=renderRow(s,locL,ml);
     }
@@ -1886,6 +1946,7 @@ function switchTab(id,btn){
   btn.classList.add('active');btn.setAttribute('aria-selected','true');
   if(id==='panelMap'&&!mapInitialized){initMap();mapInitialized=true}
   if(id==='panelMap'&&mapInitialized&&window._map){setTimeout(()=>window._map.invalidateSize(),100)}
+  if(id==='panelMap'){refreshLocation(function(ok){if(ok&&window._map&&userLat!==null)window._map.setView([userLat,userLng],13)})}
   if(id==='panelSaved')renderSaved();
   if(id==='panelMore'&&!window._moreRendered){renderMore();window._moreRendered=true}
 }
@@ -1986,8 +2047,8 @@ function initMap(){
       btn.title='My location';
       L.DomEvent.on(btn,'click',function(e){
         L.DomEvent.stopPropagation(e);
-        if(userLat!==null){map.setView([userLat,userLng],13)}
-        else{requestLocation();setTimeout(()=>{if(userLat!==null)map.setView([userLat,userLng],13)},2000)}
+        refreshLocation(function(ok){if(ok&&userLat!==null)map.setView([userLat,userLng],13)});
+        if(userLat!==null)map.setView([userLat,userLng],13);
       });
       return btn;
     }
@@ -2649,6 +2710,42 @@ function initLocation(){
       }
     }).catch(function(){});
   }
+}
+
+// ── Refresh helpers ─────────────────────────────────────────────────
+function refreshLocation(cb){
+  if(!navigator.geolocation){if(cb)cb(false);return}
+  navigator.geolocation.getCurrentPosition(function(pos){
+    userLat=pos.coords.latitude;userLng=pos.coords.longitude;
+    saveLocationCookie();
+    if(currentSort==='proximity'){filterParishes();renderCards()}
+    if(cb)cb(true);
+  },function(){
+    if(cb)cb(false);
+  },{enableHighAccuracy:true,timeout:10000,maximumAge:0});
+}
+
+function refreshApp(){
+  var btn=document.getElementById('refreshBtn');
+  if(btn)btn.classList.add('spinning');
+  // 1. Refresh location
+  refreshLocation(function(){
+    // 2. Refresh parish data from network (bypass cache)
+    fetch('parish_data.json',{cache:'no-store'}).then(function(r){
+      if(!r.ok)throw new Error('fetch failed');
+      return r.json();
+    }).then(function(data){
+      allParishes=data.parishes||[];
+      filterParishes();renderCards();
+      // Update service worker cache
+      if('caches' in window)caches.open('massfinder-v2_3').then(function(c){c.put(new Request('parish_data.json'),new Response(JSON.stringify(data),{headers:{'Content-Type':'application/json'}}))}).catch(function(){});
+      showToast('Data refreshed');
+    }).catch(function(){
+      showToast('Could not refresh — check connection');
+    }).finally(function(){
+      if(btn)btn.classList.remove('spinning');
+    });
+  });
 }
 
 // Focus trap for modals (B5)

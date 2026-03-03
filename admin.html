@@ -1,0 +1,2292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MassFinder Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Source+Sans+3:wght@400;500;600&display=swap">
+<style>
+/* ── Reset & tokens ──────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%}
+:root{
+  --primary:#2C3E5A; --primary-lt:#3D5278;
+  --accent:#B8963F;  --accent-pale:#F5EDD8; --accent-text:#7D6520;
+  --bg:#F8F7F4;      --surface:#FFFFFF;     --surface-hover:#F5F3EF;
+  --txt:#1A1E26;     --txt2:#5C6370;        --txt3:#9CA3AF;
+  --green:#4A7C59;   --green-bg:#EDF5F0;
+  --amber:#D97706;   --amber-bg:#FEF5E7;
+  --red:#B91C1C;     --red-bg:#FEF2F2;
+  --purple:#7C3AED;  --teal:#0D9488;
+  --border:#E5E2DC;  --border-lt:#F0EDE8;
+  --font-d:'Playfair Display',Georgia,serif;
+  --font-b:'Source Sans 3',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --font-m:ui-monospace,'SF Mono','Fira Code',monospace;
+  --r-sm:8px; --r-md:12px; --r-lg:16px;
+  --sh-card:0 1px 3px rgba(26,30,38,.06),0 4px 12px rgba(26,30,38,.04);
+  --sh-up:0 4px 16px rgba(26,30,38,.10),0 12px 40px rgba(26,30,38,.08);
+  --ease:cubic-bezier(0.25,0.46,0.45,0.94);
+}
+body{font-family:var(--font-b);background:var(--bg);color:var(--txt);font-size:16px;line-height:1.55}
+
+/* ── Login ────────────────────────────────────────────────────────── */
+#loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px}
+.login-card{background:var(--surface);border-radius:var(--r-lg);padding:48px 40px;width:100%;max-width:380px;box-shadow:var(--sh-up);text-align:center}
+.login-logo{width:52px;height:52px;background:var(--primary);border-radius:14px;margin:0 auto 22px;display:flex;align-items:center;justify-content:center}
+.login-logo svg{width:26px;height:26px;fill:var(--accent)}
+.login-card h1{font-family:var(--font-d);color:var(--primary);font-size:1.75rem;margin-bottom:6px}
+.login-card p{color:var(--txt2);margin-bottom:28px;font-size:14px}
+.login-card input{width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:15px;font-family:var(--font-b);outline:none;background:var(--bg);color:var(--txt);transition:border-color .15s,background .15s}
+.login-card input:focus{border-color:var(--primary);background:#fff;box-shadow:0 0 0 3px rgba(44,62,90,.08)}
+.login-card .btn-primary{margin-top:12px;width:100%;padding:13px;background:var(--primary);color:#fff;border:none;border-radius:var(--r-sm);font-size:15px;font-weight:600;cursor:pointer;font-family:var(--font-b);transition:opacity .15s}
+.login-card .btn-primary:hover{opacity:.88}
+.login-error{margin-top:10px;color:var(--red);font-size:13px;min-height:18px}
+
+/* ── App shell ──────────────────────────────────────────────────────── */
+#app{display:none;height:100vh;overflow:hidden;flex-direction:column}
+.app-bar{background:var(--primary);color:#fff;height:52px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-shrink:0}
+.app-bar-brand{display:flex;align-items:center;gap:9px}
+.app-bar-brand h1{font-family:var(--font-d);font-size:1.1rem;white-space:nowrap}
+.app-bar-meta{font-size:11.5px;opacity:.6;white-space:nowrap}
+.app-bar-actions{display:flex;align-items:center;gap:8px}
+.btn-icon{width:32px;height:32px;border-radius:var(--r-sm);border:none;background:rgba(255,255,255,.14);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;font-weight:700;transition:background .15s;flex-shrink:0}
+.btn-icon:hover{background:rgba(255,255,255,.26)}
+.btn-gold{height:32px;padding:0 16px;background:var(--accent);color:#fff;border:none;border-radius:var(--r-sm);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font-b);white-space:nowrap;transition:opacity .15s}
+.btn-gold:hover{opacity:.88}
+.app-body{display:flex;flex:1;overflow:hidden}
+
+/* ── Sidebar ────────────────────────────────────────────────────────── */
+.sidebar{width:284px;min-width:220px;flex-shrink:0;display:flex;flex-direction:column;border-right:1px solid var(--border);background:var(--surface)}
+.sidebar-search-wrap{padding:11px 11px 0}
+.sidebar-search{
+  width:100%;padding:8px 12px 8px 32px;border:1.5px solid var(--border);border-radius:var(--r-sm);
+  font-size:13.5px;font-family:var(--font-b);outline:none;
+  background:var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='%239CA3AF' stroke-width='2.5'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") 10px center/13px no-repeat;
+  color:var(--txt);transition:border-color .15s,background .15s;
+}
+.sidebar-search:focus{border-color:var(--primary);background:#fff;box-shadow:0 0 0 3px rgba(44,62,90,.07)}
+.sidebar-stats{padding:8px 13px 9px;font-size:13px;color:var(--txt3);border-bottom:1px solid var(--border-lt);display:flex;align-items:center;justify-content:space-between}
+#parishList{flex:1;overflow-y:auto}
+.parish-row{padding:9px 12px;cursor:pointer;border-bottom:1px solid var(--border-lt);display:flex;align-items:flex-start;gap:8px;transition:background .1s,transform .08s}
+.parish-row:hover{background:var(--bg)}
+.parish-row:active{transform:scale(0.99)}
+.parish-row.active{background:var(--accent-pale);border-left:3px solid var(--accent);padding-left:9px}
+.status-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.status-dot.verified,.status-dot.manually_verified{background:var(--green)}
+.status-dot.needs_verification,.status-dot.low_confidence{background:var(--amber)}
+.status-dot.excluded{background:var(--red)}
+.status-dot.unverified{background:#CBD5E1}
+.pr-text{flex:1;min-width:0}
+.pr-name{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pr-sub{font-size:12px;color:var(--txt2);margin-top:2px}
+
+/* ── Edit column ────────────────────────────────────────────────────── */
+.edit-col{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;color:var(--txt3);gap:12px;text-align:center;padding:48px 32px}
+.empty-state svg{opacity:.22;width:52px;height:52px}
+.empty-state p{font-size:15px;color:var(--txt2)}
+.empty-state small{font-size:13px;line-height:1.6;max-width:260px;color:var(--txt3)}
+.shortcut-hints{display:flex;flex-direction:column;gap:6px;margin-top:12px}
+.hint-row{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--txt3)}
+.hint-row kbd{min-width:52px;text-align:center}
+kbd{display:inline-block;padding:2px 7px;background:var(--surface);border:1px solid var(--border);border-radius:4px;font-size:11.5px;font-family:var(--font-m);color:var(--txt2);box-shadow:0 1px 0 var(--border);line-height:1.5}
+
+/* ── Sticky edit header ────────────────────────────────────────────── */
+.edit-sticky{position:sticky;top:0;z-index:10}
+.edit-hdr{background:var(--primary);color:#fff;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.edit-hdr-left{display:flex;align-items:center;gap:12px;min-width:0}
+.nav-btns{display:flex;gap:4px;flex-shrink:0}
+.btn-nav{width:34px;height:34px;border-radius:var(--r-sm);border:1.5px solid rgba(255,255,255,.35);background:rgba(255,255,255,.08);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;font-weight:600;transition:background .15s}
+.btn-nav:hover{background:rgba(255,255,255,.2)}
+.edit-hdr-info{min-width:0}
+.edit-hdr h2{font-family:var(--font-d);font-size:1.2rem;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:380px}
+.edit-hdr-town{font-size:12px;opacity:.7;margin-top:2px;font-family:var(--font-m)}
+.edit-hdr-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.vpill{padding:4px 11px;border-radius:99px;font-size:12px;font-weight:600;white-space:nowrap}
+.vpill.verified,.vpill.manually_verified{background:rgba(255,255,255,.15);color:#a8e6c0;border:1px solid rgba(74,124,89,.5)}
+.vpill.needs_verification,.vpill.low_confidence{background:rgba(255,255,255,.12);color:#fcd34d;border:1px solid rgba(217,119,6,.5)}
+.vpill.unverified{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.2)}
+.vpill.excluded{background:rgba(255,255,255,.1);color:#fca5a5;border:1px solid rgba(185,28,28,.4)}
+.btn-verify{height:34px;padding:0 14px;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.3);color:#fff;border-radius:var(--r-sm);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font-b);white-space:nowrap;transition:background .15s}
+.btn-verify:hover{background:rgba(255,255,255,.22)}
+.btn-del-parish{height:34px;padding:0 14px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);border-radius:var(--r-sm);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font-b);white-space:nowrap;transition:background .15s,color .15s}
+.btn-del-parish:hover{background:rgba(185,28,28,.3);border-color:rgba(185,28,28,.5);color:#fca5a5}
+.btn-save{height:34px;padding:0 18px;background:#fff;color:var(--primary);border:none;border-radius:var(--r-sm);font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font-b);transition:background .15s,box-shadow .4s;white-space:nowrap}
+.btn-save:hover{background:#f0ede8}
+.btn-save.dirty{background:var(--accent);color:#fff;animation:savepulse 2.4s ease infinite}
+@keyframes savepulse{0%,100%{box-shadow:0 0 0 0 rgba(184,150,63,.5)}60%{box-shadow:0 0 0 7px rgba(184,150,63,0)}}
+
+/* URL bar in sticky header */
+.edit-hdr-urls{background:rgba(37,53,77,.95);padding:8px 22px 10px;display:flex;gap:12px;border-top:1px solid rgba(255,255,255,.08)}
+.url-hdr-grp{flex:1;display:flex;flex-direction:column;gap:3px}
+.url-hdr-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.55)}
+.url-hdr-row{display:flex;gap:5px}
+.url-hdr-row input{flex:1;padding:7px 12px;border:1.5px solid rgba(255,255,255,.22);border-radius:var(--r-sm);background:rgba(255,255,255,.1);color:#fff;font-size:13.5px;font-family:var(--font-m);outline:none;transition:border-color .15s,background .15s;min-width:0}
+.url-hdr-row input::placeholder{color:rgba(255,255,255,.35)}
+.url-hdr-row input:focus{border-color:var(--accent);background:rgba(255,255,255,.16)}
+.btn-hdr-open{padding:0 10px;border:1.5px solid rgba(255,255,255,.22);border-radius:var(--r-sm);background:rgba(255,255,255,.08);color:rgba(255,255,255,.75);cursor:pointer;font-size:15px;transition:background .15s,color .15s;flex-shrink:0;display:flex;align-items:center}
+.btn-hdr-open:hover{background:rgba(255,255,255,.18);color:#fff}
+
+/* ── Cards ──────────────────────────────────────────────────────────── */
+.edit-content{padding:16px 20px 80px;display:flex;flex-direction:column;gap:12px;max-width:700px}
+.card{background:var(--surface);border-radius:var(--r-md);box-shadow:var(--sh-card);overflow:hidden}
+.card-label{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--txt2);padding:16px 20px 4px;display:flex;align-items:center;justify-content:space-between}
+.card-body{padding:12px 20px 20px;display:flex;flex-direction:column;gap:14px}
+details.card>summary{
+  list-style:none;padding:15px 20px;cursor:pointer;display:flex;align-items:center;gap:10px;
+  font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--txt2);user-select:none;
+}
+details.card>summary::-webkit-details-marker{display:none}
+details.card>summary::after{content:'›';font-size:18px;color:var(--txt3);transition:transform .2s;line-height:1;margin-left:auto}
+details.card[open]>summary::after{transform:rotate(90deg)}
+details.card>.card-body{border-top:1px solid var(--border-lt)}
+
+/* Card enter animations */
+.edit-content>.card,.edit-content>details.card{animation:cardIn .3s var(--ease) both}
+.edit-content>:nth-child(1){animation-delay:0ms}
+.edit-content>:nth-child(2){animation-delay:50ms}
+.edit-content>:nth-child(3){animation-delay:100ms}
+.edit-content>:nth-child(4){animation-delay:150ms}
+.edit-content>:nth-child(5){animation-delay:200ms}
+@keyframes cardIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* Validation summary on collapsed state */
+.val-summary{display:flex;align-items:center;gap:8px}
+.vpill-sm{padding:2px 7px;border-radius:99px;font-size:10px;font-weight:600;text-transform:none;letter-spacing:normal}
+.vpill-sm.verified,.vpill-sm.manually_verified{background:rgba(74,124,89,.15);color:#1f4d31;border:1px solid rgba(74,124,89,.25)}
+.vpill-sm.needs_verification,.vpill-sm.low_confidence{background:rgba(217,119,6,.15);color:#7c4208;border:1px solid rgba(217,119,6,.25)}
+.vpill-sm.unverified{background:rgba(156,163,175,.15);color:#4B5563;border:1px solid rgba(156,163,175,.25)}
+.vpill-sm.excluded{background:rgba(185,28,28,.12);color:#991B1B;border:1px solid rgba(185,28,28,.18)}
+.val-date{font-size:11px;color:var(--txt2);text-transform:none;letter-spacing:normal;font-weight:500}
+
+/* ── Form fields ───────────────────────────────────────────────────── */
+.f{display:flex;flex-direction:column;gap:5px;transition:border-left .2s,padding-left .2s}
+.f label{font-size:13px;font-weight:600;color:var(--txt2);letter-spacing:.01em}
+.f input,.f select,.f textarea{
+  padding:11px 14px;border:1.5px solid var(--border);border-radius:var(--r-sm);
+  font-size:15px;font-family:var(--font-b);outline:none;
+  background:var(--surface);color:var(--txt);transition:border-color .15s,box-shadow .15s;
+}
+.f input:focus,.f select:focus,.f textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(44,62,90,.08)}
+.f textarea{resize:vertical;min-height:64px}
+.f.changed{border-left:3px solid var(--accent);padding-left:8px}
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row-addr{display:flex;gap:10px}
+.row-addr .city{flex:1}
+.row-addr .state{width:80px;flex-shrink:0}
+.row-addr .zip{width:112px;flex-shrink:0}
+.check-row{display:flex;align-items:center;gap:8px;padding:2px 0}
+.check-row input[type=checkbox]{width:15px;height:15px;cursor:pointer;accent-color:var(--primary);flex-shrink:0}
+.check-row label{font-size:14px;cursor:pointer;user-select:none}
+.hint{font-size:13px;color:var(--txt3);line-height:1.6;margin-top:2px}
+.date-with-today{display:flex;align-items:flex-end;gap:6px}
+.date-with-today .f{flex:1}
+.btn-today{height:42px;padding:0 12px;border:1.5px solid var(--green);border-radius:var(--r-sm);background:var(--green-bg);color:var(--green);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font-b);transition:background .15s;white-space:nowrap}
+.btn-today:hover{background:var(--green);color:#fff}
+
+/* URL field + open button (in cards) */
+.url-grp{display:flex;gap:6px;align-items:flex-end}
+.url-grp .f{flex:1}
+.btn-open{flex-shrink:0;height:40px;padding:0 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);background:var(--bg);color:var(--txt2);font-size:12.5px;font-weight:600;cursor:pointer;font-family:var(--font-b);transition:border-color .15s,color .15s;display:flex;align-items:center;gap:5px}
+.btn-open:hover{border-color:var(--primary);color:var(--primary)}
+.btn-open svg{width:11px;height:11px;flex-shrink:0}
+
+/* ── Schedule card ──────────────────────────────────────────────────── */
+.sched-group{padding:12px 20px 6px;transition:border-left .2s}
+.sched-group+.sched-group{border-top:1px solid var(--border-lt)}
+.sched-group[data-group="sunday"]{border-left:3px solid var(--primary)}
+.sched-group[data-group="weekday"]{border-left:3px solid var(--primary-lt)}
+.sched-group[data-group="confession"]{border-left:3px solid var(--purple)}
+.sched-group[data-group="adoration"]{border-left:3px solid var(--accent)}
+.sched-group[data-group="devotions"]{border-left:3px solid var(--green)}
+.sched-group[data-group="triduum"]{border-left:3px solid var(--red)}
+.sched-group[data-group="community"]{border-left:3px solid var(--teal)}
+.sched-group[data-group="first_fri"]{border-left:3px solid #B91C1C}
+.sched-group[data-group="first_sat"]{border-left:3px solid #2563EB}
+.sched-group[data-group="other"]{border-left:3px solid var(--txt3)}
+.sched-group-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.sched-group-left{display:flex;align-items:center;gap:7px}
+.sched-group-label{font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--txt)}
+.sched-count{font-size:10.5px;background:var(--bg);color:var(--txt3);padding:1px 7px;border-radius:99px;border:1px solid var(--border)}
+.btn-sched-add{background:none;border:none;color:var(--primary);font-size:12.5px;font-weight:600;cursor:pointer;font-family:var(--font-b);padding:3px 8px;border-radius:var(--r-sm);transition:background .15s}
+.btn-sched-add:hover{background:var(--accent-pale);color:var(--accent-text)}
+.svc-rows{margin-bottom:8px}
+.svc-row-s{display:flex;align-items:center;gap:9px;padding:8px 0;border-bottom:1px solid var(--border-lt)}
+.svc-row-s:last-child{border-bottom:none}
+.svc-row-s.edited{background:var(--accent-pale);border-radius:4px;padding-left:6px;margin-left:-6px}
+.svc-row-s.verified{opacity:.5}
+.svc-row-s.verified .svc-day,.svc-row-s.verified .svc-time{text-decoration:line-through;text-decoration-color:var(--green)}
+.svc-check{width:18px;height:18px;cursor:pointer;accent-color:var(--green);flex-shrink:0}
+.svc-day,.svc-time{cursor:pointer;border-radius:4px;padding:3px 6px;transition:background .12s;font-size:15px}
+.svc-day{font-weight:500;min-width:78px}
+.svc-time{font-family:var(--font-m);font-size:14px;min-width:74px;color:var(--txt2)}
+.svc-day:hover,.svc-time:hover{background:var(--accent-pale)}
+.svc-pills{display:flex;gap:5px;flex:1;flex-wrap:wrap;align-items:center}
+.pill{padding:3px 9px;border-radius:99px;font-size:12px;font-weight:600;white-space:nowrap}
+.pill-lang{background:#EEF2FF;color:#4338CA}
+.pill-seasonal{background:var(--green-bg);color:var(--green)}
+.pill-vary{background:var(--amber-bg);color:var(--amber)}
+.loc-addr-preview{font-size:12px;color:var(--txt3);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.loc-rows{margin-bottom:4px}
+.pill-note{background:var(--bg);color:var(--txt3);border:1px solid var(--border)}
+.btn-row-edit{flex-shrink:0;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;border:1.5px solid var(--border);border-radius:var(--r-sm);background:var(--bg);color:var(--txt2);cursor:pointer;font-family:var(--font-b);transition:border-color .15s,color .15s;letter-spacing:1px}
+.btn-row-edit:hover{border-color:var(--primary);color:var(--primary)}
+.sched-empty{font-size:13px;color:var(--txt3);padding:4px 0 8px;font-style:italic}
+.btn-bulletin-link{font-size:12px;font-weight:600;color:var(--primary);text-decoration:none;padding:3px 10px;border-radius:var(--r-sm);background:var(--bg);border:1px solid var(--border);transition:all .15s;text-transform:none;letter-spacing:normal}
+.btn-bulletin-link:hover{background:var(--primary);color:#fff}
+
+/* Inline editing */
+.inline-edit-input,.inline-edit-select{padding:4px 8px;border:2px solid var(--accent);border-radius:var(--r-sm);font-size:13px;font-family:var(--font-b);outline:none;background:var(--accent-pale);max-width:140px}
+
+/* ── Modals ─────────────────────────────────────────────────────────── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(26,30,38,.52);z-index:100;align-items:center;justify-content:center;padding:24px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surface);border-radius:var(--r-lg);width:100%;max-width:460px;max-height:90vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--sh-up);animation:modalIn .2s var(--ease)}
+.modal.wide{max-width:540px}
+@keyframes modalIn{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
+.modal-hdr{padding:18px 22px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.modal-hdr h3{font-family:var(--font-d);font-size:1.15rem;color:var(--primary)}
+.modal-close{width:30px;height:30px;border-radius:50%;background:var(--bg);border:none;cursor:pointer;font-size:16px;color:var(--txt2);display:flex;align-items:center;justify-content:center;transition:background .15s}
+.modal-close:hover{background:var(--border)}
+.modal-body{overflow-y:auto;padding:18px 22px;display:flex;flex-direction:column;gap:13px;flex:1}
+.modal-footer{padding:14px 22px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.modal-footer-right{display:flex;gap:8px}
+.btn-danger{padding:8px 14px;border:1px solid #fca5a5;border-radius:var(--r-sm);background:transparent;color:var(--red);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font-b);transition:background .15s}
+.btn-danger:hover{background:var(--red-bg)}
+.btn-secondary{padding:8px 16px;border:1.5px solid var(--border);border-radius:var(--r-sm);background:var(--bg);color:var(--txt2);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font-b);transition:border-color .15s,color .15s}
+.btn-secondary:hover{border-color:var(--primary);color:var(--txt)}
+.btn-primary-sm{padding:8px 16px;border:none;border-radius:var(--r-sm);background:var(--primary);color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font-b);transition:opacity .15s}
+.btn-primary-sm:hover{opacity:.88}
+.modal-body h4{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--txt2);margin:14px 0 6px}
+.modal-body h4:first-child{margin-top:0}
+.modal-body ol,.modal-body ul{padding-left:18px;display:flex;flex-direction:column;gap:6px}
+.modal-body li{font-size:14px;line-height:1.55}
+.modal-body code{font-family:var(--font-m);font-size:12px;background:var(--bg);padding:2px 6px;border-radius:4px;border:1px solid var(--border)}
+.modal-body p{font-size:13.5px;color:var(--txt2);margin-top:6px;line-height:1.6}
+.guide-row{display:flex;align-items:baseline;gap:6px;font-size:14px;padding:3px 0}
+.guide-row strong{color:var(--txt);min-width:80px}
+
+/* ── Toast notifications ───────────────────────────────────────────── */
+.toast-container{position:fixed;bottom:20px;right:20px;z-index:200;display:flex;flex-direction:column-reverse;gap:8px;pointer-events:none}
+.toast{pointer-events:auto;display:flex;align-items:center;gap:12px;padding:12px 18px;background:var(--txt);color:#fff;border-radius:var(--r-md);box-shadow:var(--sh-up);font-size:13.5px;font-weight:500;transform:translateY(12px);opacity:0;transition:transform .3s var(--ease),opacity .3s var(--ease)}
+.toast.show{transform:none;opacity:1}
+.toast-undo{background:none;border:1px solid rgba(255,255,255,.3);color:#fff;padding:4px 10px;border-radius:var(--r-sm);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font-b);transition:background .15s;white-space:nowrap}
+.toast-undo:hover{background:rgba(255,255,255,.15)}
+
+/* ── Group completion ─────────────────────────────────────────────── */
+.sched-group.all-verified{opacity:.55;border-left-color:var(--green) !important;transition:opacity .3s,border-left-color .3s}
+.sched-progress{font-size:12px;font-weight:600;padding:2px 9px;border-radius:99px;margin-left:6px}
+.sched-progress.complete{background:var(--green-bg);color:var(--green)}
+.sched-progress.partial{background:var(--bg);color:var(--txt3);border:1px solid var(--border)}
+
+/* ── Staleness badges ────────────────────────────────────────────── */
+.stale-badge{font-size:12px;font-weight:700;padding:2px 8px;border-radius:4px;margin-left:5px;display:inline-block}
+.stale-badge.hot{background:var(--red-bg);color:var(--red)}
+.stale-badge.warm{background:var(--amber-bg);color:var(--amber)}
+.stale-badge.cool{background:var(--green-bg);color:var(--green)}
+
+/* ── Sidebar sort toggle ────────────────────────────────────────── */
+.sort-toggle{background:none;border:1px solid var(--border);border-radius:var(--r-sm);padding:4px 10px;font-size:13px;font-weight:600;cursor:pointer;color:var(--txt2);font-family:var(--font-b);transition:border-color .15s,color .15s}
+.sort-toggle:hover{border-color:var(--primary);color:var(--primary)}
+
+/* ── Parish progress bar ────────────────────────────────────────── */
+.pr-progress{height:5px;background:var(--border-lt);border-radius:3px;margin-top:5px}
+.pr-progress-fill{height:100%;border-radius:3px;transition:width .3s}
+.pr-progress-fill.fill-partial{background:var(--accent)}
+.pr-progress-fill.fill-complete{background:var(--green)}
+.pr-progress-text{font-size:12px;color:var(--txt3);margin-top:2px;font-weight:500}
+.pr-progress-text.complete{color:var(--green);font-weight:700}
+
+/* ── Bulk verify ─────────────────────────────────────────────────── */
+.parish-row.selected{background:var(--accent-pale);border-left:3px solid var(--accent);padding-left:9px}
+.parish-row.selected .status-dot{box-shadow:0 0 0 2px var(--accent)}
+.bulk-bar{padding:10px 12px;background:var(--primary);color:#fff;display:none;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.15);gap:8px}
+.bulk-bar.show{display:flex}
+.bulk-bar span{font-size:14px;font-weight:600}
+.bulk-bar button{height:32px;padding:0 16px;border:none;border-radius:var(--r-sm);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font-b)}
+.btn-bulk-verify{background:var(--green);color:#fff}
+.btn-bulk-clear{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3) !important}
+
+/* ── Quick scan mode ─────────────────────────────────────────────── */
+.quick-scan .edit-content>.card:not(#sched-card){display:none}
+.quick-scan .edit-hdr-urls{display:none}
+.btn-scan{height:34px;padding:0 14px;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.3);color:#fff;border-radius:var(--r-sm);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font-b);white-space:nowrap;transition:background .15s}
+.btn-scan:hover{background:rgba(255,255,255,.22)}
+.btn-scan.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* ── Export/Import buttons ───────────────────────────────────────── */
+.btn-secondary-bar{height:32px;padding:0 14px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:var(--r-sm);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font-b);white-space:nowrap;transition:background .15s}
+.btn-secondary-bar:hover{background:rgba(255,255,255,.25)}
+
+/* ── Flag for review ─────────────────────────────────────────────── */
+.btn-flag{height:34px;padding:0 14px;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.3);color:#fff;border-radius:var(--r-sm);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font-b);white-space:nowrap;transition:background .15s}
+.btn-flag:hover{background:rgba(255,255,255,.22)}
+.btn-flag.flagged{background:var(--amber);border-color:var(--amber);color:#fff}
+.flag-note-row{background:rgba(217,119,6,.15);padding:6px 22px 8px;display:none;align-items:center;gap:8px;border-top:1px solid rgba(217,119,6,.2)}
+.flag-note-row.show{display:flex}
+.flag-note-row input{flex:1;padding:7px 12px;border:1.5px solid rgba(217,119,6,.4);border-radius:var(--r-sm);background:rgba(255,255,255,.1);color:#fff;font-size:13px;font-family:var(--font-b);outline:none}
+.flag-note-row input::placeholder{color:rgba(255,255,255,.4)}
+.flag-note-row .flag-note-label{font-size:11px;color:rgba(255,255,255,.6);font-weight:600;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+.flag-note-row button{padding:4px 10px;border:1px solid rgba(255,255,255,.3);border-radius:var(--r-sm);background:rgba(255,255,255,.1);color:#fff;font-size:12px;cursor:pointer;font-weight:600}
+.pr-flag{color:var(--amber);font-size:13px;margin-left:4px;font-weight:700}
+.status-dot.has-flag{box-shadow:0 0 0 2.5px var(--amber)}
+
+/* ── Completeness badge ─────────────────────────────────────────── */
+.pr-completeness{font-size:11px;font-weight:700;padding:1px 6px;border-radius:4px;margin-left:auto;flex-shrink:0}
+.pr-completeness.hi{background:var(--green-bg);color:var(--green)}
+.pr-completeness.mid{background:var(--amber-bg);color:var(--amber)}
+.pr-completeness.lo{background:var(--red-bg);color:var(--red)}
+
+/* ── Stats modal ────────────────────────────────────────────────── */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stat-card{padding:14px;background:var(--bg);border-radius:var(--r-sm);text-align:center}
+.stat-card .stat-val{font-size:28px;font-weight:700;color:var(--primary);line-height:1.2}
+.stat-card .stat-label{font-size:12px;color:var(--txt2);margin-top:4px}
+.stat-bar{height:8px;background:var(--border-lt);border-radius:4px;margin-top:12px;overflow:hidden}
+.stat-bar-fill{height:100%;background:var(--green);border-radius:4px;transition:width .5s}
+
+/* ── Parish complete indicator ────────────────────────────────────── */
+.parish-row.all-done{background:var(--green-bg);border-left:3px solid var(--green);padding-left:9px}
+.parish-row.all-done .pr-name{color:var(--green)}
+
+/* ── Click feedback ────────────────────────────────────────────────── */
+button:active:not(:disabled){transform:scale(0.97)}
+
+/* ── Reduced motion ────────────────────────────────────────────────── */
+@media(prefers-reduced-motion:reduce){
+  .edit-content>.card,.edit-content>details.card,.modal,.toast{animation:none !important}
+  *{transition-duration:0s !important}
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────── */
+@media(max-width:640px){
+  .sidebar{width:100%;border-right:none;border-bottom:1px solid var(--border);max-height:38vh}
+  .app-body{flex-direction:column}
+  .row-2{grid-template-columns:1fr}
+  .row-addr{flex-wrap:wrap}
+  .row-addr .state,.row-addr .zip{flex:1;width:auto}
+  .edit-hdr-urls{flex-direction:column}
+  .edit-hdr h2{max-width:200px}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ LOGIN ══════════════════════════════════════════════════════════════ -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="2" width="4" height="20" rx="1"/>
+        <rect x="4" y="7" width="16" height="4" rx="1"/>
+      </svg>
+    </div>
+    <h1>MassFinder Admin</h1>
+    <p>Parish data editor &mdash; enter password to continue</p>
+    <input id="pwInput" type="password" placeholder="Password" autocomplete="current-password">
+    <button class="btn-primary" onclick="checkPassword()">Enter</button>
+    <div class="login-error" id="loginError"></div>
+  </div>
+</div>
+
+<!-- ══ APP ════════════════════════════════════════════════════════════════ -->
+<div id="app">
+  <div class="app-bar">
+    <div class="app-bar-brand">
+      <h1>MassFinder Admin</h1>
+      <span class="app-bar-meta" id="dataMeta"></span>
+    </div>
+    <div class="app-bar-actions">
+      <button class="btn-icon" onclick="showStatsModal()" title="View statistics dashboard" style="font-size:16px">&equiv;</button>
+      <button class="btn-icon" onclick="toggleHelp()" title="How to use this panel">?</button>
+      <button class="btn-secondary-bar" id="btnImport" onclick="document.getElementById('importFile').click()" title="Import a changes file">&#8593;&nbsp;Import</button>
+      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importChanges(event)">
+      <button class="btn-secondary-bar" id="btnExport" onclick="exportChanges()" title="Export only parishes edited this session" style="display:none">&#8595;&nbsp;Export Changes</button>
+      <button class="btn-gold" onclick="downloadJSON()">&#8595;&nbsp;Download JSON</button>
+    </div>
+  </div>
+  <div class="app-body">
+    <div class="sidebar">
+      <div class="sidebar-search-wrap">
+        <input class="sidebar-search" id="parishSearch" type="search" placeholder="Search parishes&hellip;" oninput="filterList()">
+      </div>
+      <div class="sidebar-stats" id="sidebarStats">Loading&hellip;</div>
+      <div id="parishList"></div>
+      <div class="bulk-bar" id="bulkBar">
+        <span id="bulkCount">0 selected</span>
+        <div style="display:flex;gap:6px">
+          <button class="btn-bulk-clear" onclick="clearBulkSelection()">Clear</button>
+          <button class="btn-bulk-verify" onclick="bulkVerify()">&#10003; Verify All</button>
+        </div>
+      </div>
+    </div>
+    <div class="edit-col" id="editCol">
+      <div class="empty-state" id="emptyState">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+          <rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 12h8M8 8h5"/>
+        </svg>
+        <p>Select a parish to begin editing</p>
+        <div class="shortcut-hints" id="shortcutHints"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SERVICE MODAL ══════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="svcModal" onclick="closeIfBg(event,'svcModal')">
+  <div class="modal">
+    <div class="modal-hdr">
+      <h3 id="svcModalTitle">Edit Service</h3>
+      <button class="modal-close" onclick="closeSvcModal()">&#x2715;</button>
+    </div>
+    <div class="modal-body" id="svcModalBody"></div>
+    <div class="modal-footer">
+      <div style="display:flex;gap:6px">
+        <button id="m_delete" class="btn-danger" onclick="deleteService()">Delete</button>
+        <button id="m_dup" class="btn-secondary" onclick="duplicateService()">Duplicate</button>
+      </div>
+      <div class="modal-footer-right">
+        <button class="btn-secondary" onclick="closeSvcModal()">Cancel</button>
+        <button class="btn-primary-sm" onclick="saveServiceModal()">Save Service</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ EVENT MODAL ════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="evtModal" onclick="closeIfBg(event,'evtModal')">
+  <div class="modal">
+    <div class="modal-hdr">
+      <h3 id="evtModalTitle">Edit Event</h3>
+      <button class="modal-close" onclick="closeEvtModal()">&#x2715;</button>
+    </div>
+    <div class="modal-body" id="evtModalBody"></div>
+    <div class="modal-footer">
+      <button id="me_delete" class="btn-danger" onclick="deleteEvent()">Delete</button>
+      <div class="modal-footer-right">
+        <button class="btn-secondary" onclick="closeEvtModal()">Cancel</button>
+        <button class="btn-primary-sm" onclick="saveEventModal()">Save Event</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ LOCATION MODAL ═════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="locModal" onclick="closeIfBg(event,'locModal')">
+  <div class="modal">
+    <div class="modal-hdr">
+      <h3 id="locModalTitle">Edit Location</h3>
+      <button class="modal-close" onclick="closeLocModal()">&#x2715;</button>
+    </div>
+    <div class="modal-body" id="locModalBody"></div>
+    <div class="modal-footer">
+      <button id="ml_delete" class="btn-danger" onclick="deleteLocation()">Delete</button>
+      <div class="modal-footer-right">
+        <button class="btn-secondary" onclick="closeLocModal()">Cancel</button>
+        <button class="btn-primary-sm" onclick="saveLocationModal()">Save Location</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ HELP MODAL ═════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="helpModal" onclick="closeIfBg(event,'helpModal')">
+  <div class="modal wide">
+    <div class="modal-hdr">
+      <h3>How to Use Admin</h3>
+      <button class="modal-close" onclick="toggleHelp()">&#x2715;</button>
+    </div>
+    <div class="modal-body">
+      <h4>Daily Review Workflow</h4>
+      <ol>
+        <li>Terminal: <code>node scripts/prep-review.js</code></li>
+        <li>Note the 3 parishes. Click their <strong>Bulletin URL</strong> in the header bar</li>
+        <li>Download the latest bulletin PDF; copy its text</li>
+        <li>Open <strong>claude.ai</strong> &rarr; paste <code>review/today-prompt.txt</code> + the bulletin text</li>
+        <li>Search the sidebar here, select each parish</li>
+        <li>Click any <strong>day or time</strong> in the schedule to edit inline, or click <strong>&middot;&middot;&middot;</strong> for full edit</li>
+        <li>Click <strong>&#10003; Verify</strong> in the header to mark as reviewed today</li>
+        <li><strong>Save Parish</strong> after each one</li>
+        <li>When done &rarr; <strong>Download JSON</strong>, replace the file, commit &amp; push</li>
+      </ol>
+      <h4>Keyboard Shortcuts</h4>
+      <div class="guide-row"><kbd id="kb_save"></kbd> <span>Save current parish</span></div>
+      <div class="guide-row"><kbd id="kb_dl"></kbd> <span>Download JSON</span></div>
+      <div class="guide-row"><kbd>Alt &#8593; / &#8595;</kbd> <span>Previous / Next parish</span></div>
+      <div class="guide-row"><kbd>Alt Q</kbd> <span>Toggle Quick Scan mode</span></div>
+      <div class="guide-row"><kbd>/</kbd> <span>Focus search bar</span></div>
+      <div class="guide-row"><kbd>Esc</kbd> <span>Close any modal / clear selection</span></div>
+      <h4>Schedule Editing</h4>
+      <ul>
+        <li>Services are grouped by type with colour-coded left borders</li>
+        <li>Click a <strong>day</strong> or <strong>time</strong> to edit it inline &mdash; Enter saves, Esc cancels</li>
+        <li>Click <strong>&middot;&middot;&middot;</strong> to open the full editor for language, notes, seasonal flags, etc.</li>
+        <li>Click <strong>+ Add</strong> next to a group heading to add a new service (inherits language from group)</li>
+      </ul>
+      <h4>Saving Your Work</h4>
+      <ul>
+        <li><strong>Save Parish</strong> writes to memory only &mdash; button pulses gold when unsaved edits exist</li>
+        <li><strong>Download JSON</strong> exports <em>all</em> parishes; use at end of session</li>
+        <li><strong>Export Changes</strong> exports only parishes you edited this session (patch file)</li>
+        <li><strong>Import</strong> merges a previously exported changes file into current data</li>
+        <li>Closing the tab with unsaved changes will trigger a browser warning</li>
+      </ul>
+      <h4>Sidebar &amp; Bulk Actions</h4>
+      <ul>
+        <li>Click the sort button to cycle: <strong>Priority</strong> (stalest first), <strong>A&rarr;Z</strong>, or <strong>Status</strong></li>
+        <li><strong>Shift+click</strong> parish rows to multi-select, then <strong>Verify All</strong> to mark them all as verified today</li>
+        <li>Progress bars show verified/total services for parishes you&rsquo;ve visited this session</li>
+        <li><strong>Quick Scan</strong> (header button or <kbd>Alt Q</kbd>) hides all cards except Schedule for speed</li>
+      </ul>
+      <h4>Import / Export Workflow</h4>
+      <p>Use this to edit from any machine (e.g. work PC) without needing Git.</p>
+      <ol>
+        <li>Open admin from Vercel preview on any browser. Verify and save parishes as normal</li>
+        <li>Click <strong>Export Changes</strong> &mdash; downloads a small JSON with only the parishes you touched</li>
+        <li>Email the file to yourself (or Dropbox, iCloud, etc.)</li>
+        <li>At home: open admin, click <strong>Import</strong>, select the file &rarr; parishes merge in</li>
+        <li>Click <strong>Download JSON</strong> to get the full updated file, then commit &amp; push</li>
+      </ol>
+      <h4>Batching Multiple Days</h4>
+      <ul>
+        <li>You can accumulate export files all week and import them at once on the weekend</li>
+        <li>Import them <strong>one at a time in chronological order</strong> (oldest first)</li>
+        <li>If you edit the same parish on different days, the latest file wins (full replacement per parish)</li>
+        <li>This is safe as long as you&rsquo;re the only editor &mdash; each day&rsquo;s export already includes prior edits</li>
+      </ul>
+      <h4>Limitations</h4>
+      <ul>
+        <li>Export only tracks parishes you <strong>saved</strong> this session &mdash; always Save before Export</li>
+        <li>Tracking resets on page refresh (export first!) &mdash; the data itself is fine</li>
+        <li>Import cannot add new parishes &mdash; only updates existing ones by matching parish ID</li>
+        <li>Everything runs client-side: no data is sent to any server. VPN/monitoring only sees the initial page load</li>
+      </ul>
+      <h4>Status Dot Guide</h4>
+      <ul>
+        <li><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#4A7C59;margin-right:6px;vertical-align:middle"></span><strong>Green</strong> &mdash; verified or manually verified</li>
+        <li><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#D97706;margin-right:6px;vertical-align:middle"></span><strong>Amber</strong> &mdash; needs verification or low confidence</li>
+        <li><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#CBD5E1;margin-right:6px;vertical-align:middle"></span><strong>Grey</strong> &mdash; never reviewed</li>
+        <li><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#B91C1C;margin-right:6px;vertical-align:middle"></span><strong>Red</strong> &mdash; excluded from the app</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ══ STATS MODAL ════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="statsModal" onclick="closeIfBg(event,'statsModal')">
+  <div class="modal wide">
+    <div class="modal-hdr">
+      <h3>Dashboard</h3>
+      <button class="modal-close" onclick="document.getElementById('statsModal').classList.remove('open')">&#x2715;</button>
+    </div>
+    <div class="modal-body" id="statsModalBody"></div>
+  </div>
+</div>
+
+<!-- Toast container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+// ── Platform detection (must be before startApp can be called) ─────────
+const MOD = navigator.platform.includes('Mac') ? '\u2318' : 'Ctrl+';
+
+// ── Password gate ──────────────────────────────────────────────────────
+const PW = 'xm2215x99=';
+function checkPassword() {
+  const v = document.getElementById('pwInput').value;
+  if (v === PW) {
+    sessionStorage.setItem('mf_admin_auth','1');
+    document.getElementById('loginError').textContent = '';
+    startApp();
+  } else {
+    document.getElementById('loginError').textContent = 'Incorrect password.';
+    document.getElementById('pwInput').value = '';
+    document.getElementById('pwInput').focus();
+  }
+}
+document.getElementById('pwInput').addEventListener('keydown', e => { if (e.key === 'Enter') checkPassword(); });
+if (sessionStorage.getItem('mf_admin_auth') === '1') startApp();
+
+// ── Constants (mirrors schema + index.html) ────────────────────────────
+const SVC_TYPES = {
+  sunday_mass:'Sunday Mass', daily_mass:'Daily Mass',
+  confession:'Confession', adoration:'Adoration',
+  perpetual_adoration:'Perpetual Adoration', holy_hour:'Holy Hour',
+  communion_service:'Communion Service', rosary:'Rosary',
+  stations_of_cross:'Stations of the Cross', divine_mercy:'Divine Mercy Chaplet',
+  miraculous_medal:'Miraculous Medal', novena:'Novena', devotion:'Devotion',
+  vespers:'Vespers', anointing_of_sick:'Anointing of the Sick', benediction:'Benediction',
+  holy_thursday_mass:"Mass of the Lord's Supper", good_friday_service:'Celebration of the Passion',
+  easter_vigil_mass:'Easter Vigil', palm_sunday_mass:'Palm Sunday Mass',
+  easter_sunday_mass:'Easter Sunday Mass', bible_study:'Bible Study',
+  gorzkie_zale:'Gorzkie \u017Bale', mens_group:"Men's Group", social_event:'Social Event'
+};
+const SVC_TYPE_GROUPS = [
+  { label:'Mass',       types:['sunday_mass','daily_mass','communion_service'] },
+  { label:'Sacraments', types:['confession','anointing_of_sick'] },
+  { label:'Adoration',  types:['adoration','perpetual_adoration','holy_hour','benediction'] },
+  { label:'Devotions',  types:['rosary','stations_of_cross','divine_mercy','miraculous_medal',
+                                'novena','devotion','gorzkie_zale','vespers'] },
+  { label:'Triduum',    types:['holy_thursday_mass','good_friday_service','easter_vigil_mass','palm_sunday_mass','easter_sunday_mass'] },
+  { label:'Community',  types:['bible_study','mens_group','social_event'] }
+];
+const DAY_VALUES = [
+  'sunday','monday','tuesday','wednesday','thursday','friday','saturday',
+  'daily','weekday','first_friday','first_saturday','first_sunday',
+  'first_thursday','fourth_friday','holyday','holyday_eve','lent',
+  'good_friday','holy_thursday','easter_vigil','palm_sunday','easter_sunday','civil_holiday'
+];
+const DAY_LABELS = {
+  sunday:'Sunday', monday:'Monday', tuesday:'Tuesday', wednesday:'Wednesday',
+  thursday:'Thursday', friday:'Friday', saturday:'Saturday',
+  daily:'Daily', weekday:'Weekdays', first_friday:'1st Friday',
+  first_saturday:'1st Saturday', first_sunday:'1st Sunday',
+  first_thursday:'1st Thursday', fourth_friday:'4th Friday',
+  holyday:'Holy Day', holyday_eve:'Holy Day Eve', lent:'Lent',
+  good_friday:'Good Friday', holy_thursday:'Holy Thursday',
+  easter_vigil:'Easter Vigil', palm_sunday:'Palm Sunday',
+  easter_sunday:'Easter Sunday', civil_holiday:'Civil Holiday'
+};
+const SEASONS      = ['year_round','lent','advent','summer','winter','academic_year','easter_season','ordinary_time','holy_week'];
+const LANG_NAMES   = {en:'English',es:'Spanish',pl:'Polish',pt:'Portuguese',la:'Latin',fr:'French',vi:'Vietnamese',asl:'ASL'};
+const PAR_STATUSES = ['active','inactive','closed','merged','excluded'];
+const VAL_STATUSES = ['verified','manually_verified','low_confidence','needs_verification','unverified','excluded'];
+const LOC_TYPES    = ['church','chapel','center','cathedral','shrine','school','office','rectory','hall','meeting_room','mission','other'];
+const EVT_CATS     = ['fellowship','conference','volunteering','liturgical','educational','outreach','social','devotional','bible_study','recurring','one_time'];
+const EVT_FREQS    = ['one_time','weekly','monthly','annual'];
+const STATES       = ['MA','CT','VT','NH','NY'];
+
+// ── Auto-ID generation ───────────────────────────────────────────────
+const SVC_TYPE_ABBR = {
+  sunday_mass:'smass', daily_mass:'dmass', confession:'conf', adoration:'ador',
+  perpetual_adoration:'pador', holy_hour:'hh', communion_service:'comm',
+  rosary:'rosary', stations_of_cross:'stations', divine_mercy:'divmerc',
+  miraculous_medal:'mirac', novena:'novena', devotion:'devot', vespers:'vespers',
+  anointing_of_sick:'anoint', benediction:'bened',
+  holy_thursday_mass:'htmass', good_friday_service:'gfsvc', easter_vigil_mass:'evmass',
+  palm_sunday_mass:'psmass', easter_sunday_mass:'esmass',
+  bible_study:'bible', gorzkie_zale:'gorzkie', mens_group:'mens', social_event:'social'
+};
+const DAY_ABBR = {
+  sunday:'sun', monday:'mon', tuesday:'tue', wednesday:'wed', thursday:'thu',
+  friday:'fri', saturday:'sat', daily:'daily', weekday:'wkday',
+  first_friday:'1fri', first_saturday:'1sat', first_sunday:'1sun',
+  first_thursday:'1thu', fourth_friday:'4fri',
+  holyday:'holyday', holyday_eve:'holyeve', lent:'lent',
+  good_friday:'goodfri', holy_thursday:'holyth', easter_vigil:'evig',
+  palm_sunday:'palmsun', easter_sunday:'eastsun', civil_holiday:'civil'
+};
+function slugify(s, maxLen) {
+  return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0, maxLen||30);
+}
+function genServiceId(parishId, type, day, time, locId) {
+  var ta = SVC_TYPE_ABBR[type] || slugify(type).slice(0,6);
+  var da = DAY_ABBR[day] || slugify(day).slice(0,4);
+  var tm = (time||'').replace(':','');
+  var locSlug = '';
+  if (locId && pendingParish && pendingParish.locations) {
+    var loc = pendingParish.locations.find(function(l){ return l.id === locId; });
+    if (loc) locSlug = '-' + slugify(loc.short_name || loc.name).split('-')[0];
+  }
+  return parishId + '-' + ta + '-' + da + '-' + tm + locSlug;
+}
+function genLocationId(name, city) {
+  var n = slugify(name, 50);
+  var c = slugify(city, 20);
+  return c ? n + '-' + c : n;
+}
+function genEventId(parishId, title) {
+  return parishId + '-evt-' + slugify(title);
+}
+
+const SCHED_GROUPS = [
+  { key:'sunday',     label:'Sunday Mass',        addType:'sunday_mass',        addDay:'sunday',
+    test: s => s.type === 'sunday_mass' },
+  { key:'weekday',    label:'Weekday Mass',        addType:'daily_mass',         addDay:'monday',
+    test: s => s.type === 'daily_mass' },
+  { key:'confession', label:'Confession',          addType:'confession',         addDay:'saturday',
+    test: s => s.type === 'confession' },
+  { key:'adoration',  label:'Adoration',           addType:'adoration',          addDay:'friday',
+    test: s => ['adoration','perpetual_adoration','holy_hour'].includes(s.type) },
+  { key:'first_fri',  label:'First Friday Mass',    addType:'daily_mass',         addDay:'first_friday',
+    test: s => s.day === 'first_friday' && ['sunday_mass','daily_mass','communion_service'].includes(s.type) },
+  { key:'first_sat',  label:'First Saturday Mass',  addType:'daily_mass',         addDay:'first_saturday',
+    test: s => s.day === 'first_saturday' && ['sunday_mass','daily_mass','communion_service'].includes(s.type) },
+  { key:'devotions',  label:'Devotions',           addType:'rosary',             addDay:'friday',
+    test: s => ['rosary','divine_mercy','miraculous_medal','novena','devotion','benediction','vespers','anointing_of_sick','stations_of_cross','gorzkie_zale'].includes(s.type) },
+  { key:'triduum',    label:'Triduum & Holy Week', addType:'holy_thursday_mass', addDay:'holy_thursday',
+    test: s => ['holy_thursday_mass','good_friday_service','easter_vigil_mass','palm_sunday_mass','easter_sunday_mass'].includes(s.type) },
+  { key:'community',  label:'Community',           addType:'bible_study',        addDay:'sunday',
+    test: s => ['bible_study','mens_group','social_event'].includes(s.type) },
+  { key:'other',      label:'Other',               addType:'communion_service',  addDay:'sunday',
+    test: () => true }
+];
+
+function dotClass(vs) {
+  if (['verified','manually_verified'].includes(vs)) return 'verified';
+  if (['needs_verification','low_confidence'].includes(vs)) return 'needs_verification';
+  if (vs === 'excluded') return 'excluded';
+  return 'unverified';
+}
+
+// ── State ──────────────────────────────────────────────────────────────
+let editData        = null;
+let allRows         = [];
+let pendingParish   = null;
+let isDirty         = false;
+let originalValues  = {};
+let editedSvcSet    = new Set();
+let verifiedSvcSet  = new Set();
+let undoAction      = null;
+let undoTimer       = null;
+let sidebarSort     = 'priority';
+let touchedParishIds = new Set();
+let quickScanMode   = false;
+let bulkSelection   = new Set();
+
+// ── Priority scoring (ported from scripts/prep-review.js) ──────────────
+function computeEaster(year) {
+  const a = year % 19, b = Math.floor(year / 100), c = year % 100;
+  const d = Math.floor(b / 4), e = b % 4;
+  const f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3);
+  const h = (19 * a + b - d - g + 15) % 30;
+  const i = Math.floor(c / 4), k = c % 4;
+  const l = (32 + 2 * e + 2 * i - h - k) % 7;
+  const m = Math.floor((a + 11 * h + 22 * l) / 451);
+  const month = Math.floor((h + l - 7 * m + 114) / 31);
+  const day   = ((h + l - 7 * m + 114) % 31) + 1;
+  return new Date(Date.UTC(year, month - 1, day));
+}
+function getSeasonalMultiplier(date) {
+  const year = date.getUTCFullYear(), easter = computeEaster(year), dayMs = 86400000;
+  function addDays(d, n) { return new Date(d.getTime() + n * dayMs); }
+  function between(d, s, e) { return d >= s && d <= e; }
+  const ashWed = addDays(easter, -46), palmSun = addDays(easter, -7), easterEnd = addDays(easter, 14);
+  const summerS = new Date(Date.UTC(year,4,15)), summerE = new Date(Date.UTC(year,5,15));
+  const fallS = new Date(Date.UTC(year,7,15)), fallE = new Date(Date.UTC(year,8,7));
+  const advS = new Date(Date.UTC(year,10,8)), advE = new Date(Date.UTC(year,10,29));
+  const xmasS = new Date(Date.UTC(year,11,1)), xmasE = new Date(Date.UTC(year,11,26));
+  if (between(date, easter, easterEnd)) return 0.6;
+  if (between(date, new Date(Date.UTC(year,5,15)), new Date(Date.UTC(year,6,15)))) return 0.6;
+  if (between(date, new Date(Date.UTC(year,8,7)), new Date(Date.UTC(year,9,1)))) return 0.6;
+  if (between(date, xmasE, new Date(Date.UTC(year+1,0,10)))) return 0.6;
+  if (between(date, palmSun, easter)) return 2.0;
+  if (between(date, xmasS, xmasE)) return 2.0;
+  if (between(date, addDays(ashWed,-21), ashWed)) return 1.8;
+  if (between(date, addDays(palmSun,-14), palmSun)) return 1.8;
+  if (between(date, summerS, summerE)) return 1.5;
+  if (between(date, fallS, fallE)) return 1.5;
+  if (between(date, advS, advE)) return 1.5;
+  if (between(date, ashWed, palmSun)) return 1.3;
+  return 1.0;
+}
+function latestSourceDate(services) {
+  let latest = null;
+  for (const s of services || []) {
+    if (!s.source) continue;
+    const m = s.source.match(/(\d{4}-\d{2}(?:-\d{2})?)/);
+    if (!m) continue;
+    const raw = m[1].length === 7 ? m[1] + '-01' : m[1];
+    const d = new Date(raw + 'T00:00:00Z');
+    if (!isNaN(d.getTime()) && (!latest || d > latest)) latest = d;
+  }
+  return latest;
+}
+function parishScore(parish) {
+  const today = new Date();
+  const todayUTC = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()));
+  const mult = getSeasonalMultiplier(todayUTC);
+  const checkedStr = parish.validation && parish.validation.last_checked;
+  const checked = checkedStr ? new Date(checkedStr + 'T00:00:00Z') : null;
+  const sourced = latestSourceDate(parish.services);
+  const lastDate = checked || sourced;
+  let staleness, daysSince;
+  if (!lastDate) {
+    staleness = 100; daysSince = -1;
+  } else {
+    daysSince = Math.round((todayUTC - lastDate) / 86400000);
+    staleness = Math.min(daysSince, 60) / 60 * 100;
+  }
+  const hasBulletin = !!(parish.bulletin_url || (parish.contact && parish.contact.website));
+  const isFlagged = !!(parish.validation && parish.validation.flagged);
+  return { score: staleness * mult + (hasBulletin ? 15 : 0) + (isFlagged ? 30 : 0), daysSince: daysSince };
+}
+function completenessScore(p) {
+  var checks = [
+    !!(p.bulletin_url),
+    !!(p.contact && p.contact.website),
+    !!(p.contact && p.contact.phone),
+    !!(p.locations && p.locations[0] && p.locations[0].address),
+    (p.services||[]).some(function(s){ return s.type === 'sunday_mass'; }),
+    (p.services||[]).some(function(s){ return s.type === 'confession'; }),
+    (p.services||[]).some(function(s){ return s.type === 'daily_mass'; }),
+    !!(p.validation && p.validation.last_checked)
+  ];
+  var have = checks.filter(Boolean).length;
+  return Math.round(have / checks.length * 100);
+}
+function buildRow(p) {
+  var sc = parishScore(p);
+  return {
+    id:p.id, name:p.name, town:p.town||'', state:p.state||'',
+    vs:(p.validation && p.validation.status)||'unverified',
+    flagged:!!(p.validation && p.validation.flagged),
+    completeness:completenessScore(p),
+    score:sc.score, daysSince:sc.daysSince,
+    svcCount:(p.services||[]).length
+  };
+}
+
+// ── Boot ───────────────────────────────────────────────────────────────
+async function startApp() {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('app').style.display = 'flex';
+  // Populate keyboard shortcut labels
+  var kbs = document.getElementById('kb_save'); if (kbs) kbs.textContent = MOD + 'S';
+  var kbd = document.getElementById('kb_dl');   if (kbd) kbd.textContent = MOD + 'D';
+  // Populate empty state shortcut hints
+  var hints = document.getElementById('shortcutHints');
+  if (hints) hints.innerHTML =
+    '<div class="hint-row"><kbd>/</kbd><span>Focus search</span></div>' +
+    '<div class="hint-row"><kbd>' + MOD + 'S</kbd><span>Save parish</span></div>' +
+    '<div class="hint-row"><kbd>' + MOD + 'D</kbd><span>Download JSON</span></div>' +
+    '<div class="hint-row"><kbd>Alt \u2191\u2193</kbd><span>Prev / Next parish</span></div>';
+  try {
+    const res = await fetch('parish_data.json');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    editData = await res.json();
+  } catch(e) {
+    document.getElementById('editCol').innerHTML =
+      '<div class="empty-state" style="color:var(--red)"><p>Could not load parish_data.json</p>' +
+      '<small>' + esc(e.message) + '<br>Run from a local server or Vercel preview.</small></div>';
+    return;
+  }
+  const m = editData.metadata || {};
+  document.getElementById('dataMeta').textContent =
+    (m.total_parishes||'?') + ' parishes \u00b7 v' + (m.schema_version||'?');
+  allRows = (editData.parishes||[]).map(buildRow);
+  sortRows(allRows);
+  updateStats(allRows.length, allRows.length);
+  renderList(allRows);
+}
+
+// ── Sidebar ────────────────────────────────────────────────────────────
+function updateStats(shown, total) {
+  const el = document.getElementById('sidebarStats');
+  if (!el) return;
+  const flagCount = allRows.filter(function(r){ return r.flagged; }).length;
+  const flagText = flagCount > 0 ? ' \u00b7 <span style="color:var(--amber);font-weight:600">' + flagCount + ' flagged</span>' : '';
+  const sortLabels = { priority:'\u21AF Priority', alpha:'A\u2192Z Name', status:'\u25CF Status', flagged:'\u2691 Flagged' };
+  el.innerHTML = '<span>' + (shown === total ? total + ' parishes' : shown + ' of ' + total + ' shown') + flagText + '</span>' +
+    '<div style="display:flex;gap:6px;align-items:center">' +
+      '<button class="sort-toggle" onclick="jumpToRandom()" title="Jump to random unverified parish">\u2684</button>' +
+      '<button class="sort-toggle" onclick="cycleSidebarSort()" title="Change sort order">' + sortLabels[sidebarSort] + '</button>' +
+    '</div>';
+}
+function cycleSidebarSort() {
+  const modes = ['priority','alpha','status','flagged'];
+  sidebarSort = modes[(modes.indexOf(sidebarSort) + 1) % modes.length];
+  sortRows(allRows);
+  filterList();
+}
+function sortRows(rows) {
+  if (sidebarSort === 'priority') {
+    rows.sort((a,b) => b.score - a.score);
+  } else if (sidebarSort === 'alpha') {
+    rows.sort((a,b) => a.name.localeCompare(b.name));
+  } else if (sidebarSort === 'status') {
+    const order = { unverified:0, needs_verification:1, low_confidence:2, manually_verified:3, verified:4, excluded:5 };
+    rows.sort((a,b) => (order[a.vs]||0) - (order[b.vs]||0) || a.name.localeCompare(b.name));
+  } else if (sidebarSort === 'flagged') {
+    rows.sort((a,b) => (b.flagged?1:0) - (a.flagged?1:0) || b.score - a.score);
+  }
+}
+function renderList(rows) {
+  const el = document.getElementById('parishList');
+  const activeId = pendingParish ? pendingParish.id : null;
+  if (!rows.length) {
+    el.innerHTML = '<div style="padding:14px 13px;font-size:13px;color:var(--txt3)">No matches</div>';
+    return;
+  }
+  el.innerHTML = rows.map(r => {
+    const isActive = r.id === activeId;
+    const isSelected = bulkSelection.has(r.id);
+    let cls = 'parish-row';
+    if (isActive) cls += ' active';
+    if (isSelected) cls += ' selected';
+    // Staleness badge (priority mode only)
+    let badge = '';
+    if (sidebarSort === 'priority') {
+      if (r.daysSince < 0) badge = '<span class="stale-badge hot">??</span>';
+      else if (r.daysSince > 30) badge = '<span class="stale-badge hot">' + r.daysSince + 'd</span>';
+      else if (r.daysSince > 14) badge = '<span class="stale-badge warm">' + r.daysSince + 'd</span>';
+      else badge = '<span class="stale-badge cool">' + r.daysSince + 'd</span>';
+    }
+    // Progress bar from sessionStorage
+    let progHtml = '';
+    try {
+      const prog = sessionStorage.getItem('mf_progress_' + r.id);
+      if (prog) {
+        const p = JSON.parse(prog);
+        const pct = p.total > 0 ? Math.round(p.verified / p.total * 100) : 0;
+        const isDone = pct === 100 && p.total > 0;
+        const fillCls = isDone ? 'fill-complete' : 'fill-partial';
+        const txtCls = isDone ? 'pr-progress-text complete' : 'pr-progress-text';
+        progHtml = '<div class="pr-progress"><div class="pr-progress-fill '+fillCls+'" style="width:'+pct+'%"></div></div>' +
+          '<span class="'+txtCls+'">' + (isDone ? '\u2713 ' : '') + p.verified + '/' + p.total + ' verified</span>';
+        if (isDone) cls += ' all-done';
+      }
+    } catch(e){}
+    // Flag icon
+    var flagIcon = r.flagged ? '<span class="pr-flag" title="Flagged for review">\u2691</span>' : '';
+    // Completeness badge
+    var compCls = r.completeness >= 75 ? 'hi' : r.completeness >= 50 ? 'mid' : 'lo';
+    var compBadge = '<span class="pr-completeness '+compCls+'">' + r.completeness + '%</span>';
+    return '<div class="'+cls+'" data-id="'+esc(r.id)+'" onclick="handleParishRowClick(event,\''+esc(r.id)+'\')">' +
+      '<div class="status-dot '+dotClass(r.vs)+(r.flagged?' has-flag':'')+'"></div>' +
+      '<div class="pr-text" style="display:flex;align-items:flex-start;gap:0;flex-direction:column;flex:1;min-width:0">' +
+        '<div style="display:flex;align-items:center;width:100%"><div class="pr-name">' + esc(r.name) + flagIcon + '</div>' + compBadge + '</div>' +
+        '<div class="pr-sub">' + esc(r.town) + ', ' + esc(r.state) + badge + '</div>' +
+        progHtml +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+function handleParishRowClick(e, id) {
+  if (e.shiftKey) {
+    e.preventDefault();
+    if (bulkSelection.has(id)) bulkSelection.delete(id);
+    else bulkSelection.add(id);
+    updateBulkBar();
+    filterList();
+    return;
+  }
+  if (bulkSelection.size > 0) { clearBulkSelection(); }
+  selectParish(id);
+}
+function updateBulkBar() {
+  const bar = document.getElementById('bulkBar');
+  const cnt = document.getElementById('bulkCount');
+  if (!bar) return;
+  if (bulkSelection.size > 0) {
+    bar.classList.add('show');
+    cnt.textContent = bulkSelection.size + ' selected';
+  } else {
+    bar.classList.remove('show');
+  }
+}
+function clearBulkSelection() {
+  bulkSelection.clear();
+  updateBulkBar();
+  filterList();
+}
+function bulkVerify() {
+  const today = new Date().toISOString().slice(0, 10);
+  let count = 0;
+  bulkSelection.forEach(id => {
+    const p = (editData.parishes||[]).find(p => p.id === id);
+    if (!p) return;
+    if (!p.validation) p.validation = {};
+    p.validation.status = 'manually_verified';
+    p.validation.last_checked = today;
+    count++;
+  });
+  // Refresh allRows
+  allRows = (editData.parishes||[]).map(buildRow);
+  sortRows(allRows);
+  clearBulkSelection();
+  showToast('\u2713 ' + count + ' parishes marked as verified today');
+  // Re-render current panel if open
+  if (pendingParish) {
+    const updated = (editData.parishes||[]).find(p => p.id === pendingParish.id);
+    if (updated) { pendingParish = JSON.parse(JSON.stringify(updated)); renderPanel(); }
+  }
+}
+function filterList() {
+  const q = document.getElementById('parishSearch').value.toLowerCase().trim();
+  const filtered = q ? allRows.filter(r =>
+    r.name.toLowerCase().includes(q) || r.id.toLowerCase().includes(q) || r.town.toLowerCase().includes(q)
+  ) : allRows.slice();
+  sortRows(filtered);
+  updateStats(filtered.length, allRows.length);
+  renderList(filtered);
+}
+
+// ── Select parish ──────────────────────────────────────────────────────
+function selectParish(id) {
+  document.querySelectorAll('.parish-row').forEach(r => r.classList.toggle('active', r.dataset.id === id));
+  const p = (editData.parishes||[]).find(p => p.id === id);
+  if (!p) return;
+  pendingParish = JSON.parse(JSON.stringify(p));
+  isDirty = false;
+  editedSvcSet.clear();
+  verifiedSvcSet.clear();
+  // Restore verified services from sessionStorage
+  try {
+    const stored = sessionStorage.getItem('mf_verified_' + id);
+    if (stored) JSON.parse(stored).forEach(i => verifiedSvcSet.add(i));
+  } catch(e){}
+  renderPanel();
+  document.getElementById('editCol').scrollTop = 0;
+}
+
+// ── Render edit panel ──────────────────────────────────────────────────
+function renderPanel() {
+  const p  = pendingParish;
+  const vs = (p.validation && p.validation.status) || 'unverified';
+  const c  = p.contact || {};
+  const v  = p.validation || {};
+  const locs = p.locations || [];
+  const isFlagged = !!(v.flagged);
+
+  const html =
+    '<div class="edit-sticky">' +
+      '<div class="edit-hdr">' +
+        '<div class="edit-hdr-left">' +
+          '<div class="nav-btns">' +
+            '<button class="btn-nav" onclick="navigateParish(-1)" title="Previous parish (Alt+\u2191)">\u2039</button>' +
+            '<button class="btn-nav" onclick="navigateParish(1)" title="Next parish (Alt+\u2193)">\u203A</button>' +
+          '</div>' +
+          '<div class="edit-hdr-info">' +
+            '<h2>' + esc(p.name) + '</h2>' +
+            '<div class="edit-hdr-town">' + esc(p.town) + ', ' + esc(p.state) + ' &nbsp;&middot;&nbsp; ' + esc(p.id) + '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="edit-hdr-right">' +
+          '<span class="vpill ' + dotClass(vs) + '">' + vs.replace(/_/g,' ') + '</span>' +
+          '<button class="btn-verify" onclick="markVerifiedToday()" title="Set status = manually verified, date = today">\u2713 Verify</button>' +
+          '<button class="btn-flag'+(isFlagged?' flagged':'')+'" onclick="toggleFlag()" title="Flag this parish for later review">'+(isFlagged?'\u2691 Flagged':'\u2690 Flag')+'</button>' +
+          '<button class="btn-scan'+(quickScanMode?' active':'')+'" onclick="toggleQuickScan()" title="Quick Scan: show only Schedule (Alt+Q)">Scan</button>' +
+          '<button class="btn-del-parish" onclick="skipParish()" title="Skip to next parish without saving (Alt+S)">Skip \u203A</button>' +
+          '<button class="btn-del-parish" onclick="deleteParish()" title="Remove this parish from working data">Delete</button>' +
+          '<button class="btn-save" id="btnSave" onclick="saveParish()">Save</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="edit-hdr-urls">' +
+        '<div class="url-hdr-grp">' +
+          '<span class="url-hdr-label">Website</span>' +
+          '<div class="url-hdr-row">' +
+            '<input id="c_website" type="url" placeholder="https://..." value="' + esc(c.website||'') + '">' +
+            '<button class="btn-hdr-open" onclick="openUrl(\'c_website\')" type="button" title="Open in new tab">\u2197</button>' +
+          '</div>' +
+        '</div>' +
+        '<div class="url-hdr-grp">' +
+          '<span class="url-hdr-label">Bulletin</span>' +
+          '<div class="url-hdr-row">' +
+            '<input id="p_bulletin" type="url" placeholder="https://..." value="' + esc(p.bulletin_url||'') + '">' +
+            '<button class="btn-hdr-open" onclick="openUrl(\'p_bulletin\')" type="button" title="Open in new tab">\u2197</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="flag-note-row'+(isFlagged?' show':'')+'" id="flagNoteRow">' +
+        '<span class="flag-note-label">\u2691 Note</span>' +
+        '<input id="flag_note" type="text" placeholder="Why flagged? (optional)" value="'+esc(v.flag_note||'')+'">' +
+        '<button onclick="clearFlag()">Unflag</button>' +
+      '</div>' +
+    '</div>' +
+    '<div class="edit-content">' +
+      cardIdentity(p) +
+      cardLocations(locs) +
+      cardSchedule(p) +
+      cardContact(c) +
+      cardValidation(v) +
+    '</div>';
+
+  document.getElementById('editCol').innerHTML = html;
+  document.getElementById('editCol').addEventListener('input',  handleInput);
+  document.getElementById('editCol').addEventListener('change', handleInput);
+  setTimeout(trackOriginals, 0);
+}
+
+function handleInput(e) {
+  markDirty();
+  checkChanged(e);
+}
+function markDirty() {
+  if (!isDirty) {
+    isDirty = true;
+    const b = document.getElementById('btnSave');
+    if (b) b.classList.add('dirty');
+  }
+}
+function trackOriginals() {
+  originalValues = {};
+  document.querySelectorAll('#editCol input, #editCol select, #editCol textarea').forEach(el => {
+    if (el.id) originalValues[el.id] = el.type === 'checkbox' ? String(el.checked) : el.value;
+  });
+}
+function checkChanged(e) {
+  const el = e.target;
+  if (!el.id || !(el.id in originalValues)) return;
+  const wrapper = el.closest('.f') || el.closest('.url-hdr-grp');
+  if (!wrapper) return;
+  const curr = el.type === 'checkbox' ? String(el.checked) : el.value;
+  wrapper.classList.toggle('changed', curr !== originalValues[el.id]);
+}
+
+// ── Card: Identity (Name / Status / Town) ─────────────────────────────
+function cardIdentity(p) {
+  var c = p.contact || {};
+  return '<div class="card">' +
+    '<div class="card-label">Identity</div>' +
+    '<div class="card-body">' +
+      field('p_name', 'Parish Name', p.name||'') +
+      '<div class="row-2">' +
+        fpairs('p_status','Status', PAR_STATUSES.map(s=>[s,s.replace(/_/g,' ')]), p.status||'active') +
+        field('p_town','Town', p.town||'') +
+      '</div>' +
+      '<div class="f"><label for="c_notes">Admin Notes</label>' +
+        '<textarea id="c_notes" rows="2" placeholder="Internal notes about this parish...">' + esc(c.notes||'') + '</textarea></div>' +
+    '</div>' +
+  '</div>';
+}
+
+// ── Card: Locations ───────────────────────────────────────────────────
+function cardLocations(locs) {
+  var rows = (locs || []).map(function(loc, i) { return locRowHtml(loc, i); }).join('');
+  return '<div class="card" id="loc-card">' +
+    '<div class="card-label"><span>Locations &middot; ' + (locs||[]).length + '</span>' +
+      '<button class="btn-sched-add" onclick="addLocation()">+ Add</button></div>' +
+    '<div class="card-body" style="padding-top:8px">' +
+      '<div class="loc-rows">' + (rows || '<div class="sched-empty">No locations</div>') + '</div>' +
+    '</div>' +
+  '</div>';
+}
+function locRowHtml(loc, i) {
+  var typePill = loc.type ? '<span class="pill pill-note">' + esc(loc.type.replace(/_/g,' ')) + '</span>' : '';
+  var addrParts = [loc.address, loc.city, loc.state].filter(Boolean);
+  var addrText = addrParts.join(', ');
+  var accessPill = loc.is_accessible ? '<span class="pill pill-note">\u267F</span>' : '';
+  return '<div class="svc-row-s" onclick="editLocation('+i+')" style="cursor:pointer">' +
+    '<span class="svc-day" style="cursor:pointer;flex:0 0 auto;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + esc(loc.short_name || loc.name || loc.id || 'Location '+(i+1)) + '</span>' +
+    '<div class="svc-pills">' + typePill + accessPill + '</div>' +
+    '<span class="loc-addr-preview">' + esc(addrText || 'No address') + '</span>' +
+    '<button class="btn-row-edit" onclick="event.stopPropagation();editLocation('+i+')" title="Edit location">&middot;&middot;&middot;</button>' +
+  '</div>';
+}
+
+// ── Card: Schedule ────────────────────────────────────────────────────
+function cardSchedule(p) {
+  const svcs = p.services || [];
+  const evts = p.special_events || [];
+  const locs = p.locations || [];
+  const hasMultiLoc = locs.length > 1;
+  const bulletinUrl = p.bulletin_url;
+  const bulletinLink = bulletinUrl
+    ? '<a class="btn-bulletin-link" href="'+esc(bulletinUrl)+'" target="_blank" rel="noopener">Bulletin \u2197</a>'
+    : '';
+
+  const assigned = new Set();
+  const groups = SCHED_GROUPS.map(g => {
+    const items = svcs.reduce((acc, s, i) => {
+      if (!assigned.has(i) && g.test(s)) { acc.push({ s, i }); assigned.add(i); }
+      return acc;
+    }, []);
+    return { ...g, items };
+  });
+
+  const schedHtml = groups.map(g => {
+    const rows = g.items.length
+      ? g.items.map(({ s, i }) => svcRowHtml(s, i, hasMultiLoc, locs)).join('')
+      : '<div class="sched-empty">None</div>';
+    const verCount = g.items.filter(({i}) => verifiedSvcSet.has(i)).length;
+    const totalCount = g.items.length;
+    const allDone = totalCount > 0 && verCount === totalCount;
+    const progressBadge = totalCount > 0
+      ? '<span class="sched-progress '+(allDone?'complete':'partial')+'">'+(allDone?'\u2713 ':'')+verCount+'/'+totalCount+'</span>'
+      : '';
+    return '<div class="sched-group'+(allDone?' all-verified':'')+'" data-group="'+g.key+'">' +
+      '<div class="sched-group-hdr">' +
+        '<div class="sched-group-left">' +
+          '<span class="sched-group-label">' + g.label + '</span>' +
+          (totalCount ? '<span class="sched-count">' + totalCount + '</span>' : '') +
+          progressBadge +
+        '</div>' +
+        '<button class="btn-sched-add" onclick="addService(\''+g.key+'\')">+ Add</button>' +
+      '</div>' +
+      '<div class="svc-rows">' + rows + '</div>' +
+    '</div>';
+  }).join('');
+
+  const evtRows = evts.length
+    ? evts.map((ev, i) => evtRowHtml(ev, i)).join('')
+    : '<div class="sched-empty">None</div>';
+
+  const evtHtml = '<div class="sched-group" data-group="other">' +
+    '<div class="sched-group-hdr">' +
+      '<div class="sched-group-left">' +
+        '<span class="sched-group-label">Special Events</span>' +
+        (evts.length ? '<span class="sched-count">' + evts.length + '</span>' : '') +
+      '</div>' +
+      '<button class="btn-sched-add" onclick="addEvent()">+ Add</button>' +
+    '</div>' +
+    '<div class="svc-rows">' + evtRows + '</div>' +
+  '</div>';
+
+  return '<div class="card" id="sched-card">' +
+    '<div class="card-label"><span>Schedule &mdash; ' + svcs.length + ' services, ' + evts.length + ' events</span>' + bulletinLink + '</div>' +
+    schedHtml + evtHtml +
+  '</div>';
+}
+
+function svcRowHtml(s, i, hasMultiLoc, locs) {
+  const day  = DAY_LABELS[s.day] || s.day || '\u2014';
+  const time = s.time ? fmt12(s.time) : (s.times_vary ? 'varies' : '\u2014');
+  const locN = hasMultiLoc && s.location_id ? ((locs.find(l=>l.id===s.location_id)||{}).short_name||'') : '';
+  const pills =
+    (s.language && s.language !== 'en' ? '<span class="pill pill-lang">' + s.language.toUpperCase() + '</span>' : '') +
+    (s.seasonal && s.seasonal.is_seasonal ? '<span class="pill pill-seasonal">' + (s.seasonal.season||'seasonal').replace(/_/g,' ') + '</span>' : '') +
+    (s.times_vary ? '<span class="pill pill-vary">times vary</span>' : '') +
+    (locN ? '<span class="pill pill-note">' + esc(locN) + '</span>' : '') +
+    (s.notes ? '<span class="pill pill-note">' + esc(s.notes.length > 32 ? s.notes.slice(0,32)+'\u2026' : s.notes) + '</span>' : '');
+  const editedCls = editedSvcSet.has(i) ? ' edited' : '';
+  const verCls = verifiedSvcSet.has(i) ? ' verified' : '';
+  return '<div class="svc-row-s'+editedCls+verCls+'">' +
+    '<input type="checkbox" class="svc-check"' + (verifiedSvcSet.has(i) ? ' checked' : '') +
+      ' onchange="quickVerifyService('+i+',this.checked)" title="Mark as verified this session">' +
+    '<span class="svc-day" onclick="inlineEditDay(this,'+i+')" title="Click to edit day">' + esc(day) + '</span>' +
+    '<span class="svc-time" onclick="inlineEditTime(this,'+i+')" title="Click to edit time">' + esc(time) + '</span>' +
+    '<div class="svc-pills">' + pills + '</div>' +
+    '<button class="btn-row-edit" onclick="editService('+i+')" title="Edit all details">&middot;&middot;&middot;</button>' +
+  '</div>';
+}
+
+function evtRowHtml(ev, i) {
+  const day  = DAY_LABELS[ev.day] || ev.day || '';
+  const time = ev.time ? ' ' + fmt12(ev.time) : '';
+  return '<div class="svc-row-s">' +
+    '<span class="svc-day" style="cursor:default">' + esc(ev.title || '(untitled)') + '</span>' +
+    '<div class="svc-pills">' +
+      (day ? '<span class="pill pill-note">' + esc(day + time) + '</span>' : '') +
+      (ev.frequency ? '<span class="pill pill-note">' + esc(ev.frequency.replace(/_/g,' ')) + '</span>' : '') +
+      (ev.seasonal && ev.seasonal.is_seasonal ? '<span class="pill pill-seasonal">' + (ev.seasonal.season||'seasonal').replace(/_/g,' ') + '</span>' : '') +
+    '</div>' +
+    '<button class="btn-row-edit" onclick="editEvent('+i+')" title="Edit event">&middot;&middot;&middot;</button>' +
+  '</div>';
+}
+
+// ── Card: Contact (collapsed) ──────────────────────────────────────────
+function cardContact(c) {
+  return '<details class="card">' +
+    '<summary><span>Contact &amp; Details</span></summary>' +
+    '<div class="card-body">' +
+      '<div class="row-2">' +
+        field('c_phone','Phone', c.phone||'') +
+        field('c_phone2','Secondary Phone', c.phone_secondary||'') +
+      '</div>' +
+      field('c_emails','Email(s) \u2014 comma-separated', (c.emails||[]).join(', ')) +
+      field('c_hours','Office Hours', c.office_hours||'') +
+      field('c_office_addr','Office Address (if different)', c.office_address||'') +
+      '<div class="row-2">' +
+        field('c_instagram','Instagram handle', c.instagram||'') +
+        field('c_facebook','Facebook handle', c.facebook||'') +
+      '</div>' +
+      field('c_notes','Notes', c.notes||'') +
+    '</div>' +
+  '</details>';
+}
+
+// ── Card: Validation (collapsed, with summary) ────────────────────────
+function cardValidation(v) {
+  const vs = v.status || 'needs_verification';
+  const lc = v.last_checked || 'never';
+  return '<details class="card">' +
+    '<summary>' +
+      '<span>Validation</span>' +
+      '<span class="val-summary">' +
+        '<span class="vpill-sm '+dotClass(vs)+'">' + vs.replace(/_/g,' ') + '</span>' +
+        '<span class="val-date">' + esc(lc) + '</span>' +
+      '</span>' +
+    '</summary>' +
+    '<div class="card-body">' +
+      fpairs('v_status','Review Status', VAL_STATUSES.map(s=>[s,s.replace(/_/g,' ')]), vs) +
+      '<div class="date-with-today">' +
+        field('v_checked','Last Checked', v.last_checked||'', '', 'date') +
+        '<button type="button" class="btn-today" onclick="fillToday(\'v_checked\')">Today</button>' +
+      '</div>' +
+      field('v_bulletin','Bulletin Date (YYYY-MM)', v.bulletin_date||'') +
+      '<div class="check-row"><input type="checkbox" id="v_flagged"'+(v.flagged?' checked':'')+' onchange="toggleFlagFromCheckbox(this.checked)">' +
+        '<label for="v_flagged" style="color:var(--amber);font-weight:600">\u2691 Flagged for later review</label></div>' +
+      (v.flag_note ? '<p class="hint" style="color:var(--amber)">\u2691 ' + esc(v.flag_note) + '</p>' : '') +
+      '<p class="hint">Tip: use the <strong>\u2713 Verify</strong> button in the header to set both status &amp; date in one click.</p>' +
+    '</div>' +
+  '</details>';
+}
+
+// ── Service modal ──────────────────────────────────────────────────────
+let svcModalIdx = null;
+
+function editService(i) {
+  svcModalIdx = i;
+  openSvcModal((pendingParish.services||[])[i] || {}, false);
+}
+function addService(groupKey) {
+  const g = SCHED_GROUPS.find(g => g.key === groupKey) || SCHED_GROUPS[0];
+  svcModalIdx = -1;
+  // Smart defaults: inherit language and location from existing services in same group
+  const siblings = (pendingParish.services || []).filter(s => g.test(s));
+  const lang = siblings.length ? (siblings[0].language || 'en') : 'en';
+  const locId = siblings.length ? (siblings[0].location_id || null) : null;
+  openSvcModal({ type:g.addType, day:g.addDay, language:lang, location_id:locId, time:'09:00' }, true);
+}
+function openSvcModal(s, isNew) {
+  const locs    = pendingParish.locations || [];
+  const isSeas  = !!(s.seasonal && s.seasonal.is_seasonal);
+  const locHtml = locs.length > 1
+    ? fpairs('m_locid','Location',
+        [['','\u2014 any \u2014'], ...locs.map(l=>[l.id, l.name||l.id])],
+        s.location_id||'')
+    : '';
+
+  document.getElementById('svcModalBody').innerHTML =
+    svcTypeDropdown('m_type', s.type||'sunday_mass') +
+    '<div class="row-2">' +
+      fpairs('m_day','Day', DAY_VALUES.map(d=>[d,DAY_LABELS[d]||d]), s.day||'sunday') +
+      fpairs('m_lang','Language', Object.entries(LANG_NAMES), s.language||'en') +
+    '</div>' +
+    '<div class="row-2">' +
+      field('m_time','Start Time', s.time||'', '', 'time') +
+      field('m_endtime','End Time (optional)', s.end_time||'', '', 'time') +
+    '</div>' +
+    locHtml +
+    field('m_notes','Notes', s.notes||'') +
+    '<div class="row-2">' +
+      sourceDropdown(s.source||'') +
+      field('m_rite','Rite (blank = Roman)', s.rite||'') +
+    '</div>' +
+    '<div>' +
+      '<div class="check-row"><input type="checkbox" id="m_tv"'+(s.times_vary?' checked':'')+'>' +
+        '<label for="m_tv">Times vary &mdash; check bulletin</label></div>' +
+      '<div class="check-row"><input type="checkbox" id="m_sea" onchange="toggleSvcSeason()"'+(isSeas?' checked':'')+'>' +
+        '<label for="m_sea">Seasonal only</label></div>' +
+    '</div>' +
+    '<div id="m_sea_row" style="display:'+(isSeas?'block':'none')+'">' +
+      fpairs('m_season','Active Season', SEASONS.map(s=>[s,s.replace(/_/g,' ')]), (s.seasonal&&s.seasonal.season)||'lent') +
+    '</div>' +
+    '<div class="f"><label>Service ID</label>' +
+    '<input id="m_id" name="m_id" type="text" value="'+esc(s.id||'')+'"' +
+    (isNew ? ' readonly style="opacity:.6;cursor:default" placeholder="Auto-generated on save"' : '') +
+    '></div>';
+
+  document.getElementById('svcModalTitle').textContent = isNew ? 'Add Service' : 'Edit Service';
+  document.getElementById('m_delete').style.display    = isNew ? 'none' : '';
+  document.getElementById('m_dup').style.display       = isNew ? 'none' : '';
+  document.getElementById('svcModal').classList.add('open');
+}
+function toggleSvcSeason() {
+  const el = document.getElementById('m_sea_row');
+  if (el) el.style.display = document.getElementById('m_sea').checked ? 'block' : 'none';
+}
+function closeSvcModal() {
+  document.getElementById('svcModal').classList.remove('open');
+  svcModalIdx = null;
+}
+function saveServiceModal() {
+  const isSeas = !!(document.getElementById('m_sea') && document.getElementById('m_sea').checked);
+  const s = {
+    id:          val('m_id') || genServiceId(pendingParish.id, val('m_type'), val('m_day'), val('m_time'), val('m_locid')),
+    type:        val('m_type')    || 'sunday_mass',
+    day:         val('m_day')     || null,
+    time:        val('m_time')    || null,
+    end_time:    val('m_endtime') || null,
+    language:    val('m_lang')    || 'en',
+    notes:       val('m_notes')   || null,
+    source:      val('m_source')  || null,
+    rite:        val('m_rite')    || null,
+    times_vary:  !!(document.getElementById('m_tv') && document.getElementById('m_tv').checked),
+    location_id: val('m_locid')   || null,
+    seasonal:    { is_seasonal: isSeas, season: isSeas ? (val('m_season')||'lent') : 'year_round' }
+  };
+  if (!pendingParish.services) pendingParish.services = [];
+  if (svcModalIdx === -1) {
+    pendingParish.services.push(s);
+    verifiedSvcSet.add(pendingParish.services.length - 1);
+  } else {
+    pendingParish.services[svcModalIdx] = s;
+    verifiedSvcSet.add(svcModalIdx);
+  }
+  markDirty();
+  persistVerified();
+  updateParishProgress();
+  closeSvcModal();
+  refreshScheduleCard();
+}
+function deleteService() {
+  if (svcModalIdx < 0 || !pendingParish.services) return;
+  const svc = JSON.parse(JSON.stringify(pendingParish.services[svcModalIdx]));
+  const idx = svcModalIdx;
+  pendingParish.services.splice(idx, 1);
+  editedSvcSet.delete(idx);
+  markDirty();
+  closeSvcModal();
+  refreshScheduleCard();
+  showToast('Service deleted', {
+    undo: function() {
+      pendingParish.services.splice(idx, 0, svc);
+      markDirty();
+      refreshScheduleCard();
+    },
+    duration: 5000
+  });
+}
+function refreshScheduleCard() {
+  const el = document.getElementById('sched-card');
+  if (!el) { renderPanel(); return; }
+  const tmp = document.createElement('div');
+  tmp.innerHTML = cardSchedule(pendingParish);
+  el.replaceWith(tmp.firstChild);
+}
+
+// ── Event modal ────────────────────────────────────────────────────────
+let evtModalIdx = null;
+
+function editEvent(i) {
+  evtModalIdx = i;
+  openEvtModal((pendingParish.special_events||[])[i] || {}, false);
+}
+function addEvent() {
+  evtModalIdx = -1;
+  openEvtModal({}, true);
+}
+function openEvtModal(ev, isNew) {
+  const isSeas = !!(ev.seasonal && ev.seasonal.is_seasonal);
+  document.getElementById('evtModalBody').innerHTML =
+    field('me_title','Event Title', ev.title||'') +
+    '<div class="row-2">' +
+      fpairs('me_cat','Category', EVT_CATS.map(c=>[c,c.replace(/_/g,' ')]), ev.category||'social') +
+      fpairs('me_freq','Frequency', EVT_FREQS.map(f=>[f,f.replace(/_/g,' ')]), ev.frequency||'one_time') +
+    '</div>' +
+    '<div class="row-2">' +
+      fpairs('me_day','Day / Recurrence', [['','\u2014'],...DAY_VALUES.map(d=>[d,DAY_LABELS[d]||d])], ev.day||'') +
+      field('me_time','Time', ev.time||'') +
+    '</div>' +
+    field('me_notes','Notes', ev.notes||'') +
+    field('me_src','Source', ev.source||'') +
+    '<div class="check-row"><input type="checkbox" id="me_sea" onchange="toggleEvtSeason()"'+(isSeas?' checked':'')+'>' +
+      '<label for="me_sea">Seasonal only</label></div>' +
+    '<div id="me_sea_row" style="display:'+(isSeas?'block':'none')+'">' +
+      fpairs('me_season','Active Season', SEASONS.map(s=>[s,s.replace(/_/g,' ')]), (ev.seasonal&&ev.seasonal.season)||'lent') +
+    '</div>' +
+    '<div class="f"><label>Event ID</label>' +
+    '<input id="me_id" name="me_id" type="text" value="'+esc(ev.id||'')+'"' +
+    (isNew ? ' readonly style="opacity:.6;cursor:default" placeholder="Auto-generated on save"' : '') +
+    '></div>';
+
+  document.getElementById('evtModalTitle').textContent = isNew ? 'Add Special Event' : 'Edit Special Event';
+  document.getElementById('me_delete').style.display   = isNew ? 'none' : '';
+  document.getElementById('evtModal').classList.add('open');
+}
+function toggleEvtSeason() {
+  const el = document.getElementById('me_sea_row');
+  if (el) el.style.display = document.getElementById('me_sea').checked ? 'block' : 'none';
+}
+function closeEvtModal() {
+  document.getElementById('evtModal').classList.remove('open');
+  evtModalIdx = null;
+}
+function saveEventModal() {
+  const isSeas = !!(document.getElementById('me_sea') && document.getElementById('me_sea').checked);
+  const ev = {
+    id:       val('me_id')    || genEventId(pendingParish.id, val('me_title')),
+    title:    val('me_title') || null,
+    category: val('me_cat')   || null,
+    frequency:val('me_freq')  || null,
+    day:      val('me_day')   || null,
+    time:     val('me_time')  || null,
+    notes:    val('me_notes') || null,
+    source:   val('me_src')   || null,
+    seasonal: { is_seasonal: isSeas, season: isSeas ? (val('me_season')||'lent') : 'year_round' }
+  };
+  if (!pendingParish.special_events) pendingParish.special_events = [];
+  if (evtModalIdx === -1) pendingParish.special_events.push(ev);
+  else pendingParish.special_events[evtModalIdx] = ev;
+  markDirty();
+  closeEvtModal();
+  refreshScheduleCard();
+}
+function deleteEvent() {
+  if (evtModalIdx < 0 || !pendingParish.special_events) return;
+  const evt = JSON.parse(JSON.stringify(pendingParish.special_events[evtModalIdx]));
+  const idx = evtModalIdx;
+  pendingParish.special_events.splice(idx, 1);
+  markDirty();
+  closeEvtModal();
+  refreshScheduleCard();
+  showToast('Event deleted', {
+    undo: function() {
+      pendingParish.special_events.splice(idx, 0, evt);
+      markDirty();
+      refreshScheduleCard();
+    },
+    duration: 5000
+  });
+}
+
+// ── HTML builders ──────────────────────────────────────────────────────
+function esc(s) {
+  if (s===null||s===undefined) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function field(id, label, value, extraClass, type) {
+  const t = type||'text';
+  return '<div class="f'+(extraClass?' '+extraClass:'')+'">' +
+    '<label for="'+id+'">'+label+'</label>' +
+    '<input id="'+id+'" name="'+id+'" type="'+t+'" value="'+esc(value)+'"></div>';
+}
+function fpairs(id, label, pairs, selected, extraClass) {
+  const opts = pairs.map(p =>
+    '<option value="'+esc(p[0])+'"'+(p[0]===selected?' selected':'')+'>'+esc(p[1])+'</option>'
+  ).join('');
+  return '<div class="f'+(extraClass?' '+extraClass:'')+'">' +
+    '<label for="'+id+'">'+label+'</label>' +
+    '<select id="'+id+'" name="'+id+'">'+opts+'</select></div>';
+}
+function sourceDropdown(currentSource) {
+  var bd = (pendingParish.validation && pendingParish.validation.bulletin_date) ||
+           new Date().toISOString().slice(0, 7);
+  var now = new Date().toISOString().slice(0, 7);
+  var opts = [
+    ['bulletin_' + bd, 'Bulletin ' + bd],
+    ['website', 'Website'],
+    ['website_' + now, 'Website ' + now],
+    ['manual_verification_' + now, 'Manual verification ' + now],
+    ['phone', 'Phone call']
+  ];
+  // If current source doesn't match any known option, add it so it's not lost
+  if (currentSource && !opts.some(function(o) { return o[0] === currentSource; })) {
+    opts.push([currentSource, currentSource]);
+  }
+  return fpairs('m_source', 'Source', opts, currentSource || opts[0][0]);
+}
+function svcTypeDropdown(id, selected) {
+  var html = '<div class="f"><label for="'+id+'">Service Type</label><select id="'+id+'" name="'+id+'">';
+  SVC_TYPE_GROUPS.forEach(function(g) {
+    html += '<optgroup label="'+esc(g.label)+'">';
+    g.types.forEach(function(t) {
+      html += '<option value="'+esc(t)+'"'+(t===selected?' selected':'')+'>'+esc(SVC_TYPES[t]||t)+'</option>';
+    });
+    html += '</optgroup>';
+  });
+  html += '</select></div>';
+  return html;
+}
+function openUrl(id) {
+  const u = (document.getElementById(id)||{}).value;
+  if (u && u.startsWith('http')) window.open(u,'_blank','noopener');
+  else showToast('Enter a valid URL first');
+}
+function fmt12(t) {
+  if (!t) return '';
+  const [h,m] = t.split(':').map(Number);
+  return (h%12||12) + ':' + String(m).padStart(2,'0') + ' ' + (h>=12?'PM':'AM');
+}
+function val(id) {
+  const el = document.getElementById(id);
+  if (!el) return null;
+  if (el.type === 'checkbox') return el.checked;
+  return el.value.trim() || null;
+}
+
+// ── Read form → pendingParish ──────────────────────────────────────────
+function saveFormToPending() {
+  if (!pendingParish) return;
+  const p = pendingParish;
+
+  // Identity
+  p.name         = val('p_name')     || p.name;
+  p.status       = val('p_status')   || 'active';
+  p.town         = val('p_town')     || p.town;
+  p.bulletin_url = val('p_bulletin') || null;
+
+  // Contact (website now in header bar)
+  if (!p.contact) p.contact = {};
+  p.contact.website         = val('c_website')     || null;
+  p.contact.phone           = val('c_phone')        || null;
+  p.contact.phone_secondary = val('c_phone2')       || null;
+  p.contact.office_hours    = val('c_hours')        || null;
+  p.contact.office_address  = val('c_office_addr')  || null;
+  p.contact.instagram       = val('c_instagram')    || null;
+  p.contact.facebook        = val('c_facebook')     || null;
+  p.contact.notes           = val('c_notes')        || null;
+  const rawEmails = val('c_emails');
+  p.contact.emails = rawEmails ? rawEmails.split(',').map(e=>e.trim()).filter(Boolean) : [];
+
+  // Locations: saved directly via location modal — no inline fields to read
+
+  // Validation
+  if (!p.validation) p.validation = {};
+  p.validation.status        = val('v_status')  || 'needs_verification';
+  p.validation.last_checked  = val('v_checked') || null;
+  p.validation.bulletin_date = val('v_bulletin')|| null;
+  // Persist flag note (flag itself is set directly on pendingParish by toggleFlag)
+  var flagNote = val('flag_note');
+  if (p.validation.flagged) {
+    p.validation.flag_note = flagNote || null;
+  } else {
+    delete p.validation.flagged;
+    delete p.validation.flag_note;
+  }
+}
+
+// ── Save & download ────────────────────────────────────────────────────
+function saveParish() {
+  saveFormToPending();
+  const idx = editData.parishes.findIndex(p => p.id === pendingParish.id);
+  if (idx >= 0) editData.parishes[idx] = JSON.parse(JSON.stringify(pendingParish));
+  isDirty = false;
+  editedSvcSet.clear();
+  const btn = document.getElementById('btnSave');
+  if (btn) btn.classList.remove('dirty');
+  // Track touched parishes for export
+  touchedParishIds.add(pendingParish.id);
+  const expBtn = document.getElementById('btnExport');
+  if (expBtn) expBtn.style.display = '';
+  // Clear session progress — work is committed, bar served its purpose
+  try {
+    sessionStorage.removeItem('mf_progress_' + pendingParish.id);
+    sessionStorage.removeItem('mf_verified_' + pendingParish.id);
+  } catch(e){}
+  // Update vpill in header
+  const vs = (pendingParish.validation && pendingParish.validation.status) || 'unverified';
+  const pill = document.querySelector('.vpill');
+  if (pill) { pill.className = 'vpill ' + dotClass(vs); pill.textContent = vs.replace(/_/g,' '); }
+  // Refresh sidebar with scores
+  allRows = (editData.parishes||[]).map(buildRow);
+  sortRows(allRows);
+  filterList();
+  // Reset changed-field highlights
+  document.querySelectorAll('.f.changed,.url-hdr-grp.changed').forEach(el => el.classList.remove('changed'));
+  setTimeout(trackOriginals, 0);
+  showToast('\u2713 Parish saved');
+}
+
+function deleteParish() {
+  if (!pendingParish) return;
+  const name = pendingParish.name;
+  const id   = pendingParish.id;
+  const parishCopy = JSON.parse(JSON.stringify(pendingParish));
+  const idx = editData.parishes.findIndex(p => p.id === id);
+
+  editData.parishes = (editData.parishes||[]).filter(p => p.id !== id);
+  allRows = allRows.filter(r => r.id !== id);
+  touchedParishIds.delete(id);
+  pendingParish = null;
+  isDirty = false;
+  updateStats(allRows.length, allRows.length);
+  renderList(allRows);
+
+  document.getElementById('editCol').innerHTML =
+    '<div class="empty-state">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">' +
+        '<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 12h8M8 8h5"/>' +
+      '</svg>' +
+      '<p style="color:var(--amber)">\u2713 "' + esc(name) + '" deleted from working data</p>' +
+      '<small>Click <strong>Download JSON</strong> in the top bar to make this permanent, then replace the file and commit.</small>' +
+    '</div>';
+
+  showToast('"' + name + '" deleted', {
+    undo: function() {
+      if (idx >= 0) editData.parishes.splice(idx, 0, parishCopy);
+      else editData.parishes.push(parishCopy);
+      allRows = (editData.parishes||[]).map(buildRow);
+      sortRows(allRows);
+      updateStats(allRows.length, allRows.length);
+      filterList();
+      selectParish(id);
+      showToast('\u21A9 "' + name + '" restored');
+    },
+    duration: 5000
+  });
+}
+
+function downloadJSON() {
+  if (pendingParish) saveParish();
+  const blob = new Blob([JSON.stringify(editData, null, 2)], { type:'application/json' });
+  const url  = URL.createObjectURL(blob);
+  const a    = Object.assign(document.createElement('a'), { href:url, download:'parish_data.json' });
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
+  showToast('\u2193 JSON downloaded');
+}
+
+// ── Quick-verify service (checkbox) ────────────────────────────────────
+function quickVerifyService(idx, checked) {
+  if (checked) {
+    verifiedSvcSet.add(idx);
+    var svc = pendingParish.services[idx];
+    if (svc) {
+      var bd = (pendingParish.validation && pendingParish.validation.bulletin_date) ||
+               new Date().toISOString().slice(0, 7);
+      svc.source = 'bulletin_' + bd;
+    }
+    markDirty();
+  } else {
+    verifiedSvcSet.delete(idx);
+  }
+  persistVerified();
+  updateParishProgress();
+  refreshScheduleCard();
+}
+function persistVerified() {
+  if (!pendingParish) return;
+  try {
+    sessionStorage.setItem('mf_verified_' + pendingParish.id, JSON.stringify(Array.from(verifiedSvcSet)));
+  } catch(e){}
+}
+var _completionToastShown = {};
+function updateParishProgress() {
+  if (!pendingParish) return;
+  var total = (pendingParish.services || []).length;
+  var verified = verifiedSvcSet.size;
+  if (total === 0) return;
+  try {
+    sessionStorage.setItem('mf_progress_' + pendingParish.id,
+      JSON.stringify({ verified: verified, total: total }));
+  } catch(e){}
+  // Update sidebar row in-place
+  var row = document.querySelector('.parish-row[data-id="' + pendingParish.id + '"]');
+  if (row) {
+    var pct = Math.round(verified / total * 100);
+    var isDone = pct === 100;
+    // Update or create progress bar
+    var bar = row.querySelector('.pr-progress');
+    var txt = row.querySelector('.pr-progress-text');
+    if (!bar) {
+      var prText = row.querySelector('.pr-text');
+      if (prText) {
+        bar = document.createElement('div');
+        bar.className = 'pr-progress';
+        bar.innerHTML = '<div class="pr-progress-fill ' + (isDone ? 'fill-complete' : 'fill-partial') + '" style="width:' + pct + '%"></div>';
+        prText.appendChild(bar);
+        txt = document.createElement('span');
+        txt.className = isDone ? 'pr-progress-text complete' : 'pr-progress-text';
+        txt.textContent = (isDone ? '\u2713 ' : '') + verified + '/' + total + ' verified';
+        prText.appendChild(txt);
+      }
+    } else {
+      var fill = bar.querySelector('.pr-progress-fill');
+      if (fill) {
+        fill.style.width = pct + '%';
+        fill.className = 'pr-progress-fill ' + (isDone ? 'fill-complete' : 'fill-partial');
+      }
+      if (txt) {
+        txt.className = isDone ? 'pr-progress-text complete' : 'pr-progress-text';
+        txt.textContent = (isDone ? '\u2713 ' : '') + verified + '/' + total + ' verified';
+      }
+    }
+    // Toggle all-done class
+    if (isDone) row.classList.add('all-done');
+    else row.classList.remove('all-done');
+  }
+  // 100% completion toast (once per parish per session)
+  if (verified === total && !_completionToastShown[pendingParish.id]) {
+    _completionToastShown[pendingParish.id] = true;
+    showToast('\u2713 All ' + total + ' services verified for ' + (pendingParish.name || 'this parish') + '!');
+  }
+  // Reset if they uncheck something
+  if (verified < total) { _completionToastShown[pendingParish.id] = false; }
+}
+
+// ── Inline editing ────────────────────────────────────────────────────
+function inlineEditDay(el, svcIdx) {
+  const svc = pendingParish.services[svcIdx];
+  if (!svc) return;
+  const sel = document.createElement('select');
+  sel.className = 'inline-edit-select';
+  DAY_VALUES.forEach(d => {
+    const opt = document.createElement('option');
+    opt.value = d;
+    opt.textContent = DAY_LABELS[d] || d;
+    if (d === svc.day) opt.selected = true;
+    sel.appendChild(opt);
+  });
+  el.replaceWith(sel);
+  sel.focus();
+  let done = false;
+  function commit() {
+    if (done) return; done = true;
+    svc.day = sel.value;
+    editedSvcSet.add(svcIdx);
+    markDirty();
+    refreshScheduleCard();
+  }
+  function cancel() {
+    if (done) return; done = true;
+    refreshScheduleCard();
+  }
+  sel.addEventListener('change', commit);
+  sel.addEventListener('blur', function() { setTimeout(function(){ if (!done) cancel(); }, 80); });
+  sel.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') cancel();
+  });
+}
+
+function inlineEditTime(el, svcIdx) {
+  const svc = pendingParish.services[svcIdx];
+  if (!svc || svc.times_vary) return;
+  const inp = document.createElement('input');
+  inp.type = 'time';
+  inp.className = 'inline-edit-input';
+  inp.value = svc.time || '';
+  el.replaceWith(inp);
+  inp.focus();
+  let done = false;
+  function commit() {
+    if (done) return; done = true;
+    svc.time = inp.value || null;
+    editedSvcSet.add(svcIdx);
+    markDirty();
+    refreshScheduleCard();
+  }
+  function cancel() {
+    if (done) return; done = true;
+    refreshScheduleCard();
+  }
+  inp.addEventListener('blur', commit);
+  inp.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') { inp.removeEventListener('blur', commit); commit(); }
+    if (e.key === 'Escape') { inp.removeEventListener('blur', commit); cancel(); }
+  });
+}
+
+// ── Parish navigation ─────────────────────────────────────────────────
+function navigateParish(dir) {
+  if (!pendingParish) return;
+  if (isDirty) saveParish();
+  const currentIdx = allRows.findIndex(r => r.id === pendingParish.id);
+  if (currentIdx < 0) return;
+  const nextIdx = currentIdx + dir;
+  if (nextIdx < 0 || nextIdx >= allRows.length) return;
+  selectParish(allRows[nextIdx].id);
+  const row = document.querySelector('.parish-row.active');
+  if (row) row.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+}
+
+// ── Mark verified today ───────────────────────────────────────────────
+function markVerifiedToday() {
+  if (!pendingParish) return;
+  if (!pendingParish.validation) pendingParish.validation = {};
+  pendingParish.validation.status = 'manually_verified';
+  pendingParish.validation.last_checked = new Date().toISOString().slice(0, 10);
+  // Cascade verification to all child services
+  var cascadeSrc = 'bulletin_' + (pendingParish.validation.bulletin_date ||
+                   new Date().toISOString().slice(0, 7));
+  (pendingParish.services || []).forEach(function(svc, idx) {
+    svc.source = cascadeSrc;
+    verifiedSvcSet.add(idx);
+  });
+  persistVerified();
+  updateParishProgress();
+  markDirty();
+  // Update form fields if validation section is open
+  const vs = document.getElementById('v_status');
+  const vc = document.getElementById('v_checked');
+  if (vs) vs.value = 'manually_verified';
+  if (vc) vc.value = pendingParish.validation.last_checked;
+  // Update header pill
+  const pill = document.querySelector('.vpill');
+  if (pill) { pill.className = 'vpill verified'; pill.textContent = 'manually verified'; }
+  // Update validation summary if visible
+  const smPill = document.querySelector('.vpill-sm');
+  const smDate = document.querySelector('.val-date');
+  if (smPill) { smPill.className = 'vpill-sm verified'; smPill.textContent = 'manually verified'; }
+  if (smDate) smDate.textContent = pendingParish.validation.last_checked;
+  // Refresh schedule card to show all checkboxes as verified
+  refreshScheduleCard();
+  var svcCount = (pendingParish.services || []).length;
+  showToast('\u2713 Verified — ' + svcCount + ' service' + (svcCount !== 1 ? 's' : '') + ' updated');
+}
+
+function fillToday(fieldId) {
+  const el = document.getElementById(fieldId);
+  if (el) {
+    el.value = new Date().toISOString().slice(0, 10);
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+}
+
+// ── Flag for review ──────────────────────────────────────────────────
+function toggleFlag() {
+  if (!pendingParish) return;
+  if (!pendingParish.validation) pendingParish.validation = {};
+  var wasFlagged = !!pendingParish.validation.flagged;
+  if (wasFlagged) {
+    clearFlag();
+  } else {
+    pendingParish.validation.flagged = true;
+    markDirty();
+    var noteRow = document.getElementById('flagNoteRow');
+    if (noteRow) noteRow.classList.add('show');
+    var btn = document.querySelector('.btn-flag');
+    if (btn) { btn.classList.add('flagged'); btn.innerHTML = '\u2691 Flagged'; }
+    var cb = document.getElementById('v_flagged');
+    if (cb) cb.checked = true;
+    setTimeout(function() {
+      var inp = document.getElementById('flag_note');
+      if (inp) inp.focus();
+    }, 50);
+    showToast('\u2691 Flagged for review');
+  }
+}
+function clearFlag() {
+  if (!pendingParish) return;
+  if (!pendingParish.validation) pendingParish.validation = {};
+  pendingParish.validation.flagged = false;
+  pendingParish.validation.flag_note = null;
+  markDirty();
+  renderPanel();
+  showToast('Flag removed');
+}
+function toggleFlagFromCheckbox(checked) {
+  if (!pendingParish) return;
+  if (!pendingParish.validation) pendingParish.validation = {};
+  pendingParish.validation.flagged = checked;
+  if (!checked) pendingParish.validation.flag_note = null;
+  markDirty();
+  var btn = document.querySelector('.btn-flag');
+  if (btn) { btn.classList.toggle('flagged', checked); btn.innerHTML = checked ? '\u2691 Flagged' : '\u2690 Flag'; }
+  var noteRow = document.getElementById('flagNoteRow');
+  if (noteRow) noteRow.classList.toggle('show', checked);
+}
+
+// ── Skip parish ─────────────────────────────────────────────────────
+function skipParish() {
+  isDirty = false;
+  editedSvcSet.clear();
+  verifiedSvcSet.clear();
+  var btn = document.getElementById('btnSave');
+  if (btn) btn.classList.remove('dirty');
+  // Restore original data (discard pending changes)
+  if (pendingParish) {
+    var orig = (editData.parishes||[]).find(function(p){ return p.id === pendingParish.id; });
+    if (orig) pendingParish = JSON.parse(JSON.stringify(orig));
+  }
+  navigateParish(1);
+}
+
+// ── Jump to random unverified ───────────────────────────────────────
+function jumpToRandom() {
+  var candidates = allRows.filter(function(r) {
+    return r.vs === 'unverified' || r.vs === 'needs_verification' || r.vs === 'low_confidence';
+  });
+  if (!candidates.length) {
+    showToast('No unverified parishes remaining');
+    return;
+  }
+  var pick = candidates[Math.floor(Math.random() * candidates.length)];
+  selectParish(pick.id);
+  var row = document.querySelector('.parish-row.active');
+  if (row) row.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  showToast('\u2684 Random: ' + pick.name);
+}
+
+// ── Duplicate service ───────────────────────────────────────────────
+function duplicateService() {
+  if (svcModalIdx < 0 || !pendingParish || !pendingParish.services) return;
+  var orig = pendingParish.services[svcModalIdx];
+  if (!orig) return;
+  var clone = JSON.parse(JSON.stringify(orig));
+  clone.id = genServiceId(pendingParish.id, clone.type, clone.day, clone.time, clone.location_id) + '-dup';
+  pendingParish.services.push(clone);
+  markDirty();
+  closeSvcModal();
+  refreshScheduleCard();
+  showToast('\u2398 Service duplicated');
+}
+
+// ── Location modal ──────────────────────────────────────────────────
+var locModalIdx = null;
+
+function editLocation(i) {
+  locModalIdx = i;
+  openLocModal((pendingParish.locations || [])[i] || {}, false);
+}
+function addLocation() {
+  locModalIdx = -1;
+  openLocModal({}, true);
+}
+function openLocModal(loc, isNew) {
+  document.getElementById('locModalBody').innerHTML =
+    field('ml_name', 'Location Name', loc.name || '') +
+    field('ml_short', 'Short Name (for badges)', loc.short_name || '') +
+    fpairs('ml_type', 'Type', LOC_TYPES.map(function(t){ return [t, t.replace(/_/g,' ')]; }), loc.type || 'church') +
+    field('ml_addr', 'Street Address', loc.address || '') +
+    '<div class="row-addr">' +
+      '<div class="f city"><label for="ml_city">City</label>' +
+        '<input id="ml_city" name="ml_city" type="text" value="' + esc(loc.city || '') + '"></div>' +
+      fpairs('ml_st', 'State', STATES.map(function(s){ return [s,s]; }), loc.state || 'MA', 'state') +
+      '<div class="f zip"><label for="ml_zip">ZIP</label>' +
+        '<input id="ml_zip" name="ml_zip" type="text" value="' + esc(loc.zip || '') + '"></div>' +
+    '</div>' +
+    '<div class="check-row" style="margin:10px 0"><input type="checkbox" id="ml_access"' +
+      (loc.is_accessible ? ' checked' : '') + '>' +
+      '<label for="ml_access">Wheelchair accessible</label></div>' +
+    field('ml_access_notes', 'Accessibility Notes', loc.accessibility_notes || '') +
+    field('ml_notes', 'Notes', loc.notes || '') +
+    '<div class="f"><label>Location ID</label>' +
+    '<input id="ml_id" name="ml_id" type="text" value="' + esc(loc.id || '') + '"' +
+    (isNew ? ' readonly style="opacity:.6;cursor:default" placeholder="Auto-generated on save"' : '') +
+    '></div>';
+
+  document.getElementById('locModalTitle').textContent = isNew ? 'Add Location' : 'Edit Location';
+  document.getElementById('ml_delete').style.display = isNew ? 'none' : '';
+  document.getElementById('locModal').classList.add('open');
+}
+function saveLocationModal() {
+  var existing = locModalIdx >= 0 ? ((pendingParish.locations || [])[locModalIdx] || {}) : {};
+  var loc = {
+    id:                  val('ml_id') || genLocationId(val('ml_name'), val('ml_city')),
+    name:                val('ml_name') || '',
+    short_name:          val('ml_short') || null,
+    type:                val('ml_type') || 'church',
+    address:             val('ml_addr') || null,
+    city:                val('ml_city') || null,
+    state:               val('ml_st') || 'MA',
+    zip:                 val('ml_zip') || null,
+    is_accessible:       !!(document.getElementById('ml_access') && document.getElementById('ml_access').checked),
+    accessibility_notes: val('ml_access_notes') || null,
+    notes:               val('ml_notes') || null,
+    lat:                 existing.lat || 0,
+    lng:                 existing.lng || 0
+  };
+  if (!pendingParish.locations) pendingParish.locations = [];
+  if (locModalIdx === -1) {
+    pendingParish.locations.push(loc);
+  } else {
+    pendingParish.locations[locModalIdx] = loc;
+  }
+  markDirty();
+  closeLocModal();
+  refreshLocCard();
+  showToast(locModalIdx === -1 ? 'Location added' : 'Location updated');
+}
+function deleteLocation() {
+  if (locModalIdx < 0 || !pendingParish || !pendingParish.locations) return;
+  var locId = pendingParish.locations[locModalIdx].id;
+  var inUse = (pendingParish.services || []).some(function(s) { return s.location_id === locId; });
+  if (inUse && !confirm('Services reference this location. Delete anyway?')) return;
+  var saved = JSON.parse(JSON.stringify(pendingParish.locations[locModalIdx]));
+  var idx = locModalIdx;
+  pendingParish.locations.splice(idx, 1);
+  markDirty();
+  closeLocModal();
+  refreshLocCard();
+  showToast('Location deleted', {
+    undo: function() {
+      pendingParish.locations.splice(idx, 0, saved);
+      markDirty();
+      refreshLocCard();
+    },
+    duration: 5000
+  });
+}
+function closeLocModal() {
+  document.getElementById('locModal').classList.remove('open');
+  locModalIdx = null;
+}
+function refreshLocCard() {
+  var el = document.getElementById('loc-card');
+  if (!el) { renderPanel(); return; }
+  var tmp = document.createElement('div');
+  tmp.innerHTML = cardLocations(pendingParish.locations || []);
+  el.replaceWith(tmp.firstChild);
+}
+
+// ── Statistics dashboard ────────────────────────────────────────────
+function showStatsModal() {
+  var ps = editData.parishes || [];
+  var total = ps.length;
+  var verified = ps.filter(function(p){ var s = p.validation && p.validation.status; return s === 'verified' || s === 'manually_verified'; }).length;
+  var unverified = ps.filter(function(p){ return !p.validation || p.validation.status === 'unverified'; }).length;
+  var needsVer = ps.filter(function(p){ return p.validation && p.validation.status === 'needs_verification'; }).length;
+  var flagged = ps.filter(function(p){ return p.validation && p.validation.flagged; }).length;
+  var noBulletin = ps.filter(function(p){ return !p.bulletin_url; }).length;
+  var noConfession = ps.filter(function(p){ return !(p.services||[]).some(function(s){ return s.type === 'confession'; }); }).length;
+  var noSunday = ps.filter(function(p){ return !(p.services||[]).some(function(s){ return s.type === 'sunday_mass'; }); }).length;
+  // Avg staleness
+  var staleSum = 0, staleCount = 0;
+  ps.forEach(function(p) {
+    if (p.validation && p.validation.last_checked) {
+      var d = Math.round((new Date() - new Date(p.validation.last_checked)) / 86400000);
+      staleSum += d; staleCount++;
+    }
+  });
+  var avgStale = staleCount > 0 ? Math.round(staleSum / staleCount) : '??';
+  var pct = total > 0 ? Math.round(verified / total * 100) : 0;
+
+  document.getElementById('statsModalBody').innerHTML =
+    '<div class="stat-grid">' +
+      '<div class="stat-card"><div class="stat-val">' + verified + '/' + total + '</div><div class="stat-label">Verified</div></div>' +
+      '<div class="stat-card"><div class="stat-val">' + unverified + '</div><div class="stat-label">Unverified</div></div>' +
+      '<div class="stat-card"><div class="stat-val">' + needsVer + '</div><div class="stat-label">Needs Review</div></div>' +
+      '<div class="stat-card"><div class="stat-val" style="color:var(--amber)">' + flagged + '</div><div class="stat-label">Flagged</div></div>' +
+      '<div class="stat-card"><div class="stat-val">' + avgStale + 'd</div><div class="stat-label">Avg Staleness</div></div>' +
+      '<div class="stat-card"><div class="stat-val">' + noBulletin + '</div><div class="stat-label">No Bulletin URL</div></div>' +
+      '<div class="stat-card"><div class="stat-val">' + noConfession + '</div><div class="stat-label">No Confession</div></div>' +
+      '<div class="stat-card"><div class="stat-val">' + noSunday + '</div><div class="stat-label">No Sunday Mass</div></div>' +
+    '</div>' +
+    '<div style="margin-top:16px">' +
+      '<div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:var(--txt2);margin-bottom:6px">' +
+        '<span>Verification Progress</span><span>' + pct + '%</span></div>' +
+      '<div class="stat-bar"><div class="stat-bar-fill" style="width:' + pct + '%"></div></div>' +
+    '</div>';
+  document.getElementById('statsModal').classList.add('open');
+}
+
+// ── Toast system ──────────────────────────────────────────────────────
+function showToast(msg, opts) {
+  opts = opts || {};
+  const container = document.getElementById('toastContainer');
+  if (!container) return;
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  var html = '<span>' + msg + '</span>';
+  if (opts.undo) {
+    undoAction = opts.undo;
+    clearTimeout(undoTimer);
+    html += '<button class="toast-undo" onclick="doUndo(this)">Undo</button>';
+    undoTimer = setTimeout(function() { undoAction = null; }, opts.duration || 5000);
+  }
+  toast.innerHTML = html;
+  container.appendChild(toast);
+  requestAnimationFrame(function() { toast.classList.add('show'); });
+  var dur = opts.duration || 3000;
+  setTimeout(function() {
+    toast.classList.remove('show');
+    setTimeout(function() { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 300);
+  }, dur);
+}
+function doUndo(btn) {
+  if (undoAction) { undoAction(); undoAction = null; }
+  clearTimeout(undoTimer);
+  var toast = btn.closest('.toast');
+  if (toast && toast.parentNode) toast.parentNode.removeChild(toast);
+}
+
+// ── Quick Scan mode ──────────────────────────────────────────────────
+function toggleQuickScan() {
+  quickScanMode = !quickScanMode;
+  const col = document.getElementById('editCol');
+  if (col) col.classList.toggle('quick-scan', quickScanMode);
+  const btn = document.querySelector('.btn-scan');
+  if (btn) btn.classList.toggle('active', quickScanMode);
+}
+
+// ── Export / Import changes ─────────────────────────────────────────
+function exportChanges() {
+  if (!touchedParishIds.size) { showToast('No parishes edited this session'); return; }
+  if (pendingParish && isDirty) saveParish();
+  const patches = [];
+  touchedParishIds.forEach(id => {
+    const p = (editData.parishes||[]).find(p => p.id === id);
+    if (p) patches.push({ id: p.id, parish: JSON.parse(JSON.stringify(p)) });
+  });
+  const payload = {
+    date: new Date().toISOString().slice(0, 10),
+    count: patches.length,
+    patches: patches
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type:'application/json' });
+  const url  = URL.createObjectURL(blob);
+  const a    = Object.assign(document.createElement('a'), {
+    href:url, download:'changes_' + payload.date + '.json'
+  });
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
+  // Open mailto: draft so user can attach the downloaded file and send
+  var subj = encodeURIComponent('MassFinder Changes \u2014 ' + payload.date);
+  var body = encodeURIComponent(
+    patches.length + ' parish(es) edited on ' + payload.date + '.\n\n' +
+    'Parishes: ' + patches.map(function(p){ return p.parish.name || p.id; }).join(', ') + '\n\n' +
+    'Attach the downloaded file: changes_' + payload.date + '.json'
+  );
+  window.open('mailto:massfinderapp@gmail.com?subject=' + subj + '&body=' + body, '_blank');
+  showToast('\u2193 Exported ' + patches.length + ' parishes \u2014 attach file to the email draft');
+}
+function importChanges(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!data.patches || !Array.isArray(data.patches)) {
+        showToast('Invalid changes file — missing patches array');
+        return;
+      }
+      let merged = 0;
+      data.patches.forEach(patch => {
+        const idx = editData.parishes.findIndex(p => p.id === patch.id);
+        if (idx >= 0) {
+          editData.parishes[idx] = patch.parish;
+          merged++;
+        }
+      });
+      // Refresh allRows
+      allRows = (editData.parishes||[]).map(buildRow);
+      sortRows(allRows);
+      filterList();
+      if (pendingParish) {
+        const updated = editData.parishes.find(p => p.id === pendingParish.id);
+        if (updated) { pendingParish = JSON.parse(JSON.stringify(updated)); renderPanel(); }
+      }
+      showToast('\u2713 Merged ' + merged + ' parishes from ' + (data.date||'file'));
+    } catch(err) {
+      showToast('Error reading file: ' + err.message);
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = ''; // reset so same file can be re-imported
+}
+
+// ── Keyboard shortcuts ────────────────────────────────────────────────
+document.addEventListener('keydown', function(e) {
+  // Cmd/Ctrl + S → save
+  if ((e.metaKey || e.ctrlKey) && e.key === 's') {
+    e.preventDefault();
+    if (pendingParish) saveParish();
+  }
+  // Cmd/Ctrl + D → download
+  if ((e.metaKey || e.ctrlKey) && e.key === 'd') {
+    e.preventDefault();
+    downloadJSON();
+  }
+  // Alt + Up/Down → prev/next parish
+  if (e.altKey && e.key === 'ArrowDown') { e.preventDefault(); navigateParish(1); }
+  if (e.altKey && e.key === 'ArrowUp')   { e.preventDefault(); navigateParish(-1); }
+  // Alt + Q → Quick Scan toggle
+  if (e.altKey && (e.key === 'q' || e.key === 'Q')) { e.preventDefault(); toggleQuickScan(); }
+  // Alt + S → Skip parish
+  if (e.altKey && (e.key === 's' || e.key === 'S') && !(e.metaKey||e.ctrlKey)) { e.preventDefault(); skipParish(); }
+  // Alt + R → Random unverified
+  if (e.altKey && (e.key === 'r' || e.key === 'R')) { e.preventDefault(); jumpToRandom(); }
+  // / → focus search (only when not in an input)
+  if (e.key === '/' && !['INPUT','SELECT','TEXTAREA'].includes(document.activeElement.tagName)) {
+    e.preventDefault();
+    document.getElementById('parishSearch').focus();
+  }
+  // Esc → close modals or clear bulk selection
+  if (e.key === 'Escape') {
+    if (bulkSelection.size > 0) { clearBulkSelection(); return; }
+    ['svcModal','evtModal','locModal','helpModal','statsModal'].forEach(function(id) {
+      document.getElementById(id).classList.remove('open');
+    });
+    svcModalIdx = null;
+    evtModalIdx = null;
+  }
+});
+
+// ── beforeunload warning ──────────────────────────────────────────────
+window.addEventListener('beforeunload', function(e) {
+  if (isDirty) { e.preventDefault(); e.returnValue = ''; }
+});
+
+// ── Modal helpers ──────────────────────────────────────────────────────
+function closeIfBg(e, id) {
+  if (e.target === document.getElementById(id)) document.getElementById(id).classList.remove('open');
+}
+function toggleHelp() { document.getElementById('helpModal').classList.toggle('open'); }
+</script>
+</body>
+</html>
