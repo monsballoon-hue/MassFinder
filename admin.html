@@ -202,6 +202,8 @@ details.card>.card-body{border-top:1px solid var(--border-lt)}
 .sched-group[data-group="devotions"]{border-left:3px solid var(--green)}
 .sched-group[data-group="triduum"]{border-left:3px solid var(--red)}
 .sched-group[data-group="community"]{border-left:3px solid var(--teal)}
+.sched-group[data-group="first_fri"]{border-left:3px solid #B91C1C}
+.sched-group[data-group="first_sat"]{border-left:3px solid #2563EB}
 .sched-group[data-group="other"]{border-left:3px solid var(--txt3)}
 .sched-group-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
 .sched-group-left{display:flex;align-items:center;gap:7px}
@@ -600,6 +602,10 @@ const SCHED_GROUPS = [
     test: s => s.type === 'confession' },
   { key:'adoration',  label:'Adoration',           addType:'adoration',          addDay:'friday',
     test: s => ['adoration','perpetual_adoration','holy_hour'].includes(s.type) },
+  { key:'first_fri',  label:'First Friday',         addType:'adoration',          addDay:'first_friday',
+    test: s => s.day === 'first_friday' },
+  { key:'first_sat',  label:'First Saturday',       addType:'rosary',             addDay:'first_saturday',
+    test: s => s.day === 'first_saturday' },
   { key:'devotions',  label:'Devotions',           addType:'rosary',             addDay:'friday',
     test: s => ['rosary','divine_mercy','miraculous_medal','novena','devotion','benediction','vespers','anointing_of_sick','stations_of_cross','gorzkie_zale'].includes(s.type) },
   { key:'triduum',    label:'Triduum & Holy Week', addType:'holy_thursday_mass', addDay:'holy_thursday',
@@ -1482,12 +1488,9 @@ function saveParish() {
   touchedParishIds.add(pendingParish.id);
   const expBtn = document.getElementById('btnExport');
   if (expBtn) expBtn.style.display = '';
-  // Store progress in sessionStorage
+  // Clear session progress — work is committed, bar served its purpose
   try {
-    const total = (pendingParish.services||[]).length;
-    const verified = verifiedSvcSet.size;
-    sessionStorage.setItem('mf_progress_' + pendingParish.id, JSON.stringify({verified:verified, total:total}));
-    // Clear verified set from sessionStorage (committed to data)
+    sessionStorage.removeItem('mf_progress_' + pendingParish.id);
     sessionStorage.removeItem('mf_verified_' + pendingParish.id);
   } catch(e){}
   // Update vpill in header
@@ -1813,7 +1816,15 @@ function exportChanges() {
   });
   document.body.appendChild(a); a.click();
   document.body.removeChild(a); URL.revokeObjectURL(url);
-  showToast('\u2193 Exported ' + patches.length + ' parish changes');
+  // Open mailto: draft so user can attach the downloaded file and send
+  var subj = encodeURIComponent('MassFinder Changes \u2014 ' + payload.date);
+  var body = encodeURIComponent(
+    patches.length + ' parish(es) edited on ' + payload.date + '.\n\n' +
+    'Parishes: ' + patches.map(function(p){ return p.parish.name || p.id; }).join(', ') + '\n\n' +
+    'Attach the downloaded file: changes_' + payload.date + '.json'
+  );
+  window.open('mailto:massfinderapp@gmail.com?subject=' + subj + '&body=' + body, '_blank');
+  showToast('\u2193 Exported ' + patches.length + ' parishes \u2014 attach file to the email draft');
 }
 function importChanges(event) {
   const file = event.target.files[0];

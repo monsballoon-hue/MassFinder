@@ -329,6 +329,11 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .schedule-note { font-size: var(--text-xs); color: var(--color-text-tertiary); font-style: italic; margin-top: 2px; }
 .schedule-lang-badge { display: inline-block; font-size: 11px; font-weight: var(--weight-medium); padding: 1px 6px; border-radius: var(--radius-full); color: #1E40AF; background: #DBEAFE; margin-left: var(--space-2); }
 .schedule-appt { font-size: var(--text-sm); color: var(--color-text-tertiary); font-style: italic; padding: var(--space-2) 0; }
+.schedule-day.first-friday { border-left: 3px solid #B91C1C; padding-left: var(--space-3); margin-left: calc(-1 * var(--space-1)); }
+.schedule-day.first-friday .schedule-day-label { color: #B91C1C; }
+.schedule-day.first-saturday { border-left: 3px solid #2563EB; padding-left: var(--space-3); margin-left: calc(-1 * var(--space-1)); }
+.schedule-day.first-saturday .schedule-day-label { color: #2563EB; }
+.schedule-day-subtitle { font-size: var(--text-xs); color: var(--color-text-tertiary); font-weight: var(--weight-normal); font-style: italic; margin-bottom: var(--space-1); }
 
 /* Verify prompt */
 .verify-prompt { margin-top: var(--space-6); padding: var(--space-4); background: var(--color-bg); border-radius: var(--radius-md); text-align: center; }
@@ -1218,17 +1223,21 @@ function openDetail(id){
   const ml=(p.locations||[]).length>1;
 
   // Accordion sections
+  const FIRST_DEVOTION_DAYS=['first_friday','first_saturday'];
   const secs=[
-    {k:'mass',t:'Mass Schedule',ic:'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5',types:['sunday_mass','daily_mass','communion_service']},
-    {k:'conf',t:'Sacraments',ic:'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',types:['confession','anointing_of_sick']},
-    {k:'ador',t:'Adoration & Holy Hour',ic:'M12 3v18m-6-6l6 6 6-6',types:['adoration','perpetual_adoration','holy_hour']},
-    {k:'devot',t:'Prayer & Devotion',ic:'M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15z',types:['rosary','stations_of_cross','divine_mercy','miraculous_medal','novena','devotion','vespers','gorzkie_zale','bible_study','mens_group','social_event']},
-    {k:'hw',t:'Holy Week',ic:'M12 2v20M2 12h20',types:['holy_thursday_mass','good_friday_service','easter_vigil_mass']},
+    {k:'mass',t:'Mass Schedule',ic:'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5',types:['sunday_mass','daily_mass','communion_service'],filter:s=>!FIRST_DEVOTION_DAYS.includes(s.day)},
+    {k:'conf',t:'Sacraments',ic:'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',types:['confession','anointing_of_sick'],filter:s=>!FIRST_DEVOTION_DAYS.includes(s.day)},
+    {k:'ador',t:'Adoration & Holy Hour',ic:'M12 3v18m-6-6l6 6 6-6',types:['adoration','perpetual_adoration','holy_hour'],filter:s=>!FIRST_DEVOTION_DAYS.includes(s.day)},
+    {k:'devot',t:'Prayer & Devotion',ic:'M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15z',types:['rosary','stations_of_cross','divine_mercy','miraculous_medal','novena','devotion','vespers','gorzkie_zale','bible_study','mens_group','social_event'],
+      filter:null},
+    {k:'hw',t:'Holy Week',ic:'M12 2v20M2 12h20',types:['holy_thursday_mass','good_friday_service','easter_vigil_mass'],filter:s=>!FIRST_DEVOTION_DAYS.includes(s.day)},
   ];
 
   let secHtml='';
   for(const sec of secs){
-    const svcs=p.services.filter(s=>sec.types.includes(s.type));
+    const svcs=sec.k==='devot'
+      ? p.services.filter(s=>sec.types.includes(s.type)||FIRST_DEVOTION_DAYS.includes(s.day))
+      : p.services.filter(s=>sec.types.includes(s.type)&&(!sec.filter||sec.filter(s)));
     if(!svcs.length)continue;
     // Count only services with times for badge (no-time = by appointment, shouldn't inflate count)
     // But if ALL are no-time (e.g. Holy Week TBD), show total so badge isn't 0
@@ -1676,7 +1685,10 @@ function renderSched(svcs,locL,ml,sectionTypes){
     if(!ss||!ss.length)return'';
     ss.sort((a,b)=>(toMin(a.time)||0)-(toMin(b.time)||0));
     const merged=mergeSameTime(ss);
-    let h='<div class="schedule-day"><div class="schedule-day-label">'+esc(label)+'</div>';
+    const dayCls=day==='first_friday'?' first-friday':day==='first_saturday'?' first-saturday':'';
+    const sub=day==='first_friday'?'<div class="schedule-day-subtitle">Devotion to the Sacred Heart of Jesus</div>'
+      :day==='first_saturday'?'<div class="schedule-day-subtitle">Devotion to the Immaculate Heart of Mary</div>':'';
+    let h='<div class="schedule-day'+dayCls+'"><div class="schedule-day-label">'+esc(label)+'</div>'+sub;
     for(const s of merged){
       h+=renderRow(s,locL,ml);
     }
