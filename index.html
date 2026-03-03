@@ -872,8 +872,8 @@ let advancedFilters={types:[],days:[],languages:[]},tempAdvanced={types:[],days:
 const DAY_ORDER=['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
 const DAY_NAMES={sunday:'Sunday',monday:'Monday',tuesday:'Tuesday',wednesday:'Wednesday',thursday:'Thursday',friday:'Friday',saturday:'Saturday'};
 const LANG_NAMES={en:'English',es:'Spanish',pl:'Polish',pt:'Portuguese',la:'Latin',fr:'French',vi:'Vietnamese',asl:'ASL'};
-const SVC={sunday_mass:'Sunday Mass',daily_mass:'Daily Mass',confession:'Confession',adoration:'Adoration',perpetual_adoration:'Perpetual Adoration',holy_hour:'Holy Hour',communion_service:'Communion Service (no priest)',rosary:'Rosary',stations_of_cross:'Stations of the Cross',divine_mercy:'Divine Mercy Chaplet',miraculous_medal:'Miraculous Medal',novena:'Novena',devotion:'Devotion',vespers:'Vespers',anointing_of_sick:'Anointing of the Sick',holy_thursday_mass:"Mass of the Lord's Supper",good_friday_service:'Celebration of the Passion',easter_vigil_mass:'Easter Vigil',palm_sunday_mass:'Palm Sunday Mass',easter_sunday_mass:'Easter Sunday Mass',bible_study:'Bible Study',gorzkie_zale:'Gorzkie Żale',mens_group:"Men's Group",social_event:'Social Event'};
-const SERVICE_CATEGORIES={'Mass':['sunday_mass','daily_mass','communion_service'],'Sacraments':['confession','anointing_of_sick'],'Adoration':['adoration','perpetual_adoration','holy_hour'],'Prayer & Devotion':['rosary','stations_of_cross','divine_mercy','miraculous_medal','novena','devotion','vespers','gorzkie_zale','bible_study','mens_group','social_event'],'Holy Week':['holy_thursday_mass','good_friday_service','easter_vigil_mass','palm_sunday_mass','easter_sunday_mass']};
+const SVC={sunday_mass:'Sunday Mass',daily_mass:'Daily Mass',confession:'Confession',adoration:'Adoration',perpetual_adoration:'Perpetual Adoration',holy_hour:'Holy Hour',communion_service:'Communion Service (no priest)',rosary:'Rosary',stations_of_cross:'Stations of the Cross',divine_mercy:'Divine Mercy Chaplet',miraculous_medal:'Miraculous Medal',novena:'Novena',devotion:'Devotion',vespers:'Vespers',anointing_of_sick:'Anointing of the Sick',holy_thursday_mass:"Mass of the Lord's Supper",good_friday_service:'Celebration of the Passion',easter_vigil_mass:'Easter Vigil',palm_sunday_mass:'Palm Sunday Mass',easter_sunday_mass:'Easter Sunday Mass',bible_study:'Bible Study',book_club:'Book Club',gorzkie_zale:'Gorzkie Żale',mens_group:"Men's Group",womens_group:"Women's Group",youth_group:'Youth Group',choir:'Choir',volunteer:'Volunteer / Service',prayer_group:'Prayer Group',social_event:'Social Event'};
+const SERVICE_CATEGORIES={'Mass':['sunday_mass','daily_mass','communion_service'],'Sacraments':['confession','anointing_of_sick'],'Adoration':['adoration','perpetual_adoration','holy_hour'],'Prayer & Devotion':['rosary','stations_of_cross','divine_mercy','miraculous_medal','novena','devotion','vespers','gorzkie_zale','prayer_group'],'Community':['bible_study','book_club','mens_group','womens_group','youth_group','choir','volunteer','social_event'],'Holy Week':['holy_thursday_mass','good_friday_service','easter_vigil_mass','palm_sunday_mass','easter_sunday_mass']};
 
 // Favorites
 function loadFav(){try{favorites=JSON.parse(localStorage.getItem('mf_fav')||'[]')}catch{favorites=[]}}
@@ -999,7 +999,7 @@ function toggleSort(){const m=['name','proximity','next_service'];currentSort=m[
 function updateSortLabel(){document.getElementById('sortLabel').textContent={name:'By name',proximity:'By distance',next_service:'By next service'}[currentSort]||'By name'}
 
 
-function isVer(p){const v=p.validation;return v&&(v.status==='verified'||v.status==='manually_verified')}
+function isVer(p){const v=p.validation;return v&&v.status==='verified'}
 
 // YC Events
 function generateICS(title,date,time,endTime,location,description,url){

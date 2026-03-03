@@ -73,7 +73,7 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--txt);font-size:1
 .parish-row:active{transform:scale(0.99)}
 .parish-row.active{background:var(--accent-pale);border-left:3px solid var(--accent);padding-left:9px}
 .status-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px}
-.status-dot.verified,.status-dot.manually_verified{background:var(--green)}
+.status-dot.verified{background:var(--green)}
 .status-dot.needs_verification,.status-dot.low_confidence{background:var(--amber)}
 .status-dot.excluded{background:var(--red)}
 .status-dot.unverified{background:#CBD5E1}
@@ -104,7 +104,7 @@ kbd{display:inline-block;padding:2px 7px;background:var(--surface);border:1px so
 .edit-hdr-town{font-size:12px;opacity:.7;margin-top:2px;font-family:var(--font-m)}
 .edit-hdr-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
 .vpill{padding:4px 11px;border-radius:99px;font-size:12px;font-weight:600;white-space:nowrap}
-.vpill.verified,.vpill.manually_verified{background:rgba(255,255,255,.15);color:#a8e6c0;border:1px solid rgba(74,124,89,.5)}
+.vpill.verified{background:rgba(255,255,255,.15);color:#a8e6c0;border:1px solid rgba(74,124,89,.5)}
 .vpill.needs_verification,.vpill.low_confidence{background:rgba(255,255,255,.12);color:#fcd34d;border:1px solid rgba(217,119,6,.5)}
 .vpill.unverified{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.2)}
 .vpill.excluded{background:rgba(255,255,255,.1);color:#fca5a5;border:1px solid rgba(185,28,28,.4)}
@@ -154,7 +154,7 @@ details.card>.card-body{border-top:1px solid var(--border-lt)}
 /* Validation summary on collapsed state */
 .val-summary{display:flex;align-items:center;gap:8px}
 .vpill-sm{padding:2px 7px;border-radius:99px;font-size:10px;font-weight:600;text-transform:none;letter-spacing:normal}
-.vpill-sm.verified,.vpill-sm.manually_verified{background:rgba(74,124,89,.15);color:#1f4d31;border:1px solid rgba(74,124,89,.25)}
+.vpill-sm.verified{background:rgba(74,124,89,.15);color:#1f4d31;border:1px solid rgba(74,124,89,.25)}
 .vpill-sm.needs_verification,.vpill-sm.low_confidence{background:rgba(217,119,6,.15);color:#7c4208;border:1px solid rgba(217,119,6,.25)}
 .vpill-sm.unverified{background:rgba(156,163,175,.15);color:#4B5563;border:1px solid rgba(156,163,175,.25)}
 .vpill-sm.excluded{background:rgba(185,28,28,.12);color:#991B1B;border:1px solid rgba(185,28,28,.18)}
@@ -565,7 +565,7 @@ button:active:not(:disabled){transform:scale(0.97)}
       </ul>
       <h4>Status Dot Guide</h4>
       <ul>
-        <li><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#4A7C59;margin-right:6px;vertical-align:middle"></span><strong>Green</strong> &mdash; verified or manually verified</li>
+        <li><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#4A7C59;margin-right:6px;vertical-align:middle"></span><strong>Green</strong> &mdash; verified</li>
         <li><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#D97706;margin-right:6px;vertical-align:middle"></span><strong>Amber</strong> &mdash; needs verification or low confidence</li>
         <li><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#CBD5E1;margin-right:6px;vertical-align:middle"></span><strong>Grey</strong> &mdash; never reviewed</li>
         <li><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#B91C1C;margin-right:6px;vertical-align:middle"></span><strong>Red</strong> &mdash; excluded from the app</li>
@@ -621,16 +621,18 @@ const SVC_TYPES = {
   holy_thursday_mass:"Mass of the Lord's Supper", good_friday_service:'Celebration of the Passion',
   easter_vigil_mass:'Easter Vigil', palm_sunday_mass:'Palm Sunday Mass',
   easter_sunday_mass:'Easter Sunday Mass', bible_study:'Bible Study',
-  gorzkie_zale:'Gorzkie \u017Bale', mens_group:"Men's Group", social_event:'Social Event'
+  gorzkie_zale:'Gorzkie \u017Bale', mens_group:"Men's Group", womens_group:"Women's Group",
+  youth_group:'Youth Group', choir:'Choir', volunteer:'Volunteer / Service',
+  prayer_group:'Prayer Group', book_club:'Book Club', social_event:'Social Event'
 };
 const SVC_TYPE_GROUPS = [
   { label:'Mass',       types:['sunday_mass','daily_mass','communion_service'] },
   { label:'Sacraments', types:['confession','anointing_of_sick'] },
   { label:'Adoration',  types:['adoration','perpetual_adoration','holy_hour','benediction'] },
   { label:'Devotions',  types:['rosary','stations_of_cross','divine_mercy','miraculous_medal',
-                                'novena','devotion','gorzkie_zale','vespers'] },
+                                'novena','devotion','gorzkie_zale','vespers','prayer_group'] },
   { label:'Triduum',    types:['holy_thursday_mass','good_friday_service','easter_vigil_mass','palm_sunday_mass','easter_sunday_mass'] },
-  { label:'Community',  types:['bible_study','mens_group','social_event'] }
+  { label:'Community',  types:['bible_study','book_club','mens_group','womens_group','youth_group','choir','volunteer','social_event'] }
 ];
 const DAY_VALUES = [
   'sunday','monday','tuesday','wednesday','thursday','friday','saturday',
@@ -652,7 +654,7 @@ const DAY_LABELS = {
 const SEASONS      = ['year_round','lent','advent','summer','winter','academic_year','easter_season','ordinary_time','holy_week'];
 const LANG_NAMES   = {en:'English',es:'Spanish',pl:'Polish',pt:'Portuguese',la:'Latin',fr:'French',vi:'Vietnamese',asl:'ASL'};
 const PAR_STATUSES = ['active','inactive','closed','merged','excluded'];
-const VAL_STATUSES = ['verified','manually_verified','low_confidence','needs_verification','unverified','excluded'];
+const VAL_STATUSES = ['verified','low_confidence','needs_verification','unverified','excluded'];
 const LOC_TYPES    = ['church','chapel','center','cathedral','shrine','school','office','rectory','hall','meeting_room','mission','other'];
 const EVT_CATS     = ['fellowship','conference','volunteering','liturgical','educational','outreach','social','devotional','bible_study','recurring','one_time'];
 const EVT_FREQS    = ['one_time','weekly','monthly','annual'];
@@ -667,7 +669,9 @@ const SVC_TYPE_ABBR = {
   anointing_of_sick:'anoint', benediction:'bened',
   holy_thursday_mass:'htmass', good_friday_service:'gfsvc', easter_vigil_mass:'evmass',
   palm_sunday_mass:'psmass', easter_sunday_mass:'esmass',
-  bible_study:'bible', gorzkie_zale:'gorzkie', mens_group:'mens', social_event:'social'
+  bible_study:'bible', book_club:'bookclub', gorzkie_zale:'gorzkie', mens_group:'mens',
+  womens_group:'womens', youth_group:'youth', choir:'choir', volunteer:'volun',
+  prayer_group:'prayer', social_event:'social'
 };
 const DAY_ABBR = {
   sunday:'sun', monday:'mon', tuesday:'tue', wednesday:'wed', thursday:'thu',
@@ -725,7 +729,7 @@ const SCHED_GROUPS = [
 ];
 
 function dotClass(vs) {
-  if (['verified','manually_verified'].includes(vs)) return 'verified';
+  if (vs === 'verified') return 'verified';
   if (['needs_verification','low_confidence'].includes(vs)) return 'needs_verification';
   if (vs === 'excluded') return 'excluded';
   return 'unverified';
@@ -897,7 +901,7 @@ function sortRows(rows) {
   } else if (sidebarSort === 'alpha') {
     rows.sort((a,b) => a.name.localeCompare(b.name));
   } else if (sidebarSort === 'status') {
-    const order = { unverified:0, needs_verification:1, low_confidence:2, manually_verified:3, verified:4, excluded:5 };
+    const order = { unverified:0, needs_verification:1, low_confidence:2, verified:3, excluded:4 };
     rows.sort((a,b) => (order[a.vs]||0) - (order[b.vs]||0) || a.name.localeCompare(b.name));
   } else if (sidebarSort === 'flagged') {
     rows.sort((a,b) => (b.flagged?1:0) - (a.flagged?1:0) || b.score - a.score);
@@ -989,7 +993,7 @@ function bulkVerify() {
     const p = (editData.parishes||[]).find(p => p.id === id);
     if (!p) return;
     if (!p.validation) p.validation = {};
-    p.validation.status = 'manually_verified';
+    p.validation.status = 'verified';
     p.validation.last_checked = today;
     count++;
   });
@@ -1959,7 +1963,7 @@ function navigateParish(dir) {
 function markVerifiedToday() {
   if (!pendingParish) return;
   if (!pendingParish.validation) pendingParish.validation = {};
-  pendingParish.validation.status = 'manually_verified';
+  pendingParish.validation.status = 'verified';
   pendingParish.validation.last_checked = new Date().toISOString().slice(0, 10);
   // Cascade verification to all child services
   var cascadeSrc = 'bulletin_' + (pendingParish.validation.bulletin_date ||
@@ -1974,7 +1978,7 @@ function markVerifiedToday() {
   // Update form fields if validation section is open
   const vs = document.getElementById('v_status');
   const vc = document.getElementById('v_checked');
-  if (vs) vs.value = 'manually_verified';
+  if (vs) vs.value = 'verified';
   if (vc) vc.value = pendingParish.validation.last_checked;
   // Update header pill
   const pill = document.querySelector('.vpill');
@@ -2189,7 +2193,7 @@ function refreshLocCard() {
 function showStatsModal() {
   var ps = editData.parishes || [];
   var total = ps.length;
-  var verified = ps.filter(function(p){ var s = p.validation && p.validation.status; return s === 'verified' || s === 'manually_verified'; }).length;
+  var verified = ps.filter(function(p){ var s = p.validation && p.validation.status; return s === 'verified'; }).length;
   var unverified = ps.filter(function(p){ return !p.validation || p.validation.status === 'unverified'; }).length;
   var needsVer = ps.filter(function(p){ return p.validation && p.validation.status === 'needs_verification'; }).length;
   var flagged = ps.filter(function(p){ return p.validation && p.validation.flagged; }).length;
@@ -2358,8 +2362,13 @@ document.addEventListener('keydown', function(e) {
     e.preventDefault();
     document.getElementById('parishSearch').focus();
   }
-  // Esc → close modals or clear bulk selection
+  // Esc → close modals or clear bulk selection (only when not typing in a form field)
   if (e.key === 'Escape') {
+    var tag = document.activeElement.tagName;
+    var inFormField = ['INPUT','SELECT','TEXTAREA'].includes(tag);
+    // If typing in a form field inside a modal, just blur the field — don't close the modal
+    var inModal = document.activeElement.closest && document.activeElement.closest('.modal');
+    if (inFormField && inModal) { document.activeElement.blur(); return; }
     if (bulkSelection.size > 0) { clearBulkSelection(); return; }
     ['svcModal','evtModal','locModal','helpModal','statsModal'].forEach(function(id) {
       document.getElementById(id).classList.remove('open');
@@ -2376,7 +2385,13 @@ window.addEventListener('beforeunload', function(e) {
 
 // ── Modal helpers ──────────────────────────────────────────────────────
 function closeIfBg(e, id) {
-  if (e.target === document.getElementById(id)) document.getElementById(id).classList.remove('open');
+  // Only close if clicking directly on the overlay background, not anything inside the modal
+  if (e.target === document.getElementById(id)) {
+    // Double-check: don't close if an input/textarea is focused (prevents accidental loss)
+    var tag = document.activeElement.tagName;
+    if (['INPUT','SELECT','TEXTAREA'].includes(tag) && document.activeElement.closest('.modal')) return;
+    document.getElementById(id).classList.remove('open');
+  }
 }
 function toggleHelp() { document.getElementById('helpModal').classList.toggle('open'); }
 </script>

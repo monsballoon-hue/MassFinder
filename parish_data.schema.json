@@ -81,7 +81,13 @@
         "novena",
         "anointing_of_sick",
         "bible_study",
+        "book_club",
         "mens_group",
+        "womens_group",
+        "youth_group",
+        "choir",
+        "volunteer",
+        "prayer_group",
         "social_event",
         "gorzkie_zale",
         "good_friday_service",
@@ -252,7 +258,7 @@
         "status": {
           "type": "string",
           "enum": [
-            "verified", "manually_verified",
+            "verified",
             "low_confidence", "needs_verification",
             "unverified", "excluded"
           ]

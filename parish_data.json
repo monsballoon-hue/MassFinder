@@ -635,7 +635,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-03-03",
         "bulletin_date": "2026-03"
       },
@@ -978,7 +978,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-03-03",
         "bulletin_date": "2026-03"
       },
@@ -1311,7 +1311,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-03-03",
         "bulletin_date": null
       },
@@ -1671,7 +1671,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-03-03",
         "bulletin_date": "2026-03"
       },
@@ -2026,7 +2026,7 @@
       },
       "special_events": [],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-03-03",
         "bulletin_date": "2026-03"
       },
@@ -2258,7 +2258,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-21"
       },
       "county": "Hampden",
@@ -2664,7 +2664,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-21"
       },
       "county": "Hampden",
@@ -2936,7 +2936,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-03-03",
         "confidence_reason": "No bulletin available — data sourced from website only. Schedule may not be current.",
         "sources": [
@@ -3308,7 +3308,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-21"
       },
       "county": "Hampden",
@@ -3949,7 +3949,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-21"
       },
       "county": "Hampden",
@@ -4916,7 +4916,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26"
       },
       "county": "Hampshire",
@@ -5157,7 +5157,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26"
       },
       "county": "Hampden",
@@ -5458,7 +5458,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26"
       },
       "county": "Hampden",
@@ -5849,7 +5849,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26"
       },
       "county": "Hampshire",
@@ -6788,7 +6788,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26"
       },
       "county": "Hampshire",
@@ -7004,7 +7004,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26"
       },
       "county": "Hampden",
@@ -7189,7 +7189,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26"
       },
       "county": "Hampshire",
@@ -7366,7 +7366,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-21"
       },
       "county": "Hampshire",
@@ -7730,7 +7730,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-03-03",
         "bulletin_date": null
       },
@@ -10787,7 +10787,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-21"
       },
       "county": "Hampden",
@@ -11379,7 +11379,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-21"
       },
       "county": "Hampshire",
@@ -11847,7 +11847,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26",
         "sources": [
           "bulletin_2026-02 — https://pilotbulletins.net/detail/?ID=9421"
@@ -12380,7 +12380,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26",
         "sources": [
           "bulletin_2026-02 — https://parishesonline.com/organization/sacred-heart-church-01201"
@@ -13061,7 +13061,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26",
         "pdf_version": "Jan 20, 2026",
         "deferred_reason": "Bulletin PDF not copy-able — to be manually entered by user. Deferred 2026-02-21."
@@ -13417,7 +13417,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26",
         "pdf_version": "Jan 20, 2026",
         "deferred_reason": "Bulletin PDF not copy-able — to be manually entered by user. Deferred 2026-02-21."
@@ -13771,7 +13771,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26",
         "sources": [
           "bulletin_2026-02 — https://parishesonline.com/organization/our-lady-of-the-valley-church-1257"
@@ -14685,7 +14685,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26"
       },
       "county": "Hampshire",
@@ -14954,7 +14954,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26"
       },
       "county": "Hampshire",
@@ -15144,7 +15144,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26",
         "exclusion_reason": "Possibly closed. No bulletin available. Excluded per user decision 2026-02-21."
       },
@@ -15367,7 +15367,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26",
         "notes": "No bulletin found. masstimes.org data retained at low confidence. Likely shares pastoral unit with Blessed Sacrament (parish_059) — same phone/email. Revisit together when bulletin surfaces.",
         "note": "User confirmed two separate active parishes. Shared phone/email intentional."
@@ -15568,7 +15568,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26",
         "notes": "No bulletin found. All existing services confirmed as-is. Likely shares pastoral unit, phone, and email with All Souls (parish_058). Revisit together when bulletin surfaces.",
         "note": "User confirmed two separate active parishes. Shared phone/email intentional."
@@ -15879,7 +15879,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26",
         "pdf_version": "Jan 20, 2026"
       },
@@ -17016,7 +17016,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26",
         "sources": [
           "bulletin_2026-02 — https://parishesonline.com/organization/sacred-heart-church-01104"
@@ -17246,7 +17246,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26",
         "pdf_version": "Jan 20, 2026",
         "confidence_reason": "No bulletin URL available — data retained from prior source, unverified."
@@ -17555,7 +17555,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26",
         "sources": [
           "bulletin_2026-02 — https://parishesonline.com/organization/st-catherine-of-siena-parish-01129"
@@ -17846,7 +17846,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26",
         "sources": [
           "bulletin_2026-02 — https://stmichaelscathedralspfld.org/bulletins"
@@ -18039,7 +18039,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26"
       },
       "county": "Hampden",
@@ -18246,7 +18246,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26",
         "confidence_reason": "No bulletin URL available — data retained from prior source, unverified.",
         "source_note": "Facebook image dated January 18, 2026 — not a current bulletin. Use with caution.",
@@ -18579,7 +18579,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26"
       },
       "county": "Hampden",
@@ -19918,7 +19918,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26"
       },
       "county": "Hampden",
@@ -21202,7 +21202,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26"
       },
       "county": "Hampden",
@@ -21415,7 +21415,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26",
         "confidence_reason": "No bulletin available — data sourced from static website only. Schedule may not be current."
       },
@@ -22502,7 +22502,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "bulletin_2026-02",
         "recommended_action": null
@@ -22698,7 +22698,7 @@
       ],
       "special_events": [],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "bulletin_2026-02",
         "recommended_action": null
@@ -22926,7 +22926,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "bulletin_2026-02",
         "recommended_action": null
@@ -23356,7 +23356,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "bulletin_2026-02",
         "recommended_action": null
@@ -23637,7 +23637,7 @@
       ],
       "special_events": [],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "bulletin_2026-02",
         "recommended_action": null
@@ -23959,7 +23959,7 @@
       ],
       "special_events": [],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "website_2026-02",
         "recommended_action": null
@@ -24147,7 +24147,7 @@
       ],
       "special_events": [],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "website_2026-02",
         "recommended_action": null
@@ -24424,7 +24424,7 @@
       ],
       "special_events": [],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "website_2026-02",
         "recommended_action": null
@@ -24781,7 +24781,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "bulletin_2026-02",
         "recommended_action": null
@@ -25172,7 +25172,7 @@
       ],
       "special_events": [],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "website_2026-02",
         "recommended_action": null
@@ -25582,7 +25582,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "bulletin_2026-02",
         "recommended_action": null
@@ -26002,7 +26002,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "bulletin_2026-02",
         "recommended_action": null
@@ -26314,7 +26314,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "bulletin_2026-02",
         "recommended_action": null
@@ -26772,7 +26772,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "bulletin_2026-02",
         "recommended_action": null
@@ -27136,7 +27136,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "bulletin_2026-02",
         "recommended_action": null
@@ -27628,7 +27628,7 @@
       ],
       "special_events": [],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "website_2026-02",
         "recommended_action": null
@@ -27963,7 +27963,7 @@
       ],
       "special_events": [],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "website_2026-02",
         "recommended_action": null
@@ -28358,7 +28358,7 @@
       ],
       "special_events": [],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "bulletin_2026-02",
         "recommended_action": null
@@ -28780,7 +28780,7 @@
       ],
       "special_events": [],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "bulletin_2026-02",
         "recommended_action": null
