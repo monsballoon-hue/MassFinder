@@ -80,9 +80,7 @@
         "vespers",
         "novena",
         "anointing_of_sick",
-        "bible_study",
-        "mens_group",
-        "social_event",
+        "prayer_group",
         "gorzkie_zale",
         "good_friday_service",
         "holy_thursday_mass",
@@ -164,47 +162,6 @@
       "additionalProperties": false
     },
 
-    "special_event": {
-      "type": "object",
-      "required": ["id"],
-      "properties": {
-        "id":          { "type": "string", "minLength": 1 },
-        "title":       { "$ref": "#/definitions/nullable_string" },
-        "type":        { "$ref": "#/definitions/nullable_string" },
-        "category": {
-          "oneOf": [
-            {
-              "type": "string",
-              "enum": [
-                "fellowship", "conference", "volunteering", "liturgical",
-                "educational", "outreach", "social", "devotional",
-                "bible_study", "recurring", "one_time"
-              ]
-            },
-            { "type": "null" }
-          ]
-        },
-        "day":         { "$ref": "#/definitions/day_enum" },
-        "date":        { "$ref": "#/definitions/nullable_date_string" },
-        "time":        { "$ref": "#/definitions/loose_time_string" },
-        "end_time":    { "$ref": "#/definitions/loose_time_string" },
-        "frequency": {
-          "oneOf": [
-            { "type": "string", "enum": ["one_time", "weekly", "monthly", "annual"] },
-            { "type": "null" }
-          ]
-        },
-        "language":    { "$ref": "#/definitions/nullable_string" },
-        "location":    { "$ref": "#/definitions/nullable_string" },
-        "location_id": { "$ref": "#/definitions/nullable_string" },
-        "notes":       { "$ref": "#/definitions/nullable_string" },
-        "source":      { "$ref": "#/definitions/nullable_string" },
-        "validated":   { "$ref": "#/definitions/nullable_boolean" },
-        "seasonal":    { "$ref": "#/definitions/seasonal" }
-      },
-      "additionalProperties": false
-    },
-
     "location": {
       "type": "object",
       "required": ["id", "lat", "lng"],
@@ -252,7 +209,7 @@
         "status": {
           "type": "string",
           "enum": [
-            "verified", "manually_verified",
+            "verified",
             "low_confidence", "needs_verification",
             "unverified", "excluded"
           ]
@@ -319,7 +276,6 @@
         },
         "staff":          { "type": "array", "items": { "type": "string" } },
         "services":       { "type": "array", "items": { "$ref": "#/definitions/service" } },
-        "special_events": { "type": "array", "items": { "$ref": "#/definitions/special_event" } },
         "validation":     { "$ref": "#/definitions/validation_obj" },
         "visitation": {
           "oneOf": [

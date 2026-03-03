@@ -278,7 +278,7 @@ sunday_mass, daily_mass, confession, adoration, perpetual_adoration,
 holy_hour, communion_service, rosary, stations_of_cross, divine_mercy,
 miraculous_medal, novena, devotion, vespers, anointing_of_sick,
 benediction, holy_thursday_mass, good_friday_service, easter_vigil_mass,
-bible_study, gorzkie_zale, mens_group, social_event
+gorzkie_zale
 
 DAY VALUES: sunday, monday, tuesday, wednesday, thursday, friday,
 saturday, daily, weekday, first_friday, first_saturday, first_sunday,

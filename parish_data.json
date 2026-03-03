@@ -4,7 +4,7 @@
     "source": "Diocese of Springfield, MA - Online Directory",
     "extracted_date": "2026-02-19",
     "total_parishes": 98,
-    "total_services": 1465,
+    "total_services": 1420,
     "service_types_found": {
       "daily_mass": 507,
       "sunday_mass": 364,
@@ -23,20 +23,15 @@
       "vespers": 5,
       "anointing_of_sick": 4,
       "novena": 4,
-      "bible_study": 1,
       "perpetual_adoration": 1,
-      "gorzkie_zale": 1,
-      "mens_group": 1,
-      "social_event": 1
+      "gorzkie_zale": 1
     },
     "notes": [
       "PDF hyperlinks shifted by one entry - display text used as URL source",
       "All services source=pdf, validated=false pending web validation",
       "Times in 24hr format (HH:MM)",
       "Confession \"by appointment\" entries have day=null, time=null",
-      "special_events array added per parish for non-liturgical recurring or one-time events",
-      "special_events categories: fellowship | conference | volunteering | liturgical | educational | outreach | social",
-      "special_events schema: { id, title, category, day, time, frequency (one_time|weekly|monthly|annual), notes, seasonal: { is_seasonal, season } }",
+      "Events (community, social, fellowship, etc.) now stored in events.json — keyed by parish_id",
       "times_vary: true flag on service entries means time is not fixed — app should display 'Check bulletin for times'",
       "visitation object (optional, parish-level): { open_daily (bool), hours_note (string), source } — indicates church open for private prayer/drop-in visits",
       "service type 'anointing_of_sick' added for Sacrament of the Sick/Anointing services",
@@ -635,52 +630,10 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-03-03",
         "bulletin_date": "2026-03"
       },
-      "special_events": [
-        {
-          "id": "parish_001-evt-coffee",
-          "title": "Coffee Hour",
-          "category": "social",
-          "frequency": "weekly",
-          "day": "sunday",
-          "time": "10:45",
-          "notes": "Following 9:45am Sunday Mass at St. Mary's",
-          "source": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          }
-        },
-        {
-          "id": "parish_001-evt-bitter",
-          "title": "Bitter Lamentations",
-          "category": "liturgical",
-          "day": "wednesday",
-          "time": "18:00",
-          "frequency": "one_time",
-          "notes": "Wed Apr 1, St. Stanislaus. Confession following until 7:30pm.",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "holy_week"
-          }
-        },
-        {
-          "id": "parish_001-evt-baskets",
-          "title": "Blessing of Easter Baskets",
-          "category": "liturgical",
-          "day": "saturday",
-          "time": "10:00",
-          "frequency": "one_time",
-          "notes": "Holy Saturday Apr 4, St. Stanislaus",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "holy_week"
-          }
-        }
-      ],
       "county": "Berkshire",
       "clergy": [],
       "bulletin_url": "https://parishesonline.com/organization/st-john-paul-ii-parish-st-mary-of-the-assumption-parish",
@@ -947,38 +900,8 @@
           "source": "bulletin_2026-03"
         }
       ],
-      "special_events": [
-        {
-          "id": "parish_003-evt-lectio",
-          "title": "Lectio Divina & Scripture Discussion",
-          "category": "educational",
-          "frequency": "weekly",
-          "day": "sunday",
-          "time": "09:00",
-          "notes": "Sunday & Tuesday Every Month (Coffee & Doughnut)",
-          "source": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          }
-        },
-        {
-          "id": "parish_003-evt-mens",
-          "title": "Men's Group",
-          "category": "fellowship",
-          "frequency": "monthly",
-          "day": "saturday",
-          "time": "08:30",
-          "notes": "1st & 3rd Saturday. Parish Center Lower Classroom.",
-          "source": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          }
-        }
-      ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-03-03",
         "bulletin_date": "2026-03"
       },
@@ -1229,89 +1152,8 @@
           "source": "bulletin_2026-02"
         }
       ],
-      "special_events": [
-        {
-          "id": "parish_004-evt-retreat",
-          "title": "Spring Retreat: Strength in Service",
-          "category": "fellowship",
-          "day": "friday",
-          "time": "15:30",
-          "frequency": "one_time",
-          "notes": "Mar 6–8. Departs Newman Center 3:30pm Fri, returns ~2pm Sun. St. Methodios Retreat Center, Contoocook NH. $50 incl. food, housing, t-shirt.",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          }
-        },
-        {
-          "id": "parish_004-evt-mission-es",
-          "title": "Lenten Mission I (Spanish)",
-          "category": "educational",
-          "day": "saturday",
-          "time": "09:00",
-          "frequency": "one_time",
-          "notes": "Sat Mar 14, St. Brigid's Church, 9am–12pm.",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          }
-        },
-        {
-          "id": "parish_004-evt-mission-en",
-          "title": "Lenten Mission II (English)",
-          "category": "educational",
-          "day": "friday",
-          "time": "18:00",
-          "frequency": "one_time",
-          "notes": "Fri Mar 27, Newman Catholic Center. Speaker: Andrew MacDonald.",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          }
-        },
-        {
-          "id": "parish_004-evt-cleaning",
-          "title": "Spring Community Service — Church Cleaning",
-          "category": "volunteering",
-          "day": "saturday",
-          "time": "10:00",
-          "frequency": "one_time",
-          "notes": "Sat Mar 28, St. Brigid's, 10am–noon.",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          }
-        },
-        {
-          "id": "parish_004-evt-lenten-series",
-          "title": "Weekly Lenten Series by Dcn. Tom",
-          "category": "educational",
-          "frequency": "weekly",
-          "day": "tuesday",
-          "time": null,
-          "notes": "Following 8am Mass. Monsignor Lane Pastoral Center Library. Theme: Sunday Gospels of Lent.",
-          "source": null,
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          }
-        },
-        {
-          "id": "parish_004-evt-soup",
-          "title": "Soup & Stations",
-          "category": "social",
-          "day": "friday",
-          "time": "19:00",
-          "frequency": "weekly",
-          "notes": "Fridays of Lent, St. Brigid Pastoral Center Kitchen. Homemade soup & fellowship.",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          }
-        }
-      ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-03-03",
         "bulletin_date": null
       },
@@ -1654,24 +1496,8 @@
           }
         }
       ],
-      "special_events": [
-        {
-          "id": "parish_005-evt-african",
-          "title": "African Nights",
-          "category": "fellowship",
-          "frequency": "monthly",
-          "day": "first_sunday",
-          "time": "16:30",
-          "notes": "1st Sunday of the month. Academic year only.",
-          "source": null,
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "academic_year"
-          }
-        }
-      ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-03-03",
         "bulletin_date": "2026-03"
       },
@@ -1983,40 +1809,6 @@
             "is_seasonal": false,
             "season": "year_round"
           }
-        },
-        {
-          "id": "parish_006-mens-wed-1930",
-          "type": "mens_group",
-          "day": "wednesday",
-          "time": "19:30",
-          "end_time": "20:30",
-          "language": "en",
-          "notes": "Men of St. Joseph in the Office Conference Room",
-          "source": "bulletin_2026-03",
-          "rite": null,
-          "times_vary": false,
-          "location_id": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          }
-        },
-        {
-          "id": "parish_006-mens-sat-0700",
-          "type": "mens_group",
-          "day": "saturday",
-          "time": "07:00",
-          "end_time": "08:00",
-          "language": "en",
-          "notes": "That Man is You! (Pine Room)",
-          "source": "bulletin_2026-03",
-          "rite": null,
-          "times_vary": false,
-          "location_id": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          }
         }
       ],
       "visitation": {
@@ -2024,9 +1816,8 @@
         "hours_note": "Church available all day, every day",
         "source": "bulletin_2026-02"
       },
-      "special_events": [],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-03-03",
         "bulletin_date": "2026-03"
       },
@@ -2203,62 +1994,8 @@
           "source": "bulletin_2026-02"
         }
       ],
-      "special_events": [
-        {
-          "id": "parish_007-evt-bake",
-          "title": "Martha/Mary Bake Sale",
-          "category": "social",
-          "day": "saturday",
-          "time": null,
-          "frequency": "one_time",
-          "notes": "Weekend of Mar 7–8 after all Masses. Proceeds to heating bills.",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          }
-        },
-        {
-          "id": "parish_007-evt-bookclub",
-          "title": "Book Club: The Three Ordinary Voices of God",
-          "category": "educational",
-          "day": "tuesday",
-          "time": "18:00",
-          "frequency": "one_time",
-          "notes": "Tue May 5, 6–7pm, Columbia Hall.",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          }
-        },
-        {
-          "id": "parish_007-evt-mission-1",
-          "title": "Lenten Mission: Walk in Faith — Nights 1 & 2",
-          "category": "educational",
-          "day": "monday",
-          "time": "18:00",
-          "frequency": "one_time",
-          "notes": "Mar 16 & 17, St. Patrick's. 6pm Rosary & Confession, 7pm Mass.",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          }
-        },
-        {
-          "id": "parish_007-evt-mission-2",
-          "title": "Lenten Mission: Walk in Faith — Nights 3 & 4",
-          "category": "educational",
-          "day": "wednesday",
-          "time": "18:00",
-          "frequency": "one_time",
-          "notes": "Mar 18 & 19, St. Christopher's. 6pm Rosary & Confession, 7pm Mass.",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          }
-        }
-      ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-21"
       },
       "county": "Hampden",
@@ -2664,40 +2401,12 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-21"
       },
       "county": "Hampden",
       "clergy": [],
       "bulletin_url": "https://parishesonline.com/organization/st-anne-church-1020",
-      "special_events": [
-        {
-          "id": "parish_010-evt-holyhour-wed",
-          "title": "Holy Hour",
-          "category": "liturgical",
-          "day": "wednesday",
-          "time": "15:00",
-          "frequency": "one_time",
-          "notes": "Wednesdays Feb 4, 11, 18, 25. 3–4pm.",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          }
-        },
-        {
-          "id": "parish_010-evt-holyhour-sun",
-          "title": "Holy Hour",
-          "category": "liturgical",
-          "day": "sunday",
-          "time": "15:00",
-          "frequency": "monthly",
-          "notes": "2nd & 4th Sunday 3–4pm. Note: Feb 22 Adoration begins 3:30pm.",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          }
-        }
-      ],
       "is_accessible": null
     },
     {
@@ -2936,7 +2645,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-03-03",
         "confidence_reason": "No bulletin available — data sourced from website only. Schedule may not be current.",
         "sources": [
@@ -2947,7 +2656,6 @@
       "county": "Hampden",
       "clergy": [],
       "is_accessible": null,
-      "special_events": [],
       "bulletin_url": null
     },
     {
@@ -3308,7 +3016,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-21"
       },
       "county": "Hampden",
@@ -3330,34 +3038,6 @@
         }
       ],
       "bulletin_url": "https://sterose.org/bulletin/",
-      "special_events": [
-        {
-          "id": "parish_012-evt-coffee",
-          "title": "Coffee & Donuts",
-          "category": "social",
-          "day": "sunday",
-          "time": "10:00",
-          "frequency": "weekly",
-          "notes": "After 9am Sunday Mass, church hall.",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          }
-        },
-        {
-          "id": "parish_012-evt-mission",
-          "title": "Lenten Mission of Hope 2026",
-          "category": "educational",
-          "day": "monday",
-          "time": "18:30",
-          "frequency": "one_time",
-          "notes": "Mar 23–25 (Mon–Wed), 6:30pm, Ste. Rose de Lima Church. With Fr. James Nolte.",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          }
-        }
-      ],
       "is_accessible": null
     },
     {
@@ -3949,14 +3629,13 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-21"
       },
       "county": "Hampden",
       "clergy": [],
       "bulletin_url": "https://church-bulletin.org/?id=996",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_016",
@@ -4376,21 +4055,6 @@
         "last_checked": "2026-02-21",
         "bulletin_date": "2026-02"
       },
-      "special_events": [
-        {
-          "id": "parish_016-evt-dinner",
-          "title": "Corned Beef Dinner",
-          "category": "social",
-          "day": "saturday",
-          "time": "17:00",
-          "frequency": "one_time",
-          "notes": "Sat Mar 14, St. Agnes Academy. 50/50 Raffle & Entertainment. Parish Fundraising Committee.",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          }
-        }
-      ],
       "county": "Berkshire",
       "clergy": [
         {
@@ -4916,7 +4580,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26"
       },
       "county": "Hampshire",
@@ -4934,20 +4598,6 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/our-lady-of-the-valley-parish1",
-      "special_events": [
-        {
-          "id": "parish_017-evt-divine-mercy-group",
-          "title": "Divine Mercy Prayer Group",
-          "category": "liturgical",
-          "date": "2026-02-25",
-          "time": "18:30",
-          "end_time": null,
-          "frequency": "weekly",
-          "notes": "Chaplet of Divine Mercy, Rosary, Confession, Exposition & Benediction. Wednesday evenings.",
-          "source": "manual_verification_2026-02",
-          "validated": true
-        }
-      ],
       "is_accessible": null
     },
     {
@@ -5157,7 +4807,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26"
       },
       "county": "Hampden",
@@ -5179,56 +4829,6 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/find/st-michaels-parish",
-      "special_events": [
-        {
-          "id": "parish_018-evt-candle-prayer-mar04",
-          "title": "Candlelight Prayer Service",
-          "category": "liturgical",
-          "date": "2026-03-04",
-          "time": "19:00",
-          "end_time": null,
-          "frequency": "one_time",
-          "notes": "Snow date: Wednesday March 11 at 7:00 PM",
-          "source": "manual_verification_2026-02",
-          "validated": true
-        },
-        {
-          "id": "parish_018-evt-rosary-20260315",
-          "title": "Rosary",
-          "category": "liturgical",
-          "date": "2026-03-15",
-          "time": "19:30",
-          "end_time": null,
-          "frequency": "one_time",
-          "notes": "Sunday March 15, 7:30 PM in the Church",
-          "source": "manual_verification_2026-02",
-          "validated": true
-        },
-        {
-          "id": "parish_018-evt-coffee-mar08",
-          "title": "Coffee & Donuts",
-          "category": "social",
-          "date": "2026-03-08",
-          "time": null,
-          "end_time": null,
-          "frequency": "one_time",
-          "notes": "Following the 8 AM and 10 AM Masses on March 8",
-          "source": "manual_verification_2026-02",
-          "validated": true
-        },
-        {
-          "id": "parish_018-evt-easter-bunny-mar22",
-          "title": "Breakfast with the Easter Bunny",
-          "category": "social",
-          "date": "2026-03-22",
-          "time": "08:30",
-          "end_time": "12:00",
-          "frequency": "one_time",
-          "notes": "Sunday March 22, 8:30 AM - 12 Noon",
-          "source": "manual_verification_2026-02",
-          "validated": true
-        }
-      ],
       "is_accessible": null
     },
     {
@@ -5440,25 +5040,10 @@
             "season": "lent"
           },
           "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_019-bible-wed-0900-lent-sacred",
-          "type": "bible_study",
-          "day": "wednesday",
-          "time": "09:00",
-          "end_time": "11:00",
-          "location_id": "sacredheart-office-feedinghills",
-          "language": "en",
-          "notes": "Parish Center, 9 AM–11 AM",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          },
-          "source": "manual_verification_2026-02"
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26"
       },
       "county": "Hampden",
@@ -5475,20 +5060,6 @@
         }
       ],
       "bulletin_url": "https://church-bulletin.org/?id=987",
-      "special_events": [
-        {
-          "id": "parish_019-evt-dinner-saints-mar14",
-          "title": "Dinner with the Saints",
-          "category": "social",
-          "date": "2026-03-14",
-          "time": "17:00",
-          "end_time": "19:00",
-          "frequency": "one_time",
-          "notes": "Corned beef & cabbage dinner — Saturday March 14",
-          "source": "manual_verification_2026-02",
-          "validated": true
-        }
-      ],
       "is_accessible": null
     },
     {
@@ -5849,7 +5420,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26"
       },
       "county": "Hampshire",
@@ -5866,7 +5437,6 @@
         }
       ],
       "bulletin_url": "https://www.ihmparishgranby.org/bulletins",
-      "special_events": [],
       "is_accessible": null
     },
     {
@@ -5993,7 +5563,6 @@
           }
         }
       ],
-      "special_events": [],
       "validation": {
         "status": "low_confidence",
         "confidence_reason": "No bulletin available — data sourced from static website only. Schedule may not be current.",
@@ -6482,8 +6051,7 @@
         }
       ],
       "bulletin_url": "https://www.blessedtrinitygreenfield.org/bulletins",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_023",
@@ -6788,7 +6356,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26"
       },
       "county": "Hampshire",
@@ -6805,8 +6373,7 @@
         "hours_note": "Dawn to dusk (until 6:00 PM); closed Wednesdays",
         "source": "manual_verification_2026-02"
       },
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_024",
@@ -7004,7 +6571,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26"
       },
       "county": "Hampden",
@@ -7020,8 +6587,7 @@
         }
       ],
       "bulletin_url": "https://www.stmaryshampden.org/bulletins",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_025",
@@ -7189,7 +6755,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26"
       },
       "county": "Hampshire",
@@ -7204,8 +6770,7 @@
         }
       ],
       "bulletin_url": "https://www.ourladyofgrace.faith/bulletins",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_026",
@@ -7366,14 +6931,13 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-21"
       },
       "county": "Hampshire",
       "clergy": [],
       "bulletin_url": "https://parishesonline.com/organization/our-lady-of-the-hills-parish",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_027",
@@ -7730,15 +7294,14 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-03-03",
         "bulletin_date": null
       },
       "county": "Hampden",
       "clergy": [],
       "bulletin_url": "https://parishesonline.com/organization/blessed-sacrament-parish-01040",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_028",
@@ -8091,8 +7654,7 @@
       "county": "Hampden",
       "clergy": [],
       "bulletin_url": "https://ourladyofthecross.com/news/bulletin",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_029",
@@ -8398,8 +7960,7 @@
       "county": "Hampden",
       "clergy": [],
       "bulletin_url": "https://parishesonline.com/organization/st-jerome-parish-1040",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_030",
@@ -8515,8 +8076,7 @@
       },
       "county": "Berkshire",
       "clergy": [],
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_031",
@@ -8807,8 +8367,7 @@
       "county": "Hampden",
       "clergy": [],
       "bulletin_url": "https://parishesonline.com/organization/immaculate-conception-church-01151",
-      "is_accessible": true,
-      "special_events": []
+      "is_accessible": true
     },
     {
       "id": "parish_032",
@@ -9012,8 +8571,7 @@
       "county": "Berkshire",
       "clergy": [],
       "bulletin_url": "https://www.stmarylos.com/publications",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_033",
@@ -9255,7 +8813,6 @@
           "source": "bulletin_2026-02"
         }
       ],
-      "special_events": [],
       "validation": {
         "status": "verified",
         "last_checked": "2026-02-21",
@@ -9668,8 +9225,7 @@
         }
       ],
       "bulletin_url": "https://www.stmarylong.org/bulletin",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_036",
@@ -10051,8 +9607,7 @@
       "county": "Hampden",
       "clergy": [],
       "bulletin_url": "https://parishesonline.com/organization/christ-the-king-church-01056",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_037",
@@ -10292,8 +9847,7 @@
         }
       ],
       "bulletin_url": "https://church-bulletin.org/?id=928",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_038",
@@ -10554,8 +10108,7 @@
       "county": "Hampden",
       "clergy": [],
       "bulletin_url": "https://sponsors.bonventure.net/?page=1680",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_039",
@@ -10745,49 +10298,8 @@
           "source": "bulletin_2026-02"
         }
       ],
-      "special_events": [
-        {
-          "id": "parish_039-evt-bake",
-          "title": "Martha/Mary Bake Sale",
-          "category": "social",
-          "day": "saturday",
-          "time": null,
-          "frequency": "one_time",
-          "notes": "Weekend Mar 7–8, after all Masses. Proceeds to heating bills. (Also at St. Christopher's)",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          }
-        },
-        {
-          "id": "parish_039-evt-bookclub",
-          "title": "Book Club: The Three Ordinary Voices of God",
-          "category": "educational",
-          "day": "tuesday",
-          "time": "18:00",
-          "frequency": "one_time",
-          "notes": "Tue May 5, 6–7pm, Columbia Hall.",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          }
-        },
-        {
-          "id": "parish_039-evt-mission",
-          "title": "Lenten Mission: Walk in Faith — Nights 1 & 2",
-          "category": "educational",
-          "day": "monday",
-          "time": "18:00",
-          "frequency": "one_time",
-          "notes": "Mar 16 & 17, St. Patrick's. 6pm Rosary & Confession, 7pm Mass.",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          }
-        }
-      ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-21"
       },
       "county": "Hampden",
@@ -11057,7 +10569,6 @@
           "day": "friday"
         }
       ],
-      "special_events": [],
       "validation": {
         "status": "verified",
         "last_checked": "2026-02-21",
@@ -11379,14 +10890,13 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-21"
       },
       "county": "Hampshire",
       "clergy": [],
       "bulletin_url": "https://parishesonline.com/organization/st-elizabeth-ann-seton-01060",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_043",
@@ -11578,7 +11088,6 @@
       "county": "Franklin",
       "clergy": [],
       "is_accessible": null,
-      "special_events": [],
       "bulletin_url": null
     },
     {
@@ -11847,7 +11356,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26",
         "sources": [
           "bulletin_2026-02 — https://pilotbulletins.net/detail/?ID=9421"
@@ -11861,38 +11370,6 @@
         }
       ],
       "bulletin_url": "https://www.pilotbulletins.net/detail/?ID=9421",
-      "special_events": [
-        {
-          "id": "parish_044-se-bible-lent",
-          "title": "Lenten Bible Study",
-          "category": "bible_study",
-          "day": "thursday",
-          "time": "17:30",
-          "frequency": "weekly",
-          "notes": "Lenten Thursdays only",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          },
-          "source": "manual_verification_2026-02",
-          "validated": true
-        },
-        {
-          "id": "parish_044-se-supper-lent",
-          "title": "Simple Supper",
-          "category": "social",
-          "day": "friday",
-          "time": "17:30",
-          "frequency": "weekly",
-          "notes": "Lenten Fridays only",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          },
-          "source": "manual_verification_2026-02",
-          "validated": true
-        }
-      ],
       "is_accessible": true
     },
     {
@@ -12128,8 +11605,7 @@
         }
       ],
       "bulletin_url": "https://church-bulletin.org/?id=925",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_047",
@@ -12380,7 +11856,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26",
         "sources": [
           "bulletin_2026-02 — https://parishesonline.com/organization/sacred-heart-church-01201"
@@ -12394,8 +11870,7 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/sacred-heart-church-01201",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_048",
@@ -12751,23 +12226,6 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/st-charles-church-01201#download-latest",
-      "special_events": [
-        {
-          "id": "parish_048-se-rosary-sodality",
-          "title": "Rosary Sodality",
-          "category": "devotional",
-          "day": "wednesday",
-          "time": "09:30",
-          "frequency": "monthly",
-          "notes": "2nd Wednesday of each month, 9:30 AM in Parish Center Chapel",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02",
-          "validated": true
-        }
-      ],
       "is_accessible": null
     },
     {
@@ -13061,7 +12519,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26",
         "pdf_version": "Jan 20, 2026",
         "deferred_reason": "Bulletin PDF not copy-able — to be manually entered by user. Deferred 2026-02-21."
@@ -13079,8 +12537,7 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/st-josephs-church-01201",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_050",
@@ -13417,7 +12874,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26",
         "pdf_version": "Jan 20, 2026",
         "deferred_reason": "Bulletin PDF not copy-able — to be manually entered by user. Deferred 2026-02-21."
@@ -13430,8 +12887,7 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/st-marks-church-01201",
-      "is_accessible": true,
-      "special_events": []
+      "is_accessible": true
     },
     {
       "id": "parish_051",
@@ -13606,8 +13062,7 @@
         }
       ],
       "bulletin_url": "https://church-bulletin.org/?id=939",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_052",
@@ -13771,7 +13226,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26",
         "sources": [
           "bulletin_2026-02 — https://parishesonline.com/organization/our-lady-of-the-valley-church-1257"
@@ -13786,47 +13241,6 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/our-lady-of-the-valley-church-1257",
-      "special_events": [
-        {
-          "id": "parish_052-social-coffee",
-          "title": "Coffee & Doughnuts",
-          "type": "social",
-          "category": "social",
-          "day": "sunday",
-          "time": "after 9:00 AM Mass",
-          "notes": "After 9 AM Sunday Mass — recurring social"
-        },
-        {
-          "id": "parish_052-group-mens",
-          "title": "Men's Group",
-          "type": "group",
-          "category": "recurring",
-          "day": "monday",
-          "time": "18:30",
-          "location": "Rectory",
-          "notes": "Weekly"
-        },
-        {
-          "id": "parish_052-group-bible",
-          "title": "Mill River Bible Study",
-          "type": "bible_study",
-          "category": "recurring",
-          "day": "wednesday",
-          "time": "11:00",
-          "location": "Parish Hall",
-          "notes": "Weekly"
-        },
-        {
-          "id": "parish_052-group-wwp",
-          "title": "Walking with Purpose Women's Study",
-          "type": "group",
-          "category": "recurring",
-          "day": "wednesday",
-          "time": "17:15",
-          "location": "Parish Hall",
-          "notes": "Weekly"
-        }
-      ],
       "is_accessible": null
     },
     {
@@ -14119,8 +13533,7 @@
         }
       ],
       "bulletin_url": "https://www.stjosephparishma.com/bulletin",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_054",
@@ -14402,8 +13815,7 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/holy-family-roman-catholic-parish-01373",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_055",
@@ -14685,7 +14097,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26"
       },
       "county": "Hampshire",
@@ -14700,8 +14112,7 @@
         }
       ],
       "bulletin_url": "https://saintpatrick.cc/bulletin.html",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_056",
@@ -14954,7 +14365,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26"
       },
       "county": "Hampshire",
@@ -14965,8 +14376,7 @@
         }
       ],
       "bulletin_url": "https://www.sttheresaparish.org/bulletins",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_057",
@@ -15144,7 +14554,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26",
         "exclusion_reason": "Possibly closed. No bulletin available. Excluded per user decision 2026-02-21."
       },
@@ -15156,8 +14566,7 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/our-lady-of-the-lake-parish-family",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_058",
@@ -15367,15 +14776,14 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26",
         "notes": "No bulletin found. masstimes.org data retained at low confidence. Likely shares pastoral unit with Blessed Sacrament (parish_059) — same phone/email. Revisit together when bulletin surfaces.",
         "note": "User confirmed two separate active parishes. Shared phone/email intentional."
       },
       "county": "Hampden",
       "clergy": [],
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_059",
@@ -15568,15 +14976,14 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26",
         "notes": "No bulletin found. All existing services confirmed as-is. Likely shares pastoral unit, phone, and email with All Souls (parish_058). Revisit together when bulletin surfaces.",
         "note": "User confirmed two separate active parishes. Shared phone/email intentional."
       },
       "county": "Hampden",
       "clergy": [],
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_060",
@@ -15879,7 +15286,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26",
         "pdf_version": "Jan 20, 2026"
       },
@@ -15899,8 +15306,7 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/holy-cross-church-1118",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_061",
@@ -16226,8 +15632,7 @@
           "name": "Rev. Yerick Mendez"
         }
       ],
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_062",
@@ -16491,8 +15896,7 @@
         }
       ],
       "bulletin_url": "https://www.mmohspringfield.org/bulletins",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_063",
@@ -16748,23 +16152,7 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/our-lady-of-mount-carmel-church-01105",
-      "is_accessible": true,
-      "special_events": [
-        {
-          "id": "parish_063-evt-lenten-evening-of-prayer",
-          "title": "Lenten Evening of Prayer",
-          "category": "devotional",
-          "frequency": "one_time",
-          "day": "monday",
-          "time": "06:15 pm",
-          "notes": "Confession from 6:15 - 6:45 | Mass @ 7pm followed by Anointing of the Sick",
-          "source": null,
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          }
-        }
-      ]
+      "is_accessible": true
     },
     {
       "id": "parish_064",
@@ -17016,7 +16404,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26",
         "sources": [
           "bulletin_2026-02 — https://parishesonline.com/organization/sacred-heart-church-01104"
@@ -17034,8 +16422,7 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/sacred-heart-church-01104",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_065",
@@ -17246,7 +16633,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26",
         "pdf_version": "Jan 20, 2026",
         "confidence_reason": "No bulletin URL available — data retained from prior source, unverified."
@@ -17267,8 +16654,7 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/sacred-heart-church-01104",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_066",
@@ -17555,7 +16941,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26",
         "sources": [
           "bulletin_2026-02 — https://parishesonline.com/organization/st-catherine-of-siena-parish-01129"
@@ -17573,8 +16959,7 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/st-catherine-of-siena-parish-01129",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_067",
@@ -17846,7 +17231,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26",
         "sources": [
           "bulletin_2026-02 — https://stmichaelscathedralspfld.org/bulletins"
@@ -17876,8 +17261,7 @@
         }
       ],
       "bulletin_url": "https://stmichaelscathedralspfld.org/bulletins/",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_068",
@@ -18039,7 +17423,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26"
       },
       "county": "Hampden",
@@ -18054,8 +17438,7 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/st-patrick-church-1118",
-      "is_accessible": true,
-      "special_events": []
+      "is_accessible": true
     },
     {
       "id": "parish_069",
@@ -18246,7 +17629,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26",
         "confidence_reason": "No bulletin URL available — data retained from prior source, unverified.",
         "source_note": "Facebook image dated January 18, 2026 — not a current bulletin. Use with caution.",
@@ -18273,8 +17656,7 @@
           "name": "Khanh Tran"
         }
       ],
-      "is_accessible": true,
-      "special_events": []
+      "is_accessible": true
     },
     {
       "id": "parish_071",
@@ -18579,7 +17961,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26"
       },
       "county": "Hampden",
@@ -18594,20 +17976,6 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/divine-mercy-parish-01080",
-      "special_events": [
-        {
-          "id": "parish_071-evt-firstfri-mar6",
-          "type": "special_mass",
-          "date": "2026-03-06",
-          "time": "08:00",
-          "notes": "First Friday: Confessions, Stations of the Cross, Mass",
-          "category": "one_time",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          }
-        }
-      ],
       "is_accessible": null
     },
     {
@@ -18980,8 +18348,7 @@
         }
       ],
       "bulletin_url": "https://chroniclesofczestochowa.wordpress.com/category/weekly-bulletins/",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_073",
@@ -19182,8 +18549,7 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/our-lady-of-peace-church-01376",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_074",
@@ -19377,7 +18743,6 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/all-saints-and-st-mary-churches",
-      "special_events": [],
       "is_accessible": null
     },
     {
@@ -19587,7 +18952,6 @@
           "name": "Rev. Fr. Joel Philip"
         }
       ],
-      "special_events": [],
       "bulletin_url": "https://parishesonline.com/organization/all-saints-and-st-mary-churches",
       "is_accessible": null
     },
@@ -19918,7 +19282,7 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26"
       },
       "county": "Hampden",
@@ -19937,7 +19301,6 @@
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/st-thomas-the-apostle-parish-01089",
-      "special_events": [],
       "is_accessible": null
     },
     {
@@ -20173,30 +19536,6 @@
         }
       ],
       "bulletin_url": "https://church-bulletin.org/?id=935",
-      "special_events": [
-        {
-          "id": "parish_077-retreat-mar18",
-          "type": "special_mass",
-          "date": "2026-03-18",
-          "notes": "Lenten Retreat: 5pm Confession, 6pm Mass, reflection until 8pm. Speaker: Fr. Brad Milunski",
-          "category": "one_time",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          }
-        },
-        {
-          "id": "parish_077-retreat-mar19",
-          "type": "special_mass",
-          "date": "2026-03-19",
-          "notes": "Lenten Retreat: 5pm Confession, 6pm Mass, reflection until 8pm. Speaker: Fr. Stanislaus Achu",
-          "category": "one_time",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          }
-        }
-      ],
       "is_accessible": null
     },
     {
@@ -20461,21 +19800,6 @@
           },
           "source": "bulletin_2026-02",
           "location_id": "our-lady-of-the-blessed-sacrament-church-westfield"
-        },
-        {
-          "id": "parish_078-mens-sat-0830",
-          "type": "mens_group",
-          "day": "saturday",
-          "time": "08:30",
-          "end_time": "10:30",
-          "language": "en",
-          "notes": "That Man Is You men's group. Starting again March 7. Contact Deacon Andrew Hogan 413-297-5000.",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02",
-          "location_id": "our-lady-of-the-blessed-sacrament-church-westfield"
         }
       ],
       "validation": {
@@ -20496,56 +19820,6 @@
         }
       ],
       "bulletin_url": "https://olbswestfield.org/recent-bulletins",
-      "special_events": [
-        {
-          "id": "parish_078-lenten-feb25",
-          "type": "special_event",
-          "date": "2026-02-25",
-          "time": "18:30",
-          "notes": "OLBS Lenten Series 'Hope Lives' — Speakers Brian & Susan Middleton",
-          "category": "one_time",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          }
-        },
-        {
-          "id": "parish_078-lenten-mar11",
-          "type": "special_event",
-          "date": "2026-03-11",
-          "time": "18:30",
-          "notes": "OLBS Lenten Series 'Hope Lives'",
-          "category": "one_time",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          }
-        },
-        {
-          "id": "parish_078-lenten-mar18",
-          "type": "special_mass",
-          "date": "2026-03-18",
-          "time": "18:30",
-          "notes": "OLBS Lenten Series 'Hope Lives' — Healing Mass",
-          "category": "one_time",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          }
-        },
-        {
-          "id": "parish_078-lenten-mar25",
-          "type": "special_event",
-          "date": "2026-03-25",
-          "time": "18:30",
-          "notes": "OLBS Lenten Series 'Hope Lives'",
-          "category": "one_time",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          }
-        }
-      ],
       "is_accessible": null
     },
     {
@@ -20794,8 +20068,7 @@
         }
       ],
       "bulletin_url": "https://stmarysofwestfield.com/",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "parish_080",
@@ -20977,21 +20250,6 @@
           "source": "bulletin_2026-02",
           "location_id": "st-peter-and-st-casimir-church-westfield",
           "end_time": null
-        },
-        {
-          "id": "parish_080-social-thu-1800",
-          "type": "social_event",
-          "day": "thursday",
-          "time": "18:00",
-          "language": "en",
-          "notes": "Movie Night at SP&C Social Center. Light meal provided. Contact Maryanne 896-1950.",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02",
-          "location_id": "st-peter-and-st-casimir-church-westfield",
-          "end_time": null
         }
       ],
       "validation": {
@@ -21013,30 +20271,6 @@
         {
           "title": "Deacon",
           "name": "Kevin Kriesak"
-        }
-      ],
-      "special_events": [
-        {
-          "id": "parish_080-retreat-mar16",
-          "type": "special_mass",
-          "date": "2026-03-16",
-          "notes": "Lenten Retreat: 5pm Confession, 6pm Mass, reflection until 8pm. Fr. Paul with Deacon Kevin.",
-          "category": "one_time",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          }
-        },
-        {
-          "id": "parish_080-retreat-mar17",
-          "type": "special_mass",
-          "date": "2026-03-17",
-          "notes": "Lenten Retreat: 5pm Confession, 6pm Mass, reflection with Deacon Paul Briere until 8pm.",
-          "category": "one_time",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          }
         }
       ],
       "bulletin_url": "https://church-bulletin.org/?id=935",
@@ -21202,14 +20436,13 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26"
       },
       "county": "Hampden",
       "clergy": [],
       "bulletin_url": "https://sponsors.bonventure.net/?page=1826",
-      "is_accessible": true,
-      "special_events": []
+      "is_accessible": true
     },
     {
       "id": "parish_083",
@@ -21415,15 +20648,14 @@
         }
       ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-26",
         "confidence_reason": "No bulletin available — data sourced from static website only. Schedule may not be current."
       },
       "county": "Berkshire",
       "clergy": [],
       "bulletin_url": "https://www.williamstowncatholics.org/bulletins",
-      "is_accessible": null,
-      "special_events": []
+      "is_accessible": null
     },
     {
       "id": "shrine_001",
@@ -21747,20 +20979,6 @@
           "source": "bulletin_2026-02"
         }
       ],
-      "special_events": [
-        {
-          "id": "shrine_001-evt-relics",
-          "type": "devotion",
-          "date": "2026-02-28",
-          "time": "10:30",
-          "end_time": "12:30",
-          "location_id": "divine-mercy-shrine-stockbridge",
-          "language": "en",
-          "notes": "Veneration of 9 unique and rarely seen relics of the Passion of Our Lord — St. Faustina Center",
-          "source": "shrine_website",
-          "validated": true
-        }
-      ],
       "visitation": null,
       "is_mission": false,
       "mission_of": null,
@@ -21954,21 +21172,6 @@
             "season": "year_round"
           },
           "source": "bulletin_2026-02"
-        }
-      ],
-      "special_events": [
-        {
-          "id": "pf2-evt-mens",
-          "title": "Men's Faith Group",
-          "category": "fellowship",
-          "day": "thursday",
-          "time": "06:00",
-          "frequency": "weekly",
-          "notes": "Breakfast and discussion in parish center",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          }
         }
       ],
       "validation": {
@@ -22168,21 +21371,6 @@
           "source": "bulletin_2026-02"
         }
       ],
-      "special_events": [
-        {
-          "id": "pf4-evt-fish",
-          "title": "Lenten Fish Fry",
-          "category": "social",
-          "day": "friday",
-          "time": "17:00",
-          "frequency": "weekly",
-          "notes": "Parish hall, $12/plate",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          }
-        }
-      ],
       "validation": {
         "status": "verified",
         "last_checked": "2026-02-21",
@@ -22275,7 +21463,6 @@
           "source": "bulletin_2026-02"
         }
       ],
-      "special_events": [],
       "validation": {
         "status": "verified",
         "last_checked": "2026-02-15",
@@ -22483,26 +21670,8 @@
           "source": "bulletin_2026-02"
         }
       ],
-      "special_events": [
-        {
-          "id": "parish_084-evt-legion-of-mary",
-          "title": "Legion of Mary",
-          "category": "devotional",
-          "day": "tuesday",
-          "date": null,
-          "time": "14:00",
-          "end_time": null,
-          "frequency": "weekly",
-          "notes": "Room 5",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        }
-      ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "bulletin_2026-02",
         "recommended_action": null
@@ -22696,9 +21865,8 @@
           "source": "bulletin_2026-02"
         }
       ],
-      "special_events": [],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "bulletin_2026-02",
         "recommended_action": null
@@ -22907,26 +22075,8 @@
           "source": "bulletin_2026-02"
         }
       ],
-      "special_events": [
-        {
-          "id": "parish_086-evt-coffee-donuts",
-          "title": "Coffee, Donuts & Home Baked Goodies",
-          "category": "fellowship",
-          "day": null,
-          "date": "2026-03-08",
-          "time": "11:00",
-          "end_time": null,
-          "frequency": "one_time",
-          "notes": "Father Weaver Hall; after 10:00AM Mass",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        }
-      ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "bulletin_2026-02",
         "recommended_action": null
@@ -23304,59 +22454,8 @@
           "source": "bulletin_2026-02"
         }
       ],
-      "special_events": [
-        {
-          "id": "parish_087-evt-holy-spirit-prayer",
-          "title": "Our Lady of the Holy Spirit Prayer Group",
-          "category": "devotional",
-          "day": "tuesday",
-          "date": null,
-          "time": "18:00",
-          "end_time": "20:00",
-          "frequency": "weekly",
-          "notes": "St. Nicholas Classroom",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_087-evt-souls-purgatory",
-          "title": "Souls in Purgatory Prayer Group",
-          "category": "devotional",
-          "day": "tuesday",
-          "date": null,
-          "time": "15:45",
-          "end_time": null,
-          "frequency": "weekly",
-          "notes": "Classroom #3",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_087-evt-spanish-charismatic",
-          "title": "Spanish Charismatic Prayer Group",
-          "category": "devotional",
-          "day": "thursday",
-          "date": null,
-          "time": "18:30",
-          "end_time": null,
-          "frequency": "monthly",
-          "language": "es",
-          "notes": "2nd and 4th Thursday; Classroom #2",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        }
-      ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "bulletin_2026-02",
         "recommended_action": null
@@ -23635,9 +22734,8 @@
           "source": "bulletin_2026-02"
         }
       ],
-      "special_events": [],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "bulletin_2026-02",
         "recommended_action": null
@@ -23957,9 +23055,8 @@
           "source": "website_2026-02"
         }
       ],
-      "special_events": [],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "website_2026-02",
         "recommended_action": null
@@ -24145,9 +23242,8 @@
           "source": "website_2026-02"
         }
       ],
-      "special_events": [],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "website_2026-02",
         "recommended_action": null
@@ -24422,9 +23518,8 @@
           "source": "bulletin_2026-02"
         }
       ],
-      "special_events": [],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "website_2026-02",
         "recommended_action": null
@@ -24762,26 +23857,8 @@
           "source": "bulletin_2026-02"
         }
       ],
-      "special_events": [
-        {
-          "id": "parish_092-evt-lenten-fish-fry",
-          "title": "Lenten Fish Fry",
-          "category": "fellowship",
-          "day": "friday",
-          "date": null,
-          "time": "17:00",
-          "end_time": "19:00",
-          "frequency": "weekly",
-          "notes": "St. Charles Social Center",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          },
-          "source": "bulletin_2026-02"
-        }
-      ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "bulletin_2026-02",
         "recommended_action": null
@@ -25170,9 +24247,8 @@
           "source": "bulletin_2026-02"
         }
       ],
-      "special_events": [],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "website_2026-02",
         "recommended_action": null
@@ -25499,90 +24575,8 @@
           "source": "bulletin_2026-02"
         }
       ],
-      "special_events": [
-        {
-          "id": "parish_094-evt-ignis-dei",
-          "title": "Ignis Dei Prayer Group",
-          "category": "devotional",
-          "day": "wednesday",
-          "date": null,
-          "time": "18:30",
-          "end_time": "20:30",
-          "frequency": "monthly",
-          "notes": "Last Wednesday of the month; Franciscan Center Library",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_094-evt-mens-group",
-          "title": "Parish Catholic Men's Group",
-          "category": "fellowship",
-          "day": "saturday",
-          "date": null,
-          "time": "08:45",
-          "end_time": "11:00",
-          "frequency": "monthly",
-          "notes": "Every other Saturday after 8AM Mass; Parish Center Library",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_094-evt-womens-group",
-          "title": "St. Joseph Parish Women's Group",
-          "category": "fellowship",
-          "day": "tuesday",
-          "date": null,
-          "time": "19:00",
-          "end_time": "20:30",
-          "frequency": "monthly",
-          "notes": "4th Tuesday of each month",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_094-evt-friendship-in-christ",
-          "title": "Friendship in Christ Group",
-          "category": "social",
-          "day": "tuesday",
-          "date": null,
-          "time": "18:00",
-          "end_time": "20:00",
-          "frequency": "monthly",
-          "notes": "First Tuesday; Youth Group Room; young adults with special needs ages 18+",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_094-evt-life-league",
-          "title": "Our Lady of Angels Life League",
-          "category": "devotional",
-          "day": null,
-          "date": null,
-          "time": "09:00",
-          "end_time": null,
-          "frequency": "monthly",
-          "notes": "Franciscan Center Meeting Room; check parish for schedule",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        }
-      ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "bulletin_2026-02",
         "recommended_action": null
@@ -25983,26 +24977,8 @@
           "source": "bulletin_2026-02"
         }
       ],
-      "special_events": [
-        {
-          "id": "parish_095-evt-soup-stations",
-          "title": "Soup & Stations",
-          "category": "fellowship",
-          "day": "friday",
-          "date": null,
-          "time": "17:45",
-          "end_time": "18:45",
-          "frequency": "weekly",
-          "notes": "Social Center; meatless soup and bread meal followed by Stations of the Cross",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          },
-          "source": "bulletin_2026-02"
-        }
-      ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "bulletin_2026-02",
         "recommended_action": null
@@ -26295,26 +25271,8 @@
           "source": "bulletin_2026-02"
         }
       ],
-      "special_events": [
-        {
-          "id": "parish_096-evt-lenten-soup-supper",
-          "title": "Lenten Soup Supper",
-          "category": "fellowship",
-          "day": "friday",
-          "date": null,
-          "time": "17:45",
-          "end_time": null,
-          "frequency": "weekly",
-          "notes": "Parish Center; followed by Stations of the Cross",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          },
-          "source": "bulletin_2026-02"
-        }
-      ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "bulletin_2026-02",
         "recommended_action": null
@@ -26721,58 +25679,8 @@
           "source": "bulletin_2026-02"
         }
       ],
-      "special_events": [
-        {
-          "id": "parish_097-evt-soup-for-soul",
-          "title": "Soup for the Soul",
-          "category": "fellowship",
-          "day": "wednesday",
-          "date": null,
-          "time": "18:00",
-          "end_time": null,
-          "frequency": "weekly",
-          "notes": "St. Gabriel Church Hall; Lenten readings and discussion led by Dcn. Carl; Feb 18-Mar 25",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_097-evt-feast-day-dinner",
-          "title": "St. Joseph Feast Day Mass and Dinner",
-          "category": "fellowship",
-          "day": null,
-          "date": "2026-03-19",
-          "time": "16:00",
-          "end_time": null,
-          "frequency": "one_time",
-          "notes": "St. Joseph Church; Mass 4PM, Dinner 5PM; $10/person, $25/family",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_097-evt-coffee-hour",
-          "title": "Parish Coffee Hour",
-          "category": "fellowship",
-          "day": "sunday",
-          "date": null,
-          "time": null,
-          "end_time": null,
-          "frequency": "weekly",
-          "notes": "St. Gabriel Church Hall; after 7:30AM Mass & Rosary and after 11:30AM Mass",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        }
-      ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "bulletin_2026-02",
         "recommended_action": null
@@ -27117,26 +26025,8 @@
           "source": "bulletin_2026-02"
         }
       ],
-      "special_events": [
-        {
-          "id": "parish_098-evt-bible-study",
-          "title": "Bible Study",
-          "category": "devotional",
-          "day": "sunday",
-          "date": null,
-          "time": "18:30",
-          "end_time": "19:30",
-          "frequency": "weekly",
-          "notes": "St. Robert's Hall classroom",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        }
-      ],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "bulletin_2026-02",
         "recommended_action": null
@@ -27626,9 +26516,8 @@
           "end_time": "20:30"
         }
       ],
-      "special_events": [],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "website_2026-02",
         "recommended_action": null
@@ -27961,9 +26850,8 @@
           "source": "bulletin_2026-02"
         }
       ],
-      "special_events": [],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "website_2026-02",
         "recommended_action": null
@@ -28356,9 +27244,8 @@
           "rite": "tridentine"
         }
       ],
-      "special_events": [],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "bulletin_2026-02",
         "recommended_action": null
@@ -28778,9 +27665,8 @@
           "rite": "tridentine"
         }
       ],
-      "special_events": [],
       "validation": {
-        "status": "manually_verified",
+        "status": "verified",
         "last_checked": "2026-02-27",
         "source": "bulletin_2026-02",
         "recommended_action": null

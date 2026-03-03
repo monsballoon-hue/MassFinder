@@ -73,7 +73,7 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--txt);font-size:1
 .parish-row:active{transform:scale(0.99)}
 .parish-row.active{background:var(--accent-pale);border-left:3px solid var(--accent);padding-left:9px}
 .status-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px}
-.status-dot.verified,.status-dot.manually_verified{background:var(--green)}
+.status-dot.verified{background:var(--green)}
 .status-dot.needs_verification,.status-dot.low_confidence{background:var(--amber)}
 .status-dot.excluded{background:var(--red)}
 .status-dot.unverified{background:#CBD5E1}
@@ -104,7 +104,7 @@ kbd{display:inline-block;padding:2px 7px;background:var(--surface);border:1px so
 .edit-hdr-town{font-size:12px;opacity:.7;margin-top:2px;font-family:var(--font-m)}
 .edit-hdr-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
 .vpill{padding:4px 11px;border-radius:99px;font-size:12px;font-weight:600;white-space:nowrap}
-.vpill.verified,.vpill.manually_verified{background:rgba(255,255,255,.15);color:#a8e6c0;border:1px solid rgba(74,124,89,.5)}
+.vpill.verified{background:rgba(255,255,255,.15);color:#a8e6c0;border:1px solid rgba(74,124,89,.5)}
 .vpill.needs_verification,.vpill.low_confidence{background:rgba(255,255,255,.12);color:#fcd34d;border:1px solid rgba(217,119,6,.5)}
 .vpill.unverified{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.2)}
 .vpill.excluded{background:rgba(255,255,255,.1);color:#fca5a5;border:1px solid rgba(185,28,28,.4)}
@@ -154,7 +154,7 @@ details.card>.card-body{border-top:1px solid var(--border-lt)}
 /* Validation summary on collapsed state */
 .val-summary{display:flex;align-items:center;gap:8px}
 .vpill-sm{padding:2px 7px;border-radius:99px;font-size:10px;font-weight:600;text-transform:none;letter-spacing:normal}
-.vpill-sm.verified,.vpill-sm.manually_verified{background:rgba(74,124,89,.15);color:#1f4d31;border:1px solid rgba(74,124,89,.25)}
+.vpill-sm.verified{background:rgba(74,124,89,.15);color:#1f4d31;border:1px solid rgba(74,124,89,.25)}
 .vpill-sm.needs_verification,.vpill-sm.low_confidence{background:rgba(217,119,6,.15);color:#7c4208;border:1px solid rgba(217,119,6,.25)}
 .vpill-sm.unverified{background:rgba(156,163,175,.15);color:#4B5563;border:1px solid rgba(156,163,175,.25)}
 .vpill-sm.excluded{background:rgba(185,28,28,.12);color:#991B1B;border:1px solid rgba(185,28,28,.18)}
@@ -565,7 +565,7 @@ button:active:not(:disabled){transform:scale(0.97)}
       </ul>
       <h4>Status Dot Guide</h4>
       <ul>
-        <li><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#4A7C59;margin-right:6px;vertical-align:middle"></span><strong>Green</strong> &mdash; verified or manually verified</li>
+        <li><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#4A7C59;margin-right:6px;vertical-align:middle"></span><strong>Green</strong> &mdash; verified</li>
         <li><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#D97706;margin-right:6px;vertical-align:middle"></span><strong>Amber</strong> &mdash; needs verification or low confidence</li>
         <li><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#CBD5E1;margin-right:6px;vertical-align:middle"></span><strong>Grey</strong> &mdash; never reviewed</li>
         <li><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#B91C1C;margin-right:6px;vertical-align:middle"></span><strong>Red</strong> &mdash; excluded from the app</li>
@@ -620,17 +620,16 @@ const SVC_TYPES = {
   vespers:'Vespers', anointing_of_sick:'Anointing of the Sick', benediction:'Benediction',
   holy_thursday_mass:"Mass of the Lord's Supper", good_friday_service:'Celebration of the Passion',
   easter_vigil_mass:'Easter Vigil', palm_sunday_mass:'Palm Sunday Mass',
-  easter_sunday_mass:'Easter Sunday Mass', bible_study:'Bible Study',
-  gorzkie_zale:'Gorzkie \u017Bale', mens_group:"Men's Group", social_event:'Social Event'
+  easter_sunday_mass:'Easter Sunday Mass',
+  gorzkie_zale:'Gorzkie \u017Bale', prayer_group:'Prayer Group'
 };
 const SVC_TYPE_GROUPS = [
   { label:'Mass',       types:['sunday_mass','daily_mass','communion_service'] },
   { label:'Sacraments', types:['confession','anointing_of_sick'] },
   { label:'Adoration',  types:['adoration','perpetual_adoration','holy_hour','benediction'] },
   { label:'Devotions',  types:['rosary','stations_of_cross','divine_mercy','miraculous_medal',
-                                'novena','devotion','gorzkie_zale','vespers'] },
-  { label:'Triduum',    types:['holy_thursday_mass','good_friday_service','easter_vigil_mass','palm_sunday_mass','easter_sunday_mass'] },
-  { label:'Community',  types:['bible_study','mens_group','social_event'] }
+                                'novena','devotion','gorzkie_zale','vespers','prayer_group'] },
+  { label:'Triduum',    types:['holy_thursday_mass','good_friday_service','easter_vigil_mass','palm_sunday_mass','easter_sunday_mass'] }
 ];
 const DAY_VALUES = [
   'sunday','monday','tuesday','wednesday','thursday','friday','saturday',
@@ -652,10 +651,9 @@ const DAY_LABELS = {
 const SEASONS      = ['year_round','lent','advent','summer','winter','academic_year','easter_season','ordinary_time','holy_week'];
 const LANG_NAMES   = {en:'English',es:'Spanish',pl:'Polish',pt:'Portuguese',la:'Latin',fr:'French',vi:'Vietnamese',asl:'ASL'};
 const PAR_STATUSES = ['active','inactive','closed','merged','excluded'];
-const VAL_STATUSES = ['verified','manually_verified','low_confidence','needs_verification','unverified','excluded'];
+const VAL_STATUSES = ['verified','low_confidence','needs_verification','unverified','excluded'];
 const LOC_TYPES    = ['church','chapel','center','cathedral','shrine','school','office','rectory','hall','meeting_room','mission','other'];
-const EVT_CATS     = ['fellowship','conference','volunteering','liturgical','educational','outreach','social','devotional','bible_study','recurring','one_time'];
-const EVT_FREQS    = ['one_time','weekly','monthly','annual'];
+const EVT_CATS     = ['community','social','fellowship','educational','liturgical','devotional','volunteering','yc'];
 const STATES       = ['MA','CT','VT','NH','NY'];
 
 // ── Auto-ID generation ───────────────────────────────────────────────
@@ -667,7 +665,7 @@ const SVC_TYPE_ABBR = {
   anointing_of_sick:'anoint', benediction:'bened',
   holy_thursday_mass:'htmass', good_friday_service:'gfsvc', easter_vigil_mass:'evmass',
   palm_sunday_mass:'psmass', easter_sunday_mass:'esmass',
-  bible_study:'bible', gorzkie_zale:'gorzkie', mens_group:'mens', social_event:'social'
+  gorzkie_zale:'gorzkie', prayer_group:'prayer'
 };
 const DAY_ABBR = {
   sunday:'sun', monday:'mon', tuesday:'tue', wednesday:'wed', thursday:'thu',
@@ -703,9 +701,9 @@ function genEventId(parishId, title) {
 
 const SCHED_GROUPS = [
   { key:'sunday',     label:'Sunday Mass',        addType:'sunday_mass',        addDay:'sunday',
-    test: s => s.type === 'sunday_mass' },
+    test: s => s.type === 'sunday_mass' || (s.type === 'communion_service' && s.day === 'sunday') },
   { key:'weekday',    label:'Weekday Mass',        addType:'daily_mass',         addDay:'monday',
-    test: s => s.type === 'daily_mass' },
+    test: s => s.type === 'daily_mass' || s.type === 'communion_service' },
   { key:'confession', label:'Confession',          addType:'confession',         addDay:'saturday',
     test: s => s.type === 'confession' },
   { key:'adoration',  label:'Adoration',           addType:'adoration',          addDay:'friday',
@@ -718,14 +716,12 @@ const SCHED_GROUPS = [
     test: s => ['rosary','divine_mercy','miraculous_medal','novena','devotion','benediction','vespers','anointing_of_sick','stations_of_cross','gorzkie_zale'].includes(s.type) },
   { key:'triduum',    label:'Triduum & Holy Week', addType:'holy_thursday_mass', addDay:'holy_thursday',
     test: s => ['holy_thursday_mass','good_friday_service','easter_vigil_mass','palm_sunday_mass','easter_sunday_mass'].includes(s.type) },
-  { key:'community',  label:'Community',           addType:'bible_study',        addDay:'sunday',
-    test: s => ['bible_study','mens_group','social_event'].includes(s.type) },
   { key:'other',      label:'Other',               addType:'communion_service',  addDay:'sunday',
     test: () => true }
 ];
 
 function dotClass(vs) {
-  if (['verified','manually_verified'].includes(vs)) return 'verified';
+  if (vs === 'verified') return 'verified';
   if (['needs_verification','low_confidence'].includes(vs)) return 'needs_verification';
   if (vs === 'excluded') return 'excluded';
   return 'unverified';
@@ -733,6 +729,8 @@ function dotClass(vs) {
 
 // ── State ──────────────────────────────────────────────────────────────
 let editData        = null;
+let editEvents      = [];
+let editEventsDirty = false;
 let allRows         = [];
 let pendingParish   = null;
 let isDirty         = false;
@@ -863,6 +861,13 @@ async function startApp() {
       '<small>' + esc(e.message) + '<br>Run from a local server or Vercel preview.</small></div>';
     return;
   }
+  try {
+    const evtRes = await fetch('events.json');
+    if (evtRes.ok) {
+      const evtJson = await evtRes.json();
+      editEvents = evtJson.events || [];
+    }
+  } catch(e) { editEvents = []; }
   const m = editData.metadata || {};
   document.getElementById('dataMeta').textContent =
     (m.total_parishes||'?') + ' parishes \u00b7 v' + (m.schema_version||'?');
@@ -897,7 +902,7 @@ function sortRows(rows) {
   } else if (sidebarSort === 'alpha') {
     rows.sort((a,b) => a.name.localeCompare(b.name));
   } else if (sidebarSort === 'status') {
-    const order = { unverified:0, needs_verification:1, low_confidence:2, manually_verified:3, verified:4, excluded:5 };
+    const order = { unverified:0, needs_verification:1, low_confidence:2, verified:3, excluded:4 };
     rows.sort((a,b) => (order[a.vs]||0) - (order[b.vs]||0) || a.name.localeCompare(b.name));
   } else if (sidebarSort === 'flagged') {
     rows.sort((a,b) => (b.flagged?1:0) - (a.flagged?1:0) || b.score - a.score);
@@ -989,7 +994,7 @@ function bulkVerify() {
     const p = (editData.parishes||[]).find(p => p.id === id);
     if (!p) return;
     if (!p.validation) p.validation = {};
-    p.validation.status = 'manually_verified';
+    p.validation.status = 'verified';
     p.validation.last_checked = today;
     count++;
   });
@@ -1170,7 +1175,7 @@ function locRowHtml(loc, i) {
 // ── Card: Schedule ────────────────────────────────────────────────────
 function cardSchedule(p) {
   const svcs = p.services || [];
-  const evts = p.special_events || [];
+  const evts = editEvents.filter(e => e.parish_id === p.id);
   const locs = p.locations || [];
   const hasMultiLoc = locs.length > 1;
   const bulletinUrl = p.bulletin_url;
@@ -1211,13 +1216,13 @@ function cardSchedule(p) {
   }).join('');
 
   const evtRows = evts.length
-    ? evts.map((ev, i) => evtRowHtml(ev, i)).join('')
+    ? evts.map(ev => evtRowHtml(ev)).join('')
     : '<div class="sched-empty">None</div>';
 
   const evtHtml = '<div class="sched-group" data-group="other">' +
     '<div class="sched-group-hdr">' +
       '<div class="sched-group-left">' +
-        '<span class="sched-group-label">Special Events</span>' +
+        '<span class="sched-group-label">Events</span>' +
         (evts.length ? '<span class="sched-count">' + evts.length + '</span>' : '') +
       '</div>' +
       '<button class="btn-sched-add" onclick="addEvent()">+ Add</button>' +
@@ -1236,6 +1241,7 @@ function svcRowHtml(s, i, hasMultiLoc, locs) {
   const time = s.time ? fmt12(s.time) + (s.end_time ? ' \u2013 ' + fmt12(s.end_time) : '') : (s.times_vary ? 'varies' : '\u2014');
   const locN = hasMultiLoc && s.location_id ? ((locs.find(l=>l.id===s.location_id)||{}).short_name||'') : '';
   const pills =
+    (s.type === 'communion_service' ? '<span class="pill pill-vary">Communion Svc — Not a Mass</span>' : '') +
     (s.language && s.language !== 'en' ? '<span class="pill pill-lang">' + s.language.toUpperCase() + '</span>' : '') +
     (s.seasonal && s.seasonal.is_seasonal ? '<span class="pill pill-seasonal">' + (s.seasonal.season||'seasonal').replace(/_/g,' ') + '</span>' : '') +
     (s.times_vary ? '<span class="pill pill-vary">times vary</span>' : '') +
@@ -1253,17 +1259,26 @@ function svcRowHtml(s, i, hasMultiLoc, locs) {
   '</div>';
 }
 
-function evtRowHtml(ev, i) {
+function isEvtExpired(ev) {
+  var exp = ev.end_date || ev.date;
+  if (!exp) return false;
+  return exp < new Date().toISOString().slice(0, 10);
+}
+
+function evtRowHtml(ev) {
   const day  = DAY_LABELS[ev.day] || ev.day || '';
   const time = ev.time ? ' ' + fmt12(ev.time) : '';
-  return '<div class="svc-row-s">' +
-    '<span class="svc-day" style="cursor:default">' + esc(ev.title || '(untitled)') + '</span>' +
+  const catPill = ev.category ? '<span class="pill pill-note">' + esc(ev.category.replace(/_/g,' ')) + '</span>' : '';
+  const expired = isEvtExpired(ev);
+  const expPill = expired ? '<span class="pill pill-seasonal" style="background:var(--red-bg);color:var(--red)">expired</span>' : '';
+  return '<div class="svc-row-s'+(expired?' edited':'')+'">' +
+    '<span class="svc-day" style="cursor:default'+(expired?';opacity:.5':'')+'">' + esc(ev.title || '(untitled)') + '</span>' +
     '<div class="svc-pills">' +
+      expPill +
       (day ? '<span class="pill pill-note">' + esc(day + time) + '</span>' : '') +
-      (ev.frequency ? '<span class="pill pill-note">' + esc(ev.frequency.replace(/_/g,' ')) + '</span>' : '') +
-      (ev.seasonal && ev.seasonal.is_seasonal ? '<span class="pill pill-seasonal">' + (ev.seasonal.season||'seasonal').replace(/_/g,' ') + '</span>' : '') +
+      catPill +
     '</div>' +
-    '<button class="btn-row-edit" onclick="editEvent('+i+')" title="Edit event">&middot;&middot;&middot;</button>' +
+    '<button class="btn-row-edit" onclick="editEvent(\''+esc(ev.id)+'\')" title="Edit event">&middot;&middot;&middot;</button>' +
   '</div>';
 }
 
@@ -1442,34 +1457,34 @@ function refreshScheduleCard() {
 }
 
 // ── Event modal ────────────────────────────────────────────────────────
-let evtModalIdx = null;
+let evtModalId = null;
 
-function editEvent(i) {
-  evtModalIdx = i;
-  openEvtModal((pendingParish.special_events||[])[i] || {}, false);
+function editEvent(evtId) {
+  evtModalId = evtId;
+  const ev = editEvents.find(e => e.id === evtId) || {};
+  openEvtModal(ev, false);
 }
 function addEvent() {
-  evtModalIdx = -1;
+  evtModalId = null;
   openEvtModal({}, true);
 }
 function openEvtModal(ev, isNew) {
   const isSeas = !!(ev.seasonal && ev.seasonal.is_seasonal);
   document.getElementById('evtModalBody').innerHTML =
     field('me_title','Event Title', ev.title||'') +
-    '<div class="row-2">' +
-      fpairs('me_cat','Category', EVT_CATS.map(c=>[c,c.replace(/_/g,' ')]), ev.category||'social') +
-      fpairs('me_freq','Frequency', EVT_FREQS.map(f=>[f,f.replace(/_/g,' ')]), ev.frequency||'one_time') +
-    '</div>' +
+    fpairs('me_cat','Category', EVT_CATS.map(c=>[c,c.replace(/_/g,' ')]), ev.category||'community') +
     '<div class="row-2">' +
       fpairs('me_day','Day', [['','\u2014'],...DAY_VALUES.map(d=>[d,DAY_LABELS[d]||d])], ev.day||'') +
       field('me_date','Specific Date', ev.date||'', '', 'date') +
     '</div>' +
+    field('me_enddate','Expires After (end date)', ev.end_date||'', '', 'date') +
     '<div id="me_sched_hint" class="sched-hint"></div>' +
     '<div class="row-2">' +
       field('me_time','Start Time', ev.time||'', '', 'time') +
       field('me_etime','End Time', ev.end_time||'', '', 'time') +
     '</div>' +
     field('me_notes','Notes', ev.notes||'') +
+    field('me_loc','Location', ev.location||'') +
     field('me_src','Source', ev.source||'') +
     '<div class="check-row"><input type="checkbox" id="me_sea" onchange="toggleEvtSeason()"'+(isSeas?' checked':'')+'>' +
       '<label for="me_sea">Seasonal only</label></div>' +
@@ -1481,26 +1496,23 @@ function openEvtModal(ev, isNew) {
     (isNew ? ' readonly style="opacity:.6;cursor:default" placeholder="Auto-generated on save"' : '') +
     '></div>';
 
-  document.getElementById('evtModalTitle').textContent = isNew ? 'Add Special Event' : 'Edit Special Event';
+  document.getElementById('evtModalTitle').textContent = isNew ? 'Add Event' : 'Edit Event';
   document.getElementById('me_delete').style.display   = isNew ? 'none' : '';
   document.getElementById('evtModal').classList.add('open');
   // Smart hint updates
   updateEvtSchedHint();
   var dayEl = document.getElementById('me_day');
   var dateEl = document.getElementById('me_date');
-  var freqEl = document.getElementById('me_freq');
   if (dayEl) dayEl.addEventListener('change', updateEvtSchedHint);
   if (dateEl) dateEl.addEventListener('change', updateEvtSchedHint);
-  if (freqEl) freqEl.addEventListener('change', updateEvtSchedHint);
 }
 function updateEvtSchedHint() {
   var el = document.getElementById('me_sched_hint');
   if (!el) return;
-  var day = val('me_day'), date = val('me_date'), freq = val('me_freq');
+  var day = val('me_day'), date = val('me_date');
   if (date && !day) el.textContent = 'One-time event on ' + date;
-  else if (day && !date && freq && freq !== 'one_time') el.textContent = 'Recurring every ' + (DAY_LABELS[day]||day) + ' (' + freq.replace(/_/g,' ') + ')';
   else if (day && date) el.textContent = 'Specific date: ' + date + ' (falls on ' + (DAY_LABELS[day]||day) + ')';
-  else if (day) el.textContent = 'Every ' + (DAY_LABELS[day]||day);
+  else if (day) el.textContent = 'Recurring every ' + (DAY_LABELS[day]||day);
   else el.textContent = '';
 }
 function toggleEvtSeason() {
@@ -1509,41 +1521,53 @@ function toggleEvtSeason() {
 }
 function closeEvtModal() {
   document.getElementById('evtModal').classList.remove('open');
-  evtModalIdx = null;
+  evtModalId = null;
 }
 function saveEventModal() {
   const isSeas = !!(document.getElementById('me_sea') && document.getElementById('me_sea').checked);
   const ev = {
-    id:       val('me_id')    || genEventId(pendingParish.id, val('me_title')),
-    title:    val('me_title') || null,
-    category: val('me_cat')   || null,
-    frequency:val('me_freq')  || null,
-    day:      val('me_day')   || null,
-    date:     val('me_date')  || null,
-    time:     val('me_time')  || null,
-    end_time: val('me_etime') || null,
-    notes:    val('me_notes') || null,
-    source:   val('me_src')   || null,
-    seasonal: { is_seasonal: isSeas, season: isSeas ? (val('me_season')||'lent') : 'year_round' }
+    id:        val('me_id')    || genEventId(pendingParish.id, val('me_title')),
+    title:     val('me_title') || null,
+    category:  val('me_cat')   || 'community',
+    parish_id: pendingParish.id,
+    day:       val('me_day')   || null,
+    date:      val('me_date')    || null,
+    end_date:  val('me_enddate') || null,
+    time:      val('me_time')    || null,
+    end_time:  val('me_etime') || null,
+    notes:     val('me_notes') || null,
+    location:  val('me_loc')   || null,
+    source:    val('me_src')   || null
   };
-  if (!pendingParish.special_events) pendingParish.special_events = [];
-  if (evtModalIdx === -1) pendingParish.special_events.push(ev);
-  else pendingParish.special_events[evtModalIdx] = ev;
+  if (isSeas) {
+    ev.seasonal = { is_seasonal: true, season: val('me_season')||'lent' };
+  }
+  if (evtModalId === null) {
+    editEvents.push(ev);
+  } else {
+    const idx = editEvents.findIndex(e => e.id === evtModalId);
+    if (idx >= 0) editEvents[idx] = ev;
+    else editEvents.push(ev);
+  }
+  editEventsDirty = true;
   markDirty();
   closeEvtModal();
   refreshScheduleCard();
 }
 function deleteEvent() {
-  if (evtModalIdx < 0 || !pendingParish.special_events) return;
-  const evt = JSON.parse(JSON.stringify(pendingParish.special_events[evtModalIdx]));
-  const idx = evtModalIdx;
-  pendingParish.special_events.splice(idx, 1);
+  if (!evtModalId) return;
+  const idx = editEvents.findIndex(e => e.id === evtModalId);
+  if (idx < 0) return;
+  const evt = JSON.parse(JSON.stringify(editEvents[idx]));
+  editEvents.splice(idx, 1);
+  editEventsDirty = true;
   markDirty();
   closeEvtModal();
   refreshScheduleCard();
   showToast('Event deleted', {
     undo: function() {
-      pendingParish.special_events.splice(idx, 0, evt);
+      editEvents.splice(idx, 0, evt);
+      editEventsDirty = true;
       markDirty();
       refreshScheduleCard();
     },
@@ -1780,13 +1804,6 @@ function sanitizeForExport(data) {
       }
     });
 
-    // Special events
-    (p.special_events || []).forEach(function(e) {
-      ['title','type','category','day','date','time','end_time','frequency',
-       'language','location','location_id','notes','source'].forEach(function(f) {
-        if (f in e) e[f] = ns(e[f]);
-      });
-    });
   });
   return data;
 }
@@ -1799,7 +1816,18 @@ function downloadJSON() {
   const a    = Object.assign(document.createElement('a'), { href:url, download:'parish_data.json' });
   document.body.appendChild(a); a.click();
   document.body.removeChild(a); URL.revokeObjectURL(url);
-  showToast('\u2193 JSON downloaded');
+  if (editEventsDirty) {
+    const evtOut = {
+      metadata: { version: '1.0', description: 'MassFinder Events', last_updated: new Date().toISOString().slice(0,10) },
+      events: editEvents
+    };
+    const evtBlob = new Blob([JSON.stringify(evtOut, null, 2)], { type:'application/json' });
+    const evtUrl = URL.createObjectURL(evtBlob);
+    const evtA = Object.assign(document.createElement('a'), { href:evtUrl, download:'events.json' });
+    document.body.appendChild(evtA); evtA.click();
+    document.body.removeChild(evtA); URL.revokeObjectURL(evtUrl);
+  }
+  showToast('\u2193 JSON downloaded' + (editEventsDirty ? ' (+ events.json)' : ''));
 }
 
 // ── Quick-verify service (checkbox) ────────────────────────────────────
@@ -1959,7 +1987,7 @@ function navigateParish(dir) {
 function markVerifiedToday() {
   if (!pendingParish) return;
   if (!pendingParish.validation) pendingParish.validation = {};
-  pendingParish.validation.status = 'manually_verified';
+  pendingParish.validation.status = 'verified';
   pendingParish.validation.last_checked = new Date().toISOString().slice(0, 10);
   // Cascade verification to all child services
   var cascadeSrc = 'bulletin_' + (pendingParish.validation.bulletin_date ||
@@ -1974,7 +2002,7 @@ function markVerifiedToday() {
   // Update form fields if validation section is open
   const vs = document.getElementById('v_status');
   const vc = document.getElementById('v_checked');
-  if (vs) vs.value = 'manually_verified';
+  if (vs) vs.value = 'verified';
   if (vc) vc.value = pendingParish.validation.last_checked;
   // Update header pill
   const pill = document.querySelector('.vpill');
@@ -2189,7 +2217,7 @@ function refreshLocCard() {
 function showStatsModal() {
   var ps = editData.parishes || [];
   var total = ps.length;
-  var verified = ps.filter(function(p){ var s = p.validation && p.validation.status; return s === 'verified' || s === 'manually_verified'; }).length;
+  var verified = ps.filter(function(p){ var s = p.validation && p.validation.status; return s === 'verified'; }).length;
   var unverified = ps.filter(function(p){ return !p.validation || p.validation.status === 'unverified'; }).length;
   var needsVer = ps.filter(function(p){ return p.validation && p.validation.status === 'needs_verification'; }).length;
   var flagged = ps.filter(function(p){ return p.validation && p.validation.flagged; }).length;
@@ -2358,14 +2386,19 @@ document.addEventListener('keydown', function(e) {
     e.preventDefault();
     document.getElementById('parishSearch').focus();
   }
-  // Esc → close modals or clear bulk selection
+  // Esc → close modals or clear bulk selection (only when not typing in a form field)
   if (e.key === 'Escape') {
+    var tag = document.activeElement.tagName;
+    var inFormField = ['INPUT','SELECT','TEXTAREA'].includes(tag);
+    // If typing in a form field inside a modal, just blur the field — don't close the modal
+    var inModal = document.activeElement.closest && document.activeElement.closest('.modal');
+    if (inFormField && inModal) { document.activeElement.blur(); return; }
     if (bulkSelection.size > 0) { clearBulkSelection(); return; }
     ['svcModal','evtModal','locModal','helpModal','statsModal'].forEach(function(id) {
       document.getElementById(id).classList.remove('open');
     });
     svcModalIdx = null;
-    evtModalIdx = null;
+    evtModalId = null;
   }
 });
 
@@ -2376,7 +2409,13 @@ window.addEventListener('beforeunload', function(e) {
 
 // ── Modal helpers ──────────────────────────────────────────────────────
 function closeIfBg(e, id) {
-  if (e.target === document.getElementById(id)) document.getElementById(id).classList.remove('open');
+  // Only close if clicking directly on the overlay background, not anything inside the modal
+  if (e.target === document.getElementById(id)) {
+    // Double-check: don't close if an input/textarea is focused (prevents accidental loss)
+    var tag = document.activeElement.tagName;
+    if (['INPUT','SELECT','TEXTAREA'].includes(tag) && document.activeElement.closest('.modal')) return;
+    document.getElementById(id).classList.remove('open');
+  }
 }
 function toggleHelp() { document.getElementById('helpModal').classList.toggle('open'); }
 </script>
