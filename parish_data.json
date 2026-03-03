@@ -4,7 +4,7 @@
     "source": "Diocese of Springfield, MA - Online Directory",
     "extracted_date": "2026-02-19",
     "total_parishes": 98,
-    "total_services": 1421,
+    "total_services": 1420,
     "service_types_found": {
       "daily_mass": 507,
       "sunday_mass": 364,
@@ -23,7 +23,6 @@
       "vespers": 5,
       "anointing_of_sick": 4,
       "novena": 4,
-      "bible_study": 1,
       "perpetual_adoration": 1,
       "gorzkie_zale": 1
     },
@@ -5036,21 +5035,6 @@
           "location_id": "sacredheart-church-feedinghills",
           "language": "en",
           "notes": "Immediately following 9:00 AM Mass",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_019-bible-wed-0900-lent-sacred",
-          "type": "bible_study",
-          "day": "wednesday",
-          "time": "09:00",
-          "end_time": "11:00",
-          "location_id": "sacredheart-office-feedinghills",
-          "language": "en",
-          "notes": "Parish Center, 9 AM–11 AM",
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"

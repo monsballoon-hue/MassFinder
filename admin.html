@@ -620,7 +620,7 @@ const SVC_TYPES = {
   vespers:'Vespers', anointing_of_sick:'Anointing of the Sick', benediction:'Benediction',
   holy_thursday_mass:"Mass of the Lord's Supper", good_friday_service:'Celebration of the Passion',
   easter_vigil_mass:'Easter Vigil', palm_sunday_mass:'Palm Sunday Mass',
-  easter_sunday_mass:'Easter Sunday Mass', bible_study:'Bible Study',
+  easter_sunday_mass:'Easter Sunday Mass',
   gorzkie_zale:'Gorzkie \u017Bale', prayer_group:'Prayer Group'
 };
 const SVC_TYPE_GROUPS = [
@@ -629,8 +629,7 @@ const SVC_TYPE_GROUPS = [
   { label:'Adoration',  types:['adoration','perpetual_adoration','holy_hour','benediction'] },
   { label:'Devotions',  types:['rosary','stations_of_cross','divine_mercy','miraculous_medal',
                                 'novena','devotion','gorzkie_zale','vespers','prayer_group'] },
-  { label:'Triduum',    types:['holy_thursday_mass','good_friday_service','easter_vigil_mass','palm_sunday_mass','easter_sunday_mass'] },
-  { label:'Community',  types:['bible_study','prayer_group'] }
+  { label:'Triduum',    types:['holy_thursday_mass','good_friday_service','easter_vigil_mass','palm_sunday_mass','easter_sunday_mass'] }
 ];
 const DAY_VALUES = [
   'sunday','monday','tuesday','wednesday','thursday','friday','saturday',
@@ -666,7 +665,7 @@ const SVC_TYPE_ABBR = {
   anointing_of_sick:'anoint', benediction:'bened',
   holy_thursday_mass:'htmass', good_friday_service:'gfsvc', easter_vigil_mass:'evmass',
   palm_sunday_mass:'psmass', easter_sunday_mass:'esmass',
-  bible_study:'bible', gorzkie_zale:'gorzkie', prayer_group:'prayer'
+  gorzkie_zale:'gorzkie', prayer_group:'prayer'
 };
 const DAY_ABBR = {
   sunday:'sun', monday:'mon', tuesday:'tue', wednesday:'wed', thursday:'thu',
@@ -702,9 +701,9 @@ function genEventId(parishId, title) {
 
 const SCHED_GROUPS = [
   { key:'sunday',     label:'Sunday Mass',        addType:'sunday_mass',        addDay:'sunday',
-    test: s => s.type === 'sunday_mass' },
+    test: s => s.type === 'sunday_mass' || (s.type === 'communion_service' && s.day === 'sunday') },
   { key:'weekday',    label:'Weekday Mass',        addType:'daily_mass',         addDay:'monday',
-    test: s => s.type === 'daily_mass' },
+    test: s => s.type === 'daily_mass' || s.type === 'communion_service' },
   { key:'confession', label:'Confession',          addType:'confession',         addDay:'saturday',
     test: s => s.type === 'confession' },
   { key:'adoration',  label:'Adoration',           addType:'adoration',          addDay:'friday',
@@ -717,8 +716,6 @@ const SCHED_GROUPS = [
     test: s => ['rosary','divine_mercy','miraculous_medal','novena','devotion','benediction','vespers','anointing_of_sick','stations_of_cross','gorzkie_zale'].includes(s.type) },
   { key:'triduum',    label:'Triduum & Holy Week', addType:'holy_thursday_mass', addDay:'holy_thursday',
     test: s => ['holy_thursday_mass','good_friday_service','easter_vigil_mass','palm_sunday_mass','easter_sunday_mass'].includes(s.type) },
-  { key:'community',  label:'Community',           addType:'bible_study',        addDay:'sunday',
-    test: s => s.type === 'bible_study' },
   { key:'other',      label:'Other',               addType:'communion_service',  addDay:'sunday',
     test: () => true }
 ];
@@ -1244,6 +1241,7 @@ function svcRowHtml(s, i, hasMultiLoc, locs) {
   const time = s.time ? fmt12(s.time) + (s.end_time ? ' \u2013 ' + fmt12(s.end_time) : '') : (s.times_vary ? 'varies' : '\u2014');
   const locN = hasMultiLoc && s.location_id ? ((locs.find(l=>l.id===s.location_id)||{}).short_name||'') : '';
   const pills =
+    (s.type === 'communion_service' ? '<span class="pill pill-vary">Communion Svc — Not a Mass</span>' : '') +
     (s.language && s.language !== 'en' ? '<span class="pill pill-lang">' + s.language.toUpperCase() + '</span>' : '') +
     (s.seasonal && s.seasonal.is_seasonal ? '<span class="pill pill-seasonal">' + (s.seasonal.season||'seasonal').replace(/_/g,' ') + '</span>' : '') +
     (s.times_vary ? '<span class="pill pill-vary">times vary</span>' : '') +
@@ -1261,13 +1259,22 @@ function svcRowHtml(s, i, hasMultiLoc, locs) {
   '</div>';
 }
 
+function isEvtExpired(ev) {
+  var exp = ev.end_date || ev.date;
+  if (!exp) return false;
+  return exp < new Date().toISOString().slice(0, 10);
+}
+
 function evtRowHtml(ev) {
   const day  = DAY_LABELS[ev.day] || ev.day || '';
   const time = ev.time ? ' ' + fmt12(ev.time) : '';
   const catPill = ev.category ? '<span class="pill pill-note">' + esc(ev.category.replace(/_/g,' ')) + '</span>' : '';
-  return '<div class="svc-row-s">' +
-    '<span class="svc-day" style="cursor:default">' + esc(ev.title || '(untitled)') + '</span>' +
+  const expired = isEvtExpired(ev);
+  const expPill = expired ? '<span class="pill pill-seasonal" style="background:var(--red-bg);color:var(--red)">expired</span>' : '';
+  return '<div class="svc-row-s'+(expired?' edited':'')+'">' +
+    '<span class="svc-day" style="cursor:default'+(expired?';opacity:.5':'')+'">' + esc(ev.title || '(untitled)') + '</span>' +
     '<div class="svc-pills">' +
+      expPill +
       (day ? '<span class="pill pill-note">' + esc(day + time) + '</span>' : '') +
       catPill +
     '</div>' +
@@ -1470,6 +1477,7 @@ function openEvtModal(ev, isNew) {
       fpairs('me_day','Day', [['','\u2014'],...DAY_VALUES.map(d=>[d,DAY_LABELS[d]||d])], ev.day||'') +
       field('me_date','Specific Date', ev.date||'', '', 'date') +
     '</div>' +
+    field('me_enddate','Expires After (end date)', ev.end_date||'', '', 'date') +
     '<div id="me_sched_hint" class="sched-hint"></div>' +
     '<div class="row-2">' +
       field('me_time','Start Time', ev.time||'', '', 'time') +
@@ -1523,8 +1531,9 @@ function saveEventModal() {
     category:  val('me_cat')   || 'community',
     parish_id: pendingParish.id,
     day:       val('me_day')   || null,
-    date:      val('me_date')  || null,
-    time:      val('me_time')  || null,
+    date:      val('me_date')    || null,
+    end_date:  val('me_enddate') || null,
+    time:      val('me_time')    || null,
     end_time:  val('me_etime') || null,
     notes:     val('me_notes') || null,
     location:  val('me_loc')   || null,
