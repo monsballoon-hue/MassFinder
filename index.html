@@ -465,6 +465,32 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .saved-empty-icon svg { width: 28px; height: 28px; color: var(--color-text-tertiary); }
 .saved-empty h3 { font-family: var(--font-display); font-size: var(--text-xl); font-weight: var(--weight-semibold); color: var(--color-text-secondary); margin-bottom: var(--space-2); }
 .saved-empty p { font-size: var(--text-sm); color: var(--color-text-tertiary); line-height: 1.5; }
+.saved-week-section { margin-bottom: var(--space-3); }
+.saved-week-section details { border-radius: var(--radius-md); overflow: hidden; }
+.saved-week-section summary { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-3) 0; font-family: var(--font-display); font-size: var(--text-base); font-weight: var(--weight-semibold); color: var(--color-text-primary); cursor: pointer; list-style: none; }
+.saved-week-section summary::-webkit-details-marker { display: none; }
+.saved-week-section summary::before { content: '\25B6'; font-size: 10px; color: var(--color-text-tertiary); transition: transform var(--transition-fast); }
+.saved-week-section details[open]>summary::before { transform: rotate(90deg); }
+.saved-week-count { font-size: var(--text-xs); color: var(--color-accent-text); font-weight: var(--weight-medium); background: var(--color-accent-pale); padding: 2px 8px; border-radius: var(--radius-full); }
+.saved-evt { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); background: var(--color-surface); border-radius: var(--radius-md); box-shadow: var(--shadow-card); margin-bottom: var(--space-2); cursor: pointer; transition: box-shadow var(--transition-fast); }
+.saved-evt:hover { box-shadow: var(--shadow-card-hover); }
+.saved-evt .ce-item-accent { width: 3px; border-radius: 2px; align-self: stretch; min-height: 32px; flex-shrink: 0; }
+.saved-evt .ce-item-body { flex: 1; min-width: 0; }
+.saved-evt .ce-item-title { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.saved-evt .ce-item-when { font-size: var(--text-xs); color: var(--color-text-secondary); margin-top: 1px; }
+.saved-evt-actions { display: flex; gap: var(--space-1); flex-shrink: 0; }
+.saved-evt-btn { width: 32px; height: 32px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--color-text-tertiary); background: none; border: 1px solid var(--color-border-light); cursor: pointer; transition: all var(--transition-fast); }
+.saved-evt-btn:hover { background: var(--color-surface-hover); color: var(--color-text-secondary); }
+.saved-evt-btn:disabled { opacity: 0.5; cursor: default; }
+.saved-lent-accent { background: #7C3AED !important; }
+.saved-evt-count { font-size: var(--text-xs); color: var(--color-accent-text); font-weight: var(--weight-medium); background: var(--color-accent-pale); padding: 1px 6px; border-radius: var(--radius-full); margin-left: var(--space-1); }
+.saved-section-title { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 700; color: var(--color-text-primary); margin: var(--space-4) 0 var(--space-2); display: flex; align-items: center; gap: var(--space-2); }
+.saved-compact-yc { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); background: linear-gradient(135deg, #FBF8F1 0%, #F5EDD8 100%); border-left: 3px solid var(--color-accent); border-radius: var(--radius-md); box-shadow: var(--shadow-card); margin-bottom: var(--space-2); cursor: pointer; transition: box-shadow var(--transition-fast); }
+.saved-compact-yc:hover { box-shadow: var(--shadow-card-hover); }
+.saved-compact-yc .ce-item-body { flex: 1; min-width: 0; }
+.saved-compact-yc .ce-item-title { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.saved-compact-yc .ce-item-when { font-size: var(--text-xs); color: var(--color-text-secondary); margin-top: 1px; }
+.saved-section-divider { height: 1px; background: var(--color-border-light); margin: var(--space-4) 0; }
 
 /* MORE TAB */
 .more-content { max-width: var(--max-width); margin: 0 auto; padding: var(--space-4) var(--space-4) var(--space-12); }
@@ -884,6 +910,15 @@ function toggleFav(id,ev){if(ev){ev.stopPropagation();ev.preventDefault()}if(isF
 // Time
 function getNow(){return new Date()}
 function isEventActive(e){const t=getNow().toISOString().slice(0,10);const exp=e.end_date||e.date;if(!exp)return true;return exp>=t}
+function getNextDateForDay(dayName){
+  if(!dayName)return null;
+  const dayIdx={sunday:0,monday:1,tuesday:2,wednesday:3,thursday:4,friday:5,saturday:6}[dayName];
+  if(dayIdx===undefined)return null;
+  const d=getNow();const cur=d.getDay();
+  const diff=(dayIdx-cur+7)%7||7;
+  d.setDate(d.getDate()+diff);
+  return d.toISOString().slice(0,10);
+}
 function fmt12(t){if(!t)return'';const[h,m]=t.split(':').map(Number);const ap=h>=12?'PM':'AM',h12=h===0?12:h>12?h-12:h;return m===0?h12+' '+ap:h12+':'+String(m).padStart(2,'0')+' '+ap}
 function toMin(t){if(!t)return null;const[h,m]=t.split(':').map(Number);return h*60+m}
 
@@ -1156,12 +1191,17 @@ function renderCommunityEvents(p){
       whenText=[dayName?dayName+'s':'',timeStr].filter(Boolean).join(' · ');
     }
     const accent=isUpcoming?'upcoming':'ongoing';
+    const calSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="14" height="14"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
     return '<div class="ce-item">'
       +'<div class="ce-item-accent '+accent+'"></div>'
       +'<div class="ce-item-body">'
       +'<div class="ce-item-title">'+esc(e.title)+'</div>'
       +(whenText?'<div class="ce-item-when">'+whenText+'</div>':'')
       +(e.notes?'<div class="ce-item-notes">'+esc(e.notes)+'</div>':'')
+      +'</div>'
+      +'<div class="saved-evt-actions">'
+      +'<button class="saved-evt-btn" onclick="downloadEventIcal(\''+esc(e.id)+'\');event.stopPropagation()" title="Add to Calendar">'+calSvg+'</button>'
+      +'<button class="saved-evt-btn" onclick="expressInterest(\''+esc(e.id)+'\',event)" title="I\'m interested">&#9825;</button>'
       +'</div></div>';
   }
 
@@ -1186,6 +1226,13 @@ function renderCommunityEvents(p){
   html+='</div>';
   return html;
 }
+
+const CLERGY_RANK={pastor:1,pastor_and_director:2,provisional_priest:3,deacon:4,deacon_emeritus:5,deacon_retired:6};
+function getPastor(p){
+  if(!p.clergy||!p.clergy.length)return null;
+  return p.clergy.slice().sort((a,b)=>(CLERGY_RANK[a.role]||99)-(CLERGY_RANK[b.role]||99))[0];
+}
+const CLERGY_ROLE_LABEL={pastor:'Pastor',pastor_and_director:'Pastor & Director',provisional_priest:'Provisional Priest',deacon:'Deacon',deacon_emeritus:'Deacon Emeritus',deacon_retired:'Deacon (Retired)'};
 
 function openDetail(id){
   const p=allParishes.find(x=>x.id===id);if(!p)return;
@@ -1219,8 +1266,8 @@ function openDetail(id){
     :'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>';
 
   let chtml='<div class="detail-contact">';
-  if(p.staff&&p.staff.length)chtml+='<div class="contact-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>'+esc(p.staff[0])+'</span></div>';
-  if(ct.phone)chtml+='<div class="contact-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><a href="tel:'+ct.phone+'">'+esc(ct.phone)+'</a></div>';
+  const _pastor=getPastor(p);
+  if(_pastor)chtml+='<div class="contact-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><div><span>'+esc(_pastor.name)+'</span><div style="font-size:var(--text-xs);color:var(--color-text-tertiary)">'+esc(CLERGY_ROLE_LABEL[_pastor.role]||_pastor.role)+'</div></div></div>';
   // Show website as text link ONLY when bulletin URL takes the button (so website isn't lost)
   if(bulletinUrl&&ct.website)chtml+='<div class="contact-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><a href="'+esc(ct.website)+'" target="_blank" rel="noopener">'+esc(domain)+'</a></div>';
   if(ct.office_hours)chtml+='<div class="contact-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>'+esc(ct.office_hours)+'</span></div>';
@@ -1399,11 +1446,16 @@ function openEventDetail(eventId){
   const parishDisplayName=displayName(p.name||'',evt.parish_id);
   const venueName=evt.venue_name||locName||parishDisplayName;
 
-  // Format date
-  const d=new Date(evt.date+'T12:00:00');
-  const dateStr=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+  // Format date — guard for recurring events without a date
   const timeStr=evt.time?fmt12(evt.time):'';
   const endStr=evt.end_time?' – '+fmt12(evt.end_time):'';
+  let dateStr='';
+  if(evt.date){
+    const d=new Date(evt.date+'T12:00:00');
+    dateStr=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+  }else if(evt.day){
+    dateStr=(DAY_NAMES[evt.day]||evt.day)+'s'+(evt.time?' · '+timeStr:'');
+  }else{dateStr='Ongoing'}
 
   // Badges
   let badges='';
@@ -1412,12 +1464,16 @@ function openEventDetail(eventId){
   else if(evt.category==='community')badges+='<span class="evt-badge community">Community</span>';
   // Date badge
   const today=getNow().toISOString().slice(0,10);
-  const tomorrow=new Date(getNow());tomorrow.setDate(tomorrow.getDate()+1);
-  const tomorrowStr=tomorrow.toISOString().slice(0,10);
-  let dateBadgeText=dateStr;
-  if(evt.date===today)dateBadgeText='Today · '+dateStr.split(', ').slice(1).join(', ');
-  else if(evt.date===tomorrowStr)dateBadgeText='Tomorrow · '+dateStr.split(', ').slice(1).join(', ');
-  badges+='<span class="evt-badge date-badge">'+dateBadgeText+'</span>';
+  if(evt.date){
+    const tomorrow=new Date(getNow());tomorrow.setDate(tomorrow.getDate()+1);
+    const tomorrowStr=tomorrow.toISOString().slice(0,10);
+    let dateBadgeText=dateStr;
+    if(evt.date===today)dateBadgeText='Today · '+dateStr.split(', ').slice(1).join(', ');
+    else if(evt.date===tomorrowStr)dateBadgeText='Tomorrow · '+dateStr.split(', ').slice(1).join(', ');
+    badges+='<span class="evt-badge date-badge">'+dateBadgeText+'</span>';
+  }else{
+    badges+='<span class="evt-badge date-badge">'+esc(dateStr)+'</span>';
+  }
   // Time badge
   if(timeStr)badges+='<span class="evt-badge time-badge">'+timeStr+endStr+'</span>';
   // Type badge
@@ -1425,22 +1481,24 @@ function openEventDetail(eventId){
   if(typeLabel)badges+='<span class="evt-badge type-badge">'+esc(typeLabel)+'</span>';
   // Social badge
   if(evt.social)badges+='<span class="evt-badge social-badge">✦ Social gathering</span>';
-  // Countdown badge
-  const evtDateTime=new Date(evt.date+'T'+(evt.time||'12:00'));
-  const nowMs=getNow().getTime();
-  const diffMs=evtDateTime.getTime()-nowMs;
-  if(diffMs>0){
-    const diffMins=Math.floor(diffMs/60000);
-    const diffHrs=Math.floor(diffMins/60);
-    const diffDays=Math.floor(diffHrs/24);
-    let countdownText='';
-    let imminent=false;
-    if(diffMins<60){countdownText='In '+diffMins+' minute'+(diffMins!==1?'s':'');imminent=true}
-    else if(diffHrs<24){countdownText='In '+diffHrs+' hour'+(diffHrs!==1?'s':'');imminent=diffHrs<=3}
-    else if(diffDays===1){countdownText='In 1 day'}
-    else if(diffDays<30){countdownText='In '+diffDays+' days'}
-    else{const diffWeeks=Math.floor(diffDays/7);countdownText='In '+diffWeeks+' week'+(diffWeeks!==1?'s':'')}
-    badges+='<span class="evt-badge countdown-badge'+(imminent?' imminent':'')+'">'+countdownText+'</span>';
+  // Countdown badge (only for dated events)
+  if(evt.date){
+    const evtDateTime=new Date(evt.date+'T'+(evt.time||'12:00'));
+    const nowMs=getNow().getTime();
+    const diffMs=evtDateTime.getTime()-nowMs;
+    if(diffMs>0){
+      const diffMins=Math.floor(diffMs/60000);
+      const diffHrs=Math.floor(diffMins/60);
+      const diffDays=Math.floor(diffHrs/24);
+      let countdownText='';
+      let imminent=false;
+      if(diffMins<60){countdownText='In '+diffMins+' minute'+(diffMins!==1?'s':'');imminent=true}
+      else if(diffHrs<24){countdownText='In '+diffHrs+' hour'+(diffHrs!==1?'s':'');imminent=diffHrs<=3}
+      else if(diffDays===1){countdownText='In 1 day'}
+      else if(diffDays<30){countdownText='In '+diffDays+' days'}
+      else{const diffWeeks=Math.floor(diffDays/7);countdownText='In '+diffWeeks+' week'+(diffWeeks!==1?'s':'')}
+      badges+='<span class="evt-badge countdown-badge'+(imminent?' imminent':'')+'">'+countdownText+'</span>';
+    }
   }
 
   // Parish link row
@@ -1466,6 +1524,7 @@ function openEventDetail(eventId){
   actions+='<button class="evt-action-btn" onclick="downloadEventIcal(\''+esc(evt.id)+'\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>Add to Calendar</span></button>';
   if(evt.registration_url)actions+='<a class="evt-action-btn" href="'+esc(evt.registration_url)+'" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg><span>Register</span></a>';
   if(evt.flyer_url)actions+='<a class="evt-action-btn" href="'+esc(evt.flyer_url)+'" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span>View Flyer</span></a>';
+  actions+='<button class="evt-action-btn" onclick="expressInterest(\''+esc(evt.id)+'\',event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span>I\'m Interested</span></button>';
   actions+='</div>';
 
   // Image (optional hero)
@@ -1505,7 +1564,9 @@ function downloadEventIcal(eventId){
   if(!evtLat2&&p.locations&&p.locations[0]){evtLat2=p.locations[0].lat;evtLng2=p.locations[0].lng;}
   const mapsUrl=evtLat2&&evtLng2?getMapsUrlCoords(evtLat2,evtLng2,addr||loc):(addr?getMapsUrl(addr):(loc?getMapsUrl(loc):''));
   const desc=[evt.description||'',evt.notes||'',mapsUrl?'Directions: '+mapsUrl:'','From MassFinder'].filter(Boolean).join('\n');
-  generateICS(evt.title,evt.date,evt.time||'',evt.end_time||'',loc,desc,mapsUrl);
+  const icsDate=evt.date||getNextDateForDay(evt.day);
+  if(!icsDate)return;
+  generateICS(evt.title,icsDate,evt.time||'',evt.end_time||'',loc,desc,mapsUrl);
 }
 
 function navEventToParish(parishId){
@@ -1546,6 +1607,22 @@ async function web3submit(payload){
   const data=await resp.json();
   if(!data.success)throw new Error(data.message||'Web3Forms error');
   return data;
+}
+async function expressInterest(eventId,ev){
+  if(ev)ev.stopPropagation();
+  const btn=ev&&ev.currentTarget;
+  if(btn)btn.disabled=true;
+  const e=eventsData.find(x=>x.id===eventId)||ycEvents.find(x=>x.id===eventId);
+  if(!e){if(btn)btn.disabled=false;return}
+  const p=allParishes.find(x=>x.id===e.parish_id)||{};
+  try{
+    await web3submit({subject:'MassFinder Interest: '+e.title,message:'Event: '+e.title+'\nChurch: '+(p.name||'')+'\nCategory: '+(e.category||'')+'\nDate: '+(e.date||'Recurring')+(e.day?'\nDay: '+e.day:'')+(e.time?'\nTime: '+e.time:'')+'\n\nA user expressed interest via MassFinder.'});
+    showToast('Thanks for your interest!');
+    if(btn){btn.innerHTML='&#10003;';setTimeout(()=>{btn.innerHTML='&#9825;';btn.disabled=false},2000)}
+  }catch(err){
+    console.warn('Interest submit failed:',err);
+    if(btn)btn.disabled=false;
+  }
 }
 async function verifyOk(ok){
   document.getElementById('verifyPrompt').style.display='none';
@@ -2081,14 +2158,96 @@ function closeMapPopup(){if(window._map)window._map.closePopup()}
 // ============================================================
 // SAVED TAB
 // ============================================================
+function getSavedChurchEvents(favIds){
+  const today=getNow();
+  const todayStr=today.toISOString().slice(0,10);
+  const todayDow=['sunday','monday','tuesday','wednesday','thursday','friday','saturday'][today.getDay()];
+  // End of week = next Sunday
+  const endOfWeek=new Date(today);endOfWeek.setDate(today.getDate()+(7-today.getDay()));
+  const endOfWeekStr=endOfWeek.toISOString().slice(0,10);
+  // Remaining days this week (after today)
+  const remainingDays=[];
+  for(let i=today.getDay()+1;i<7;i++)remainingDays.push(['sunday','monday','tuesday','wednesday','thursday','friday','saturday'][i]);
+
+  const buckets={today:[],coming:[],ongoing:[]};
+  const dayOrd={sunday:0,monday:1,tuesday:2,wednesday:3,thursday:4,friday:5,saturday:6};
+  const evts=eventsData.filter(e=>favIds.has(e.parish_id)&&e.category!=='yc'&&isEventActive(e));
+
+  for(const e of evts){
+    if(e.date){
+      if(e.date===todayStr)buckets.today.push(e);
+      else if(e.date>todayStr&&e.date<=endOfWeekStr)buckets.coming.push(e);
+      else buckets.ongoing.push(e);
+    }else if(e.day){
+      if(e.day===todayDow)buckets.today.push(e);
+      else if(remainingDays.includes(e.day))buckets.coming.push(e);
+      else buckets.ongoing.push(e);
+    }else{
+      buckets.ongoing.push(e);
+    }
+  }
+
+  // Sort: dated by date, recurring by day-of-week
+  buckets.today.sort((a,b)=>(a.time||'').localeCompare(b.time||''));
+  buckets.coming.sort((a,b)=>(a.date||'').localeCompare(b.date||'')||(dayOrd[a.day]??7)-(dayOrd[b.day]??7));
+  buckets.ongoing.sort((a,b)=>(dayOrd[a.day]??7)-(dayOrd[b.day]??7));
+  return buckets;
+}
+
+function renderSavedEvt(e){
+  const p=allParishes.find(x=>x.id===e.parish_id)||{};
+  const pName=displayName(p.name||'',e.parish_id);
+  const isLent=isLentSeason()&&(e.category==='liturgical'||e.category==='devotional');
+
+  // When text
+  let whenParts=[];
+  if(e.date){
+    const d=new Date(e.date+'T12:00:00');
+    const todayStr=getNow().toISOString().slice(0,10);
+    const tmrw=new Date(getNow());tmrw.setDate(tmrw.getDate()+1);
+    if(e.date===todayStr)whenParts.push('Today');
+    else if(e.date===tmrw.toISOString().slice(0,10))whenParts.push('Tomorrow');
+    else whenParts.push(d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}));
+  }else if(e.day){
+    whenParts.push((DAY_NAMES[e.day]||e.day)+'s');
+  }
+  if(e.time)whenParts.push(fmt12(e.time));
+  whenParts.push(pName);
+
+  const calSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="14" height="14"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
+
+  return '<div class="saved-evt" onclick="openDetail(\''+e.parish_id+'\')">'
+    +'<div class="ce-item-accent'+(isLent?' saved-lent-accent':' upcoming')+'"></div>'
+    +'<div class="ce-item-body">'
+    +'<div class="ce-item-title">'+esc(e.title)+'</div>'
+    +'<div class="ce-item-when">'+whenParts.join(' · ')+'</div>'
+    +'</div>'
+    +'<div class="saved-evt-actions">'
+    +'<button class="saved-evt-btn" onclick="downloadEventIcal(\''+esc(e.id)+'\');event.stopPropagation()" title="Add to Calendar">'+calSvg+'</button>'
+    +'<button class="saved-evt-btn" onclick="expressInterest(\''+esc(e.id)+'\',event)" title="I\'m interested">&#9825;</button>'
+    +'</div></div>';
+}
+
+function renderCompactYC(e){
+  const r=resolveYC(e);
+  const timeStr=fmt12(e.time)+(e.end_time?' – '+fmt12(e.end_time):'');
+  const calSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="14" height="14"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
+  return '<div class="saved-compact-yc" onclick="openEventDetail(\''+e.id+'\')">'
+    +'<div class="ce-item-body">'
+    +'<div class="ce-item-title">'+esc(e.title)+'</div>'
+    +'<div class="ce-item-when">'+fmtYCDate(e.date)+' · '+timeStr+' · '+esc(displayName(r.locName||r.parishName,e.parish_id))+'</div>'
+    +'</div>'
+    +'<div class="saved-evt-actions">'
+    +'<button class="saved-evt-btn" onclick="downloadEventIcal(\''+esc(e.id)+'\');event.stopPropagation()" title="Add to Calendar">'+calSvg+'</button>'
+    +'<button class="saved-evt-btn" onclick="expressInterest(\''+esc(e.id)+'\',event)" title="I\'m interested">&#9825;</button>'
+    +'</div></div>';
+}
+
 function renderSaved(){
   const el=document.getElementById('savedList');
   const sub=document.getElementById('savedSubtitle');
   const favParishes=allParishes.filter(p=>isFav(p.id));
   const favIds=new Set(favParishes.map(p=>p.id));
-
-  // YC events at saved churches
-  const upcoming=getUpcomingYC().filter(e=>favIds.has(e.parish_id));
 
   sub.textContent=favParishes.length?favParishes.length+' saved church'+(favParishes.length!==1?'es':''):'Tap the heart on any church to save it';
 
@@ -2104,13 +2263,45 @@ function renderSaved(){
 
   let html='';
 
-  // YC events at saved churches (shown first)
-  if(upcoming.length){
-    html+='<div class="yc-section-header"><span class="yc-section-title">Coming up at your churches</span><span class="yc-section-count">'+upcoming.length+'</span></div>';
-    html+=upcoming.slice(0,4).map((e,i)=>renderYCCard(e,0,i)).join('');
-    if(upcoming.length>4)html+='<div style="text-align:center;padding:var(--space-2) 0"><button style="font-size:var(--text-sm);font-weight:var(--weight-semibold);color:var(--color-accent-text);padding:var(--space-2) var(--space-4)" onclick="document.querySelector(\'[data-filter=yc]\').click();switchTab(\'panelFind\',document.querySelector(\'[data-tab=panelFind]\'))">See all YC events →</button></div>';
-    html+='<div style="height:var(--space-4)"></div>';
+  // ── This Week at Your Churches ──
+  const buckets=getSavedChurchEvents(favIds);
+  const totalEvts=buckets.today.length+buckets.coming.length+buckets.ongoing.length;
+  if(totalEvts){
+    html+='<div class="saved-section-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="20" height="20"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>This Week at Your Churches</div>';
+
+    if(buckets.today.length){
+      html+='<div class="saved-week-section"><details open><summary>Today <span class="saved-week-count">'+buckets.today.length+'</span></summary>';
+      html+=buckets.today.map(e=>renderSavedEvt(e)).join('');
+      html+='</details></div>';
+    }
+    if(buckets.coming.length){
+      html+='<div class="saved-week-section"><details open><summary>Coming Up <span class="saved-week-count">'+buckets.coming.length+'</span></summary>';
+      html+=buckets.coming.map(e=>renderSavedEvt(e)).join('');
+      html+='</details></div>';
+    }
+    if(buckets.ongoing.length){
+      html+='<div class="saved-week-section"><details><summary>Ongoing <span class="saved-week-count">'+buckets.ongoing.length+'</span></summary>';
+      html+=buckets.ongoing.map(e=>renderSavedEvt(e)).join('');
+      html+='</details></div>';
+    }
+    html+='<div class="saved-section-divider"></div>';
   }
+
+  // ── YC Events (compact) ──
+  const upcoming=getUpcomingYC().filter(e=>favIds.has(e.parish_id));
+  if(upcoming.length){
+    html+='<div class="saved-section-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Young &amp; Catholic <span class="saved-week-count">'+upcoming.length+'</span></div>';
+    html+=upcoming.slice(0,4).map(e=>renderCompactYC(e)).join('');
+    if(upcoming.length>4)html+='<div style="text-align:center;padding:var(--space-2) 0"><button style="font-size:var(--text-sm);font-weight:var(--weight-semibold);color:var(--color-accent-text);padding:var(--space-2) var(--space-4)" onclick="document.querySelector(\'[data-filter=yc]\').click();switchTab(\'panelFind\',document.querySelector(\'[data-tab=panelFind]\'))">See all YC events →</button></div>';
+    html+='<div class="saved-section-divider"></div>';
+  }
+
+  // ── Your Churches ──
+  // Count active events per parish for badges
+  const evtCounts={};
+  eventsData.filter(e=>favIds.has(e.parish_id)&&e.category!=='yc'&&isEventActive(e)).forEach(e=>{evtCounts[e.parish_id]=(evtCounts[e.parish_id]||0)+1});
+
+  html+='<div class="saved-section-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="20" height="20"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/></svg>Your Churches</div>';
 
   // Sort: within 10mi by next service, then beyond 10mi by next service
   const sortedFav=favParishes.map(p=>({p,next:getNext(p,'all'),dist:getDist(p)}))
@@ -2128,11 +2319,13 @@ function renderSaved(){
     let nh;
     if(next){nh='<div class="card-next-service"><span class="card-next-time">'+next.timeFormatted+'</span><span class="card-next-label">'+esc(SVC[next.service.type]||next.service.type)+'</span>'+statusBadge+'</div><div class="card-next-day">'+next.dayLabel+'</div>'}
     else{nh='<div class="card-next-service"><span class="card-next-label" style="color:var(--color-text-tertiary)">Check bulletin for times</span></div>'}
+    const ec=evtCounts[p.id];
+    const evtBadge=ec?'<span class="saved-evt-count">'+ec+' event'+(ec!==1?'s':'')+'</span>':'';
     return '<article class="parish-card" role="listitem" onclick="openDetail(\''+p.id+'\')">'
       +'<div class="card-top"><div class="card-name-row"><h3 class="card-name">'+esc(displayName(p.name,p.id))+'</h3>'+(ver?checkSvg:'')+'</div>'
       +'<div class="card-right">'+(dist!==null?'<span class="card-distance">'+fmtDist(dist)+'</span>':'')
       +'<button class="card-fav is-fav" onclick="toggleFav(\''+p.id+"',event);renderSaved()\" aria-label=\"Remove from favorites\"><svg viewBox=\"0 0 24 24\" fill=\"currentColor\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z\"/></svg></button>"
-      +'</div></div><div class="card-town">'+esc(p.town)+', '+esc(p.state)+'</div>'+nh
+      +'</div></div><div class="card-town">'+esc(p.town)+', '+esc(p.state)+evtBadge+'</div>'+nh
       +'</article>';
   }).join('');
   el.innerHTML=html;
@@ -2684,12 +2877,16 @@ function renderMore(){
       const dist=p?getDist(p):null;
       const isNear=!isFavE&&dist!==null&&dist<=10;
       const indicator=isFavE?'<div class="wh-event-fav">♥ Saved</div>':isNear?'<div class="wh-event-near">📍 '+fmtDist(dist)+'</div>':'';
+      const calSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="14" height="14"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
       return '<div class="wh-event-card" onclick="openEventDetail(\''+e.id+'\')">'
         +indicator
         +'<div class="wh-event-date">'+fmtYCDate(e.date)+(e.time?' · '+fmt12(e.time):'')+'</div>'
         +'<div class="wh-event-title">'+esc(e.title)+'</div>'
         +'<div class="wh-event-church">'+esc(displayName(r.locName||r.parishName,e.parish_id))+'</div>'
-        +'</div>';
+        +'<div class="saved-evt-actions" style="margin-top:var(--space-2)">'
+        +'<button class="saved-evt-btn" onclick="downloadEventIcal(\''+esc(e.id)+'\');event.stopPropagation()" title="Add to Calendar">'+calSvg+'</button>'
+        +'<button class="saved-evt-btn" onclick="expressInterest(\''+esc(e.id)+'\',event)" title="I\'m interested">&#9825;</button>'
+        +'</div></div>';
     }).join(''):'<p class="wh-empty">No upcoming YC events.</p>';
 
     // Community events column — up to 4 items
@@ -2699,13 +2896,17 @@ function renderMore(){
       const p=allParishes.find(x=>x.id===e.parishId);
       const dist=p?getDist(p):null;
       const near=dist!==null&&dist<=10?'<div class="wh-event-near">📍 '+fmtDist(dist)+'</div>':'';
+      const cCalSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="14" height="14"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
       return '<div class="wh-event-card" onclick="openDetail(\''+e.parishId+'\')">'
         +near
         +(e.date?'<div class="wh-event-date">'+esc(e.date)+'</div>':e.day?'<div class="wh-event-date">'+esc(DAY_NAMES[e.day]||e.day)+(e.time?' · '+fmt12(e.time):'')+'</div>':'')
         +'<div class="wh-event-title">'+esc(e.title)+'</div>'
         +'<div class="wh-event-church">'+esc(displayName(e.parishName,e.parishId))+'</div>'
         +(e.notes?'<div class="wh-event-time">'+esc(e.notes)+'</div>':'')
-        +'</div>';
+        +'<div class="saved-evt-actions" style="margin-top:var(--space-2)">'
+        +'<button class="saved-evt-btn" onclick="downloadEventIcal(\''+esc(e.id)+'\');event.stopPropagation()" title="Add to Calendar">'+cCalSvg+'</button>'
+        +'<button class="saved-evt-btn" onclick="expressInterest(\''+esc(e.id)+'\',event)" title="I\'m interested">&#9825;</button>'
+        +'</div></div>';
     }).join(''):'<p class="wh-empty">No upcoming events.</p>';
   }
 
