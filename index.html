@@ -1224,20 +1224,22 @@ function openDetail(id){
 
   // Accordion sections
   const FIRST_DEVOTION_DAYS=['first_friday','first_saturday'];
+  const MASS_TYPES=['sunday_mass','daily_mass','communion_service'];
+  function isFirstDevotionMass(s){return FIRST_DEVOTION_DAYS.includes(s.day)&&MASS_TYPES.includes(s.type);}
   const secs=[
-    {k:'mass',t:'Mass Schedule',ic:'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5',types:['sunday_mass','daily_mass','communion_service'],filter:s=>!FIRST_DEVOTION_DAYS.includes(s.day)},
-    {k:'conf',t:'Sacraments',ic:'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',types:['confession','anointing_of_sick'],filter:s=>!FIRST_DEVOTION_DAYS.includes(s.day)},
-    {k:'ador',t:'Adoration & Holy Hour',ic:'M12 3v18m-6-6l6 6 6-6',types:['adoration','perpetual_adoration','holy_hour'],filter:s=>!FIRST_DEVOTION_DAYS.includes(s.day)},
-    {k:'devot',t:'Prayer & Devotion',ic:'M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15z',types:['rosary','stations_of_cross','divine_mercy','miraculous_medal','novena','devotion','vespers','gorzkie_zale','bible_study','mens_group','social_event'],
-      filter:null},
-    {k:'hw',t:'Holy Week',ic:'M12 2v20M2 12h20',types:['holy_thursday_mass','good_friday_service','easter_vigil_mass'],filter:s=>!FIRST_DEVOTION_DAYS.includes(s.day)},
+    {k:'mass',t:'Mass Schedule',ic:'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5',types:MASS_TYPES},
+    {k:'conf',t:'Sacraments',ic:'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',types:['confession','anointing_of_sick']},
+    {k:'ador',t:'Adoration & Holy Hour',ic:'M12 3v18m-6-6l6 6 6-6',types:['adoration','perpetual_adoration','holy_hour']},
+    {k:'devot',t:'Prayer & Devotion',ic:'M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15z',types:['rosary','stations_of_cross','divine_mercy','miraculous_medal','novena','devotion','vespers','gorzkie_zale','bible_study','mens_group','social_event']},
+    {k:'hw',t:'Holy Week',ic:'M12 2v20M2 12h20',types:['holy_thursday_mass','good_friday_service','easter_vigil_mass']},
   ];
 
   let secHtml='';
   for(const sec of secs){
+    // First Friday/Saturday Masses route to Devotions; non-mass first fri/sat stay in their normal section
     const svcs=sec.k==='devot'
-      ? p.services.filter(s=>sec.types.includes(s.type)||FIRST_DEVOTION_DAYS.includes(s.day))
-      : p.services.filter(s=>sec.types.includes(s.type)&&(!sec.filter||sec.filter(s)));
+      ? p.services.filter(s=>sec.types.includes(s.type)||isFirstDevotionMass(s))
+      : p.services.filter(s=>sec.types.includes(s.type)&&!isFirstDevotionMass(s));
     if(!svcs.length)continue;
     // Count only services with times for badge (no-time = by appointment, shouldn't inflate count)
     // But if ALL are no-time (e.g. Holy Week TBD), show total so badge isn't 0
