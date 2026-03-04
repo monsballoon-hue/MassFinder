@@ -4,8 +4,8 @@
   "description": "Find Mass, Confession, Adoration and more across Western New England",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#F8F7F4",
-  "theme_color": "#F8F7F4",
+  "background_color": "#F2F2F7",
+  "theme_color": "#F2F2F7",
   "icons": [
     {
       "src": "icon-192.png",
