@@ -804,21 +804,6 @@
           "source": "bulletin_2026-03"
         },
         {
-          "id": "parish_003-smass-1sat-0800",
-          "type": "sunday_mass",
-          "day": "first_saturday",
-          "time": "08:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-03"
-        },
-        {
           "id": "parish_003-ador-wed-1200",
           "type": "adoration",
           "day": "wednesday",
@@ -1415,7 +1400,7 @@
           }
         },
         {
-          "id": "parish_005-ador-thu-0830",
+          "id": "parish_005-ador-1fri-0830",
           "type": "adoration",
           "day": "first_friday",
           "time": "08:30",
@@ -1849,16 +1834,17 @@
         {
           "id": "st-christopher-church-brimfield",
           "name": "St. Christopher Church",
+          "short_name": "St. Christopher's",
           "type": "church",
-          "address": "16 Sturbridge Rd (Rt. 20), Brimfield, MA",
+          "address": "16 Sturbridge Rd (Rt. 20)",
           "city": "Brimfield",
           "state": "MA",
           "zip": "01010",
-          "is_accessible": null,
+          "is_accessible": false,
+          "accessibility_notes": null,
+          "notes": null,
           "lat": 42.1228,
-          "lng": -72.1882,
-          "office_hours": "Mon–Fri 8:30am–2:30pm",
-          "short_name": "St. Christopher"
+          "lng": -72.1882
         }
       ],
       "contact": {
@@ -1867,7 +1853,12 @@
           "stchrisbrimfield@gmail.com"
         ],
         "website": "https://www.stpatstchris.org",
-        "office_hours": "Mon. - Thu. 8:30 AM - 2:30 PM"
+        "office_hours": "Mon. - Thu. 8:30 AM - 2:30 PM",
+        "phone_secondary": null,
+        "office_address": null,
+        "instagram": null,
+        "facebook": null,
+        "notes": null
       },
       "staff": [
         "pastor"
@@ -1886,7 +1877,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_007-smass-sun-1030",
@@ -1901,7 +1892,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_007-dmass-mon-0900",
@@ -1916,7 +1907,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_007-dmass-wed-0900",
@@ -1931,7 +1922,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_007-conf-sat-1830",
@@ -1946,7 +1937,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_007-devot-wed-0900",
@@ -1954,14 +1945,17 @@
           "day": "wednesday",
           "time": "09:00",
           "end_time": null,
-          "location_id": null,
+          "date": null,
           "language": "en",
           "notes": "During 9:00 am Mass",
+          "source": "manual_verification_2026-02",
+          "rite": null,
+          "times_vary": false,
+          "location_id": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
+          }
         },
         {
           "id": "parish_007-stations-fri-1500-lent",
@@ -1969,34 +1963,23 @@
           "day": "friday",
           "time": "15:00",
           "end_time": null,
-          "location_id": null,
+          "date": null,
           "language": "en",
           "notes": null,
+          "source": "manual_verification_2026-02",
+          "rite": null,
+          "times_vary": false,
+          "location_id": null,
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_007-novena-wed-0900",
-          "type": "miraculous_medal",
-          "day": "wednesday",
-          "time": "09:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": "At/after 9:00 AM Mass",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
+          }
         }
       ],
       "validation": {
         "status": "verified",
-        "last_checked": "2026-02-21"
+        "last_checked": "2026-03-04",
+        "bulletin_date": "2026-03"
       },
       "county": "Hampden",
       "clergy": [
@@ -2030,15 +2013,17 @@
         {
           "id": "st-anne-church-chicopee",
           "name": "St. Anne Church",
+          "short_name": "St. Anne's",
           "type": "church",
           "address": "30 College Street",
           "city": "Chicopee",
           "state": "MA",
           "zip": "01020",
-          "is_accessible": null,
+          "is_accessible": false,
+          "accessibility_notes": null,
+          "notes": null,
           "lat": 42.1716,
-          "lng": -72.6138,
-          "short_name": "St. Anne"
+          "lng": -72.6138
         }
       ],
       "contact": {
@@ -2047,7 +2032,12 @@
           "www.saintanneparish@gmail.com"
         ],
         "website": "https://www.saintanne.us",
-        "office_hours": "Mon. - Fri. 8:00 a.m. - 2:00 p.m."
+        "office_hours": "Mon. - Fri. 8:00 a.m. - 2:00 p.m.",
+        "phone_secondary": null,
+        "office_address": null,
+        "instagram": null,
+        "facebook": null,
+        "notes": null
       },
       "staff": [
         "pastor",
@@ -2067,7 +2057,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_010-smass-sun-0700",
@@ -2082,7 +2072,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_010-smass-sun-0900",
@@ -2097,7 +2087,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_010-smass-sun-1100",
@@ -2112,172 +2102,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_010-dmass-mon-0900",
-          "type": "daily_mass",
-          "day": "monday",
-          "time": "09:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_010-dmass-tue-0900",
-          "type": "daily_mass",
-          "day": "tuesday",
-          "time": "09:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_010-dmass-wed-0900",
-          "type": "daily_mass",
-          "day": "wednesday",
-          "time": "09:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_010-dmass-thu-0900",
-          "type": "daily_mass",
-          "day": "thursday",
-          "time": "09:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_010-dmass-fri-0900",
-          "type": "daily_mass",
-          "day": "friday",
-          "time": "09:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_010-smass-1sat-0900",
-          "type": "sunday_mass",
-          "day": "first_saturday",
-          "time": "09:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_010-rosary-mon-0830",
-          "type": "rosary",
-          "day": "monday",
-          "time": "08:30",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": "Before 9:00 AM Mass",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_010-rosary-tue-0830",
-          "type": "rosary",
-          "day": "tuesday",
-          "time": "08:30",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": "Before 9:00 AM Mass",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_010-rosary-wed-0830",
-          "type": "rosary",
-          "day": "wednesday",
-          "time": "08:30",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": "Before 9:00 AM Mass",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_010-rosary-thu-0830",
-          "type": "rosary",
-          "day": "thursday",
-          "time": "08:30",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": "Before 9:00 AM Mass",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_010-rosary-fri-0830",
-          "type": "rosary",
-          "day": "friday",
-          "time": "08:30",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": "Before 9:00 AM Mass",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_010-conf-sat-1445",
@@ -2292,22 +2117,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_010-conf-daily-0930",
-          "type": "confession",
-          "day": "daily",
-          "time": "09:30",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": "After 9:00 AM daily Massor during Holy Hour",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_010-stations-fri-1800-lent",
@@ -2315,14 +2125,17 @@
           "day": "friday",
           "time": "18:00",
           "end_time": null,
-          "location_id": null,
+          "date": null,
           "language": "en",
           "notes": null,
+          "source": "bulletin_2026-03",
+          "rite": null,
+          "times_vary": false,
+          "location_id": null,
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
-          },
-          "source": "manual_verification_2026-02"
+          }
         },
         {
           "id": "parish_010-dmass-wkday-0900",
@@ -2330,14 +2143,17 @@
           "day": "weekday",
           "time": "09:00",
           "end_time": null,
-          "location_id": null,
+          "date": null,
           "language": "en",
           "notes": "Monday–Friday",
+          "source": "bulletin_2026-03",
+          "rite": null,
+          "times_vary": false,
+          "location_id": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
+          }
         },
         {
           "id": "parish_010-dmass-1sat-0900",
@@ -2352,7 +2168,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_010-rosary-wkday-0830",
@@ -2367,45 +2183,41 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_010-conf-wkday",
           "type": "confession",
           "day": "weekday",
-          "time": null,
+          "time": "09:30",
           "end_time": null,
-          "location_id": null,
+          "date": null,
           "language": "en",
           "notes": "After 9am daily Mass",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_010-conf-x",
-          "type": "confession",
-          "day": null,
-          "time": null,
-          "end_time": null,
+          "source": "bulletin_2026-03",
+          "rite": null,
+          "times_vary": false,
           "location_id": null,
-          "language": "en",
-          "notes": "Also available during Holy Hour",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
+          }
         }
       ],
       "validation": {
         "status": "verified",
-        "last_checked": "2026-02-21"
+        "last_checked": "2026-03-04",
+        "bulletin_date": "2026-03"
       },
       "county": "Hampden",
-      "clergy": [],
+      "clergy": [
+        {
+          "role": "pastor",
+          "name": "Fr. Dennis",
+          "email": "FrD316@icloud.com",
+          "phone": "(413) 532-7503"
+        }
+      ],
       "bulletin_url": "https://parishesonline.com/organization/st-anne-church-1020",
       "is_accessible": null
     },
@@ -2672,15 +2484,17 @@
         {
           "id": "st-rose-de-lima-church-chicopee",
           "name": "St. Rose de Lima Church",
+          "short_name": "St. Rose de Lima",
           "type": "church",
-          "address": "15 Chapel Street, Chicopee, MA 01020",
+          "address": "15 Chapel Street",
           "city": "Chicopee",
           "state": "MA",
           "zip": "01020",
-          "is_accessible": null,
+          "is_accessible": false,
+          "accessibility_notes": null,
+          "notes": null,
           "lat": 42.1487,
-          "lng": -72.6078,
-          "short_name": "St. Rose de Lima"
+          "lng": -72.6078
         }
       ],
       "contact": {
@@ -2689,7 +2503,12 @@
           "frbob@sterose.org"
         ],
         "website": "https://sterose.org",
-        "office_hours": "Mon–Thu 9:00am–5:00pm, Fri 9:00am–3:00pm"
+        "office_hours": "Mon–Thu 9:00am–5:00pm, Fri 9:00am–3:00pm",
+        "phone_secondary": null,
+        "office_address": null,
+        "instagram": null,
+        "facebook": null,
+        "notes": null
       },
       "staff": [
         "pastor"
@@ -2708,7 +2527,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_012-smass-sun-0730",
@@ -2723,7 +2542,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_012-smass-sun-0900",
@@ -2738,7 +2557,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_012-smass-sun-1100",
@@ -2753,7 +2572,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_012-smass-sun-1600",
@@ -2768,82 +2587,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_012-dmass-mon-0700",
-          "type": "daily_mass",
-          "day": "monday",
-          "time": "07:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_012-dmass-tue-0700",
-          "type": "daily_mass",
-          "day": "tuesday",
-          "time": "07:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_012-dmass-wed-0700",
-          "type": "daily_mass",
-          "day": "wednesday",
-          "time": "07:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_012-dmass-thu-0700",
-          "type": "daily_mass",
-          "day": "thursday",
-          "time": "07:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_012-dmass-fri-0700",
-          "type": "daily_mass",
-          "day": "friday",
-          "time": "07:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_012-dmass-1fri-0900-acad",
@@ -2851,44 +2595,17 @@
           "day": "first_friday",
           "time": "09:00",
           "end_time": null,
-          "location_id": null,
+          "date": null,
           "language": "en",
-          "notes": "During school year only",
+          "notes": null,
+          "source": "bulletin_2026-03",
+          "rite": null,
+          "times_vary": false,
+          "location_id": null,
           "seasonal": {
             "is_seasonal": true,
             "season": "academic_year"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_012-dmass-holyeve-1600",
-          "type": "daily_mass",
-          "day": "holyday_eve",
-          "time": "16:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": "Holy Day Vigil Mass (night before)",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_012-dmass-holyday-1830",
-          "type": "daily_mass",
-          "day": "holyday",
-          "time": "18:30",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
+          }
         },
         {
           "id": "parish_012-conf-sat-1515",
@@ -2903,7 +2620,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_012-ador-1fri-0730",
@@ -2918,7 +2635,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_012-ador-tue-1830",
@@ -2926,14 +2643,17 @@
           "day": "tuesday",
           "time": "18:30",
           "end_time": "20:00",
-          "location_id": null,
+          "date": null,
           "language": "en",
           "notes": "Parish Center",
+          "source": "manual_verification_2026-02",
+          "rite": null,
+          "times_vary": false,
+          "location_id": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02",
           "recurrence": {
             "type": "nth",
             "week": 1
@@ -2952,7 +2672,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_012-smass-holyeve-1600",
@@ -2967,7 +2687,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_012-smass-holyday-1830",
@@ -2982,7 +2702,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_012-stations-fri-1800-lent",
@@ -3013,11 +2733,34 @@
             "season": "holy_week"
           },
           "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_012-anoint-sun-1145",
+          "type": "anointing_of_sick",
+          "day": "sunday",
+          "time": "11:45",
+          "end_time": null,
+          "date": null,
+          "language": "en",
+          "notes": "For those under going surgery, illnesses, having a baby, depression/anxiety, etc. Stay after mass and Fr. Bob will offer the blessing.",
+          "source": "bulletin_2026-03",
+          "rite": null,
+          "times_vary": false,
+          "location_id": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "recurrence": {
+            "type": "nth",
+            "week": 1
+          }
         }
       ],
       "validation": {
         "status": "verified",
-        "last_checked": "2026-02-21"
+        "last_checked": "2026-03-04",
+        "bulletin_date": "2026-03"
       },
       "county": "Hampden",
       "clergy": [
@@ -3151,81 +2894,6 @@
           "source": "manual_verification_2026-02"
         },
         {
-          "id": "parish_013-dmass-mon-0630",
-          "type": "daily_mass",
-          "day": "monday",
-          "time": "06:30",
-          "end_time": null,
-          "location_id": "ststans-basilica-chicopee",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_013-dmass-mon-1200",
-          "type": "daily_mass",
-          "day": "monday",
-          "time": "12:00",
-          "end_time": null,
-          "location_id": "ststans-basilica-chicopee",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_013-dmass-tue-0630",
-          "type": "daily_mass",
-          "day": "tuesday",
-          "time": "06:30",
-          "end_time": null,
-          "location_id": "ststans-basilica-chicopee",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_013-dmass-tue-1200",
-          "type": "daily_mass",
-          "day": "tuesday",
-          "time": "12:00",
-          "end_time": null,
-          "location_id": "ststans-basilica-chicopee",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_013-dmass-wed-0630",
-          "type": "daily_mass",
-          "day": "wednesday",
-          "time": "06:30",
-          "end_time": null,
-          "location_id": "ststans-basilica-chicopee",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
           "id": "parish_013-dmass-wed-0845",
           "type": "daily_mass",
           "day": "wednesday",
@@ -3234,81 +2902,6 @@
           "location_id": "ststans-basilica-chicopee",
           "language": "en",
           "notes": "School Mass",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_013-dmass-wed-1200",
-          "type": "daily_mass",
-          "day": "wednesday",
-          "time": "12:00",
-          "end_time": null,
-          "location_id": "ststans-basilica-chicopee",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_013-dmass-thu-0630",
-          "type": "daily_mass",
-          "day": "thursday",
-          "time": "06:30",
-          "end_time": null,
-          "location_id": "ststans-basilica-chicopee",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_013-dmass-thu-1200",
-          "type": "daily_mass",
-          "day": "thursday",
-          "time": "12:00",
-          "end_time": null,
-          "location_id": "ststans-basilica-chicopee",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_013-dmass-fri-0630",
-          "type": "daily_mass",
-          "day": "friday",
-          "time": "06:30",
-          "end_time": null,
-          "location_id": "ststans-basilica-chicopee",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_013-dmass-fri-1200",
-          "type": "daily_mass",
-          "day": "friday",
-          "time": "12:00",
-          "end_time": null,
-          "location_id": "ststans-basilica-chicopee",
-          "language": "en",
-          "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
@@ -3626,6 +3219,36 @@
             "season": "lent"
           },
           "source": "manual_verification_2026-02"
+        },
+        {
+          "id": "parish_013-dmass-wkday-0630-stst",
+          "type": "daily_mass",
+          "day": "weekday",
+          "time": "06:30",
+          "end_time": null,
+          "location_id": "ststans-basilica-chicopee",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "manual_verification_2026-02"
+        },
+        {
+          "id": "parish_013-dmass-wkday-1200-stst",
+          "type": "daily_mass",
+          "day": "weekday",
+          "time": "12:00",
+          "end_time": null,
+          "location_id": "ststans-basilica-chicopee",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "manual_verification_2026-02"
         }
       ],
       "validation": {
@@ -3824,81 +3447,6 @@
             "season": "year_round"
           },
           "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_016-dmass-mon-0830-st",
-          "type": "daily_mass",
-          "time": "08:30",
-          "end_time": null,
-          "location_id": "st-agnes-church-dalton",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02",
-          "day": "monday"
-        },
-        {
-          "id": "parish_016-dmass-tue-0830-st",
-          "type": "daily_mass",
-          "time": "08:30",
-          "end_time": null,
-          "location_id": "st-agnes-church-dalton",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02",
-          "day": "tuesday"
-        },
-        {
-          "id": "parish_016-dmass-wed-0830-st",
-          "type": "daily_mass",
-          "time": "08:30",
-          "end_time": null,
-          "location_id": "st-agnes-church-dalton",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02",
-          "day": "wednesday"
-        },
-        {
-          "id": "parish_016-dmass-thu-0830-st",
-          "type": "daily_mass",
-          "time": "08:30",
-          "end_time": null,
-          "location_id": "st-agnes-church-dalton",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02",
-          "day": "thursday"
-        },
-        {
-          "id": "parish_016-dmass-fri-0830-st",
-          "type": "daily_mass",
-          "time": "08:30",
-          "end_time": null,
-          "location_id": "st-agnes-church-dalton",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02",
-          "day": "friday"
         },
         {
           "id": "parish_016-dmass-wkday-0830-st",
@@ -5758,21 +5306,6 @@
           "source": "bulletin_2026-02"
         },
         {
-          "id": "parish_022-dmass-wed-1205-holy",
-          "type": "daily_mass",
-          "day": "wednesday",
-          "time": "12:05",
-          "end_time": null,
-          "location_id": "holy-trinity-church-greenfield",
-          "language": "en",
-          "rite": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
           "id": "parish_022-dmass-wed-1800-adorat",
           "type": "daily_mass",
           "day": "wednesday",
@@ -5810,66 +5343,6 @@
           "time": "08:30",
           "end_time": null,
           "location_id": "blessed-sacrament-church-greenfield",
-          "language": "en",
-          "rite": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_022-dmass-mon-1205-holy",
-          "type": "daily_mass",
-          "day": "monday",
-          "time": "12:05",
-          "end_time": null,
-          "location_id": "holy-trinity-church-greenfield",
-          "language": "en",
-          "rite": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_022-dmass-tue-1205-holy",
-          "type": "daily_mass",
-          "day": "tuesday",
-          "time": "12:05",
-          "end_time": null,
-          "location_id": "holy-trinity-church-greenfield",
-          "language": "en",
-          "rite": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_022-dmass-thu-1205-holy",
-          "type": "daily_mass",
-          "day": "thursday",
-          "time": "12:05",
-          "end_time": null,
-          "location_id": "holy-trinity-church-greenfield",
-          "language": "en",
-          "rite": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_022-dmass-fri-1205-holy",
-          "type": "daily_mass",
-          "day": "friday",
-          "time": "12:05",
-          "end_time": null,
-          "location_id": "holy-trinity-church-greenfield",
           "language": "en",
           "rite": null,
           "seasonal": {
@@ -6011,6 +5484,21 @@
           "id": "parish_022-stations-fri-1130-lent-holy",
           "end_time": null,
           "language": "en",
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_022-dmass-wkday-1205-holy",
+          "type": "daily_mass",
+          "day": "weekday",
+          "time": "12:05",
+          "end_time": null,
+          "location_id": "holy-trinity-church-greenfield",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
           "source": "bulletin_2026-02"
         }
       ],
@@ -7029,83 +6517,6 @@
           "source": "bulletin_2026-03"
         },
         {
-          "id": "parish_027-dmass-mon-0645",
-          "type": "daily_mass",
-          "day": "monday",
-          "time": "06:45",
-          "end_time": null,
-          "language": "en",
-          "notes": "Legal Holidays 8am",
-          "source": "bulletin_2026-03",
-          "rite": null,
-          "times_vary": false,
-          "location_id": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          }
-        },
-        {
-          "id": "parish_027-dmass-tue-0645",
-          "type": "daily_mass",
-          "day": "tuesday",
-          "time": "06:45",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-03"
-        },
-        {
-          "id": "parish_027-dmass-wed-0645",
-          "type": "daily_mass",
-          "day": "wednesday",
-          "time": "06:45",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-03"
-        },
-        {
-          "id": "parish_027-dmass-thu-0645",
-          "type": "daily_mass",
-          "day": "thursday",
-          "time": "06:45",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-03"
-        },
-        {
-          "id": "parish_027-dmass-fri-0645",
-          "type": "daily_mass",
-          "day": "friday",
-          "time": "06:45",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-03"
-        },
-        {
           "id": "parish_027-conf-sat-1500",
           "type": "confession",
           "day": "saturday",
@@ -7291,6 +6702,21 @@
             "is_seasonal": true,
             "season": "holy_week"
           }
+        },
+        {
+          "id": "parish_027-dmass-wkday-0645",
+          "type": "daily_mass",
+          "day": "weekday",
+          "time": "06:45",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Legal Holidays 8am",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03"
         }
       ],
       "validation": {
@@ -7404,81 +6830,6 @@
           "source": "bulletin_2026-02"
         },
         {
-          "id": "parish_028-dmass-mon-0830",
-          "type": "daily_mass",
-          "day": "monday",
-          "time": "08:30",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_028-dmass-tue-0830",
-          "type": "daily_mass",
-          "day": "tuesday",
-          "time": "08:30",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_028-dmass-wed-0830",
-          "type": "daily_mass",
-          "day": "wednesday",
-          "time": "08:30",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_028-dmass-thu-0830",
-          "type": "daily_mass",
-          "day": "thursday",
-          "time": "08:30",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_028-dmass-fri-0830",
-          "type": "daily_mass",
-          "day": "friday",
-          "time": "08:30",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
           "id": "parish_028-dmass-sat-0830",
           "type": "daily_mass",
           "day": "saturday",
@@ -7487,81 +6838,6 @@
           "location_id": null,
           "language": "en",
           "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_028-divmerc-mon-0750",
-          "type": "divine_mercy",
-          "day": "monday",
-          "time": "07:50",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": "Rosary follows at 8:05 AM",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_028-divmerc-tue-0750",
-          "type": "divine_mercy",
-          "day": "tuesday",
-          "time": "07:50",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": "Rosary follows at 8:05 AM",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_028-divmerc-wed-0750",
-          "type": "divine_mercy",
-          "day": "wednesday",
-          "time": "07:50",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": "Rosary follows at 8:05 AM",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_028-divmerc-thu-0750",
-          "type": "divine_mercy",
-          "day": "thursday",
-          "time": "07:50",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": "Rosary follows at 8:05 AM",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_028-divmerc-fri-0750",
-          "type": "divine_mercy",
-          "day": "friday",
-          "time": "07:50",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": "Rosary follows at 8:05 AM",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
@@ -7640,6 +6916,36 @@
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_028-dmass-wkday-0830",
+          "type": "daily_mass",
+          "day": "weekday",
+          "time": "08:30",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_028-divmerc-wkday-0750",
+          "type": "divine_mercy",
+          "day": "weekday",
+          "time": "07:50",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "Rosary follows at 8:05 AM",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
           },
           "source": "bulletin_2026-02"
         }
@@ -7785,81 +7091,6 @@
           "source": "bulletin_2026-02"
         },
         {
-          "id": "parish_029-dmass-mon-1215",
-          "type": "daily_mass",
-          "day": "monday",
-          "time": "12:15",
-          "end_time": null,
-          "location_id": "st-jerome-church-holyoke",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_029-dmass-tue-1215",
-          "type": "daily_mass",
-          "day": "tuesday",
-          "time": "12:15",
-          "end_time": null,
-          "location_id": "st-jerome-church-holyoke",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_029-dmass-wed-1215",
-          "type": "daily_mass",
-          "day": "wednesday",
-          "time": "12:15",
-          "end_time": null,
-          "location_id": "st-jerome-church-holyoke",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_029-dmass-thu-1215",
-          "type": "daily_mass",
-          "day": "thursday",
-          "time": "12:15",
-          "end_time": null,
-          "location_id": "st-jerome-church-holyoke",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_029-dmass-fri-1215",
-          "type": "daily_mass",
-          "day": "friday",
-          "time": "12:15",
-          "end_time": null,
-          "location_id": "st-jerome-church-holyoke",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
           "id": "parish_029-dmass-wed-0830",
           "type": "daily_mass",
           "day": "wednesday",
@@ -7943,6 +7174,21 @@
           "location_id": "st-jerome-church-holyoke",
           "language": "en",
           "notes": "St. Patrick's Chapel",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_029-dmass-wkday-1215-stje",
+          "type": "daily_mass",
+          "day": "weekday",
+          "time": "12:15",
+          "end_time": null,
+          "location_id": "st-jerome-church-holyoke",
+          "language": "en",
+          "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
@@ -8939,66 +8185,6 @@
           "source": "bulletin_2026-02"
         },
         {
-          "id": "parish_035-dmass-mon-0700",
-          "type": "daily_mass",
-          "day": "monday",
-          "time": "07:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_035-dmass-tue-0700",
-          "type": "daily_mass",
-          "day": "tuesday",
-          "time": "07:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_035-dmass-wed-0700",
-          "type": "daily_mass",
-          "day": "wednesday",
-          "time": "07:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_035-dmass-thu-0700",
-          "type": "daily_mass",
-          "day": "thursday",
-          "time": "07:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
           "id": "parish_035-dmass-mon-1830",
           "type": "daily_mass",
           "day": "monday",
@@ -9022,25 +8208,6 @@
           "location_id": null,
           "language": "en",
           "notes": "3rd Friday is Mass instead",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02",
-          "recurrence": {
-            "type": "nth",
-            "week": 3
-          }
-        },
-        {
-          "id": "parish_035-dmass-fri-0700",
-          "type": "daily_mass",
-          "day": "friday",
-          "time": "07:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": "Replaces Communion Service this week",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
@@ -9187,14 +8354,29 @@
           "source": "bulletin_2026-02"
         },
         {
-          "id": "parish_035-smass-1sat-0800",
-          "type": "sunday_mass",
+          "id": "parish_035-dmass-1sat-0800",
+          "type": "daily_mass",
           "day": "first_saturday",
           "time": "08:00",
           "end_time": null,
           "location_id": null,
           "language": "en",
           "notes": "Respect for Life Mass; Rosary follows at ~8:30 AM",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_035-dmass-wkday-0700",
+          "type": "daily_mass",
+          "day": "weekday",
+          "time": "07:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
@@ -9384,81 +8566,6 @@
           "source": "bulletin_2026-02"
         },
         {
-          "id": "parish_036-dmass-mon-0700",
-          "type": "daily_mass",
-          "day": "monday",
-          "time": "07:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_036-dmass-tue-0700",
-          "type": "daily_mass",
-          "day": "tuesday",
-          "time": "07:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_036-dmass-wed-0700",
-          "type": "daily_mass",
-          "day": "wednesday",
-          "time": "07:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_036-dmass-thu-0700",
-          "type": "daily_mass",
-          "day": "thursday",
-          "time": "07:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_036-dmass-fri-0700",
-          "type": "daily_mass",
-          "day": "friday",
-          "time": "07:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
           "id": "parish_036-ador-daily",
           "type": "adoration",
           "day": "daily",
@@ -9593,6 +8700,21 @@
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_036-dmass-wkday-0700",
+          "type": "daily_mass",
+          "day": "weekday",
+          "time": "07:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
           },
           "source": "bulletin_2026-02"
         }
@@ -9963,81 +9085,6 @@
           "source": "bulletin_2026-02"
         },
         {
-          "id": "parish_038-dmass-mon-0730",
-          "type": "daily_mass",
-          "day": "monday",
-          "time": "07:30",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_038-dmass-tue-0730",
-          "type": "daily_mass",
-          "day": "tuesday",
-          "time": "07:30",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_038-dmass-wed-0730",
-          "type": "daily_mass",
-          "day": "wednesday",
-          "time": "07:30",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_038-dmass-thu-0730",
-          "type": "daily_mass",
-          "day": "thursday",
-          "time": "07:30",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_038-dmass-fri-0730",
-          "type": "daily_mass",
-          "day": "friday",
-          "time": "07:30",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
           "id": "parish_038-smass-holyeve-1730",
           "type": "sunday_mass",
           "day": "holyday_eve",
@@ -10088,6 +9135,21 @@
           "day": "saturday",
           "time": "14:30",
           "end_time": "15:30",
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_038-dmass-wkday-0730",
+          "type": "daily_mass",
+          "day": "weekday",
+          "time": "07:30",
+          "end_time": null,
           "location_id": null,
           "language": "en",
           "notes": null,
@@ -10865,28 +9927,6 @@
             "season": "lent"
           },
           "source": "manual_verification_2026-02"
-        },
-        {
-          "type": "devotion",
-          "title": "Lenten Reflections and Prayers",
-          "days": [
-            "2026-02-25",
-            "2026-03-04",
-            "2026-03-11",
-            "2026-03-18",
-            "2026-03-25"
-          ],
-          "time": "17:30",
-          "end_time": "19:00",
-          "location": "St. Elizabeth Ann Seton Youth Center, 87 Beacon St, Florence",
-          "category": "one_time_series",
-          "id": "parish_042-devot-x-1730",
-          "language": "en",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          },
-          "source": "bulletin_2026-03"
         }
       ],
       "validation": {
@@ -11455,81 +10495,6 @@
           "source": "bulletin_2026-02"
         },
         {
-          "id": "parish_046-dmass-mon-0900",
-          "type": "daily_mass",
-          "day": "monday",
-          "time": "09:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_046-dmass-tue-0900",
-          "type": "daily_mass",
-          "day": "tuesday",
-          "time": "09:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_046-dmass-wed-0900",
-          "type": "daily_mass",
-          "day": "wednesday",
-          "time": "09:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_046-dmass-thu-0900",
-          "type": "daily_mass",
-          "day": "thursday",
-          "time": "09:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_046-dmass-fri-0900",
-          "type": "daily_mass",
-          "day": "friday",
-          "time": "09:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
           "id": "parish_046-dmass-holyday-0900",
           "type": "daily_mass",
           "day": "holyday",
@@ -11583,6 +10548,21 @@
           "location_id": null,
           "language": "en",
           "notes": "In the sacristy",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_046-dmass-wkday-0900",
+          "type": "daily_mass",
+          "day": "weekday",
+          "time": "09:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
@@ -12318,91 +11298,6 @@
           "source": "pdf"
         },
         {
-          "id": "parish_049-dmass-mon-1210",
-          "type": "daily_mass",
-          "day": "monday",
-          "time": "12:10",
-          "end_time": null,
-          "location_id": "st-joseph-church-pittsfield",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round",
-            "start_date": null,
-            "end_date": null
-          },
-          "source": "pdf"
-        },
-        {
-          "id": "parish_049-dmass-tue-1210",
-          "type": "daily_mass",
-          "day": "tuesday",
-          "time": "12:10",
-          "end_time": null,
-          "location_id": "st-joseph-church-pittsfield",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round",
-            "start_date": null,
-            "end_date": null
-          },
-          "source": "pdf"
-        },
-        {
-          "id": "parish_049-dmass-wed-1210",
-          "type": "daily_mass",
-          "day": "wednesday",
-          "time": "12:10",
-          "end_time": null,
-          "location_id": "st-joseph-church-pittsfield",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round",
-            "start_date": null,
-            "end_date": null
-          },
-          "source": "pdf"
-        },
-        {
-          "id": "parish_049-dmass-thu-1210",
-          "type": "daily_mass",
-          "day": "thursday",
-          "time": "12:10",
-          "end_time": null,
-          "location_id": "st-joseph-church-pittsfield",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round",
-            "start_date": null,
-            "end_date": null
-          },
-          "source": "pdf"
-        },
-        {
-          "id": "parish_049-dmass-fri-1210",
-          "type": "daily_mass",
-          "day": "friday",
-          "time": "12:10",
-          "end_time": null,
-          "location_id": "st-joseph-church-pittsfield",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round",
-            "start_date": null,
-            "end_date": null
-          },
-          "source": "pdf"
-        },
-        {
           "id": "parish_049-conf-sat-1500",
           "type": "confession",
           "day": "saturday",
@@ -12516,6 +11411,23 @@
             "season": "year_round"
           },
           "source": "manual_verification_2026-02"
+        },
+        {
+          "id": "parish_049-dmass-wkday-1210-stjo",
+          "type": "daily_mass",
+          "day": "weekday",
+          "time": "12:10",
+          "end_time": null,
+          "location_id": "st-joseph-church-pittsfield",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round",
+            "start_date": null,
+            "end_date": null
+          },
+          "source": "pdf"
         }
       ],
       "validation": {
@@ -13646,81 +12558,6 @@
           "source": "bulletin_2026-02"
         },
         {
-          "id": "parish_054-dmass-mon-0800-holy",
-          "type": "daily_mass",
-          "day": "monday",
-          "time": "08:00",
-          "end_time": null,
-          "location_id": "holy-family-south-deerfield",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_054-dmass-tue-0800-holy",
-          "type": "daily_mass",
-          "day": "tuesday",
-          "time": "08:00",
-          "end_time": null,
-          "location_id": "holy-family-south-deerfield",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_054-dmass-wed-0800-holy",
-          "type": "daily_mass",
-          "day": "wednesday",
-          "time": "08:00",
-          "end_time": null,
-          "location_id": "holy-family-south-deerfield",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_054-dmass-thu-0800-holy",
-          "type": "daily_mass",
-          "day": "thursday",
-          "time": "08:00",
-          "end_time": null,
-          "location_id": "holy-family-south-deerfield",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_054-dmass-fri-0800-holy",
-          "type": "daily_mass",
-          "day": "friday",
-          "time": "08:00",
-          "end_time": null,
-          "location_id": "holy-family-south-deerfield",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
           "id": "parish_054-dmass-holyday-0800-holy",
           "type": "daily_mass",
           "day": "holyday",
@@ -13789,6 +12626,21 @@
           "location_id": "holy-family-south-deerfield",
           "language": "en",
           "notes": "During Adoration",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_054-dmass-wkday-0800-holy",
+          "type": "daily_mass",
+          "day": "weekday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": "holy-family-south-deerfield",
+          "language": "en",
+          "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
@@ -14199,83 +13051,8 @@
           "source": "manual_verification_2026-02"
         },
         {
-          "id": "parish_056-dmass-mon-0800",
+          "id": "parish_056-dmass-1sat-0800",
           "type": "daily_mass",
-          "day": "monday",
-          "time": "08:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_056-dmass-tue-0800",
-          "type": "daily_mass",
-          "day": "tuesday",
-          "time": "08:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_056-dmass-wed-0800",
-          "type": "daily_mass",
-          "day": "wednesday",
-          "time": "08:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_056-dmass-thu-0800",
-          "type": "daily_mass",
-          "day": "thursday",
-          "time": "08:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_056-dmass-fri-0800",
-          "type": "daily_mass",
-          "day": "friday",
-          "time": "08:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "manual_verification_2026-02"
-        },
-        {
-          "id": "parish_056-smass-1sat-0800",
-          "type": "sunday_mass",
           "day": "first_saturday",
           "time": "08:00",
           "end_time": null,
@@ -14357,6 +13134,21 @@
           "location_id": null,
           "language": "en",
           "notes": "Before 4:00 PM Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "manual_verification_2026-02"
+        },
+        {
+          "id": "parish_056-dmass-wkday-0800",
+          "type": "daily_mass",
+          "day": "weekday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
@@ -14673,91 +13465,6 @@
           "source": "pdf"
         },
         {
-          "id": "parish_058-dmass-mon-1900",
-          "type": "daily_mass",
-          "day": "monday",
-          "time": "19:00",
-          "end_time": null,
-          "location_id": "all-souls-church-springfield",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round",
-            "start_date": null,
-            "end_date": null
-          },
-          "source": "pdf"
-        },
-        {
-          "id": "parish_058-dmass-tue-1900",
-          "type": "daily_mass",
-          "day": "tuesday",
-          "time": "19:00",
-          "end_time": null,
-          "location_id": "all-souls-church-springfield",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round",
-            "start_date": null,
-            "end_date": null
-          },
-          "source": "pdf"
-        },
-        {
-          "id": "parish_058-dmass-wed-1900",
-          "type": "daily_mass",
-          "day": "wednesday",
-          "time": "19:00",
-          "end_time": null,
-          "location_id": "all-souls-church-springfield",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round",
-            "start_date": null,
-            "end_date": null
-          },
-          "source": "pdf"
-        },
-        {
-          "id": "parish_058-dmass-thu-1900",
-          "type": "daily_mass",
-          "day": "thursday",
-          "time": "19:00",
-          "end_time": null,
-          "location_id": "all-souls-church-springfield",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round",
-            "start_date": null,
-            "end_date": null
-          },
-          "source": "pdf"
-        },
-        {
-          "id": "parish_058-dmass-fri-1900",
-          "type": "daily_mass",
-          "day": "friday",
-          "time": "19:00",
-          "end_time": null,
-          "location_id": "all-souls-church-springfield",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round",
-            "start_date": null,
-            "end_date": null
-          },
-          "source": "pdf"
-        },
-        {
           "id": "parish_058-conf-sat-1500-es",
           "type": "confession",
           "day": "saturday",
@@ -14765,6 +13472,23 @@
           "end_time": "16:00",
           "location_id": "all-souls-church-springfield",
           "language": "es",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round",
+            "start_date": null,
+            "end_date": null
+          },
+          "source": "pdf"
+        },
+        {
+          "id": "parish_058-dmass-wkday-1900-alls",
+          "type": "daily_mass",
+          "day": "weekday",
+          "time": "19:00",
+          "end_time": null,
+          "location_id": "all-souls-church-springfield",
+          "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
@@ -15404,81 +14128,6 @@
           "source": "bulletin_2026-02"
         },
         {
-          "id": "parish_061-dmass-mon-0815",
-          "type": "daily_mass",
-          "day": "monday",
-          "time": "08:15",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_061-dmass-tue-0815",
-          "type": "daily_mass",
-          "day": "tuesday",
-          "time": "08:15",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_061-dmass-wed-0815",
-          "type": "daily_mass",
-          "day": "wednesday",
-          "time": "08:15",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_061-dmass-thu-0815",
-          "type": "daily_mass",
-          "day": "thursday",
-          "time": "08:15",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_061-dmass-fri-0815",
-          "type": "daily_mass",
-          "day": "friday",
-          "time": "08:15",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
           "id": "parish_061-dmass-sat-0815",
           "type": "daily_mass",
           "day": "saturday",
@@ -15607,6 +14256,21 @@
           "location_id": null,
           "language": "en",
           "notes": "Blue Army: Rosary & meditation after 8:15 AM Mass; confession until ~10:30 AM",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_061-dmass-wkday-0815",
+          "type": "daily_mass",
+          "day": "weekday",
+          "time": "08:15",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
@@ -16253,81 +14917,6 @@
           "source": "bulletin_2026-02"
         },
         {
-          "id": "parish_064-dmass-mon-1715",
-          "type": "daily_mass",
-          "day": "monday",
-          "time": "17:15",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_064-dmass-tue-1715",
-          "type": "daily_mass",
-          "day": "tuesday",
-          "time": "17:15",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_064-dmass-wed-1715",
-          "type": "daily_mass",
-          "day": "wednesday",
-          "time": "17:15",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_064-dmass-thu-1715",
-          "type": "daily_mass",
-          "day": "thursday",
-          "time": "17:15",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_064-dmass-fri-1715",
-          "type": "daily_mass",
-          "day": "friday",
-          "time": "17:15",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
           "id": "parish_064-smass-holyeve-1715",
           "type": "sunday_mass",
           "day": "holyday_eve",
@@ -16393,6 +14982,21 @@
           "day": "saturday",
           "time": "17:00",
           "end_time": "17:30",
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_064-dmass-wkday-1715",
+          "type": "daily_mass",
+          "day": "weekday",
+          "time": "17:15",
+          "end_time": null,
           "location_id": null,
           "language": "en",
           "notes": null,
@@ -16513,91 +15117,6 @@
           "source": "pdf"
         },
         {
-          "id": "parish_065-dmass-mon-1715",
-          "type": "daily_mass",
-          "day": "monday",
-          "time": "17:15",
-          "end_time": null,
-          "location_id": "sacred-heart-church-springfield",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round",
-            "start_date": null,
-            "end_date": null
-          },
-          "source": "pdf"
-        },
-        {
-          "id": "parish_065-dmass-tue-1715",
-          "type": "daily_mass",
-          "day": "tuesday",
-          "time": "17:15",
-          "end_time": null,
-          "location_id": "sacred-heart-church-springfield",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round",
-            "start_date": null,
-            "end_date": null
-          },
-          "source": "pdf"
-        },
-        {
-          "id": "parish_065-dmass-wed-1715",
-          "type": "daily_mass",
-          "day": "wednesday",
-          "time": "17:15",
-          "end_time": null,
-          "location_id": "sacred-heart-church-springfield",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round",
-            "start_date": null,
-            "end_date": null
-          },
-          "source": "pdf"
-        },
-        {
-          "id": "parish_065-dmass-thu-1715",
-          "type": "daily_mass",
-          "day": "thursday",
-          "time": "17:15",
-          "end_time": null,
-          "location_id": "sacred-heart-church-springfield",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round",
-            "start_date": null,
-            "end_date": null
-          },
-          "source": "pdf"
-        },
-        {
-          "id": "parish_065-dmass-fri-1715",
-          "type": "daily_mass",
-          "day": "friday",
-          "time": "17:15",
-          "end_time": null,
-          "location_id": "sacred-heart-church-springfield",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round",
-            "start_date": null,
-            "end_date": null
-          },
-          "source": "pdf"
-        },
-        {
           "id": "parish_065-conf-sat-1500-es",
           "type": "confession",
           "day": "saturday",
@@ -16622,6 +15141,23 @@
           "end_time": "17:30",
           "location_id": "sacred-heart-church-springfield",
           "language": "es",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round",
+            "start_date": null,
+            "end_date": null
+          },
+          "source": "pdf"
+        },
+        {
+          "id": "parish_065-dmass-wkday-1715-sacr",
+          "type": "daily_mass",
+          "day": "weekday",
+          "time": "17:15",
+          "end_time": null,
+          "location_id": "sacred-heart-church-springfield",
+          "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
@@ -17075,81 +15611,6 @@
           "source": "bulletin_2026-02"
         },
         {
-          "id": "parish_067-dmass-mon-1210",
-          "type": "daily_mass",
-          "day": "monday",
-          "time": "12:10",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_067-dmass-tue-1210",
-          "type": "daily_mass",
-          "day": "tuesday",
-          "time": "12:10",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_067-dmass-wed-1210",
-          "type": "daily_mass",
-          "day": "wednesday",
-          "time": "12:10",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_067-dmass-thu-1210",
-          "type": "daily_mass",
-          "day": "thursday",
-          "time": "12:10",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_067-dmass-fri-1210",
-          "type": "daily_mass",
-          "day": "friday",
-          "time": "12:10",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
           "id": "parish_067-conf-sat-1515",
           "type": "confession",
           "day": "saturday",
@@ -17226,6 +15687,21 @@
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_067-dmass-wkday-1210",
+          "type": "daily_mass",
+          "day": "weekday",
+          "time": "12:10",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
           },
           "source": "bulletin_2026-02"
         }
@@ -17523,81 +15999,6 @@
           "source": "bulletin_2026-01"
         },
         {
-          "id": "parish_069-dmass-mon-0730",
-          "type": "daily_mass",
-          "day": "monday",
-          "time": "07:30",
-          "end_time": null,
-          "location_id": "st-paul-the-apostle-church-springfield",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-01"
-        },
-        {
-          "id": "parish_069-dmass-tue-0730",
-          "type": "daily_mass",
-          "day": "tuesday",
-          "time": "07:30",
-          "end_time": null,
-          "location_id": "st-paul-the-apostle-church-springfield",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-01"
-        },
-        {
-          "id": "parish_069-dmass-wed-0730",
-          "type": "daily_mass",
-          "day": "wednesday",
-          "time": "07:30",
-          "end_time": null,
-          "location_id": "st-paul-the-apostle-church-springfield",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-01"
-        },
-        {
-          "id": "parish_069-dmass-thu-0730",
-          "type": "daily_mass",
-          "day": "thursday",
-          "time": "07:30",
-          "end_time": null,
-          "location_id": "st-paul-the-apostle-church-springfield",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-01"
-        },
-        {
-          "id": "parish_069-dmass-fri-0730",
-          "type": "daily_mass",
-          "day": "friday",
-          "time": "07:30",
-          "end_time": null,
-          "location_id": "st-paul-the-apostle-church-springfield",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-01"
-        },
-        {
           "id": "parish_069-conf-sat-1600",
           "type": "confession",
           "day": "saturday",
@@ -17618,6 +16019,21 @@
           "day": "sunday",
           "time": "10:00",
           "end_time": "10:45",
+          "location_id": "st-paul-the-apostle-church-springfield",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-01"
+        },
+        {
+          "id": "parish_069-dmass-wkday-0730-stpa",
+          "type": "daily_mass",
+          "day": "weekday",
+          "time": "07:30",
+          "end_time": null,
           "location_id": "st-paul-the-apostle-church-springfield",
           "language": "en",
           "notes": null,
@@ -24305,81 +22721,6 @@
       ],
       "services": [
         {
-          "id": "parish_094-dmass-mon-0800",
-          "type": "daily_mass",
-          "day": "monday",
-          "time": "08:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_094-dmass-tue-0800",
-          "type": "daily_mass",
-          "day": "tuesday",
-          "time": "08:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_094-dmass-wed-0800",
-          "type": "daily_mass",
-          "day": "wednesday",
-          "time": "08:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_094-dmass-thu-0800",
-          "type": "daily_mass",
-          "day": "thursday",
-          "time": "08:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_094-dmass-fri-0800",
-          "type": "daily_mass",
-          "day": "friday",
-          "time": "08:00",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
           "id": "parish_094-dmass-sat-0800",
           "type": "daily_mass",
           "day": "saturday",
@@ -24571,6 +22912,21 @@
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
+          },
+          "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_094-dmass-wkday-0800",
+          "type": "daily_mass",
+          "day": "weekday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
           },
           "source": "bulletin_2026-02"
         }
@@ -25514,81 +23870,6 @@
           "source": "bulletin_2026-02"
         },
         {
-          "id": "parish_097-ador-mon-0800-sj",
-          "type": "adoration",
-          "day": "monday",
-          "time": "08:00",
-          "end_time": "20:00",
-          "location_id": "st-joseph-church-windsor",
-          "language": "en",
-          "notes": "St. Joseph Adoration Chapel; Mon-Fri",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_097-ador-tue-0800-sj",
-          "type": "adoration",
-          "day": "tuesday",
-          "time": "08:00",
-          "end_time": "20:00",
-          "location_id": "st-joseph-church-windsor",
-          "language": "en",
-          "notes": "St. Joseph Adoration Chapel",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_097-ador-wed-0800-sj",
-          "type": "adoration",
-          "day": "wednesday",
-          "time": "08:00",
-          "end_time": "20:00",
-          "location_id": "st-joseph-church-windsor",
-          "language": "en",
-          "notes": "St. Joseph Adoration Chapel",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_097-ador-thu-0800-sj",
-          "type": "adoration",
-          "day": "thursday",
-          "time": "08:00",
-          "end_time": "20:00",
-          "location_id": "st-joseph-church-windsor",
-          "language": "en",
-          "notes": "St. Joseph Adoration Chapel",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_097-ador-fri-0800-sj",
-          "type": "adoration",
-          "day": "friday",
-          "time": "08:00",
-          "end_time": "20:00",
-          "location_id": "st-joseph-church-windsor",
-          "language": "en",
-          "notes": "St. Joseph Adoration Chapel",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
           "id": "parish_097-rosary-sun-sg",
           "type": "rosary",
           "day": "sunday",
@@ -25677,6 +23958,21 @@
             "season": "lent"
           },
           "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_097-ador-wkday-0800-stjo",
+          "type": "adoration",
+          "day": "weekday",
+          "time": "08:00",
+          "end_time": "20:00",
+          "location_id": "st-joseph-church-windsor",
+          "language": "en",
+          "notes": "St. Joseph Adoration Chapel; Mon-Fri",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
         }
       ],
       "validation": {
@@ -25754,81 +24050,6 @@
         }
       ],
       "services": [
-        {
-          "id": "parish_098-dmass-mon-0730-sm",
-          "type": "daily_mass",
-          "day": "monday",
-          "time": "07:30",
-          "end_time": null,
-          "location_id": "st-mary-church-windsor-locks",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_098-dmass-tue-0730-sm",
-          "type": "daily_mass",
-          "day": "tuesday",
-          "time": "07:30",
-          "end_time": null,
-          "location_id": "st-mary-church-windsor-locks",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_098-dmass-wed-0730-sm",
-          "type": "daily_mass",
-          "day": "wednesday",
-          "time": "07:30",
-          "end_time": null,
-          "location_id": "st-mary-church-windsor-locks",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_098-dmass-thu-0730-sm",
-          "type": "daily_mass",
-          "day": "thursday",
-          "time": "07:30",
-          "end_time": null,
-          "location_id": "st-mary-church-windsor-locks",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_098-dmass-fri-0730-sm",
-          "type": "daily_mass",
-          "day": "friday",
-          "time": "07:30",
-          "end_time": null,
-          "location_id": "st-mary-church-windsor-locks",
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
         {
           "id": "parish_098-smass-sat-1630-sr",
           "type": "sunday_mass",
@@ -26023,6 +24244,21 @@
             "season": "lent"
           },
           "source": "bulletin_2026-02"
+        },
+        {
+          "id": "parish_098-dmass-wkday-0730-stma",
+          "type": "daily_mass",
+          "day": "weekday",
+          "time": "07:30",
+          "end_time": null,
+          "location_id": "st-mary-church-windsor-locks",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-02"
         }
       ],
       "validation": {
@@ -26150,76 +24386,6 @@
           "source": "website_2026-02"
         },
         {
-          "id": "parish_099-dmass-mon-0700",
-          "type": "daily_mass",
-          "day": "monday",
-          "time": "07:00",
-          "language": "la",
-          "rite": "tridentine",
-          "notes": "Low Mass",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "website_2026-02"
-        },
-        {
-          "id": "parish_099-dmass-tue-0700",
-          "type": "daily_mass",
-          "day": "tuesday",
-          "time": "07:00",
-          "language": "la",
-          "rite": "tridentine",
-          "notes": "Low Mass",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "website_2026-02"
-        },
-        {
-          "id": "parish_099-dmass-wed-0700",
-          "type": "daily_mass",
-          "day": "wednesday",
-          "time": "07:00",
-          "language": "la",
-          "rite": "tridentine",
-          "notes": "Low Mass",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "website_2026-02"
-        },
-        {
-          "id": "parish_099-dmass-thu-0700",
-          "type": "daily_mass",
-          "day": "thursday",
-          "time": "07:00",
-          "language": "la",
-          "rite": "tridentine",
-          "notes": "Low Mass",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "website_2026-02"
-        },
-        {
-          "id": "parish_099-dmass-fri-0700",
-          "type": "daily_mass",
-          "day": "friday",
-          "time": "07:00",
-          "language": "la",
-          "rite": "tridentine",
-          "notes": "Low Mass",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "website_2026-02"
-        },
-        {
           "id": "parish_099-dmass-sat-0700",
           "type": "daily_mass",
           "day": "saturday",
@@ -26227,76 +24393,6 @@
           "language": "la",
           "rite": "tridentine",
           "notes": "Low Mass",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "website_2026-02"
-        },
-        {
-          "id": "parish_099-dmass-mon-0830",
-          "type": "daily_mass",
-          "day": "monday",
-          "time": "08:30",
-          "language": "la",
-          "rite": "tridentine",
-          "notes": "Community Mass",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "website_2026-02"
-        },
-        {
-          "id": "parish_099-dmass-tue-0830",
-          "type": "daily_mass",
-          "day": "tuesday",
-          "time": "08:30",
-          "language": "la",
-          "rite": "tridentine",
-          "notes": "Community Mass",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "website_2026-02"
-        },
-        {
-          "id": "parish_099-dmass-wed-0830",
-          "type": "daily_mass",
-          "day": "wednesday",
-          "time": "08:30",
-          "language": "la",
-          "rite": "tridentine",
-          "notes": "Community Mass",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "website_2026-02"
-        },
-        {
-          "id": "parish_099-dmass-thu-0830",
-          "type": "daily_mass",
-          "day": "thursday",
-          "time": "08:30",
-          "language": "la",
-          "rite": "tridentine",
-          "notes": "Community Mass",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "website_2026-02"
-        },
-        {
-          "id": "parish_099-dmass-fri-0830",
-          "type": "daily_mass",
-          "day": "friday",
-          "time": "08:30",
-          "language": "la",
-          "rite": "tridentine",
-          "notes": "Community Mass",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
@@ -26318,142 +24414,12 @@
           "source": "website_2026-02"
         },
         {
-          "id": "parish_099-rosary-mon-0800",
-          "type": "rosary",
-          "day": "monday",
-          "time": "08:00",
-          "language": "la",
-          "notes": "In Latin",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "website_2026-02"
-        },
-        {
-          "id": "parish_099-rosary-tue-0800",
-          "type": "rosary",
-          "day": "tuesday",
-          "time": "08:00",
-          "language": "la",
-          "notes": "In Latin",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "website_2026-02"
-        },
-        {
-          "id": "parish_099-rosary-wed-0800",
-          "type": "rosary",
-          "day": "wednesday",
-          "time": "08:00",
-          "language": "la",
-          "notes": "In Latin",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "website_2026-02"
-        },
-        {
-          "id": "parish_099-rosary-thu-0800",
-          "type": "rosary",
-          "day": "thursday",
-          "time": "08:00",
-          "language": "la",
-          "notes": "In Latin",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "website_2026-02"
-        },
-        {
-          "id": "parish_099-rosary-fri-0800",
-          "type": "rosary",
-          "day": "friday",
-          "time": "08:00",
-          "language": "la",
-          "notes": "In Latin",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "website_2026-02"
-        },
-        {
           "id": "parish_099-rosary-sat-0800",
           "type": "rosary",
           "day": "saturday",
           "time": "08:00",
           "language": "la",
           "notes": "In Latin",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "website_2026-02"
-        },
-        {
-          "id": "parish_099-rosary-mon-1700",
-          "type": "rosary",
-          "day": "monday",
-          "time": "17:00",
-          "language": "en",
-          "notes": "In English; followed by Benediction",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "website_2026-02"
-        },
-        {
-          "id": "parish_099-rosary-tue-1700",
-          "type": "rosary",
-          "day": "tuesday",
-          "time": "17:00",
-          "language": "en",
-          "notes": "In English; followed by Benediction",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "website_2026-02"
-        },
-        {
-          "id": "parish_099-rosary-wed-1700",
-          "type": "rosary",
-          "day": "wednesday",
-          "time": "17:00",
-          "language": "en",
-          "notes": "In English; followed by Benediction",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "website_2026-02"
-        },
-        {
-          "id": "parish_099-rosary-thu-1700",
-          "type": "rosary",
-          "day": "thursday",
-          "time": "17:00",
-          "language": "en",
-          "notes": "In English; followed by Benediction",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "website_2026-02"
-        },
-        {
-          "id": "parish_099-rosary-fri-1700",
-          "type": "rosary",
-          "day": "friday",
-          "time": "17:00",
-          "language": "en",
-          "notes": "In English; followed by Benediction",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
@@ -26514,6 +24480,66 @@
           },
           "source": "website_2026-02",
           "end_time": "20:30"
+        },
+        {
+          "id": "parish_099-dmass-wkday-0700",
+          "type": "daily_mass",
+          "day": "weekday",
+          "time": "07:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "la",
+          "notes": "Low Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-dmass-wkday-0830",
+          "type": "daily_mass",
+          "day": "weekday",
+          "time": "08:30",
+          "end_time": null,
+          "location_id": null,
+          "language": "la",
+          "notes": "Community Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-rosary-wkday-0800",
+          "type": "rosary",
+          "day": "weekday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "la",
+          "notes": "In Latin",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
+        },
+        {
+          "id": "parish_099-rosary-wkday-1700",
+          "type": "rosary",
+          "day": "weekday",
+          "time": "17:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "en",
+          "notes": "In English; followed by Benediction",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "website_2026-02"
         }
       ],
       "validation": {
