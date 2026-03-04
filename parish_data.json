@@ -1338,7 +1338,7 @@
         {
           "id": "parish_005-smass-sun-1630-st",
           "type": "sunday_mass",
-          "day": "first_sunday",
+          "day": "sunday",
           "time": "16:30",
           "end_time": null,
           "language": "en",
@@ -1350,6 +1350,10 @@
           "seasonal": {
             "is_seasonal": true,
             "season": "academic_year"
+          },
+          "recurrence": {
+            "type": "nth",
+            "week": 1
           }
         },
         {
@@ -1683,7 +1687,7 @@
         {
           "id": "parish_006-anoint-sun-1140-st",
           "type": "anointing_of_sick",
-          "day": "first_sunday",
+          "day": "sunday",
           "time": "11:40",
           "end_time": null,
           "language": "en",
@@ -1695,6 +1699,10 @@
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
+          },
+          "recurrence": {
+            "type": "nth",
+            "week": 1
           }
         },
         {
@@ -3061,7 +3069,7 @@
         {
           "id": "parish_013-dmercy-1sun-1200",
           "type": "divine_mercy",
-          "day": "first_sunday",
+          "day": "sunday",
           "time": "12:00",
           "end_time": null,
           "location_id": "ststans-basilica-chicopee",
@@ -3071,7 +3079,11 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-03"
+          "source": "bulletin_2026-03",
+          "recurrence": {
+            "type": "nth",
+            "week": 1
+          }
         },
         {
           "id": "parish_013-devot-sun-1500",
@@ -17444,7 +17456,7 @@
         {
           "id": "parish_072-holyhour-1sun-1500",
           "type": "holy_hour",
-          "day": "first_sunday",
+          "day": "sunday",
           "time": "15:00",
           "end_time": "17:00",
           "language": "en",
@@ -17454,7 +17466,11 @@
             "season": "year_round"
           },
           "source": "bulletin_2026-02",
-          "location_id": "our-lady-of-czestochowa-church-turners-falls"
+          "location_id": "our-lady-of-czestochowa-church-turners-falls",
+          "recurrence": {
+            "type": "nth",
+            "week": 1
+          }
         },
         {
           "id": "parish_072-stations-fri-lent",
@@ -18956,7 +18972,7 @@
         {
           "id": "parish_078-ador-firs-0830",
           "type": "adoration",
-          "day": "first_thursday",
+          "day": "thursday",
           "time": "08:30",
           "end_time": "20:00",
           "language": "en",
@@ -18966,7 +18982,11 @@
             "season": "year_round"
           },
           "source": "bulletin_2026-02",
-          "location_id": "our-lady-of-the-blessed-sacrament-church-westfield"
+          "location_id": "our-lady-of-the-blessed-sacrament-church-westfield",
+          "recurrence": {
+            "type": "nth",
+            "week": 1
+          }
         },
         {
           "id": "parish_078-divmerc-sat-1545",
@@ -21887,7 +21907,7 @@
         {
           "id": "parish_088-rosary-1sun-0800",
           "type": "rosary",
-          "day": "first_sunday",
+          "day": "sunday",
           "time": "08:00",
           "end_time": null,
           "location_id": null,
@@ -21897,7 +21917,11 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-02",
+          "recurrence": {
+            "type": "nth",
+            "week": 1
+          }
         },
         {
           "id": "parish_088-ador-mon-1500",
