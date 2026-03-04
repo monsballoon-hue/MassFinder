@@ -877,13 +877,26 @@ function completenessScore(p) {
   var have = checks.filter(Boolean).length;
   return Math.round(have / checks.length * 100);
 }
+function countParishEvents(parishId) {
+  var today = new Date().toISOString().slice(0,10);
+  return editEvents.filter(function(e) {
+    if (e.parish_id !== parishId) return false;
+    if (e.dates && e.dates.length) {
+      var last = e.dates[e.dates.length - 1];
+      return (e.end_date || last) >= today;
+    }
+    var exp = e.end_date || e.date;
+    if (!exp) return true;
+    return exp >= today;
+  }).length;
+}
 function buildRow(p) {
   var sc = parishScore(p);
   return {
     id:p.id, name:p.name, town:p.town||'', state:p.state||'',
     vs:(p.validation && p.validation.status)||'unverified',
     flagged:!!(p.validation && p.validation.flagged),
-    completeness:completenessScore(p),
+    evtCount:countParishEvents(p.id),
     score:sc.score, daysSince:sc.daysSince,
     svcCount:(p.services||[]).length
   };
@@ -999,13 +1012,14 @@ function renderList(rows) {
     } catch(e){}
     // Flag icon
     var flagIcon = r.flagged ? '<span class="pr-flag" title="Flagged for review">\u2691</span>' : '';
-    // Completeness badge
-    var compCls = r.completeness >= 75 ? 'hi' : r.completeness >= 50 ? 'mid' : 'lo';
-    var compBadge = '<span class="pr-completeness '+compCls+'">' + r.completeness + '%</span>';
+    // Event count badge
+    var evtBadge = r.evtCount > 0
+      ? '<span class="pr-completeness hi">' + r.evtCount + ' evt' + (r.evtCount !== 1 ? 's' : '') + '</span>'
+      : '';
     return '<div class="'+cls+'" data-id="'+esc(r.id)+'" onclick="handleParishRowClick(event,\''+esc(r.id)+'\')">' +
       '<div class="status-dot '+dotClass(r.vs)+(r.flagged?' has-flag':'')+'"></div>' +
       '<div class="pr-text" style="display:flex;align-items:flex-start;gap:0;flex-direction:column;flex:1;min-width:0">' +
-        '<div style="display:flex;align-items:center;width:100%"><div class="pr-name">' + esc(r.name) + flagIcon + '</div>' + compBadge + '</div>' +
+        '<div style="display:flex;align-items:center;width:100%"><div class="pr-name">' + esc(r.name) + flagIcon + '</div>' + evtBadge + '</div>' +
         '<div class="pr-sub">' + esc(r.town) + ', ' + esc(r.state) + badge + '</div>' +
         progHtml +
       '</div>' +

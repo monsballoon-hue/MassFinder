@@ -2882,12 +2882,16 @@ function renderMore(){
     });
     const avgDays=checkedCount?Math.round(totalDays/checkedCount):null;
     const avgLabel=avgDays===null?'-':avgDays+' days';
-    const verPct=allParishes.length?Math.round(verCount/allParishes.length*100):0;
+    const todayStr=today.toISOString().slice(0,10);
+    const activeEvtCount=eventsData.filter(function(e){
+      if(e.dates&&e.dates.length){var last=e.dates[e.dates.length-1];return(e.end_date||last)>=todayStr}
+      var exp=e.end_date||e.date;if(!exp)return true;return exp>=todayStr;
+    }).length;
     grid.innerHTML=
       '<div class="stat-card"><div class="stat-value">'+allParishes.length+'</div><div class="stat-label">Churches</div></div>'
       +'<div class="stat-card"><div class="stat-value">'+svcCount.toLocaleString()+'</div><div class="stat-label">Services</div></div>'
       +'<div class="stat-card"><div class="stat-value">'+avgLabel+'</div><div class="stat-label">Avg. Data Age</div></div>'
-      +'<div class="stat-card"><div class="stat-value">'+verPct+'%</div><div class="stat-label">Churches Verified</div></div>';
+      +'<div class="stat-card"><div class="stat-value">'+activeEvtCount+'</div><div class="stat-label">Active Events</div></div>';
   })();
 
   // ── What's Happening: unified YC + Community events ────────────────────
