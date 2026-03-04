@@ -909,7 +909,9 @@ function toggleFav(id,ev){if(ev){ev.stopPropagation();ev.preventDefault()}if(isF
 
 // Time
 function getNow(){return new Date()}
-function isEventActive(e){const t=getNow().toISOString().slice(0,10);const exp=e.end_date||e.date;if(!exp)return true;return exp>=t}
+function isEventActive(e){const t=getNow().toISOString().slice(0,10);if(e.dates&&e.dates.length){const exp=e.end_date||e.dates[e.dates.length-1];return exp>=t}const exp=e.end_date||e.date;if(!exp)return true;return exp>=t}
+function getNextEventDate(e){const t=getNow().toISOString().slice(0,10);if(e.dates&&e.dates.length){for(const d of e.dates){if(d>=t)return d}return e.dates[e.dates.length-1]}return e.date||null}
+function getRemainingDates(e){if(!e.dates||!e.dates.length)return[];const t=getNow().toISOString().slice(0,10);return e.dates.filter(function(d){return d>=t})}
 function getNextDateForDay(dayName){
   if(!dayName)return null;
   const dayIdx={sunday:0,monday:1,tuesday:2,wednesday:3,thursday:4,friday:5,saturday:6}[dayName];
@@ -1152,14 +1154,18 @@ function renderCommunityEvents(p){
   const upcoming=[];
   const ongoing=[];
   for(const e of evts){
-    if(e.date&&e.date>=today){
+    const nextDate=getNextEventDate(e);
+    if(nextDate&&nextDate>=today){
       upcoming.push(e);
+    }else if(e.dates&&e.dates.length){
+      // Multi-date series with all dates past — skip (already filtered by isEventActive if end_date set)
+      ongoing.push(e);
     }else{
       ongoing.push(e);
     }
   }
-  // Sort upcoming by date
-  upcoming.sort((a,b)=>(a.date||'').localeCompare(b.date||''));
+  // Sort upcoming by next date
+  upcoming.sort((a,b)=>(getNextEventDate(a)||'').localeCompare(getNextEventDate(b)||''));
   // Sort ongoing by day of week
   const dayOrd={sunday:0,monday:1,tuesday:2,wednesday:3,thursday:4,friday:5,saturday:6};
   ongoing.sort((a,b)=>(dayOrd[a.day]??7)-(dayOrd[b.day]??7));
@@ -1170,12 +1176,25 @@ function renderCommunityEvents(p){
   // Render individual items
   function renderItem(e,isUpcoming){
     let whenText='';
-    if(isUpcoming&&e.date){
-      const d=new Date(e.date+'T12:00:00');
+    const nextDate=getNextEventDate(e);
+    if(e.dates&&e.dates.length){
+      // Multi-date series
+      const remaining=getRemainingDates(e);
+      if(nextDate){
+        const d=new Date(nextDate+'T12:00:00');
+        const dateStr=d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+        const timeStr=e.time?(' · '+fmt12(e.time)):'';
+        const countText=remaining.length>1?' · <span class="ce-countdown">'+remaining.length+' dates left</span>':'';
+        whenText=dateStr+timeStr+countText;
+      }else{
+        whenText=e.dates.length+' date series (ended)';
+      }
+    }else if(isUpcoming&&nextDate){
+      const d=new Date(nextDate+'T12:00:00');
       const dateStr=d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
       const timeStr=e.time?(' · '+fmt12(e.time)):'';
       // Mini countdown
-      const diffMs=new Date(e.date+'T'+(e.time||'12:00')).getTime()-getNow().getTime();
+      const diffMs=new Date(nextDate+'T'+(e.time||'12:00')).getTime()-getNow().getTime();
       let cdText='';
       if(diffMs>0){
         const days=Math.floor(diffMs/(1000*60*60*24));
@@ -1450,7 +1469,11 @@ function openEventDetail(eventId){
   const timeStr=evt.time?fmt12(evt.time):'';
   const endStr=evt.end_time?' – '+fmt12(evt.end_time):'';
   let dateStr='';
-  if(evt.date){
+  if(evt.dates&&evt.dates.length){
+    // Multi-date series
+    const fmtOpts={month:'short',day:'numeric'};
+    dateStr=evt.dates.map(function(ds){return new Date(ds+'T12:00:00').toLocaleDateString('en-US',fmtOpts)}).join(', ');
+  }else if(evt.date){
     const d=new Date(evt.date+'T12:00:00');
     dateStr=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
   }else if(evt.day){
@@ -1464,7 +1487,11 @@ function openEventDetail(eventId){
   else if(evt.category==='community')badges+='<span class="evt-badge community">Community</span>';
   // Date badge
   const today=getNow().toISOString().slice(0,10);
-  if(evt.date){
+  if(evt.dates&&evt.dates.length){
+    const remaining=getRemainingDates(evt);
+    badges+='<span class="evt-badge date-badge">'+esc(dateStr)+'</span>';
+    if(remaining.length)badges+='<span class="evt-badge countdown-badge">'+remaining.length+' date'+(remaining.length!==1?'s':'')+' remaining</span>';
+  }else if(evt.date){
     const tomorrow=new Date(getNow());tomorrow.setDate(tomorrow.getDate()+1);
     const tomorrowStr=tomorrow.toISOString().slice(0,10);
     let dateBadgeText=dateStr;
@@ -1564,7 +1591,7 @@ function downloadEventIcal(eventId){
   if(!evtLat2&&p.locations&&p.locations[0]){evtLat2=p.locations[0].lat;evtLng2=p.locations[0].lng;}
   const mapsUrl=evtLat2&&evtLng2?getMapsUrlCoords(evtLat2,evtLng2,addr||loc):(addr?getMapsUrl(addr):(loc?getMapsUrl(loc):''));
   const desc=[evt.description||'',evt.notes||'',mapsUrl?'Directions: '+mapsUrl:'','From MassFinder'].filter(Boolean).join('\n');
-  const icsDate=evt.date||getNextDateForDay(evt.day);
+  const icsDate=getNextEventDate(evt)||getNextDateForDay(evt.day);
   if(!icsDate)return;
   generateICS(evt.title,icsDate,evt.time||'',evt.end_time||'',loc,desc,mapsUrl);
 }
@@ -2174,7 +2201,12 @@ function getSavedChurchEvents(favIds){
   const evts=eventsData.filter(e=>favIds.has(e.parish_id)&&e.category!=='yc'&&isEventActive(e));
 
   for(const e of evts){
-    if(e.date){
+    if(e.dates&&e.dates.length){
+      const next=getNextEventDate(e);
+      if(next===todayStr)buckets.today.push(e);
+      else if(next&&next>todayStr&&next<=endOfWeekStr)buckets.coming.push(e);
+      else buckets.ongoing.push(e);
+    }else if(e.date){
       if(e.date===todayStr)buckets.today.push(e);
       else if(e.date>todayStr&&e.date<=endOfWeekStr)buckets.coming.push(e);
       else buckets.ongoing.push(e);
@@ -2201,7 +2233,18 @@ function renderSavedEvt(e){
 
   // When text
   let whenParts=[];
-  if(e.date){
+  if(e.dates&&e.dates.length){
+    const next=getNextEventDate(e);
+    const rem=getRemainingDates(e);
+    if(next){
+      const todayStr=getNow().toISOString().slice(0,10);
+      const tmrw=new Date(getNow());tmrw.setDate(tmrw.getDate()+1);
+      if(next===todayStr)whenParts.push('Today');
+      else if(next===tmrw.toISOString().slice(0,10))whenParts.push('Tomorrow');
+      else{const d=new Date(next+'T12:00:00');whenParts.push(d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}));}
+    }
+    if(rem.length>1)whenParts.push(rem.length+' dates left');
+  }else if(e.date){
     const d=new Date(e.date+'T12:00:00');
     const todayStr=getNow().toISOString().slice(0,10);
     const tmrw=new Date(getNow());tmrw.setDate(tmrw.getDate()+1);
@@ -2839,12 +2882,16 @@ function renderMore(){
     });
     const avgDays=checkedCount?Math.round(totalDays/checkedCount):null;
     const avgLabel=avgDays===null?'-':avgDays+' days';
-    const verPct=allParishes.length?Math.round(verCount/allParishes.length*100):0;
+    const todayStr=today.toISOString().slice(0,10);
+    const activeEvtCount=eventsData.filter(function(e){
+      if(e.dates&&e.dates.length){var last=e.dates[e.dates.length-1];return(e.end_date||last)>=todayStr}
+      var exp=e.end_date||e.date;if(!exp)return true;return exp>=todayStr;
+    }).length;
     grid.innerHTML=
       '<div class="stat-card"><div class="stat-value">'+allParishes.length+'</div><div class="stat-label">Churches</div></div>'
       +'<div class="stat-card"><div class="stat-value">'+svcCount.toLocaleString()+'</div><div class="stat-label">Services</div></div>'
       +'<div class="stat-card"><div class="stat-value">'+avgLabel+'</div><div class="stat-label">Avg. Data Age</div></div>'
-      +'<div class="stat-card"><div class="stat-value">'+verPct+'%</div><div class="stat-label">Churches Verified</div></div>';
+      +'<div class="stat-card"><div class="stat-value">'+activeEvtCount+'</div><div class="stat-label">Active Events</div></div>';
   })();
 
   // ── What's Happening: unified YC + Community events ────────────────────
