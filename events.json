@@ -1726,6 +1726,285 @@
       "venue_address": "191 Hubbard Street, Ludlow, MA 01056",
       "notes": "2nd Saturday of the month. Dust while listening to the Rosary. Contact Deb Gendreau 413-505-9760.",
       "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_039-evt-bake-sale-mar",
+      "category": "social",
+      "title": "Martha/Mary Bake Sale",
+      "parish_id": "parish_039",
+      "dates": [
+        "2026-03-07",
+        "2026-03-08"
+      ],
+      "end_date": "2026-03-08",
+      "time": null,
+      "end_time": null,
+      "notes": "After Masses at both churches. Proceeds benefit heating bills.",
+      "venue_name": "St. Patrick & St. Christopher Churches",
+      "venue_address": null,
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_039-evt-church-cleaning",
+      "category": "volunteering",
+      "title": "Monthly Church Cleaning",
+      "parish_id": "parish_039",
+      "day": "saturday",
+      "time": "08:30",
+      "end_time": null,
+      "recurrence": {
+        "type": "nth",
+        "week": 2
+      },
+      "notes": "2nd Saturday of each month. Volunteers welcome — no commitment required.",
+      "venue_name": "St. Patrick Church",
+      "venue_address": "22 Green Street, Monson, MA 01057",
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_039-evt-book-club",
+      "category": "educational",
+      "title": "Spiritual Life Book Club — The Three Ordinary Voices of God",
+      "parish_id": "parish_039",
+      "date": "2026-05-05",
+      "time": "18:00",
+      "end_time": "19:00",
+      "notes": "Free book available in vestibules. Contact: Doreen dcmattie49@aol.com or Barbara 267-3622.",
+      "venue_name": "Columbia Hall",
+      "venue_address": null,
+      "contact_name": "Doreen",
+      "contact_email": "dcmattie49@aol.com",
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_039-evt-lenten-mission",
+      "category": "devotional",
+      "title": "Lenten Mission: Walk in Faith",
+      "parish_id": "parish_039",
+      "dates": [
+        "2026-03-16",
+        "2026-03-17",
+        "2026-03-18",
+        "2026-03-19"
+      ],
+      "end_date": "2026-03-19",
+      "time": "18:00",
+      "end_time": null,
+      "notes": "By Fr. David Gunter. 6:00 PM Rosary & Confession, Mass at 7:00 PM. Mar 16-17 at St. Patrick's, Mar 18-19 at St. Christopher's.",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      },
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_039-evt-women-bible-study",
+      "category": "educational",
+      "title": "Women of the Bible — Bible Study",
+      "parish_id": "parish_039",
+      "day": "thursday",
+      "time": "10:00",
+      "end_time": "11:00",
+      "notes": "Ongoing. Led by Rich Morris. Join at any point.",
+      "venue_name": "St. Christopher's Parish Center",
+      "venue_address": "16 Sturbridge Road, Brimfield, MA 01010",
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_039-evt-adoration-mar8",
+      "category": "devotional",
+      "title": "Eucharistic Adoration",
+      "parish_id": "parish_039",
+      "date": "2026-03-08",
+      "time": "11:15",
+      "end_time": null,
+      "time_is_inferred": true,
+      "notes": "Following the 10:30 AM Mass at St. Christopher's",
+      "location_id": "st-christopher-church-brimfield",
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_041-evt-irish-night",
+      "category": "social",
+      "title": "Irish Night",
+      "parish_id": "parish_041",
+      "date": "2026-03-14",
+      "time": "16:30",
+      "end_time": "18:30",
+      "notes": "Corned beef or ham, cabbage, potatoes, carrots, fresh rolls & dessert. $16 adults, $8 kids under 12.",
+      "venue_name": "St. Elizabeth Parish Center",
+      "venue_address": "70 Marshall Street, North Adams, MA 01247",
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_041-evt-lenten-family",
+      "category": "educational",
+      "title": "Lenten Family Gathering",
+      "parish_id": "parish_041",
+      "date": "2026-03-29",
+      "time": "08:30",
+      "end_time": "11:00",
+      "notes": "Begins with 8:30 AM Family Mass (Palm Sunday). Faith Formation 9:30-11:00 AM. Breakfast, reflection, and crafts.",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      },
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_042-evt-coffee-hour",
+      "category": "social",
+      "title": "Coffee Hour",
+      "parish_id": "parish_042",
+      "day": "sunday",
+      "time": "10:15",
+      "end_time": null,
+      "time_is_inferred": true,
+      "recurrence": {
+        "type": "nth",
+        "week": 1
+      },
+      "notes": "1st Sunday of each month after the 9:30 AM Mass. All are welcome.",
+      "venue_name": "Youth Center",
+      "venue_address": "87 Beacon St, Florence, MA 01062",
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_107-evt-bible-study",
+      "category": "educational",
+      "title": "Bible Study",
+      "parish_id": "parish_107",
+      "day": "wednesday",
+      "time": "15:00",
+      "end_time": "16:15",
+      "notes": "Bell Tower Room",
+      "venue_name": "Sacred Heart Church — Bell Tower Room",
+      "venue_address": "5 East Main Street, Milford, MA 01757",
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_107-evt-catechism",
+      "category": "educational",
+      "title": "Catechism of Our Catholic Beliefs",
+      "parish_id": "parish_107",
+      "day": "wednesday",
+      "time": "18:30",
+      "end_time": "20:00",
+      "notes": "Bell Tower Room",
+      "venue_name": "Sacred Heart Church — Bell Tower Room",
+      "venue_address": "5 East Main Street, Milford, MA 01757",
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_104-evt-aa-meetings",
+      "category": "community",
+      "title": "Alcoholics Anonymous",
+      "parish_id": "parish_104",
+      "day": "tuesday",
+      "time": "19:30",
+      "end_time": null,
+      "notes": "Weekly AA meetings.",
+      "venue_name": "IHM Parish Hall",
+      "venue_address": "256 State Street, Granby, MA 01033",
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_028-evt-deanery-penance",
+      "category": "devotional",
+      "title": "Deanery Wide Penance Service",
+      "parish_id": "parish_028",
+      "date": "2026-03-08",
+      "time": "14:00",
+      "end_time": "15:00",
+      "notes": "Hosted at Our Lady of the Cross. Open to all parishes in the deanery.",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      },
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_104-evt-holy-hour-mar18",
+      "category": "devotional",
+      "title": "Holy Hour",
+      "parish_id": "parish_104",
+      "date": "2026-03-18",
+      "time": "18:45",
+      "end_time": null,
+      "notes": null,
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_104-evt-lenten-confessions",
+      "category": "devotional",
+      "title": "Lenten Confessions",
+      "parish_id": "parish_104",
+      "dates": [
+        "2026-03-18",
+        "2026-03-25",
+        "2026-04-01"
+      ],
+      "end_date": "2026-04-01",
+      "time": "17:30",
+      "end_time": "19:00",
+      "notes": "Fr. Michael hearing confessions on Wednesdays during Lent.",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      },
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_017-evt-irish-night-2026",
+      "category": "social",
+      "title": "Irish Night",
+      "parish_id": "parish_017",
+      "date": "2026-03-21",
+      "time": "18:00",
+      "end_time": null,
+      "notes": "Annual Irish Night celebration",
+      "venue_name": "Our Lady of the Valley Parish",
+      "venue_address": "33 Adams Street, Easthampton, MA 01027",
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_017-evt-divine-mercy-prayer-2026",
+      "category": "devotional",
+      "title": "Divine Mercy Prayer Group",
+      "parish_id": "parish_017",
+      "date": "2026-03-11",
+      "time": null,
+      "end_time": null,
+      "notes": null,
+      "venue_name": "Our Lady of the Valley Church",
+      "venue_address": "33 Adams Street, Easthampton, MA 01027",
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_017-evt-penance-2026-03-17",
+      "category": "liturgical",
+      "title": "Communal Penance Service",
+      "parish_id": "parish_017",
+      "date": "2026-03-17",
+      "time": "17:30",
+      "end_time": null,
+      "notes": "Lenten Penance Service",
+      "venue_name": "Our Lady of the Valley Church",
+      "venue_address": "33 Adams Street, Easthampton, MA 01027",
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_017-evt-stjoseph-tlm-2026-03-19",
+      "category": "liturgical",
+      "title": "Traditional Latin Mass — Solemnity of St. Joseph",
+      "parish_id": "parish_017",
+      "date": "2026-03-19",
+      "time": "18:00",
+      "end_time": null,
+      "notes": "Sung Traditional Latin Mass for the Solemnity of St. Joseph",
+      "venue_name": "Our Lady of the Valley Church",
+      "venue_address": "33 Adams Street, Easthampton, MA 01027",
+      "source": "bulletin_2026-03"
     }
   ]
 }

@@ -291,3 +291,181 @@ Accumulated during parish-by-parish bulletin review. Used to inform admin panel 
 | 13 | **Bilingual Mass language tagging** | Masses celebrated in two languages (e.g., "English/Polish") — currently tagged as primary language with notes. Should we support `languages: ["en", "pl"]` array? Or is `language` + notes sufficient? Affects search/filter if users filter by language. |
 | 14 | **Holy Saturday as a day value** | Need `holy_saturday` for tomb visits, food blessings, Easter Vigil prep. Currently not in DATA_STANDARDS.md day values list. Easter Vigil uses `easter_vigil` but pre-vigil events need a separate day. |
 | 15 | **Cultural/ethnic traditions as service types** | Polish Swieconka (food blessing), Resurrection Procession — these are cultural liturgical traditions. Currently using `adoration` or `easter_sunday_mass` with notes. Consider adding `blessing` service type for food blessings, or keep as notes. |
+
+---
+
+### parish_039 — St. Patrick Parish, Monson (2026-03-04)
+
+Multi-site parish: St. Patrick (Monson) + St. Christopher (Brimfield). Data was severely incomplete — missing entire second location and half the services.
+
+| # | Issue | Was | Fixed To |
+|---|-------|-----|----------|
+| 1 | Missing St. Christopher location entirely | 1 location | Added: 16 Sturbridge Rd, Brimfield, MA 01010 |
+| 2 | All 10 services had null location_ids | null | Assigned to st-patrick or st-christopher |
+| 3 | Missing Sat 6PM vigil Mass at St. Christopher's | — | Added sunday_mass sat 18:00 |
+| 4 | Missing Sun 10:30 AM Mass at St. Christopher's | — | Added sunday_mass sun 10:30 |
+| 5 | Missing Mon 9AM daily Mass at St. Christopher's | — | Added daily_mass mon 09:00 |
+| 6 | Missing Wed 9AM daily Mass at St. Christopher's | — | Added daily_mass wed 09:00 |
+| 7 | Missing confession at St. Christopher's (after 6PM Mass) | — | Added confession sat 18:45 (inferred time) |
+| 8 | Missing Miraculous Medal Wed 9AM at St. Christopher's | — | Added miraculous_medal wed 09:00 |
+| 9 | Duplicate Miraculous Medal Tue 8AM (2 entries) | devot-tue-0800 + mirac-tue-0800 | Removed devot-tue-0800 |
+| 10 | Generic `devotion` for St. Peregrine Novena | type: devotion | Removed (novena entry covers it) |
+| 11 | Excess clergy (emeritus deacon beyond pastor+1) | 3 clergy | Dropped Deacon Pellissier (emeritus) |
+| 12 | Address missing full format | "22 Green St., Monson, MA" | "22 Green Street, Monson, MA 01057" |
+| 13 | Secondary phone not captured | — | Added 413-245-7274 for St. Christopher's office |
+
+**Services: 10 → 14** (removed 2 duplicates, added 6 new)
+
+**Events logged (6):**
+- Martha/Mary Bake Sale (Mar 7-8) → social
+- Monthly Church Cleaning (2nd Saturday) → volunteering (recurring with recurrence)
+- Spiritual Life Book Club (May 5) → educational
+- Lenten Mission: Walk in Faith (Mar 16-19) → devotional (multi-date series)
+- Women of the Bible Study (Thu 10-11 AM, ongoing) → educational (recurring)
+- Eucharistic Adoration (Mar 8, one-time) → devotional
+
+**New issue pattern discovered:**
+- Multi-site parish with completely missing second worship site — all services lacked location assignment
+
+---
+
+### parish_041 — St. Elizabeth of Hungary, North Adams (2026-03-04)
+
+| # | Issue | Was | Fixed To |
+|---|-------|-----|----------|
+| 1 | Clergy array empty | `[]` | Added pastor (Fr. Wudarski) + deacon (Galli) |
+| 2 | Weekday confession but no Wed confession | `day: "weekday"` | Split to 4 entries (Mon/Tue/Thu/Fri) |
+| 3 | Missing adoration chapel service | — | Added adoration daily 07:00–22:00 |
+| 4 | Missing Lenten rosary (Fri 6PM) | — | Added rosary fri 18:00 seasonal/lent |
+| 5 | Daily Mass missing morning prayer context | no note | Added "Morning Prayer at 7:50 AM" to daily_mass notes |
+
+**Services: 14 → 19** (removed 1 incorrect weekday confession, added 4 individual + adoration + Lenten rosary)
+
+**Verified correct:**
+- Weekend Masses (4): Sat vigil 4PM, Sun 8:30/10:45/5:30 ✓
+- Weekday Masses (4 individual Mon/Tue/Thu/Fri): correct split since Wed is communion service ✓
+- Wednesday communion service ✓
+- First Saturday sequence (confession 7AM / rosary 7:30 / Mass 8AM) ✓
+- Saturday confession 2-3 PM with end_time ✓
+- All location_ids assigned ✓
+
+**Events logged (2):**
+- Irish Night (Mar 14, Parish Center) → social
+- Lenten Family Gathering (Mar 29, Palm Sunday) → educational
+
+**New issue pattern:**
+- `weekday` confession covering only 4 of 5 days (Wed excluded) — must split to individual entries
+
+---
+
+### parish_042 — St. Elizabeth Ann Seton, Northampton (2026-03-04)
+
+Multi-location parish (church + chapel). Already well-structured — minor fixes only.
+
+| # | Issue | Was | Fixed To |
+|---|-------|-----|----------|
+| 1 | Adoration incorrectly marked seasonal/lent | seasonal: lent | year_round; added end_time 19:00 |
+| 2 | Missing anointing of sick on First Fridays | — | Added anointing_of_sick first_friday 18:00 |
+| 3 | Clergy empty | `[]` | No pastoral staff names in provided bulletin — flagged |
+
+**Services: 15 → 16** (added anointing, fixed adoration)
+
+**Flagged:** New weekend Mass schedule announced for Divine Mercy Sunday (~Apr 12 2026). Current schedule remains valid until then. Changes: Sun 8AM→10AM (Church), Sun 9:30→8:30 (Chapel), Sun 11AM dropped, Sun 12:30→12:00 (Chapel).
+
+**Verified correct:**
+- Weekend Masses (5): Sat 4PM vigil, Sun 8/9:30/11/12:30 ✓
+- Weekday Masses: Mon/Tue/Wed 7:30 + Fri 12:30 ✓
+- Thu Communion Service 7:30 ✓
+- Holy Day: Vigil 5:30 Chapel + 7:30 Church ✓
+- Confession: Fri 1:10 + Sat 3:15 ✓
+- Stations: Fri 5PM Lent ✓
+- Spanish Mass tagged es at Chapel ✓
+- All location_ids correctly assigned ✓
+
+**Events logged (1 new):**
+- Coffee Hour (1st Sunday monthly, Youth Center) → social
+
+**New issue pattern:**
+- Upcoming schedule change announced in bulletin — flagged with details for future revisit
+
+---
+
+### parish_106 — Our Lady of Mount Carmel, Springfield (2026-03-04)
+
+**COMPLETE REBUILD** — entire parish data was for the wrong location. Data had Easthampton/55 Payson Ave; bulletin is Springfield/123 William St. Placeholder phone, wrong website, wrong services, `pf4-*` IDs.
+
+| # | Issue | Was | Fixed To |
+|---|-------|-----|----------|
+| 1 | Wrong town | Easthampton | Springfield |
+| 2 | Wrong address | 55 Payson Ave, Easthampton 01027 | 123 William St, Springfield 01105 |
+| 3 | Placeholder phone | 413-555-0404 | 413-734-5433 |
+| 4 | Wrong website | mtcarmelparish.org | olmcspringfield.org |
+| 5 | Wrong email | olmc@mtcarmelparish.org | mountcarmelrectoryoffice@gmail.com |
+| 6 | Wrong county | Hampshire | Hampden |
+| 7 | Ghost Spanish Sunday Mass | es Sun 12PM | Removed (not in bulletin) |
+| 8 | Wrong weekday Mass | weekday 7:30AM | M/Tu/W/F 12:10PM (4 individual) |
+| 9 | Wrong devotions | miraculous_medal Wed, Fri adoration, Thu holy_hour/confession | St. Anthony Novena Tue 6:30, Holy Hour Thu 3:30 |
+| 10 | Wrong confession | Sat 2:30-3:30 + Thu 7-8 | Sat 3:15-3:45 only |
+| 11 | Clergy empty | `[]` | Fr. White CSS + Deacon Farrell |
+| 12 | Non-standard IDs | `pf4-*` | `parish_106-*` |
+
+**Services: 10 → 13** (complete replacement)
+
+**New issue pattern:**
+- Entire parish data from wrong source/location — required full rebuild
+
+---
+
+### parish_107 — Sacred Heart of Jesus, Milford (2026-03-04)
+
+**COMPLETE REBUILD** — same problem as parish_106. Data had Granville/218 Main Road; bulletin is Milford/5 East Main St. Placeholder phone (413-555-0505), made-up email, wrong services, `pf5-*` IDs.
+
+| # | Issue | Was | Fixed To |
+|---|-------|-----|----------|
+| 1 | Wrong town | Granville | Milford |
+| 2 | Wrong address | 218 Main Road, Granville 01034 | 5 East Main Street, Milford 01757 |
+| 3 | Placeholder phone | 413-555-0505 | 508-634-5435 |
+| 4 | Made-up email | sacredheart@granvillecatholic.org | Removed (none in bulletin) |
+| 5 | No website | null | sacredheartmilford.org |
+| 6 | Wrong county | Hampden | Worcester |
+| 7 | Wrong services (3 total) | Sun 9AM, Thu Mass, Thu confession | Complete rebuild |
+| 8 | Non-standard IDs | `pf5-*` | `parish_107-*` |
+| 9 | No clergy | `[]` | Fr. Scioli CSS + Deacon Mussulli |
+
+**Services: 3 → 16** (complete replacement): 3 weekend, 4 weekday (M/Tu/W/F), 1 confession, 4 rosary (after Mass), 2 Lenten (stations + benediction), 2 Holy Week (Holy Thursday + Good Friday)
+
+**Events logged (2):**
+- Bible Study (Wed 3-4:15 PM, Bell Tower Room) → educational
+- Catechism of Catholic Beliefs (Wed 6:30-8 PM, Bell Tower Room) → educational
+
+**Note:** Milford MA is in Worcester County (Diocese of Worcester), not Diocese of Springfield. Parish may be outside primary coverage area.
+
+---
+
+### parish_104 — Immaculate Heart of Mary, Granby (2026-03-04)
+
+**COMPLETE REBUILD** — third `pf*-` prefix parish. Data had Westfield/256 Orange St; bulletin is Granby/256 State St. Placeholder phone, made-up email/website, wrong services.
+
+| # | Issue | Was | Fixed To |
+|---|-------|-----|----------|
+| 1 | Wrong town | Westfield | Granby |
+| 2 | Wrong address | 256 Orange St, Westfield 01085 | 256 State St, Granby 01033 |
+| 3 | Placeholder phone | 413-555-0202 | 413-467-9821 |
+| 4 | Wrong website | ihmwestfield.org | ihmparishgranby.org |
+| 5 | Wrong email | parish@ihmwestfield.org | Removed (none in bulletin) |
+| 6 | Wrong weekend Masses | Sat 5PM, Sun 8:30/11 | Sat 4PM, Sun 8/10:45 |
+| 7 | Wrong daily Mass | weekday 8AM + Thu 5:30PM | Mon-Thu 8:30AM (4 individual) |
+| 8 | Wrong confession | Sat 3:30-4:45 + Thu 4:30-5:15 | Sat 3:00-3:45 + before every Mass |
+| 9 | Ghost services | Wed adoration, rosary, divine mercy | Removed (not in bulletin) |
+| 10 | No clergy | `[]` | Fr. Goodreau + Deacon Mazzariello |
+| 11 | Non-standard IDs | `pf2-*` | `parish_104-*` |
+
+**Services: 10 → 9** (complete replacement): 3 weekend, 4 weekday (Mon-Thu), 1 confession, 1 Lenten stations
+
+**Events logged (4):**
+- AA meetings (Tue 7:30 PM, recurring) → community
+- Deanery Penance Service (Mar 8, hosted at parish_028) → devotional (cross-parish)
+- Holy Hour (Mar 18, one-time) → devotional
+- Lenten Confessions (Mar 18/25, Apr 1, multi-date) → devotional
+
+**Pattern confirmed:** Three consecutive `pf*-` prefix parishes (pf2, pf4, pf5 → parish_104, _106, _107) all have same injection failure: wrong town, placeholder phones, fabricated contact info, wrong services. Likely batch-imported from an incorrect source.
