@@ -465,32 +465,20 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .saved-empty-icon svg { width: 28px; height: 28px; color: var(--color-text-tertiary); }
 .saved-empty h3 { font-family: var(--font-display); font-size: var(--text-xl); font-weight: var(--weight-semibold); color: var(--color-text-secondary); margin-bottom: var(--space-2); }
 .saved-empty p { font-size: var(--text-sm); color: var(--color-text-tertiary); line-height: 1.5; }
-.saved-week-section { margin-bottom: var(--space-3); }
-.saved-week-section details { border-radius: var(--radius-md); overflow: hidden; }
-.saved-week-section summary { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-3) 0; font-family: var(--font-display); font-size: var(--text-base); font-weight: var(--weight-semibold); color: var(--color-text-primary); cursor: pointer; list-style: none; }
-.saved-week-section summary::-webkit-details-marker { display: none; }
-.saved-week-section summary::before { content: '\25B6'; font-size: 10px; color: var(--color-text-tertiary); transition: transform var(--transition-fast); }
-.saved-week-section details[open]>summary::before { transform: rotate(90deg); }
-.saved-week-count { font-size: var(--text-xs); color: var(--color-accent-text); font-weight: var(--weight-medium); background: var(--color-accent-pale); padding: 2px 8px; border-radius: var(--radius-full); }
-.saved-evt { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); background: var(--color-surface); border-radius: var(--radius-md); box-shadow: var(--shadow-card); margin-bottom: var(--space-2); cursor: pointer; transition: box-shadow var(--transition-fast); }
-.saved-evt:hover { box-shadow: var(--shadow-card-hover); }
-.saved-evt .ce-item-accent { width: 3px; border-radius: 2px; align-self: stretch; min-height: 32px; flex-shrink: 0; }
-.saved-evt .ce-item-body { flex: 1; min-width: 0; }
-.saved-evt .ce-item-title { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.saved-evt .ce-item-when { font-size: var(--text-xs); color: var(--color-text-secondary); margin-top: 1px; }
-.saved-evt-actions { display: flex; gap: var(--space-1); flex-shrink: 0; }
-.saved-evt-btn { width: 32px; height: 32px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--color-text-tertiary); background: none; border: 1px solid var(--color-border-light); cursor: pointer; transition: all var(--transition-fast); }
-.saved-evt-btn:hover { background: var(--color-surface-hover); color: var(--color-text-secondary); }
-.saved-evt-btn:disabled { opacity: 0.5; cursor: default; }
-.saved-lent-accent { background: #7C3AED !important; }
 .saved-evt-count { font-size: var(--text-xs); color: var(--color-accent-text); font-weight: var(--weight-medium); background: var(--color-accent-pale); padding: 1px 6px; border-radius: var(--radius-full); margin-left: var(--space-1); }
-.saved-section-title { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 700; color: var(--color-text-primary); margin: var(--space-4) 0 var(--space-2); display: flex; align-items: center; gap: var(--space-2); }
-.saved-compact-yc { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); background: linear-gradient(135deg, #FBF8F1 0%, #F5EDD8 100%); border-left: 3px solid var(--color-accent); border-radius: var(--radius-md); box-shadow: var(--shadow-card); margin-bottom: var(--space-2); cursor: pointer; transition: box-shadow var(--transition-fast); }
-.saved-compact-yc:hover { box-shadow: var(--shadow-card-hover); }
-.saved-compact-yc .ce-item-body { flex: 1; min-width: 0; }
-.saved-compact-yc .ce-item-title { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.saved-compact-yc .ce-item-when { font-size: var(--text-xs); color: var(--color-text-secondary); margin-top: 1px; }
-.saved-section-divider { height: 1px; background: var(--color-border-light); margin: var(--space-4) 0; }
+/* Inline event rows within saved church cards */
+.card-evt-divider { height: 1px; background: var(--color-border-light); margin: var(--space-2) 0 0; }
+.card-evt-section { padding: var(--space-2) 0 0; }
+.card-evt-row { display: flex; align-items: center; gap: var(--space-2); padding: 6px 0; }
+.card-evt-row + .card-evt-row { border-top: 1px solid var(--color-border-light); }
+.card-evt-accent { width: 3px; border-radius: 2px; align-self: stretch; min-height: 24px; flex-shrink: 0; }
+.card-evt-upcoming { background: var(--color-info); }
+.card-evt-lent { background: #7C3AED; }
+.card-evt-yc { background: var(--color-accent); }
+.card-evt-body { flex: 1; min-width: 0; display: flex; align-items: baseline; gap: var(--space-2); }
+.card-evt-title { font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--color-text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.card-evt-when { font-size: 11px; color: var(--color-text-tertiary); white-space: nowrap; margin-left: auto; flex-shrink: 0; }
+.card-evt-more { font-size: var(--text-xs); color: var(--color-accent-text); font-weight: var(--weight-medium); padding: var(--space-1) 0; }
 
 /* MORE TAB */
 .more-content { max-width: var(--max-width); margin: 0 auto; padding: var(--space-4) var(--space-4) var(--space-12); }
@@ -2185,104 +2173,45 @@ function closeMapPopup(){if(window._map)window._map.closePopup()}
 // ============================================================
 // SAVED TAB
 // ============================================================
-function getSavedChurchEvents(favIds){
-  const today=getNow();
-  const todayStr=today.toISOString().slice(0,10);
-  const todayDow=['sunday','monday','tuesday','wednesday','thursday','friday','saturday'][today.getDay()];
-  // End of week = next Sunday
-  const endOfWeek=new Date(today);endOfWeek.setDate(today.getDate()+(7-today.getDay()));
-  const endOfWeekStr=endOfWeek.toISOString().slice(0,10);
-  // Remaining days this week (after today)
-  const remainingDays=[];
-  for(let i=today.getDay()+1;i<7;i++)remainingDays.push(['sunday','monday','tuesday','wednesday','thursday','friday','saturday'][i]);
-
-  const buckets={today:[],coming:[],ongoing:[]};
-  const dayOrd={sunday:0,monday:1,tuesday:2,wednesday:3,thursday:4,friday:5,saturday:6};
-  const evts=eventsData.filter(e=>favIds.has(e.parish_id)&&e.category!=='yc'&&isEventActive(e));
-
-  for(const e of evts){
-    if(e.dates&&e.dates.length){
-      const next=getNextEventDate(e);
-      if(next===todayStr)buckets.today.push(e);
-      else if(next&&next>todayStr&&next<=endOfWeekStr)buckets.coming.push(e);
-      else buckets.ongoing.push(e);
-    }else if(e.date){
-      if(e.date===todayStr)buckets.today.push(e);
-      else if(e.date>todayStr&&e.date<=endOfWeekStr)buckets.coming.push(e);
-      else buckets.ongoing.push(e);
-    }else if(e.day){
-      if(e.day===todayDow)buckets.today.push(e);
-      else if(remainingDays.includes(e.day))buckets.coming.push(e);
-      else buckets.ongoing.push(e);
-    }else{
-      buckets.ongoing.push(e);
-    }
-  }
-
-  // Sort: dated by date, recurring by day-of-week
-  buckets.today.sort((a,b)=>(a.time||'').localeCompare(b.time||''));
-  buckets.coming.sort((a,b)=>(a.date||'').localeCompare(b.date||'')||(dayOrd[a.day]??7)-(dayOrd[b.day]??7));
-  buckets.ongoing.sort((a,b)=>(dayOrd[a.day]??7)-(dayOrd[b.day]??7));
-  return buckets;
-}
-
-function renderSavedEvt(e){
-  const p=allParishes.find(x=>x.id===e.parish_id)||{};
-  const pName=displayName(p.name||'',e.parish_id);
-  const isLent=isLentSeason()&&(e.category==='liturgical'||e.category==='devotional');
-
-  // When text
-  let whenParts=[];
+function getCardEvtWhen(e){
+  const todayStr=getNow().toISOString().slice(0,10);
+  const tmrw=new Date(getNow());tmrw.setDate(tmrw.getDate()+1);
+  const tmrwStr=tmrw.toISOString().slice(0,10);
+  let when='';
   if(e.dates&&e.dates.length){
     const next=getNextEventDate(e);
-    const rem=getRemainingDates(e);
-    if(next){
-      const todayStr=getNow().toISOString().slice(0,10);
-      const tmrw=new Date(getNow());tmrw.setDate(tmrw.getDate()+1);
-      if(next===todayStr)whenParts.push('Today');
-      else if(next===tmrw.toISOString().slice(0,10))whenParts.push('Tomorrow');
-      else{const d=new Date(next+'T12:00:00');whenParts.push(d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}));}
-    }
-    if(rem.length>1)whenParts.push(rem.length+' dates left');
+    if(next===todayStr)when='Today';
+    else if(next===tmrwStr)when='Tomorrow';
+    else if(next){const d=new Date(next+'T12:00:00');when=d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});}
   }else if(e.date){
-    const d=new Date(e.date+'T12:00:00');
-    const todayStr=getNow().toISOString().slice(0,10);
-    const tmrw=new Date(getNow());tmrw.setDate(tmrw.getDate()+1);
-    if(e.date===todayStr)whenParts.push('Today');
-    else if(e.date===tmrw.toISOString().slice(0,10))whenParts.push('Tomorrow');
-    else whenParts.push(d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}));
+    if(e.date===todayStr)when='Today';
+    else if(e.date===tmrwStr)when='Tomorrow';
+    else{const d=new Date(e.date+'T12:00:00');when=d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});}
   }else if(e.day){
-    whenParts.push((DAY_NAMES[e.day]||e.day)+'s');
+    when=(DAY_NAMES[e.day]||e.day)+'s';
   }
-  if(e.time)whenParts.push(fmt12(e.time));
-  whenParts.push(pName);
-
-  const calSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="14" height="14"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
-
-  return '<div class="saved-evt" onclick="openDetail(\''+e.parish_id+'\')">'
-    +'<div class="ce-item-accent'+(isLent?' saved-lent-accent':' upcoming')+'"></div>'
-    +'<div class="ce-item-body">'
-    +'<div class="ce-item-title">'+esc(e.title)+'</div>'
-    +'<div class="ce-item-when">'+whenParts.join(' · ')+'</div>'
-    +'</div>'
-    +'<div class="saved-evt-actions">'
-    +'<button class="saved-evt-btn" onclick="downloadEventIcal(\''+esc(e.id)+'\');event.stopPropagation()" title="Add to Calendar">'+calSvg+'</button>'
-    +'<button class="saved-evt-btn" onclick="expressInterest(\''+esc(e.id)+'\',event)" title="I\'m interested">&#9825;</button>'
-    +'</div></div>';
+  if(e.time)when+=(when?' · ':'')+fmt12(e.time);
+  return when;
 }
 
-function renderCompactYC(e){
-  const r=resolveYC(e);
-  const timeStr=fmt12(e.time)+(e.end_time?' – '+fmt12(e.end_time):'');
-  const calSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="14" height="14"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
-  return '<div class="saved-compact-yc" onclick="openEventDetail(\''+e.id+'\')">'
-    +'<div class="ce-item-body">'
-    +'<div class="ce-item-title">'+esc(e.title)+'</div>'
-    +'<div class="ce-item-when">'+fmtYCDate(e.date)+' · '+timeStr+' · '+esc(displayName(r.locName||r.parishName,e.parish_id))+'</div>'
-    +'</div>'
-    +'<div class="saved-evt-actions">'
-    +'<button class="saved-evt-btn" onclick="downloadEventIcal(\''+esc(e.id)+'\');event.stopPropagation()" title="Add to Calendar">'+calSvg+'</button>'
-    +'<button class="saved-evt-btn" onclick="expressInterest(\''+esc(e.id)+'\',event)" title="I\'m interested">&#9825;</button>'
+function getEvtSortKey(e){
+  const todayStr=getNow().toISOString().slice(0,10);
+  if(e.dates&&e.dates.length){const n=getNextEventDate(e);return n||'9999';}
+  if(e.date)return e.date;
+  if(e.day){const dayOrd={sunday:0,monday:1,tuesday:2,wednesday:3,thursday:4,friday:5,saturday:6};const todayDow=getNow().getDay();const d=dayOrd[e.day]??7;const diff=(d-todayDow+7)%7;return todayStr.slice(0,8)+String(Number(todayStr.slice(8))+diff).padStart(2,'0');}
+  return '9999';
+}
+
+function renderCardEvtRow(e){
+  const isLent=isLentSeason()&&(e.category==='liturgical'||e.category==='devotional');
+  const isYC=e.category==='yc';
+  const accent=isYC?'card-evt-yc':(isLent?'card-evt-lent':'card-evt-upcoming');
+  const when=getCardEvtWhen(e);
+  return '<div class="card-evt-row">'
+    +'<div class="card-evt-accent '+accent+'"></div>'
+    +'<div class="card-evt-body">'
+    +'<span class="card-evt-title">'+esc(e.title)+'</span>'
+    +'<span class="card-evt-when">'+when+'</span>'
     +'</div></div>';
 }
 
@@ -2304,47 +2233,14 @@ function renderSaved(){
 
   const checkSvg='<svg class="card-verified" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>';
 
-  let html='';
-
-  // ── This Week at Your Churches ──
-  const buckets=getSavedChurchEvents(favIds);
-  const totalEvts=buckets.today.length+buckets.coming.length+buckets.ongoing.length;
-  if(totalEvts){
-    html+='<div class="saved-section-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="20" height="20"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>This Week at Your Churches</div>';
-
-    if(buckets.today.length){
-      html+='<div class="saved-week-section"><details open><summary>Today <span class="saved-week-count">'+buckets.today.length+'</span></summary>';
-      html+=buckets.today.map(e=>renderSavedEvt(e)).join('');
-      html+='</details></div>';
-    }
-    if(buckets.coming.length){
-      html+='<div class="saved-week-section"><details open><summary>Coming Up <span class="saved-week-count">'+buckets.coming.length+'</span></summary>';
-      html+=buckets.coming.map(e=>renderSavedEvt(e)).join('');
-      html+='</details></div>';
-    }
-    if(buckets.ongoing.length){
-      html+='<div class="saved-week-section"><details><summary>Ongoing <span class="saved-week-count">'+buckets.ongoing.length+'</span></summary>';
-      html+=buckets.ongoing.map(e=>renderSavedEvt(e)).join('');
-      html+='</details></div>';
-    }
-    html+='<div class="saved-section-divider"></div>';
-  }
-
-  // ── YC Events (compact) ──
-  const upcoming=getUpcomingYC().filter(e=>favIds.has(e.parish_id));
-  if(upcoming.length){
-    html+='<div class="saved-section-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Young &amp; Catholic <span class="saved-week-count">'+upcoming.length+'</span></div>';
-    html+=upcoming.slice(0,4).map(e=>renderCompactYC(e)).join('');
-    if(upcoming.length>4)html+='<div style="text-align:center;padding:var(--space-2) 0"><button style="font-size:var(--text-sm);font-weight:var(--weight-semibold);color:var(--color-accent-text);padding:var(--space-2) var(--space-4)" onclick="document.querySelector(\'[data-filter=yc]\').click();switchTab(\'panelFind\',document.querySelector(\'[data-tab=panelFind]\'))">See all YC events →</button></div>';
-    html+='<div class="saved-section-divider"></div>';
-  }
-
-  // ── Your Churches ──
-  // Count active events per parish for badges
-  const evtCounts={};
-  eventsData.filter(e=>favIds.has(e.parish_id)&&e.category!=='yc'&&isEventActive(e)).forEach(e=>{evtCounts[e.parish_id]=(evtCounts[e.parish_id]||0)+1});
-
-  html+='<div class="saved-section-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="20" height="20"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/></svg>Your Churches</div>';
+  // Gather active events per parish (regular + YC)
+  const parishEvts={};
+  eventsData.filter(e=>favIds.has(e.parish_id)&&isEventActive(e)).forEach(e=>{
+    if(!parishEvts[e.parish_id])parishEvts[e.parish_id]=[];
+    parishEvts[e.parish_id].push(e);
+  });
+  // Sort each parish's events by proximity
+  for(const pid in parishEvts)parishEvts[pid].sort((a,b)=>getEvtSortKey(a).localeCompare(getEvtSortKey(b)));
 
   // Sort: within 10mi by next service, then beyond 10mi by next service
   const sortedFav=favParishes.map(p=>({p,next:getNext(p,'all'),dist:getDist(p)}))
@@ -2354,6 +2250,7 @@ function renderSaved(){
       return(a.next?.minutesUntil??99999)-(b.next?.minutesUntil??99999);
     });
 
+  let html='';
   html+=sortedFav.map(({p,next,dist})=>{
     const ver=isVer(p);
     let statusBadge='';
@@ -2362,13 +2259,23 @@ function renderSaved(){
     let nh;
     if(next){nh='<div class="card-next-service"><span class="card-next-time">'+next.timeFormatted+'</span><span class="card-next-label">'+esc(SVC[next.service.type]||next.service.type)+'</span>'+statusBadge+'</div><div class="card-next-day">'+next.dayLabel+'</div>'}
     else{nh='<div class="card-next-service"><span class="card-next-label" style="color:var(--color-text-tertiary)">Check bulletin for times</span></div>'}
-    const ec=evtCounts[p.id];
+    const evts=parishEvts[p.id]||[];
+    const ec=evts.length;
     const evtBadge=ec?'<span class="saved-evt-count">'+ec+' event'+(ec!==1?'s':'')+'</span>':'';
+    // Inline event rows (max 3, with "+N more" if overflow)
+    let evtHtml='';
+    if(ec){
+      const shown=evts.slice(0,3);
+      evtHtml='<div class="card-evt-divider"></div><div class="card-evt-section">'
+        +shown.map(e=>renderCardEvtRow(e)).join('');
+      if(ec>3)evtHtml+='<div class="card-evt-more">+'+(ec-3)+' more event'+(ec-3!==1?'s':'')+'</div>';
+      evtHtml+='</div>';
+    }
     return '<article class="parish-card" role="listitem" onclick="openDetail(\''+p.id+'\')">'
       +'<div class="card-top"><div class="card-name-row"><h3 class="card-name">'+esc(displayName(p.name,p.id))+'</h3>'+(ver?checkSvg:'')+'</div>'
       +'<div class="card-right">'+(dist!==null?'<span class="card-distance">'+fmtDist(dist)+'</span>':'')
       +'<button class="card-fav is-fav" onclick="toggleFav(\''+p.id+"',event);renderSaved()\" aria-label=\"Remove from favorites\"><svg viewBox=\"0 0 24 24\" fill=\"currentColor\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z\"/></svg></button>"
-      +'</div></div><div class="card-town">'+esc(p.town)+', '+esc(p.state)+evtBadge+'</div>'+nh
+      +'</div></div><div class="card-town">'+esc(p.town)+', '+esc(p.state)+evtBadge+'</div>'+nh+evtHtml
       +'</article>';
   }).join('');
   el.innerHTML=html;
