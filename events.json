@@ -1507,6 +1507,30 @@
       "end_time": "11:00",
       "notes": "Parish Center, 9 AM–11 AM",
       "source": "manual_verification_2026-02"
+    },
+    {
+      "id": "parish_042-evt-lenten-reflections",
+      "category": "devotional",
+      "title": "Lenten Reflections and Prayers",
+      "parish_id": "parish_042",
+      "dates": [
+        "2026-02-25",
+        "2026-03-04",
+        "2026-03-11",
+        "2026-03-18",
+        "2026-03-25"
+      ],
+      "time": "17:30",
+      "end_time": "19:00",
+      "end_date": "2026-03-25",
+      "venue_name": "St. Elizabeth Ann Seton Youth Center",
+      "venue_address": "87 Beacon St, Florence",
+      "notes": "Lenten Reflections and Prayers series",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      },
+      "source": "bulletin_2026-03"
     }
   ]
 }

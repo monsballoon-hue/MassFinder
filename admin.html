@@ -229,6 +229,29 @@ details.card>.card-body{border-top:1px solid var(--border-lt)}
 .pill-vary{background:var(--amber-bg);color:var(--amber)}
 .loc-addr-preview{font-size:12px;color:var(--txt3);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sched-hint{font-size:12px;color:var(--accent);padding:2px 0 6px;min-height:18px}
+.svc-hint-warn{color:var(--amber);font-weight:500}
+.svc-hint-block{color:var(--red);font-weight:600}
+.recur-weeks{display:flex;gap:10px;flex-wrap:wrap;padding:4px 0}
+.recur-weeks label{display:flex;align-items:center;gap:4px;font-size:14px;cursor:pointer}
+.recur-weeks input{accent-color:var(--primary)}
+/* Clergy card */
+.clergy-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border-lt)}
+.clergy-row:last-child{border-bottom:none}
+.clergy-role-badge{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:2px 8px;border-radius:99px;white-space:nowrap}
+.clergy-role-badge.pastor{background:#EDF5F0;color:var(--green)}
+.clergy-role-badge.deacon{background:#EEF2FF;color:#4338CA}
+.clergy-role-badge.provisional{background:var(--amber-bg);color:var(--amber)}
+.clergy-name{font-weight:500;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.clergy-email{font-size:12px;color:var(--txt3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:200px}
+.clergy-actions{display:flex;gap:4px}
+/* New Parish Wizard */
+.wizard-steps{display:flex;justify-content:center;gap:8px;padding:0 0 14px}
+.wizard-dot{width:10px;height:10px;border-radius:50%;background:var(--border);transition:background .2s}
+.wizard-dot.active{background:var(--primary)}
+.wizard-dot.done{background:var(--green)}
+.wizard-page{display:none}
+.wizard-page.active{display:block}
+.wizard-nav{display:flex;justify-content:space-between;padding-top:12px;border-top:1px solid var(--border);margin-top:8px}
 .loc-rows{margin-bottom:4px}
 .pill-note{background:var(--bg);color:var(--txt3);border:1px solid var(--border)}
 .btn-row-edit{flex-shrink:0;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;border:1.5px solid var(--border);border-radius:var(--r-sm);background:var(--bg);color:var(--txt2);cursor:pointer;font-family:var(--font-b);transition:border-color .15s,color .15s;letter-spacing:1px}
@@ -488,6 +511,35 @@ button:active:not(:disabled){transform:scale(0.97)}
         <button class="btn-primary-sm" onclick="saveLocationModal()">Save Location</button>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- ══ CLERGY MODAL ═══════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="clergyModal" onclick="closeIfBg(event,'clergyModal')">
+  <div class="modal">
+    <div class="modal-hdr">
+      <h3 id="clergyModalTitle">Edit Clergy</h3>
+      <button class="modal-close" onclick="closeClergyModal()">&#x2715;</button>
+    </div>
+    <div class="modal-body" id="clergyModalBody"></div>
+    <div class="modal-footer">
+      <button id="mc_delete" class="btn-danger" onclick="deleteClergyMember()">Delete</button>
+      <div class="modal-footer-right">
+        <button class="btn-secondary" onclick="closeClergyModal()">Cancel</button>
+        <button class="btn-primary-sm" onclick="saveClergyModal()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ NEW PARISH WIZARD ═════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="newParishModal" onclick="closeIfBg(event,'newParishModal')">
+  <div class="modal wide">
+    <div class="modal-hdr">
+      <h3>New Parish</h3>
+      <button class="modal-close" onclick="closeNewParishModal()">&#x2715;</button>
+    </div>
+    <div class="modal-body" id="newParishBody"></div>
   </div>
 </div>
 
@@ -886,6 +938,7 @@ function updateStats(shown, total) {
   const sortLabels = { priority:'\u21AF Priority', alpha:'A\u2192Z Name', status:'\u25CF Status', flagged:'\u2691 Flagged' };
   el.innerHTML = '<span>' + (shown === total ? total + ' parishes' : shown + ' of ' + total + ' shown') + flagText + '</span>' +
     '<div style="display:flex;gap:6px;align-items:center">' +
+      '<button class="sort-toggle" onclick="openNewParishModal()" title="Create new parish" style="color:var(--green);font-weight:700">+</button>' +
       '<button class="sort-toggle" onclick="jumpToRandom()" title="Jump to random unverified parish">\u2684</button>' +
       '<button class="sort-toggle" onclick="cycleSidebarSort()" title="Change sort order">' + sortLabels[sidebarSort] + '</button>' +
     '</div>';
@@ -1094,6 +1147,7 @@ function renderPanel() {
     '<div class="edit-content">' +
       cardIdentity(p) +
       cardLocations(locs) +
+      cardClergy(p) +
       cardSchedule(p) +
       cardContact(c) +
       cardValidation(v) +
@@ -1172,6 +1226,91 @@ function locRowHtml(loc, i) {
   '</div>';
 }
 
+// ── Card: Clergy ─────────────────────────────────────────────────────
+var clergyModalIdx = -1;
+const CLERGY_ROLES = [['pastor','Pastor'],['pastor_and_director','Pastor & Director'],['provisional_priest','Provisional Priest'],['deacon','Deacon'],['deacon_emeritus','Deacon Emeritus'],['deacon_retired','Deacon (Retired)']];
+function clergyBadgeClass(role) {
+  if (role === 'pastor' || role === 'pastor_and_director') return 'pastor';
+  if (role === 'provisional_priest') return 'provisional';
+  return 'deacon';
+}
+function cardClergy(p) {
+  var clergy = p.clergy || [];
+  var rows = clergy.map(function(c, i) {
+    var roleLabel = (CLERGY_ROLES.find(function(r){return r[0]===c.role})||['',''])[1] || c.role || '';
+    return '<div class="clergy-row">' +
+      '<span class="clergy-role-badge ' + clergyBadgeClass(c.role) + '">' + esc(roleLabel) + '</span>' +
+      '<span class="clergy-name">' + esc(c.name || '') + '</span>' +
+      (c.email ? '<span class="clergy-email">' + esc(c.email) + '</span>' : '') +
+      '<button class="btn-row-edit" onclick="editClergy('+i+')" title="Edit">&middot;&middot;&middot;</button>' +
+    '</div>';
+  }).join('');
+  return '<div class="card" id="clergy-card">' +
+    '<div class="card-label"><span>Clergy &middot; ' + clergy.length + '</span>' +
+      '<button class="btn-sched-add" onclick="addClergy()">+ Add</button></div>' +
+    '<div class="card-body" style="padding-top:8px">' +
+      (rows || '<div class="sched-empty">No clergy listed</div>') +
+    '</div>' +
+  '</div>';
+}
+function addClergy() {
+  clergyModalIdx = -1;
+  openClergyModal({}, true);
+}
+function editClergy(i) {
+  clergyModalIdx = i;
+  openClergyModal((pendingParish.clergy||[])[i] || {}, false);
+}
+function openClergyModal(c, isNew) {
+  document.getElementById('clergyModalBody').innerHTML =
+    field('mc_name','Name', c.name||'') +
+    fpairs('mc_role','Role', CLERGY_ROLES, c.role||'pastor') +
+    field('mc_email','Email (optional)', c.email||'') +
+    field('mc_phone','Phone (optional)', c.phone||'');
+  document.getElementById('clergyModalTitle').textContent = isNew ? 'Add Clergy' : 'Edit Clergy';
+  document.getElementById('mc_delete').style.display = isNew ? 'none' : '';
+  document.getElementById('clergyModal').classList.add('open');
+}
+function closeClergyModal() {
+  document.getElementById('clergyModal').classList.remove('open');
+  clergyModalIdx = -1;
+}
+function saveClergyModal() {
+  var c = {
+    role: val('mc_role') || 'pastor',
+    name: val('mc_name') || '',
+    email: val('mc_email') || null,
+    phone: val('mc_phone') || null
+  };
+  if (!c.name) { alert('Name is required'); return; }
+  if (!c.phone) delete c.phone;
+  if (!c.email) delete c.email;
+  if (!pendingParish.clergy) pendingParish.clergy = [];
+  if (clergyModalIdx === -1) {
+    pendingParish.clergy.push(c);
+  } else {
+    pendingParish.clergy[clergyModalIdx] = c;
+  }
+  markDirty();
+  closeClergyModal();
+  refreshClergyCard();
+}
+function deleteClergyMember() {
+  if (clergyModalIdx < 0 || !pendingParish.clergy) return;
+  pendingParish.clergy.splice(clergyModalIdx, 1);
+  markDirty();
+  closeClergyModal();
+  refreshClergyCard();
+}
+function refreshClergyCard() {
+  var el = document.getElementById('clergy-card');
+  if (el) {
+    var tmp = document.createElement('div');
+    tmp.innerHTML = cardClergy(pendingParish);
+    el.replaceWith(tmp.firstChild);
+  }
+}
+
 // ── Card: Schedule ────────────────────────────────────────────────────
 function cardSchedule(p) {
   const svcs = p.services || [];
@@ -1245,6 +1384,7 @@ function svcRowHtml(s, i, hasMultiLoc, locs) {
     (s.language && s.language !== 'en' ? '<span class="pill pill-lang">' + s.language.toUpperCase() + '</span>' : '') +
     (s.seasonal && s.seasonal.is_seasonal ? '<span class="pill pill-seasonal">' + (s.seasonal.season||'seasonal').replace(/_/g,' ') + '</span>' : '') +
     (s.times_vary ? '<span class="pill pill-vary">times vary</span>' : '') +
+    (s.recurrence ? '<span class="pill pill-lang">' + (s.recurrence.weeks ? s.recurrence.weeks.map(function(w){return['','1st','2nd','3rd','4th','5th'][w]||w}).join(' & ') : ['','1st','2nd','3rd','4th','5th'][s.recurrence.week]||'') + ' wk</span>' : '') +
     (locN ? '<span class="pill pill-note">' + esc(locN) + '</span>' : '') +
     (s.notes ? '<span class="pill pill-note">' + esc(s.notes.length > 32 ? s.notes.slice(0,32)+'\u2026' : s.notes) + '</span>' : '');
   const editedCls = editedSvcSet.has(i) ? ' edited' : '';
@@ -1355,6 +1495,10 @@ function openSvcModal(s, isNew) {
         s.location_id||'')
     : '';
 
+  // Recurrence state
+  var hasRecur = !!(s.recurrence && s.recurrence.type === 'nth');
+  var recurWeeks = hasRecur ? (s.recurrence.weeks || (s.recurrence.week ? [s.recurrence.week] : [])) : [];
+
   document.getElementById('svcModalBody').innerHTML =
     svcTypeDropdown('m_type', s.type||'sunday_mass') +
     '<div class="row-2">' +
@@ -1375,12 +1519,27 @@ function openSvcModal(s, isNew) {
     '<div>' +
       '<div class="check-row"><input type="checkbox" id="m_tv"'+(s.times_vary?' checked':'')+'>' +
         '<label for="m_tv">Times vary &mdash; check bulletin</label></div>' +
+      '<div class="check-row"><input type="checkbox" id="m_recur" onchange="toggleRecurrence()"'+(hasRecur?' checked':'')+'>' +
+        '<label for="m_recur">Specific week(s) of month only</label></div>' +
+    '</div>' +
+    '<div id="m_recur_row" style="display:'+(hasRecur?'block':'none')+'">' +
+      '<label style="font-size:13px;color:var(--txt2)">Which weeks?</label>' +
+      '<div class="recur-weeks">' +
+        '<label><input type="checkbox" name="m_week" value="1"'+(recurWeeks.indexOf(1)>=0?' checked':'')+'> 1st</label>' +
+        '<label><input type="checkbox" name="m_week" value="2"'+(recurWeeks.indexOf(2)>=0?' checked':'')+'> 2nd</label>' +
+        '<label><input type="checkbox" name="m_week" value="3"'+(recurWeeks.indexOf(3)>=0?' checked':'')+'> 3rd</label>' +
+        '<label><input type="checkbox" name="m_week" value="4"'+(recurWeeks.indexOf(4)>=0?' checked':'')+'> 4th</label>' +
+        '<label><input type="checkbox" name="m_week" value="5"'+(recurWeeks.indexOf(5)>=0?' checked':'')+'> 5th</label>' +
+      '</div>' +
+    '</div>' +
+    '<div>' +
       '<div class="check-row"><input type="checkbox" id="m_sea" onchange="toggleSvcSeason()"'+(isSeas?' checked':'')+'>' +
         '<label for="m_sea">Seasonal only</label></div>' +
     '</div>' +
     '<div id="m_sea_row" style="display:'+(isSeas?'block':'none')+'">' +
       fpairs('m_season','Active Season', SEASONS.map(s=>[s,s.replace(/_/g,' ')]), (s.seasonal&&s.seasonal.season)||'lent') +
     '</div>' +
+    '<div id="m_svc_hint" class="sched-hint"></div>' +
     '<div class="f"><label>Service ID</label>' +
     '<input id="m_id" name="m_id" type="text" value="'+esc(s.id||'')+'"' +
     (isNew ? ' readonly style="opacity:.6;cursor:default" placeholder="Auto-generated on save"' : '') +
@@ -1390,17 +1549,91 @@ function openSvcModal(s, isNew) {
   document.getElementById('m_delete').style.display    = isNew ? 'none' : '';
   document.getElementById('m_dup').style.display       = isNew ? 'none' : '';
   document.getElementById('svcModal').classList.add('open');
+
+  // Wire live validation
+  updateSvcHint();
+  var typeEl = document.getElementById('m_type');
+  var dayEl = document.getElementById('m_day');
+  if (typeEl) typeEl.addEventListener('change', updateSvcHint);
+  if (dayEl) dayEl.addEventListener('change', updateSvcHint);
 }
 function toggleSvcSeason() {
   const el = document.getElementById('m_sea_row');
   if (el) el.style.display = document.getElementById('m_sea').checked ? 'block' : 'none';
+}
+function toggleRecurrence() {
+  const el = document.getElementById('m_recur_row');
+  if (el) el.style.display = document.getElementById('m_recur').checked ? 'block' : 'none';
+}
+function updateSvcHint() {
+  var el = document.getElementById('m_svc_hint');
+  if (!el) return;
+  var type = val('m_type') || '';
+  var day = val('m_day') || '';
+  var saveBtn = document.querySelector('#svcModal .btn-primary-sm');
+
+  // Rule 1: Block sunday_mass + first_friday/first_saturday
+  if (type === 'sunday_mass' && (day === 'first_friday' || day === 'first_saturday')) {
+    var dayLabel = day === 'first_friday' ? 'First Friday' : 'First Saturday';
+    el.innerHTML = '<span class="svc-hint-block">\u26A0 ' + dayLabel + ' Mass should use "Daily Mass" type, not "Sunday Mass"</span>';
+    if (saveBtn) saveBtn.disabled = true;
+    return;
+  }
+  if (saveBtn) saveBtn.disabled = false;
+
+  var hints = [];
+  // Rule 2: Weekday consolidation warning
+  var indivDays = ['monday','tuesday','wednesday','thursday','friday'];
+  if (indivDays.indexOf(day) >= 0 && pendingParish && pendingParish.services) {
+    var time = val('m_time') || '';
+    var locId = val('m_locid') || null;
+    var lang = val('m_lang') || 'en';
+    var matches = pendingParish.services.filter(function(s, i) {
+      if (svcModalIdx >= 0 && i === svcModalIdx) return false;
+      return s.type === type && s.time === time && (s.location_id||null) === locId && (s.language||'en') === lang && indivDays.indexOf(s.day) >= 0;
+    });
+    if (matches.length >= 4) {
+      hints.push('<span class="svc-hint-warn">\u26A0 This parish already has Mon\u2013Fri ' + type.replace(/_/g,' ') + ' at ' + time + '. Consider using "Weekday" instead.</span>');
+    }
+  }
+
+  // Rule 3: Duplicate detection
+  if (pendingParish && pendingParish.services && day && type) {
+    var time2 = val('m_time') || '';
+    var locId2 = val('m_locid') || null;
+    var dupe = pendingParish.services.some(function(s, i) {
+      if (svcModalIdx >= 0 && i === svcModalIdx) return false;
+      return s.type === type && s.day === day && s.time === time2 && (s.location_id||null) === locId2;
+    });
+    if (dupe) {
+      hints.push('<span class="svc-hint-warn">\u26A0 A ' + type.replace(/_/g,' ') + ' on ' + (DAY_LABELS[day]||day) + ' at ' + time2 + ' already exists</span>');
+    }
+  }
+
+  el.innerHTML = hints.join('<br>');
 }
 function closeSvcModal() {
   document.getElementById('svcModal').classList.remove('open');
   svcModalIdx = null;
 }
 function saveServiceModal() {
+  // Check blocking validation
+  var type = val('m_type') || 'sunday_mass';
+  var day = val('m_day') || null;
+  if (type === 'sunday_mass' && (day === 'first_friday' || day === 'first_saturday')) {
+    updateSvcHint();
+    return;
+  }
   const isSeas = !!(document.getElementById('m_sea') && document.getElementById('m_sea').checked);
+  // Recurrence
+  var hasRecur = !!(document.getElementById('m_recur') && document.getElementById('m_recur').checked);
+  var recurrence = null;
+  if (hasRecur) {
+    var weeks = [];
+    document.querySelectorAll('input[name="m_week"]:checked').forEach(function(cb) { weeks.push(parseInt(cb.value)); });
+    if (weeks.length === 1) recurrence = { type: 'nth', week: weeks[0] };
+    else if (weeks.length > 1) recurrence = { type: 'nth', weeks: weeks };
+  }
   const s = {
     id:          val('m_id') || genServiceId(pendingParish.id, val('m_type'), val('m_day'), val('m_time'), val('m_locid')),
     type:        val('m_type')    || 'sunday_mass',
@@ -1416,6 +1649,7 @@ function saveServiceModal() {
     location_id: val('m_locid')   || null,
     seasonal:    { is_seasonal: isSeas, season: isSeas ? (val('m_season')||'lent') : 'year_round' }
   };
+  if (recurrence) s.recurrence = recurrence;
   if (!pendingParish.services) pendingParish.services = [];
   if (svcModalIdx === -1) {
     pendingParish.services.push(s);
@@ -1477,6 +1711,9 @@ function openEvtModal(ev, isNew) {
       fpairs('me_day','Day', [['','\u2014'],...DAY_VALUES.map(d=>[d,DAY_LABELS[d]||d])], ev.day||'') +
       field('me_date','Specific Date', ev.date||'', '', 'date') +
     '</div>' +
+    '<div class="f"><label>Multiple Dates (series)</label>' +
+    '<textarea id="me_dates" rows="2" placeholder="YYYY-MM-DD, comma-separated (e.g. 2026-03-04, 2026-03-11, 2026-03-18)" style="font-size:13px;font-family:inherit">'+(ev.dates&&ev.dates.length?ev.dates.join(', '):'')+'</textarea>' +
+    '<div style="font-size:11px;color:#888;margin-top:2px">For multi-date series. Overrides single Date and Day fields.</div></div>' +
     field('me_enddate','Expires After (end date)', ev.end_date||'', '', 'date') +
     '<div id="me_sched_hint" class="sched-hint"></div>' +
     '<div class="row-2">' +
@@ -1503,12 +1740,26 @@ function openEvtModal(ev, isNew) {
   updateEvtSchedHint();
   var dayEl = document.getElementById('me_day');
   var dateEl = document.getElementById('me_date');
+  var datesEl = document.getElementById('me_dates');
   if (dayEl) dayEl.addEventListener('change', updateEvtSchedHint);
   if (dateEl) dateEl.addEventListener('change', updateEvtSchedHint);
+  if (datesEl) datesEl.addEventListener('input', updateEvtSchedHint);
+}
+function parseDatesField() {
+  var raw = (document.getElementById('me_dates') || {}).value || '';
+  if (!raw.trim()) return [];
+  return raw.split(/[,\n]/).map(function(s){return s.trim()}).filter(function(s){return /^\d{4}-\d{2}-\d{2}$/.test(s)}).sort();
 }
 function updateEvtSchedHint() {
   var el = document.getElementById('me_sched_hint');
   if (!el) return;
+  var dates = parseDatesField();
+  if (dates.length >= 2) {
+    var first = new Date(dates[0]+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'});
+    var last = new Date(dates[dates.length-1]+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'});
+    el.textContent = 'Multi-date series: ' + dates.length + ' dates (' + first + ' \u2013 ' + last + ')';
+    return;
+  }
   var day = val('me_day'), date = val('me_date');
   if (date && !day) el.textContent = 'One-time event on ' + date;
   else if (day && date) el.textContent = 'Specific date: ' + date + ' (falls on ' + (DAY_LABELS[day]||day) + ')';
@@ -1525,20 +1776,22 @@ function closeEvtModal() {
 }
 function saveEventModal() {
   const isSeas = !!(document.getElementById('me_sea') && document.getElementById('me_sea').checked);
+  const multiDates = parseDatesField();
   const ev = {
     id:        val('me_id')    || genEventId(pendingParish.id, val('me_title')),
     title:     val('me_title') || null,
     category:  val('me_cat')   || 'community',
     parish_id: pendingParish.id,
-    day:       val('me_day')   || null,
-    date:      val('me_date')    || null,
-    end_date:  val('me_enddate') || null,
+    day:       multiDates.length ? null : (val('me_day') || null),
+    date:      multiDates.length ? null : (val('me_date') || null),
+    end_date:  val('me_enddate') || (multiDates.length ? multiDates[multiDates.length-1] : null),
     time:      val('me_time')    || null,
     end_time:  val('me_etime') || null,
     notes:     val('me_notes') || null,
     location:  val('me_loc')   || null,
     source:    val('me_src')   || null
   };
+  if (multiDates.length) ev.dates = multiDates;
   if (isSeas) {
     ev.seasonal = { is_seasonal: true, season: val('me_season')||'lent' };
   }
@@ -2360,6 +2613,156 @@ function importChanges(event) {
   event.target.value = ''; // reset so same file can be re-imported
 }
 
+// ── New Parish Wizard ──────────────────────────────────────────────────
+var wizardStep_ = 0;
+function genNextParishId() {
+  var max = 0;
+  (editData.parishes || []).forEach(function(p) {
+    var m = p.id.match(/^parish_(\d+)$/);
+    if (m) max = Math.max(max, parseInt(m[1]));
+  });
+  var next = max + 1;
+  return 'parish_' + (next < 100 ? ('00'+next).slice(-3) : next);
+}
+function openNewParishModal() {
+  if (!editData) return;
+  wizardStep_ = 0;
+  var newId = genNextParishId();
+  var stateOpts = [['MA','Massachusetts'],['CT','Connecticut'],['VT','Vermont'],['NH','New Hampshire'],['NY','New York']];
+  var locTypeOpts = [['church','Church'],['chapel','Chapel'],['center','Center'],['cathedral','Cathedral'],['shrine','Shrine'],['school','School'],['hall','Hall'],['mission','Mission'],['other','Other']];
+  var roleOpts = [['pastor','Pastor'],['pastor_and_director','Pastor & Director'],['provisional_priest','Provisional Priest']];
+  document.getElementById('newParishBody').innerHTML =
+    '<div class="wizard-steps"><span class="wizard-dot active" id="wd0"></span><span class="wizard-dot" id="wd1"></span><span class="wizard-dot" id="wd2"></span></div>' +
+    // Step 0: Identity
+    '<div class="wizard-page active" id="wp0">' +
+      '<h4>Parish Identity</h4>' +
+      field('np_name','Parish Name','') +
+      '<div class="row-2">' + field('np_town','Town','') + fpairs('np_state','State',stateOpts,'MA') + '</div>' +
+      field('np_zip','ZIP Code','') +
+      '<div class="f"><label>Parish ID</label><input id="np_id" type="text" value="'+newId+'" readonly style="opacity:.6;cursor:default"></div>' +
+      '<div class="wizard-nav"><span></span><button class="btn-primary-sm" type="button" onclick="wizardNext()">Next \u203A</button></div>' +
+    '</div>' +
+    // Step 1: Primary Location
+    '<div class="wizard-page" id="wp1">' +
+      '<h4>Primary Location</h4>' +
+      field('np_loc_name','Church/Building Name','') +
+      field('np_loc_addr','Street Address','') +
+      '<div class="row-2">' + field('np_loc_city','City','') + fpairs('np_loc_state','State',stateOpts,'MA') + '</div>' +
+      '<div class="row-2">' + field('np_loc_zip','ZIP','') + fpairs('np_loc_type','Type',locTypeOpts,'church') + '</div>' +
+      '<div class="check-row"><input type="checkbox" id="np_loc_access"><label for="np_loc_access">Wheelchair accessible</label></div>' +
+      '<div class="wizard-nav"><button class="btn-secondary" type="button" onclick="wizardPrev()">\u2039 Back</button><button class="btn-primary-sm" type="button" onclick="wizardNext()">Next \u203A</button></div>' +
+    '</div>' +
+    // Step 2: Contact
+    '<div class="wizard-page" id="wp2">' +
+      '<h4>Contact &amp; Clergy</h4>' +
+      '<div class="row-2">' + field('np_phone','Phone','') + field('np_email','Email','') + '</div>' +
+      '<div class="row-2">' + field('np_website','Website','','','url') + field('np_bulletin','Bulletin URL','','','url') + '</div>' +
+      '<h4>Pastor (optional)</h4>' +
+      '<div class="row-2">' + field('np_pastor','Pastor Name','') + fpairs('np_pastor_role','Role',roleOpts,'pastor') + '</div>' +
+      field('np_pastor_email','Pastor Email','') +
+      '<div class="wizard-nav"><button class="btn-secondary" type="button" onclick="wizardPrev()">\u2039 Back</button><button class="btn-primary-sm" type="button" onclick="createParish()">Create Parish</button></div>' +
+    '</div>';
+  document.getElementById('newParishModal').classList.add('open');
+}
+function closeNewParishModal() {
+  document.getElementById('newParishModal').classList.remove('open');
+}
+function wizardNext() {
+  // Validate current step
+  if (wizardStep_ === 0) {
+    if (!val('np_name') || !val('np_town')) { alert('Parish name and town are required'); return; }
+    // Pre-fill location city/state from identity
+    var cityEl = document.getElementById('np_loc_city');
+    var stEl = document.getElementById('np_loc_state');
+    var zipEl = document.getElementById('np_loc_zip');
+    if (cityEl && !cityEl.value) cityEl.value = val('np_town') || '';
+    if (stEl) stEl.value = val('np_state') || 'MA';
+    if (zipEl && !zipEl.value) zipEl.value = val('np_zip') || '';
+  }
+  if (wizardStep_ === 1) {
+    if (!val('np_loc_name') || !val('np_loc_addr')) { alert('Location name and address are required'); return; }
+  }
+  showWizardStep(wizardStep_ + 1);
+}
+function wizardPrev() { showWizardStep(wizardStep_ - 1); }
+function showWizardStep(n) {
+  if (n < 0 || n > 2) return;
+  for (var i = 0; i < 3; i++) {
+    var p = document.getElementById('wp'+i);
+    var d = document.getElementById('wd'+i);
+    if (p) p.className = 'wizard-page' + (i===n?' active':'');
+    if (d) d.className = 'wizard-dot' + (i===n?' active':(i<n?' done':''));
+  }
+  wizardStep_ = n;
+}
+function createParish() {
+  var id = val('np_id') || genNextParishId();
+  var name = val('np_name');
+  var town = val('np_town');
+  if (!name || !town) { alert('Parish name and town are required'); return; }
+  var locName = val('np_loc_name') || name;
+  var locCity = val('np_loc_city') || town;
+  var locId = slugify(locName) + '-' + slugify(locCity);
+  var pastorName = val('np_pastor') || '';
+  var clergy = [];
+  if (pastorName) {
+    var cl = { role: val('np_pastor_role') || 'pastor', name: pastorName };
+    var pe = val('np_pastor_email');
+    if (pe) cl.email = pe;
+    clergy.push(cl);
+  }
+  var emails = [];
+  var em = val('np_email');
+  if (em) emails.push(em);
+  var parish = {
+    id: id,
+    name: name,
+    town: town,
+    state: val('np_state') || 'MA',
+    zip: val('np_zip') || null,
+    status: 'active',
+    is_mission: false,
+    mission_of: null,
+    locations: [{
+      id: locId,
+      name: locName,
+      short_name: null,
+      type: val('np_loc_type') || 'church',
+      address: val('np_loc_addr') || null,
+      city: locCity,
+      state: val('np_loc_state') || val('np_state') || 'MA',
+      zip: val('np_loc_zip') || val('np_zip') || null,
+      lat: null, lng: null,
+      is_accessible: !!(document.getElementById('np_loc_access') && document.getElementById('np_loc_access').checked),
+      accessibility_notes: null,
+      notes: null
+    }],
+    contact: {
+      phone: val('np_phone') || null,
+      phone_secondary: null,
+      emails: emails,
+      website: val('np_website') || null,
+      office_hours: null,
+      office_address: null,
+      instagram: null,
+      facebook: null,
+      notes: null
+    },
+    clergy: clergy,
+    staff: [],
+    services: [],
+    bulletin_url: val('np_bulletin') || null,
+    validation: { status: 'unverified', last_checked: null, bulletin_date: null },
+    county: null
+  };
+  editData.parishes.push(parish);
+  allRows.push(buildRow(parish));
+  sortRows(allRows);
+  filterList();
+  closeNewParishModal();
+  selectParish(id);
+  showToast('Parish created \u2014 add services & locations');
+}
 // ── Keyboard shortcuts ────────────────────────────────────────────────
 document.addEventListener('keydown', function(e) {
   // Cmd/Ctrl + S → save
