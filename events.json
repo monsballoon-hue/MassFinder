@@ -1531,6 +1531,201 @@
         "season": "lent"
       },
       "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_013-evt-lenten-retreat",
+      "category": "devotional",
+      "title": "Lenten Retreat with Fr. Dennis Mason",
+      "parish_id": "parish_013",
+      "dates": [
+        "2026-03-21",
+        "2026-03-22",
+        "2026-03-23",
+        "2026-03-24"
+      ],
+      "time": null,
+      "end_time": null,
+      "end_date": "2026-03-24",
+      "venue_name": "St. Stanislaus Basilica",
+      "venue_address": "566 Front St, Chicopee, MA 01013",
+      "notes": "Lenten Retreat led by Fr. Dennis Mason",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      },
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_016-evt-lenten-soup",
+      "category": "social",
+      "title": "Lenten Soup Suppers",
+      "parish_id": "parish_016",
+      "day": "friday",
+      "time": "17:00",
+      "end_time": "18:00",
+      "end_date": "2026-04-02",
+      "venue_name": "St. Agnes Academy Cafeteria",
+      "venue_address": "391 Main St, Dalton, MA 01226",
+      "notes": "Fridays during Lent",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      },
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_016-evt-sunday-lunch",
+      "category": "community",
+      "title": "Dalton Sunday Lunch",
+      "parish_id": "parish_016",
+      "date": "2026-03-15",
+      "time": "12:30",
+      "end_time": "14:30",
+      "venue_name": "St. Agnes Parish",
+      "venue_address": "391 Main St, Dalton, MA 01226",
+      "notes": "Setup 10am-12pm, serving 12:30-2:30pm. Contact Justin Brown (413) 362-5064",
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "regional-evt-lenten-senior-retreat",
+      "category": "devotional",
+      "title": "Lenten Senior Retreat",
+      "parish_id": null,
+      "date": "2026-03-19",
+      "time": null,
+      "end_time": null,
+      "venue_name": "Jericho Celebration Center",
+      "venue_address": "537 Northampton St, Holyoke, MA 01040",
+      "notes": "Regional Lenten retreat for seniors. Advertised in Our Lady of the Hills bulletin.",
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      },
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_028-evt-lenten-penance",
+      "category": "devotional",
+      "title": "Lenten Penance Service",
+      "parish_id": "parish_028",
+      "date": "2026-03-08",
+      "time": "14:00",
+      "end_time": null,
+      "venue_name": "Our Lady of the Cross Church",
+      "venue_address": "Holy Cross Ave, Holyoke, MA 01040",
+      "notes": null,
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      },
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_028-evt-spaghetti-supper",
+      "category": "social",
+      "title": "Mater Dolorosa School Spaghetti Supper",
+      "parish_id": "parish_028",
+      "date": "2026-03-04",
+      "time": "16:00",
+      "end_time": "18:30",
+      "venue_name": "Pope St. John Paul II Social Center",
+      "venue_address": "Holyoke, MA",
+      "notes": "Monthly spaghetti supper benefiting Mater Dolorosa School",
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_029-evt-communion-breakfast",
+      "category": "social",
+      "title": "Communion Breakfast",
+      "parish_id": "parish_029",
+      "date": "2026-03-15",
+      "time": null,
+      "end_time": null,
+      "venue_name": "St. Jerome Church",
+      "venue_address": "135 Main St, Holyoke, MA 01040",
+      "notes": "Also advertised in Our Lady of the Cross bulletin",
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_029-evt-st-patrick-novena",
+      "category": "devotional",
+      "title": "St. Patrick Novena",
+      "parish_id": "parish_029",
+      "dates": [
+        "2026-03-09",
+        "2026-03-10",
+        "2026-03-11",
+        "2026-03-12",
+        "2026-03-13",
+        "2026-03-14",
+        "2026-03-15",
+        "2026-03-16",
+        "2026-03-17"
+      ],
+      "time": null,
+      "end_time": null,
+      "end_date": "2026-03-17",
+      "venue_name": "St. Patrick's Chapel",
+      "venue_address": "135 Main St, Holyoke, MA 01040",
+      "notes": "Daily Masses in St. Patrick's Chapel with 9 different celebrants",
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_035-evt-sandwich-making",
+      "category": "volunteering",
+      "title": "Sandwich Making for Springfield Rescue Mission",
+      "parish_id": "parish_035",
+      "date": "2026-03-08",
+      "time": "10:30",
+      "end_time": null,
+      "venue_name": "St. Mary's Parish Center",
+      "venue_address": "519 Longmeadow Street, Longmeadow, MA 01106",
+      "notes": "After 9:30 AM Mass. Families & youth invited. Bring a loaf of bread, sandwich meat, and sliced cheese.",
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_037-evt-lenten-confession",
+      "category": "devotional",
+      "title": "Lenten Confession",
+      "parish_id": "parish_037",
+      "date": "2026-03-06",
+      "time": "19:00",
+      "end_time": "20:00",
+      "venue_name": "Our Lady of Fatima Church",
+      "venue_address": "438 Winsor Street, Ludlow, MA 01056",
+      "notes": null,
+      "seasonal": {
+        "is_seasonal": true,
+        "season": "lent"
+      },
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_038-evt-bible-study",
+      "category": "educational",
+      "title": "Bible Study — Gospel of Luke",
+      "parish_id": "parish_038",
+      "day": "wednesday",
+      "time": "18:30",
+      "end_time": "20:00",
+      "end_date": "2026-06-30",
+      "venue_name": "Parish Center (Jordan Room)",
+      "venue_address": "191 Hubbard Street, Ludlow, MA 01056",
+      "notes": "Facilitated by Keith Messier. Each session stands on its own. Contact: kaimaclain@gmail.com or 413-374-3303. Not meeting March 18 or 25 (Parish Mission / Penance Service).",
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_038-evt-church-cleaning",
+      "category": "volunteering",
+      "title": "Time Talent Treasure — Church Cleaning & Rosary",
+      "parish_id": "parish_038",
+      "date": "2026-03-14",
+      "time": "10:00",
+      "end_time": "11:00",
+      "venue_name": "St. Elizabeth Church",
+      "venue_address": "191 Hubbard Street, Ludlow, MA 01056",
+      "notes": "2nd Saturday of the month. Dust while listening to the Rosary. Contact Deb Gendreau 413-505-9760.",
+      "source": "bulletin_2026-03"
     }
   ]
 }

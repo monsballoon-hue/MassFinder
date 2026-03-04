@@ -2846,7 +2846,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_013-smass-sun-0700",
@@ -2861,7 +2861,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_013-smass-sun-0900-pl",
@@ -2876,7 +2876,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_013-smass-sun-1100",
@@ -2891,7 +2891,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_013-dmass-wed-0845",
@@ -2906,11 +2906,11 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
-          "id": "parish_013-smass-sat-0700",
-          "type": "sunday_mass",
+          "id": "parish_013-dmass-sat-0700",
+          "type": "daily_mass",
           "day": "saturday",
           "time": "07:00",
           "end_time": null,
@@ -2921,7 +2921,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_013-dmass-wed-1900-pl",
@@ -2936,7 +2936,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_013-dmass-1fri-1900-pl",
@@ -2951,7 +2951,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_013-ador-wkday-0700",
@@ -2966,7 +2966,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_013-ador-1fri-0645",
@@ -2981,7 +2981,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_013-ador-1sat-0730",
@@ -2996,7 +2996,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_013-rosary-wkday-0700",
@@ -3011,7 +3011,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_013-rosary-wkday-0815",
@@ -3026,7 +3026,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_013-rosary-wkday-1130",
@@ -3041,7 +3041,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_013-rosary-mon-1800",
@@ -3056,26 +3056,22 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
-          "id": "parish_013-devot-sun-1200",
-          "type": "devotion",
-          "day": "sunday",
+          "id": "parish_013-dmercy-1sun-1200",
+          "type": "divine_mercy",
+          "day": "first_sunday",
           "time": "12:00",
           "end_time": null,
           "location_id": "ststans-basilica-chicopee",
           "language": "en",
-          "notes": "Divine Mercy — after 11:00 AM Mass",
+          "notes": "After 11:00 AM Mass",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02",
-          "recurrence": {
-            "type": "nth",
-            "week": 1
-          }
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_013-devot-sun-1500",
@@ -3090,7 +3086,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02",
+          "source": "bulletin_2026-03",
           "recurrence": {
             "type": "nth",
             "week": 2
@@ -3109,7 +3105,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02",
+          "source": "bulletin_2026-03",
           "recurrence": {
             "type": "nth",
             "week": 4
@@ -3128,7 +3124,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_013-conf-wkday-1045",
@@ -3143,7 +3139,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_013-conf-sat-0730",
@@ -3158,7 +3154,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_013-conf-sat-0900",
@@ -3173,7 +3169,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_013-conf-sat-1500",
@@ -3188,7 +3184,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_013-stations-fri-1315-lent",
@@ -3203,7 +3199,7 @@
             "is_seasonal": true,
             "season": "lent"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_013-stations-fri-1900-lent",
@@ -3218,7 +3214,7 @@
             "is_seasonal": true,
             "season": "lent"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_013-dmass-wkday-0630-stst",
@@ -3233,7 +3229,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_013-dmass-wkday-1200-stst",
@@ -3248,12 +3244,28 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_013-stations-wed-1900-lent-pl",
+          "type": "stations_of_cross",
+          "day": "wednesday",
+          "time": "19:00",
+          "end_time": null,
+          "location_id": "ststans-basilica-chicopee",
+          "language": "pl",
+          "notes": "In Polish",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-03"
         }
       ],
       "validation": {
         "status": "verified",
-        "last_checked": "2026-02-21"
+        "last_checked": "2026-03-04",
+        "bulletin_date": "2026-03"
       },
       "county": "Hampden",
       "clergy": [],
@@ -3326,7 +3338,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_016-smass-sat-1730-st",
@@ -3341,7 +3353,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_016-smass-sun-0800-st",
@@ -3356,7 +3368,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_016-smass-sun-1000-st",
@@ -3371,7 +3383,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_016-smass-sun-1730-acad-st",
@@ -3386,7 +3398,7 @@
             "is_seasonal": true,
             "season": "academic_year"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_016-dmass-holyeve-1730-st",
@@ -3401,7 +3413,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_016-dmass-holyday-0830-st",
@@ -3416,7 +3428,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_016-rosary-wkday-0800-st",
@@ -3431,22 +3443,22 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_016-conf-sat-1515-st",
           "type": "confession",
           "day": "saturday",
           "time": "15:15",
-          "end_time": null,
+          "end_time": "15:45",
           "location_id": "st-agnes-church-dalton",
           "language": "en",
-          "notes": "At St. Agnes. Also see priest at St. Patrick'spriest also visits homebound",
+          "notes": "At St. Agnes",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_016-dmass-wkday-0830-st",
@@ -3461,37 +3473,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_016-smass-holyeve-1730",
-          "type": "sunday_mass",
-          "day": "holyday_eve",
-          "time": "17:30",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_016-smass-holyday-0830",
-          "type": "sunday_mass",
-          "day": "holyday",
-          "time": "08:30",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": null,
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_016-anoint-sat-1515-st",
@@ -3506,7 +3488,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_016-rosary-sun-1830",
@@ -3514,14 +3496,14 @@
           "day": "sunday",
           "time": "18:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-agnes-church-dalton",
           "language": "en",
-          "notes": "Sunday evening Rosary Group, Adoration Chapel",
+          "notes": "Rosary Group, Adoration Chapel",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_016-htmass-Holy-1900-hw-st",
@@ -3535,22 +3517,22 @@
             "is_seasonal": true,
             "season": "holy_week"
           },
-          "source": "manual_verification_2026-02",
+          "source": "bulletin_2026-03",
           "end_time": null
         },
         {
           "id": "parish_016-gfsvc-Good-hw-st",
           "type": "good_friday_service",
           "day": "good_friday",
-          "time": null,
+          "time": "19:00",
           "location_id": "st-agnes-church-dalton",
           "language": "en",
-          "notes": null,
+          "notes": "Celebration of the Lord's Passion & Death",
           "seasonal": {
             "is_seasonal": true,
             "season": "holy_week"
           },
-          "source": "manual_verification_2026-02",
+          "source": "bulletin_2026-03",
           "end_time": null
         },
         {
@@ -3565,7 +3547,7 @@
             "is_seasonal": true,
             "season": "holy_week"
           },
-          "source": "manual_verification_2026-02",
+          "source": "bulletin_2026-03",
           "end_time": null
         },
         {
@@ -3580,14 +3562,14 @@
           "id": "parish_016-dmass-mf-0645-lent-st",
           "end_time": null,
           "language": "en",
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "type": "stations_of_cross",
           "day": "friday",
           "time": "18:00",
           "location_id": "st-agnes-church-dalton",
-          "notes": "NO Stations at St. Patrick's",
+          "notes": "Stations of the Cross & Benediction at St. Agnes. NO Stations at St. Patrick's.",
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
@@ -3595,13 +3577,178 @@
           "id": "parish_016-stations-fri-1800-lent-st",
           "end_time": null,
           "language": "en",
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_016-conf-sat-1715-stpat",
+          "type": "confession",
+          "day": "saturday",
+          "time": "17:15",
+          "end_time": null,
+          "location_id": "st-patricks-chapel-hinsdale",
+          "language": "en",
+          "notes": "At St. Patrick's Chapel before 5:30 PM Vigil",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_016-stations-gfri-1500-hw-st",
+          "type": "stations_of_cross",
+          "day": "good_friday",
+          "time": "15:00",
+          "end_time": null,
+          "location_id": "st-agnes-church-dalton",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_016-ador-hthu-1930-hw-st",
+          "type": "adoration",
+          "day": "holy_thursday",
+          "time": "19:30",
+          "end_time": "21:00",
+          "location_id": "st-agnes-church-dalton",
+          "language": "en",
+          "notes": "After Mass of the Lord's Supper until 9:00 PM",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_016-esmass-esun-0800-st",
+          "type": "easter_sunday_mass",
+          "day": "easter_sunday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": "st-agnes-church-dalton",
+          "language": "en",
+          "notes": "NO 5:30 PM Mass on Easter",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_016-esmass-esun-1000-st",
+          "type": "easter_sunday_mass",
+          "day": "easter_sunday",
+          "time": "10:00",
+          "end_time": null,
+          "location_id": "st-agnes-church-dalton",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_016-esmass-esun-1130-stpat",
+          "type": "easter_sunday_mass",
+          "day": "easter_sunday",
+          "time": "11:30",
+          "end_time": null,
+          "location_id": "st-patricks-chapel-hinsdale",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_016-psmass-psun-0800-st",
+          "type": "palm_sunday_mass",
+          "day": "palm_sunday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": "st-agnes-church-dalton",
+          "language": "en",
+          "notes": "Palms blessed and distributed",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_016-psmass-psun-1000-st",
+          "type": "palm_sunday_mass",
+          "day": "palm_sunday",
+          "time": "10:00",
+          "end_time": null,
+          "location_id": "st-agnes-church-dalton",
+          "language": "en",
+          "notes": "Palms blessed and distributed",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_016-psmass-psun-1730-st",
+          "type": "palm_sunday_mass",
+          "day": "palm_sunday",
+          "time": "17:30",
+          "end_time": null,
+          "location_id": "st-agnes-church-dalton",
+          "language": "en",
+          "notes": "Palms blessed and distributed",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_016-psmass-psat-1600-st",
+          "type": "palm_sunday_mass",
+          "day": "palm_sunday",
+          "time": "16:00",
+          "end_time": null,
+          "location_id": "st-agnes-church-dalton",
+          "language": "en",
+          "notes": "Saturday vigil. Palms blessed and distributed.",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_016-psmass-psat-1730-stpat",
+          "type": "palm_sunday_mass",
+          "day": "palm_sunday",
+          "time": "17:30",
+          "end_time": null,
+          "location_id": "st-patricks-chapel-hinsdale",
+          "language": "en",
+          "notes": "Saturday vigil. Palms blessed and distributed.",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "bulletin_2026-03"
         }
       ],
       "validation": {
         "status": "verified",
-        "last_checked": "2026-02-21",
-        "bulletin_date": "2026-02"
+        "last_checked": "2026-03-04",
+        "bulletin_date": "2026-03"
       },
       "county": "Berkshire",
       "clergy": [
@@ -3614,16 +3761,6 @@
           "role": "deacon",
           "name": "Deacon George Morrell",
           "email": "gmorrell@saintagnescc.com"
-        },
-        {
-          "role": "deacon",
-          "name": "Deacon Richard Radzick",
-          "email": "rradzick@saintagnescc.com"
-        },
-        {
-          "role": "deacon_retired",
-          "name": "Deacon Sean Mulholland",
-          "email": "s.mulholland@diospringfield.org"
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/st-agnes-catholic-community-1226",
@@ -6303,14 +6440,14 @@
           "day": "saturday",
           "time": "16:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "our-lady-of-the-hills-church-haydenville",
           "language": "en",
           "notes": "Vigil Mass",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_026-smass-sun-0800",
@@ -6318,14 +6455,14 @@
           "day": "sunday",
           "time": "08:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "our-lady-of-the-hills-church-haydenville",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_026-smass-sun-1030",
@@ -6333,14 +6470,14 @@
           "day": "sunday",
           "time": "10:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "our-lady-of-the-hills-church-haydenville",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_026-dmass-mon-0830",
@@ -6348,14 +6485,14 @@
           "day": "monday",
           "time": "08:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "our-lady-of-the-hills-church-haydenville",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_026-dmass-tue-0830",
@@ -6363,14 +6500,14 @@
           "day": "tuesday",
           "time": "08:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "our-lady-of-the-hills-church-haydenville",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_026-dmass-wed-0830",
@@ -6378,14 +6515,14 @@
           "day": "wednesday",
           "time": "08:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "our-lady-of-the-hills-church-haydenville",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_026-dmass-thu-0830",
@@ -6393,14 +6530,14 @@
           "day": "thursday",
           "time": "08:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "our-lady-of-the-hills-church-haydenville",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_026-conf-sat-1500",
@@ -6408,22 +6545,51 @@
           "day": "saturday",
           "time": "15:00",
           "end_time": "15:30",
-          "location_id": null,
+          "location_id": "our-lady-of-the-hills-church-haydenville",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_026-ador-mon-1300",
+          "type": "adoration",
+          "day": "monday",
+          "time": "13:00",
+          "end_time": "14:00",
+          "location_id": "our-lady-of-the-hills-church-haydenville",
+          "language": "en",
+          "notes": "Benediction at 1:50 PM",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03"
         }
       ],
       "validation": {
         "status": "verified",
-        "last_checked": "2026-02-21"
+        "last_checked": "2026-03-04",
+        "bulletin_date": "2026-03"
       },
       "county": "Hampshire",
-      "clergy": [],
+      "clergy": [
+        {
+          "role": "pastor",
+          "name": "Fr. John Gawienowski",
+          "email": null,
+          "phone": "413-268-7212"
+        },
+        {
+          "role": "deacon",
+          "name": "Deacon Mark Kolasinski",
+          "email": null,
+          "phone": "413-775-3001"
+        }
+      ],
       "bulletin_url": "https://parishesonline.com/organization/our-lady-of-the-hills-parish",
       "is_accessible": null
     },
@@ -6744,7 +6910,7 @@
           "id": "our-lady-of-the-cross-church-holyoke",
           "name": "Our Lady of the Cross Church",
           "type": "church",
-          "address": "15 Maple Street, 01040",
+          "address": "Holy Cross Ave, Holyoke, MA 01040",
           "city": "Holyoke",
           "state": "MA",
           "zip": "01040",
@@ -6758,11 +6924,10 @@
         "phone": "413-532-5661",
         "emails": [
           "parish@ourladyofthecross.com",
-          "pastor@ourladyofthecross.com",
-          "thedeaconrjt@gmail.com"
+          "pastor@ourladyofthecross.com"
         ],
         "website": "https://www.ourladyofthecross.com",
-        "office_hours": "Mon. - Fri. 8:30 a.m. - 12:30 p.m."
+        "office_hours": "Monday-Friday 9:00 AM - 12:00 PM"
       },
       "staff": [
         "pastor",
@@ -6775,14 +6940,14 @@
           "day": "saturday",
           "time": "16:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "our-lady-of-the-cross-church-holyoke",
           "language": "en",
           "notes": "Vigil Mass",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_028-smass-sun-0730",
@@ -6790,14 +6955,14 @@
           "day": "sunday",
           "time": "07:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "our-lady-of-the-cross-church-holyoke",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_028-smass-sun-0900-pl",
@@ -6805,14 +6970,14 @@
           "day": "sunday",
           "time": "09:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "our-lady-of-the-cross-church-holyoke",
           "language": "pl",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_028-smass-sun-1030",
@@ -6820,14 +6985,14 @@
           "day": "sunday",
           "time": "10:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "our-lady-of-the-cross-church-holyoke",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_028-dmass-sat-0830",
@@ -6835,14 +7000,14 @@
           "day": "saturday",
           "time": "08:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "our-lady-of-the-cross-church-holyoke",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_028-divmerc-sat-0750",
@@ -6850,29 +7015,29 @@
           "day": "saturday",
           "time": "07:50",
           "end_time": null,
-          "location_id": null,
+          "location_id": "our-lady-of-the-cross-church-holyoke",
           "language": "en",
-          "notes": "Rosary follows at 8:05 AM",
+          "notes": "Before 8:30 AM Mass",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
-          "id": "parish_028-conf-mon-0800",
+          "id": "parish_028-conf-wkday-0800",
           "type": "confession",
-          "day": "monday",
+          "day": "weekday",
           "time": "08:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "our-lady-of-the-cross-church-holyoke",
           "language": "en",
-          "notes": "Mon–Sat before 8:30 AM Mass; not on holy days or holidays",
+          "notes": "Mon-Fri before 8:30 AM Mass. Not on holydays or holidays.",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_028-conf-sat-1515",
@@ -6880,14 +7045,14 @@
           "day": "saturday",
           "time": "15:15",
           "end_time": null,
-          "location_id": null,
+          "location_id": "our-lady-of-the-cross-church-holyoke",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_028-stations-fri-1200-lent",
@@ -6895,14 +7060,14 @@
           "day": "friday",
           "time": "12:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "our-lady-of-the-cross-church-holyoke",
           "language": "en",
           "notes": "Fridays only",
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_028-stations-fri-1600-pl-lent",
@@ -6910,14 +7075,14 @@
           "day": "friday",
           "time": "16:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "our-lady-of-the-cross-church-holyoke",
           "language": "pl",
           "notes": "Fridays only — Polish",
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_028-dmass-wkday-0830",
@@ -6925,14 +7090,14 @@
           "day": "weekday",
           "time": "08:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "our-lady-of-the-cross-church-holyoke",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_028-divmerc-wkday-0750",
@@ -6940,25 +7105,89 @@
           "day": "weekday",
           "time": "07:50",
           "end_time": null,
-          "location_id": null,
+          "location_id": "our-lady-of-the-cross-church-holyoke",
           "language": "en",
-          "notes": "Rosary follows at 8:05 AM",
+          "notes": "Before 8:30 AM Mass",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_028-conf-sat-0800",
+          "type": "confession",
+          "day": "saturday",
+          "time": "08:00",
+          "end_time": null,
+          "location_id": "our-lady-of-the-cross-church-holyoke",
+          "language": "en",
+          "notes": "Before 8:30 AM Mass. Not on holydays or holidays.",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_028-rosary-wkday-0805",
+          "type": "rosary",
+          "day": "weekday",
+          "time": "08:05",
+          "end_time": null,
+          "location_id": "our-lady-of-the-cross-church-holyoke",
+          "language": "en",
+          "notes": "After Divine Mercy Chaplet, before 8:30 AM Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_028-rosary-sat-0805",
+          "type": "rosary",
+          "day": "saturday",
+          "time": "08:05",
+          "end_time": null,
+          "location_id": "our-lady-of-the-cross-church-holyoke",
+          "language": "en",
+          "notes": "After Divine Mercy Chaplet, before 8:30 AM Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_028-ador-1fri-0900",
+          "type": "adoration",
+          "day": "first_friday",
+          "time": "09:00",
+          "end_time": "18:00",
+          "location_id": "our-lady-of-the-cross-church-holyoke",
+          "language": "en",
+          "notes": "Side chapel. Enter through front center doors.",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03"
         }
       ],
       "validation": {
         "status": "verified",
-        "last_checked": "2026-02-21",
-        "sources": [
-          "bulletin_2026-02 — https://ourladyofthecross.com/news/bulletin"
-        ]
+        "last_checked": "2026-03-04",
+        "bulletin_date": "2026-03"
       },
       "county": "Hampden",
-      "clergy": [],
+      "clergy": [
+        {
+          "role": "pastor",
+          "name": "Fr. Albert Scherer, OFM Conv.",
+          "email": "pastor@ourladyofthecross.com"
+        }
+      ],
       "bulletin_url": "https://ourladyofthecross.com/news/bulletin",
       "is_accessible": null
     },
@@ -6985,15 +7214,29 @@
           "lat": 42.2097,
           "lng": -72.6083,
           "short_name": "St. Jerome"
+        },
+        {
+          "id": "immaculate-conception-chapel-holyoke",
+          "name": "Immaculate Conception Chapel",
+          "type": "chapel",
+          "address": "54 N. Summer Street, Holyoke, MA 01040",
+          "city": "Holyoke",
+          "state": "MA",
+          "zip": "01040",
+          "is_accessible": null,
+          "lat": null,
+          "lng": null,
+          "short_name": "Immaculate Conception"
         }
       ],
       "contact": {
         "phone": "413-532-6381",
         "emails": [
-          "st-jerome@comcast.net"
+          "st-jerome@comcast.net",
+          "f.reilly@diospringfield.org"
         ],
         "website": "https://www.stjeromeholyoke.org",
-        "office_hours": "Mon. - Fri. 10:00 a.m. - 2:00 p.m."
+        "office_hours": "Monday-Friday 9:00 AM - 3:00 PM"
       },
       "staff": [
         "pastor",
@@ -7013,7 +7256,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_029-smass-sat-1800-es",
@@ -7021,14 +7264,14 @@
           "day": "saturday",
           "time": "18:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "immaculate-conception-chapel-holyoke",
           "language": "es",
-          "notes": null,
+          "notes": "At Immaculate Conception Chapel",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_029-smass-sun-0800",
@@ -7043,7 +7286,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_029-smass-sun-1030",
@@ -7058,7 +7301,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_029-smass-sun-1200-es",
@@ -7073,7 +7316,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_029-smass-sun-0915",
@@ -7081,14 +7324,14 @@
           "day": "sunday",
           "time": "09:15",
           "end_time": null,
-          "location_id": null,
+          "location_id": "immaculate-conception-chapel-holyoke",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_029-dmass-wed-0830",
@@ -7096,14 +7339,14 @@
           "day": "wednesday",
           "time": "08:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "immaculate-conception-chapel-holyoke",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_029-dmass-holyday-0900",
@@ -7118,7 +7361,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_029-conf-1fri-1800",
@@ -7133,7 +7376,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_029-conf-sat-1500",
@@ -7148,7 +7391,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_029-conf-sat-1700",
@@ -7156,14 +7399,14 @@
           "day": "saturday",
           "time": "17:00",
           "end_time": "17:45",
-          "location_id": null,
+          "location_id": "immaculate-conception-chapel-holyoke",
           "language": "en",
-          "notes": null,
+          "notes": "At Immaculate Conception Chapel",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_029-ador-1fri-1700",
@@ -7178,7 +7421,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_029-dmass-wkday-1215-stje",
@@ -7193,18 +7436,28 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         }
       ],
       "validation": {
         "status": "verified",
-        "last_checked": "2026-02-21",
-        "sources": [
-          "bulletin_2026-02 — https://parishesonline.com/organization/st-jerome-parish-1040"
-        ]
+        "last_checked": "2026-03-04",
+        "bulletin_date": "2026-03"
       },
       "county": "Hampden",
-      "clergy": [],
+      "clergy": [
+        {
+          "role": "pastor",
+          "name": "Fr. Francis Reilly",
+          "email": "f.reilly@diospringfield.org"
+        },
+        {
+          "role": "deacon",
+          "name": "Deacon Jose E. Correa Pacheco",
+          "email": null,
+          "phone": "413-534-5623"
+        }
+      ],
       "bulletin_url": "https://parishesonline.com/organization/st-jerome-parish-1040",
       "is_accessible": null
     },
@@ -7355,7 +7608,7 @@
           "iccmaoffice@gmail.com"
         ],
         "website": "https://www.indian-orchard-immaculate-conception.org",
-        "office_hours": "Mon., Tue., and Wed. 3:00 p.m. - 6:00 p.m."
+        "office_hours": "Mon, Tue, Wed 3:00 PM - 5:30 PM"
       },
       "staff": [
         "pastor",
@@ -7375,7 +7628,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_031-smass-sun-0830",
@@ -7390,7 +7643,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_031-smass-sun-1015-pl",
@@ -7405,7 +7658,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_031-dmass-mon-0800",
@@ -7420,7 +7673,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_031-dmass-tue-0800",
@@ -7435,7 +7688,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_031-dmass-thu-1800",
@@ -7450,7 +7703,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_031-dmass-fri-1800",
@@ -7465,7 +7718,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_031-dmass-holyday-0800",
@@ -7480,7 +7733,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_031-dmass-holyday-1800-pl",
@@ -7495,7 +7748,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_031-rosary-sat-1530",
@@ -7510,7 +7763,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_031-rosary-sun-0945-pl",
@@ -7525,7 +7778,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_031-conf-sat-1530",
@@ -7540,7 +7793,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_031-ador-wed-0800",
@@ -7555,63 +7808,142 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_031-htmass-Holy-hw",
           "type": "holy_thursday_mass",
           "day": "holy_thursday",
-          "time": null,
+          "time": "19:00",
           "location_id": "immaculate-conception-church-indian-orchard",
-          "language": "en",
-          "notes": null,
+          "language": "pl",
+          "notes": "Polish-English. Followed by adoration until 9:30 PM.",
           "seasonal": {
             "is_seasonal": true,
             "season": "holy_week"
           },
-          "source": "manual_verification_2026-02",
+          "source": "bulletin_2026-03",
           "end_time": null
         },
         {
           "id": "parish_031-gfsvc-Good-hw",
           "type": "good_friday_service",
           "day": "good_friday",
-          "time": null,
+          "time": "19:00",
           "location_id": "immaculate-conception-church-indian-orchard",
-          "language": "en",
-          "notes": null,
+          "language": "pl",
+          "notes": "Liturgy of the Passion (Polish-English). Followed by adoration until 9:00 PM.",
           "seasonal": {
             "is_seasonal": true,
             "season": "holy_week"
           },
-          "source": "manual_verification_2026-02",
+          "source": "bulletin_2026-03",
           "end_time": null
         },
         {
           "id": "parish_031-evmass-East-hw",
           "type": "easter_vigil_mass",
           "day": "easter_vigil",
-          "time": null,
+          "time": "19:30",
           "location_id": "immaculate-conception-church-indian-orchard",
-          "language": "en",
-          "notes": null,
+          "language": "pl",
+          "notes": "English-Polish",
           "seasonal": {
             "is_seasonal": true,
             "season": "holy_week"
           },
-          "source": "manual_verification_2026-02",
+          "source": "bulletin_2026-03",
           "end_time": null
+        },
+        {
+          "id": "parish_031-stations-gfri-1745-hw",
+          "type": "stations_of_cross",
+          "day": "good_friday",
+          "time": "17:45",
+          "end_time": null,
+          "location_id": "immaculate-conception-church-indian-orchard",
+          "language": "pl",
+          "notes": "Polish-English. Followed by private prayer time before 7 PM Liturgy.",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_031-ador-hthu-2000-hw",
+          "type": "adoration",
+          "day": "holy_thursday",
+          "time": "20:00",
+          "end_time": "21:30",
+          "location_id": "immaculate-conception-church-indian-orchard",
+          "language": "en",
+          "notes": "After Mass until 9:30 PM",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_031-ador-hsat-1000-hw",
+          "type": "adoration",
+          "day": "holy_saturday",
+          "time": "10:00",
+          "end_time": "13:00",
+          "location_id": "immaculate-conception-church-indian-orchard",
+          "language": "en",
+          "notes": "Visit the tomb of Jesus. Traditional blessing of food at 10am, 11am, 12pm, 1pm (Swieconka).",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_031-esmass-esun-0700-hw",
+          "type": "easter_sunday_mass",
+          "day": "easter_sunday",
+          "time": "07:00",
+          "end_time": null,
+          "location_id": "immaculate-conception-church-indian-orchard",
+          "language": "pl",
+          "notes": "Resurrection with Procession (Polish-English). No 8:30 AM Mass.",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_031-esmass-esun-1015-hw",
+          "type": "easter_sunday_mass",
+          "day": "easter_sunday",
+          "time": "10:15",
+          "end_time": null,
+          "location_id": "immaculate-conception-church-indian-orchard",
+          "language": "pl",
+          "notes": "English-Polish",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "bulletin_2026-03"
         }
       ],
       "validation": {
         "status": "verified",
-        "last_checked": "2026-02-21",
-        "sources": [
-          "bulletin_2026-02 — https://parishesonline.com/organization/immaculate-conception-church-01151"
-        ]
+        "last_checked": "2026-03-04",
+        "bulletin_date": "2026-03"
       },
       "county": "Hampden",
-      "clergy": [],
+      "clergy": [
+        {
+          "role": "pastor",
+          "name": "Fr. Piotr",
+          "email": null
+        }
+      ],
       "bulletin_url": "https://parishesonline.com/organization/immaculate-conception-church-01151",
       "is_accessible": true
     },
@@ -7643,7 +7975,7 @@
           "id": "st-joseph-church-stockbridge",
           "name": "St. Joseph Church",
           "type": "church",
-          "address": "Stockbridge, MA 01262",
+          "address": "11 Elm Street, Stockbridge, MA 01262",
           "city": "Stockbridge",
           "state": "MA",
           "zip": "01262",
@@ -7651,6 +7983,19 @@
           "lat": 42.2818,
           "lng": -73.3073,
           "short_name": "St. Joseph's"
+        },
+        {
+          "id": "st-mary-of-the-lakes-otis",
+          "name": "St. Mary of the Lakes",
+          "type": "church",
+          "address": "Rts. 8 & 23, Otis, MA",
+          "city": "Otis",
+          "state": "MA",
+          "zip": null,
+          "is_accessible": null,
+          "lat": null,
+          "lng": null,
+          "short_name": "St. Mary of the Lakes"
         }
       ],
       "contact": {
@@ -7680,7 +8025,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_032-smass-sun-0830-st",
@@ -7695,7 +8040,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_032-smass-sun-1100-st",
@@ -7710,7 +8055,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_032-dmass-mon-0800-st",
@@ -7725,7 +8070,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_032-dmass-tue-0800-st",
@@ -7740,7 +8085,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_032-dmass-thu-0800-st",
@@ -7755,7 +8100,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_032-dmass-fri-0800-st",
@@ -7770,7 +8115,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_032-conf-sat-1500-st",
@@ -7785,37 +8130,72 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
-          "id": "parish_032-ador-mon-0630-st",
+          "id": "parish_032-ador-wkday-0800",
           "type": "adoration",
-          "day": "monday",
-          "time": "06:30",
-          "end_time": "20:00",
-          "location_id": "st-joseph-church-stockbridge",
+          "day": "weekday",
+          "time": "08:00",
+          "end_time": "23:00",
+          "location_id": "st-mary-mother-of-the-church-church-lee",
           "language": "en",
-          "notes": null,
+          "notes": "Oratory behind St. Mary's Church",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02",
-          "recurrence": {
-            "type": "nth",
-            "week": 1
-          }
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_032-ador-sat-0900",
+          "type": "adoration",
+          "day": "saturday",
+          "time": "09:00",
+          "end_time": "23:00",
+          "location_id": "st-mary-mother-of-the-church-church-lee",
+          "language": "en",
+          "notes": "Oratory behind St. Mary's Church",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_032-ador-sun-0900",
+          "type": "adoration",
+          "day": "sunday",
+          "time": "09:00",
+          "end_time": "23:00",
+          "location_id": "st-mary-mother-of-the-church-church-lee",
+          "language": "en",
+          "notes": "Oratory behind St. Mary's Church",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03"
         }
       ],
       "validation": {
         "status": "verified",
-        "last_checked": "2026-02-21",
-        "sources": [
-          "bulletin_2026-02 — https://stmarylos.com/publications"
-        ]
+        "last_checked": "2026-03-04",
+        "bulletin_date": "2026-03"
       },
       "county": "Berkshire",
-      "clergy": [],
+      "clergy": [
+        {
+          "role": "pastor",
+          "name": "Fr. Matthew Guidi",
+          "email": null
+        },
+        {
+          "role": "deacon_emeritus",
+          "name": "Deacon Jim McElroy",
+          "email": null
+        }
+      ],
       "bulletin_url": "https://www.stmarylos.com/publications",
       "is_accessible": null
     },
@@ -7910,7 +8290,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_033-smass-sun-0945-st",
@@ -7925,7 +8305,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_033-smass-sun-1115-st",
@@ -7940,7 +8320,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_033-dmass-mon-0700-st",
@@ -7954,7 +8334,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_033-dmass-tue-0700-st",
@@ -7968,7 +8348,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_033-dmass-wed-0700-st",
@@ -7982,7 +8362,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_033-dmass-thu-0700-st",
@@ -7996,7 +8376,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_033-comm-fri-0700-st",
@@ -8011,7 +8391,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_033-conf-sat-1500-st",
@@ -8026,7 +8406,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_033-smass-sat-1730-st",
@@ -8041,7 +8421,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_033-smass-sun-0830-st",
@@ -8056,18 +8436,121 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_033-dmass-wkday-1730-svdp",
+          "type": "daily_mass",
+          "day": "weekday",
+          "time": "17:30",
+          "end_time": null,
+          "location_id": "st-vincent-de-paul-church-lenox-dale",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_033-conf-sat-1815-svdp",
+          "type": "confession",
+          "day": "saturday",
+          "time": "18:15",
+          "end_time": null,
+          "location_id": "st-vincent-de-paul-church-lenox-dale",
+          "language": "en",
+          "notes": "After 5:30 PM Vigil Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_033-conf-sun-4th-pat",
+          "type": "confession",
+          "day": "sunday",
+          "time": null,
+          "end_time": null,
+          "location_id": "st-patrick-church-west-stockbridge",
+          "language": "en",
+          "notes": "4th Sunday of the month",
+          "recurrence": {
+            "type": "nth",
+            "week": 4
+          },
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_033-htmass-hthu-1900-ann",
+          "type": "holy_thursday_mass",
+          "day": "holy_thursday",
+          "time": "19:00",
+          "end_time": null,
+          "location_id": "st-ann-church-lenox",
+          "language": "en",
+          "notes": "Mass of the Lord's Supper",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_033-soc-gfri-1500-ann",
+          "type": "stations_of_cross",
+          "day": "good_friday",
+          "time": "15:00",
+          "end_time": null,
+          "location_id": "st-ann-church-lenox",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_033-gfri-gfri-1900-ann",
+          "type": "good_friday_service",
+          "day": "good_friday",
+          "time": "19:00",
+          "end_time": null,
+          "location_id": "st-ann-church-lenox",
+          "language": "en",
+          "notes": "Passion of the Lord",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "bulletin_2026-03"
         }
       ],
       "validation": {
         "status": "verified",
-        "last_checked": "2026-02-21",
-        "sources": [
-          "bulletin_2026-02 — https://avptriparish.org"
-        ]
+        "last_checked": "2026-03-04",
+        "bulletin_date": "2026-03"
       },
       "county": "Berkshire",
-      "clergy": [],
+      "clergy": [
+        {
+          "role": "pastor",
+          "name": "Rev. Msgr. John J. Bonzagni",
+          "email": null
+        },
+        {
+          "role": "deacon",
+          "name": "Deacon John Zick",
+          "email": null
+        }
+      ],
       "bulletin_url": "https://www.avptriparish.org",
       "is_accessible": null
     },
@@ -8086,7 +8569,7 @@
           "id": "st-mary-s-church-longmeadow",
           "name": "St. Mary’s Church",
           "type": "church",
-          "address": "519 Longmeadow Street, 01106",
+          "address": "519 Longmeadow Street, Longmeadow, MA 01106",
           "city": "Longmeadow",
           "state": "MA",
           "zip": "01106",
@@ -8115,14 +8598,14 @@
           "day": "saturday",
           "time": "16:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-mary-s-church-longmeadow",
           "language": "en",
           "notes": "Vigil Mass",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_035-smass-sat-1730",
@@ -8130,14 +8613,14 @@
           "day": "saturday",
           "time": "17:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-mary-s-church-longmeadow",
           "language": "en",
           "notes": "Vigil Mass",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_035-smass-sun-0800",
@@ -8145,14 +8628,14 @@
           "day": "sunday",
           "time": "08:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-mary-s-church-longmeadow",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_035-smass-sun-0930",
@@ -8160,14 +8643,14 @@
           "day": "sunday",
           "time": "09:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-mary-s-church-longmeadow",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_035-smass-sun-1100",
@@ -8175,14 +8658,14 @@
           "day": "sunday",
           "time": "11:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-mary-s-church-longmeadow",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_035-dmass-mon-1830",
@@ -8190,14 +8673,14 @@
           "day": "monday",
           "time": "18:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-mary-s-church-longmeadow",
           "language": "en",
           "notes": "Evening Mass with Miraculous Medal Novena; Rosary after Mass",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_035-comm-fri-0700",
@@ -8205,18 +8688,14 @@
           "day": "friday",
           "time": "07:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-mary-s-church-longmeadow",
           "language": "en",
           "notes": "3rd Friday is Mass instead",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02",
-          "recurrence": {
-            "type": "nth",
-            "week": 3
-          }
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_035-dmass-holyday-0700",
@@ -8224,14 +8703,14 @@
           "day": "holyday",
           "time": "07:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-mary-s-church-longmeadow",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_035-dmass-holyday-0900",
@@ -8239,14 +8718,14 @@
           "day": "holyday",
           "time": "09:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-mary-s-church-longmeadow",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_035-dmass-holyday-1800",
@@ -8254,14 +8733,14 @@
           "day": "holyday",
           "time": "18:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-mary-s-church-longmeadow",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_035-conf-sat-1430",
@@ -8269,14 +8748,14 @@
           "day": "saturday",
           "time": "14:30",
           "end_time": "15:30",
-          "location_id": null,
+          "location_id": "st-mary-s-church-longmeadow",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_035-conf-mon-1900-lent",
@@ -8284,14 +8763,14 @@
           "day": "monday",
           "time": "19:00",
           "end_time": "20:00",
-          "location_id": null,
+          "location_id": "st-mary-s-church-longmeadow",
           "language": "en",
           "notes": "Mondays only — following the 6:30 PM Novena Mass",
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_035-stations-fri-1830-lent",
@@ -8299,14 +8778,14 @@
           "day": "friday",
           "time": "18:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-mary-s-church-longmeadow",
           "language": "en",
           "notes": "Fridays only (except Good Friday); Communion Service follows",
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_035-ador-tue-0730",
@@ -8314,14 +8793,14 @@
           "day": "tuesday",
           "time": "07:30",
           "end_time": "12:00",
-          "location_id": null,
+          "location_id": "st-mary-s-church-longmeadow",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_035-ador-fri-0730",
@@ -8329,14 +8808,14 @@
           "day": "friday",
           "time": "07:30",
           "end_time": "08:30",
-          "location_id": null,
+          "location_id": "st-mary-s-church-longmeadow",
           "language": "en",
           "notes": "Rosary with Adoration",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_035-ador-1fri-1200",
@@ -8344,66 +8823,126 @@
           "day": "first_friday",
           "time": "12:00",
           "end_time": "17:00",
-          "location_id": null,
+          "location_id": "st-mary-s-church-longmeadow",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_035-dmass-1sat-0800",
           "type": "daily_mass",
           "day": "first_saturday",
           "time": "08:00",
-          "end_time": null,
-          "location_id": null,
+          "end_time": "09:00",
+          "location_id": "st-mary-s-church-longmeadow",
           "language": "en",
           "notes": "Respect for Life Mass; Rosary follows at ~8:30 AM",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
-          "id": "parish_035-dmass-wkday-0700",
+          "id": "parish_035-dmass-mon-0700",
           "type": "daily_mass",
-          "day": "weekday",
+          "day": "monday",
           "time": "07:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-mary-s-church-longmeadow",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_035-dmass-tue-0700",
+          "type": "daily_mass",
+          "day": "tuesday",
+          "time": "07:00",
+          "end_time": null,
+          "location_id": "st-mary-s-church-longmeadow",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_035-dmass-wed-0700",
+          "type": "daily_mass",
+          "day": "wednesday",
+          "time": "07:00",
+          "end_time": null,
+          "location_id": "st-mary-s-church-longmeadow",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_035-dmass-thu-0700",
+          "type": "daily_mass",
+          "day": "thursday",
+          "time": "07:00",
+          "end_time": null,
+          "location_id": "st-mary-s-church-longmeadow",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_035-dmass-fri-0700-3rd",
+          "type": "daily_mass",
+          "day": "friday",
+          "time": "07:00",
+          "end_time": null,
+          "location_id": "st-mary-s-church-longmeadow",
+          "language": "en",
+          "notes": null,
+          "recurrence": {
+            "type": "nth",
+            "week": 3
+          },
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03"
         }
       ],
       "validation": {
         "status": "verified",
-        "last_checked": "2026-02-21",
-        "sources": [
-          "bulletin_2026-02 — https://stmarylong.org/bulletin"
-        ]
+        "last_checked": "2026-03-04",
+        "bulletin_date": "2026-03"
       },
       "county": "Hampden",
       "clergy": [
         {
-          "title": "Pastor",
-          "name": "Fr. Christopher J. Waitekus"
+          "role": "pastor",
+          "name": "Fr. Christopher J. Waitekus",
+          "email": "parishoffice@stmarylong.org"
         },
         {
-          "title": "Priest in Residence",
-          "name": "Fr. Stan Achu"
-        },
-        {
-          "title": "Deacon",
-          "name": "Donald Higby"
+          "role": "deacon",
+          "name": "Deacon Donald Higby",
+          "email": null
         }
       ],
       "bulletin_url": "https://www.stmarylong.org/bulletin",
@@ -8424,7 +8963,7 @@
           "id": "christ-the-king-church-ludlow",
           "name": "Christ the King Church",
           "type": "church",
-          "address": "41 Warsaw Avenue, 01056",
+          "address": "41 Warsaw Avenue, Ludlow, MA 01056",
           "city": "Ludlow",
           "state": "MA",
           "zip": "01056",
@@ -8446,19 +8985,19 @@
       ],
       "services": [
         {
-          "id": "parish_036-smass-sat-0700",
-          "type": "sunday_mass",
+          "id": "parish_036-dmass-sat-0700",
+          "type": "daily_mass",
           "day": "saturday",
           "time": "07:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "christ-the-king-church-ludlow",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_036-smass-sat-1700",
@@ -8466,14 +9005,14 @@
           "day": "saturday",
           "time": "17:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "christ-the-king-church-ludlow",
           "language": "en",
           "notes": "Vigil Mass",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_036-smass-sat-1830",
@@ -8481,14 +9020,14 @@
           "day": "saturday",
           "time": "18:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "christ-the-king-church-ludlow",
           "language": "en",
           "notes": "Vigil Mass",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_036-smass-sun-0730",
@@ -8496,14 +9035,14 @@
           "day": "sunday",
           "time": "07:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "christ-the-king-church-ludlow",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_036-smass-sun-0845-pl",
@@ -8511,14 +9050,14 @@
           "day": "sunday",
           "time": "08:45",
           "end_time": null,
-          "location_id": null,
+          "location_id": "christ-the-king-church-ludlow",
           "language": "pl",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_036-smass-sun-1000",
@@ -8526,14 +9065,14 @@
           "day": "sunday",
           "time": "10:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "christ-the-king-church-ludlow",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_036-smass-sun-1115",
@@ -8541,14 +9080,14 @@
           "day": "sunday",
           "time": "11:15",
           "end_time": null,
-          "location_id": null,
+          "location_id": "christ-the-king-church-ludlow",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_036-smass-sun-1730",
@@ -8556,14 +9095,14 @@
           "day": "sunday",
           "time": "17:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "christ-the-king-church-ludlow",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_036-ador-daily",
@@ -8571,30 +9110,15 @@
           "day": "daily",
           "time": null,
           "end_time": null,
-          "location_id": null,
+          "location_id": "christ-the-king-church-ludlow",
           "language": "en",
           "notes": "Perpetual Adoration Chapel — open 24/7 for scheduled adorers. Public access hours may vary; contact the church for walk-in availability. Livestream at ctkchapelludlow.com",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "perpetual": true
-        },
-        {
-          "id": "parish_036-rosary-mon-0625",
-          "type": "rosary",
-          "day": "monday",
-          "time": "06:25",
-          "end_time": null,
-          "location_id": null,
-          "language": "en",
-          "notes": "Mon–Sat: Rosary at 6:25 AM before 7:00 AM Mass; Divine Mercy Chaplet after Mass",
-          "seasonal": {
-            "is_seasonal": false,
-            "season": "year_round"
-          },
-          "source": "bulletin_2026-02"
         },
         {
           "id": "parish_036-mirac-tue-0700",
@@ -8602,14 +9126,14 @@
           "day": "tuesday",
           "time": "07:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "christ-the-king-church-ludlow",
           "language": "en",
           "notes": "Prayed at the 7:00 AM Tuesday Mass",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_036-conf-wkday-0630",
@@ -8617,14 +9141,14 @@
           "day": "weekday",
           "time": "06:30",
           "end_time": "07:00",
-          "location_id": null,
+          "location_id": "christ-the-king-church-ludlow",
           "language": "en",
           "notes": "English and Polish",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_036-conf-sat-1500",
@@ -8632,14 +9156,14 @@
           "day": "saturday",
           "time": "15:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "christ-the-king-church-ludlow",
           "language": "en",
           "notes": "English and Polish",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_036-conf-sat-1915",
@@ -8647,14 +9171,14 @@
           "day": "saturday",
           "time": "19:15",
           "end_time": "19:45",
-          "location_id": null,
+          "location_id": "christ-the-king-church-ludlow",
           "language": "en",
           "notes": "Following the 6:30 PM Saturday Mass",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "time_is_inferred": true
         },
         {
@@ -8663,14 +9187,14 @@
           "day": "friday",
           "time": "13:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "christ-the-king-church-ludlow",
           "language": "en",
           "notes": "Fridays — English/Polish (Droga Krzyżowa)",
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_036-stations-fri-1815-lent",
@@ -8678,14 +9202,14 @@
           "day": "friday",
           "time": "18:15",
           "end_time": "18:45",
-          "location_id": null,
+          "location_id": "christ-the-king-church-ludlow",
           "language": "en",
           "notes": "Fridays — immediately following 5:30 PM Mass",
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
           },
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "time_is_inferred": true
         },
         {
@@ -8694,14 +9218,14 @@
           "day": "sunday",
           "time": "13:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "christ-the-king-church-ludlow",
           "language": "pl",
           "notes": "Sundays — Rosary 1:30 PM followed by Gorzkie Żale (Lenten Lamentation) at 2:00 PM",
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_036-dmass-wkday-0700",
@@ -8709,25 +9233,134 @@
           "day": "weekday",
           "time": "07:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "christ-the-king-church-ludlow",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_036-rosary-wkday-0625",
+          "type": "rosary",
+          "day": "weekday",
+          "time": "06:25",
+          "end_time": null,
+          "location_id": "christ-the-king-church-ludlow",
+          "language": "en",
+          "notes": "Before 7:00 AM Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_036-rosary-sat-0625",
+          "type": "rosary",
+          "day": "saturday",
+          "time": "06:25",
+          "end_time": null,
+          "location_id": "christ-the-king-church-ludlow",
+          "language": "en",
+          "notes": "Before 7:00 AM Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_036-dm-wkday-0730",
+          "type": "divine_mercy",
+          "day": "weekday",
+          "time": "07:30",
+          "end_time": null,
+          "location_id": "christ-the-king-church-ludlow",
+          "language": "en",
+          "notes": "Immediately following 7:00 AM Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_036-dm-sat-0730",
+          "type": "divine_mercy",
+          "day": "saturday",
+          "time": "07:30",
+          "end_time": null,
+          "location_id": "christ-the-king-church-ludlow",
+          "language": "en",
+          "notes": "Immediately following 7:00 AM Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_036-pray-wed-1000",
+          "type": "prayer_group",
+          "day": "wednesday",
+          "time": "10:00",
+          "end_time": "11:00",
+          "location_id": "christ-the-king-church-ludlow",
+          "language": "en",
+          "notes": "Praying for Priests",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_036-gz-sun-1400-lent",
+          "type": "gorzkie_zale",
+          "day": "sunday",
+          "time": "14:00",
+          "end_time": null,
+          "location_id": "christ-the-king-church-ludlow",
+          "language": "pl",
+          "notes": "Rosary at 1:30 PM before Gorzkie Żale",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_036-dmass-fri-1730-lent",
+          "type": "daily_mass",
+          "day": "friday",
+          "time": "17:30",
+          "end_time": null,
+          "location_id": "christ-the-king-church-ludlow",
+          "language": "en",
+          "notes": "Stations of the Cross follow",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-03"
         }
       ],
       "validation": {
         "status": "verified",
-        "last_checked": "2026-02-21",
-        "sources": [
-          "bulletin_2026-02 — https://parishesonline.com/organization/christ-the-king-church-01056"
-        ]
+        "last_checked": "2026-03-04",
+        "bulletin_date": "2026-03"
       },
       "county": "Hampden",
-      "clergy": [],
+      "clergy": [
+        {
+          "role": "pastor",
+          "name": "Fr. Raymond A. Sołtys",
+          "email": null
+        }
+      ],
       "bulletin_url": "https://parishesonline.com/organization/christ-the-king-church-01056",
       "is_accessible": null
     },
@@ -8746,7 +9379,7 @@
           "id": "our-lady-of-fatima-church-ludlow",
           "name": "Our Lady of Fatima Church",
           "type": "church",
-          "address": "438 Winsor Street, 01056",
+          "address": "438 Winsor Street, Ludlow, MA 01056",
           "city": "Ludlow",
           "state": "MA",
           "zip": "01056",
@@ -8754,6 +9387,19 @@
           "lat": 42.1584,
           "lng": -72.4689,
           "short_name": "Our Lady of Fatima"
+        },
+        {
+          "id": "chapel-of-the-little-shepherds-ludlow",
+          "name": "Chapel of The Little Shepherds",
+          "type": "chapel",
+          "address": "438 Winsor Street, Ludlow, MA 01056",
+          "city": "Ludlow",
+          "state": "MA",
+          "zip": "01056",
+          "is_accessible": null,
+          "lat": null,
+          "lng": null,
+          "short_name": "Little Shepherds Chapel"
         }
       ],
       "contact": {
@@ -8775,14 +9421,14 @@
           "day": "saturday",
           "time": "16:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "our-lady-of-fatima-church-ludlow",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_037-smass-sun-0900-pt",
@@ -8790,14 +9436,14 @@
           "day": "sunday",
           "time": "09:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "our-lady-of-fatima-church-ludlow",
           "language": "pt",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_037-smass-sun-1100",
@@ -8805,14 +9451,14 @@
           "day": "sunday",
           "time": "11:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "our-lady-of-fatima-church-ludlow",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_037-dmass-mon-0830-pt",
@@ -8820,14 +9466,14 @@
           "day": "monday",
           "time": "08:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "chapel-of-the-little-shepherds-ludlow",
           "language": "pt",
-          "notes": "Chapel",
+          "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_037-dmass-tue-1730-pt",
@@ -8835,14 +9481,14 @@
           "day": "tuesday",
           "time": "17:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "chapel-of-the-little-shepherds-ludlow",
           "language": "pt",
-          "notes": "Chapel",
+          "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_037-dmass-wed-0830-pt",
@@ -8850,14 +9496,14 @@
           "day": "wednesday",
           "time": "08:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "chapel-of-the-little-shepherds-ludlow",
           "language": "pt",
-          "notes": "Chapel",
+          "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_037-dmass-thu-0830-pt",
@@ -8865,14 +9511,14 @@
           "day": "thursday",
           "time": "08:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "chapel-of-the-little-shepherds-ludlow",
           "language": "pt",
-          "notes": "Chapel",
+          "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_037-dmass-fri-1730-pt",
@@ -8880,14 +9526,14 @@
           "day": "friday",
           "time": "17:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "chapel-of-the-little-shepherds-ludlow",
           "language": "pt",
-          "notes": "Chapel",
+          "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_037-ador-thu-0900",
@@ -8895,14 +9541,14 @@
           "day": "thursday",
           "time": "09:00",
           "end_time": "20:00",
-          "location_id": null,
+          "location_id": "chapel-of-the-little-shepherds-ludlow",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_037-conf-sat-1500",
@@ -8910,14 +9556,14 @@
           "day": "saturday",
           "time": "15:00",
           "end_time": "16:00",
-          "location_id": null,
+          "location_id": "our-lady-of-fatima-church-ludlow",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_037-dmass-fri-1730-lent",
@@ -8925,14 +9571,14 @@
           "day": "friday",
           "time": "17:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "our-lady-of-fatima-church-ludlow",
           "language": "en",
           "notes": "Fridays only — Bilingual Mass (replaces or supplements regular Fri schedule)",
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_037-stations-fri-1800-lent",
@@ -8940,32 +9586,162 @@
           "day": "friday",
           "time": "18:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "our-lady-of-fatima-church-ludlow",
           "language": "en",
           "notes": "Fridays only — Bilingual; immediately following 5:30 PM Mass",
           "seasonal": {
             "is_seasonal": true,
             "season": "lent"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_037-dmass-1fri-0830-pt",
+          "type": "daily_mass",
+          "day": "first_friday",
+          "time": "08:30",
+          "end_time": null,
+          "location_id": "chapel-of-the-little-shepherds-ludlow",
+          "language": "pt",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_037-dmass-1sat-0830-pt",
+          "type": "daily_mass",
+          "day": "first_saturday",
+          "time": "08:30",
+          "end_time": null,
+          "location_id": "chapel-of-the-little-shepherds-ludlow",
+          "language": "pt",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_037-ador-1sat-0900",
+          "type": "adoration",
+          "day": "first_saturday",
+          "time": "09:00",
+          "end_time": "15:00",
+          "location_id": "chapel-of-the-little-shepherds-ludlow",
+          "language": "pt",
+          "notes": "Eucharistic Vigil",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_037-dmass-holyday-0830-pt",
+          "type": "daily_mass",
+          "day": "holyday",
+          "time": "08:30",
+          "end_time": null,
+          "location_id": "our-lady-of-fatima-church-ludlow",
+          "language": "pt",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_037-dmass-holyday-1730",
+          "type": "daily_mass",
+          "day": "holyday",
+          "time": "17:30",
+          "end_time": null,
+          "location_id": "our-lady-of-fatima-church-ludlow",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_037-dmass-civil-0830",
+          "type": "daily_mass",
+          "day": "civil_holiday",
+          "time": "08:30",
+          "end_time": null,
+          "location_id": "our-lady-of-fatima-church-ludlow",
+          "language": "en",
+          "notes": "In main church",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_037-htmass-hthu-1900",
+          "type": "holy_thursday_mass",
+          "day": "holy_thursday",
+          "time": "19:00",
+          "end_time": null,
+          "location_id": "our-lady-of-fatima-church-ludlow",
+          "language": "en",
+          "notes": "Bilingual (English/Portuguese)",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_037-soc-gfri-1500",
+          "type": "stations_of_cross",
+          "day": "good_friday",
+          "time": "15:00",
+          "end_time": null,
+          "location_id": "our-lady-of-fatima-church-ludlow",
+          "language": "en",
+          "notes": "Via Sacra — Bilingual (English/Portuguese)",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_037-gfri-gfri-1900",
+          "type": "good_friday_service",
+          "day": "good_friday",
+          "time": "19:00",
+          "end_time": null,
+          "location_id": "our-lady-of-fatima-church-ludlow",
+          "language": "en",
+          "notes": "Passion of the Lord — Bilingual (English/Portuguese)",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "bulletin_2026-03"
         }
       ],
       "validation": {
         "status": "verified",
-        "last_checked": "2026-02-21",
-        "sources": [
-          "bulletin_2026-02 — https://church-bulletin.org/?id=928"
-        ]
+        "last_checked": "2026-03-04",
+        "bulletin_date": "2026-03"
       },
       "county": "Hampden",
       "clergy": [
         {
-          "title": "Pastor",
-          "name": "Friar Pedro de Oliveira OFM Conv."
-        },
-        {
-          "title": "Parochial Vicar",
-          "name": "Friar Luiz De Lima Rangel OFM Conv."
+          "role": "pastor",
+          "name": "Fr. Pedro de Oliveira, OFM Conv.",
+          "email": null
         }
       ],
       "bulletin_url": "https://church-bulletin.org/?id=928",
@@ -8986,7 +9762,7 @@
           "id": "st-elizabeth-church-ludlow",
           "name": "St. Elizabeth Church",
           "type": "church",
-          "address": "191 Hubbard Street, 01056 Rectory: 181 Hubbard Street, 01056",
+          "address": "191 Hubbard Street, Ludlow, MA 01056",
           "city": "Ludlow",
           "state": "MA",
           "zip": "01056",
@@ -9015,14 +9791,14 @@
           "day": "saturday",
           "time": "16:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-elizabeth-church-ludlow",
           "language": "en",
           "notes": "Vigil Mass",
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_038-smass-sun-0730",
@@ -9030,14 +9806,14 @@
           "day": "sunday",
           "time": "07:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-elizabeth-church-ludlow",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_038-smass-sun-0915",
@@ -9045,14 +9821,14 @@
           "day": "sunday",
           "time": "09:15",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-elizabeth-church-ludlow",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_038-smass-sun-1100",
@@ -9060,14 +9836,14 @@
           "day": "sunday",
           "time": "11:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-elizabeth-church-ludlow",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_038-smass-sun-1700",
@@ -9075,14 +9851,14 @@
           "day": "sunday",
           "time": "17:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-elizabeth-church-ludlow",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_038-smass-holyeve-1730",
@@ -9090,14 +9866,14 @@
           "day": "holyday_eve",
           "time": "17:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-elizabeth-church-ludlow",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_038-dmass-holyday-0830",
@@ -9105,14 +9881,14 @@
           "day": "holyday",
           "time": "08:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-elizabeth-church-ludlow",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_038-dmass-holyday-1900",
@@ -9120,14 +9896,14 @@
           "day": "holyday",
           "time": "19:00",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-elizabeth-church-ludlow",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_038-conf-sat-1430",
@@ -9135,14 +9911,14 @@
           "day": "saturday",
           "time": "14:30",
           "end_time": "15:30",
-          "location_id": null,
+          "location_id": "st-elizabeth-church-ludlow",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_038-dmass-wkday-0730",
@@ -9150,25 +9926,29 @@
           "day": "weekday",
           "time": "07:30",
           "end_time": null,
-          "location_id": null,
+          "location_id": "st-elizabeth-church-ludlow",
           "language": "en",
           "notes": null,
           "seasonal": {
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         }
       ],
       "validation": {
         "status": "verified",
-        "last_checked": "2026-02-21",
-        "sources": [
-          "bulletin_2026-02 — https://sponsors.bonventure.net/?page=1680"
-        ]
+        "last_checked": "2026-03-04",
+        "bulletin_date": "2026-03"
       },
       "county": "Hampden",
-      "clergy": [],
+      "clergy": [
+        {
+          "role": "pastor",
+          "name": "Rev. Msgr. Homer P. Gosselin",
+          "email": null
+        }
+      ],
       "bulletin_url": "https://sponsors.bonventure.net/?page=1680",
       "is_accessible": null
     },
