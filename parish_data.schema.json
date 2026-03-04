@@ -52,11 +52,10 @@
             "monday", "tuesday", "wednesday", "thursday", "friday",
             "saturday", "sunday",
             "daily", "weekday",
-            "first_friday", "first_saturday", "first_sunday", "first_thursday",
-            "fourth_friday",
+            "first_friday", "first_saturday",
             "holyday", "holyday_eve",
             "lent",
-            "good_friday", "holy_thursday", "easter_vigil",
+            "good_friday", "holy_thursday", "holy_saturday", "easter_vigil",
             "palm_sunday", "easter_sunday",
             "civil_holiday"
           ]
@@ -82,6 +81,7 @@
         "anointing_of_sick",
         "prayer_group",
         "gorzkie_zale",
+        "blessing",
         "good_friday_service",
         "holy_thursday_mass",
         "easter_vigil_mass",
@@ -138,6 +138,7 @@
         "location_id":      { "$ref": "#/definitions/nullable_string" },
         "location":         { "$ref": "#/definitions/nullable_string" },
         "language":         { "type": "string", "minLength": 2, "maxLength": 5 },
+        "languages":        { "type": "array", "items": { "type": "string", "minLength": 2, "maxLength": 5 }, "description": "For bilingual/multilingual services — array of ISO 639-1 codes" },
         "language_note":    { "$ref": "#/definitions/nullable_string" },
         "notes":            { "$ref": "#/definitions/nullable_string" },
         "title":            { "$ref": "#/definitions/nullable_string" },
@@ -187,16 +188,18 @@
         "accessibility_notes":  { "$ref": "#/definitions/nullable_string" },
         "notes":                { "$ref": "#/definitions/nullable_string" },
         "lat": {
-          "type": "number",
-          "minimum": 40.5,
-          "maximum": 46.0,
-          "description": "Latitude — Western New England region"
+          "description": "Latitude — Western New England region",
+          "oneOf": [
+            { "type": "number", "minimum": 40.5, "maximum": 46.0 },
+            { "type": "null" }
+          ]
         },
         "lng": {
-          "type": "number",
-          "minimum": -74.5,
-          "maximum": -70.5,
-          "description": "Longitude — Western New England region"
+          "description": "Longitude — Western New England region",
+          "oneOf": [
+            { "type": "number", "minimum": -74.5, "maximum": -70.5 },
+            { "type": "null" }
+          ]
         }
       },
       "additionalProperties": false

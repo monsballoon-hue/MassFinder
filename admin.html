@@ -898,7 +898,8 @@ function buildRow(p) {
     flagged:!!(p.validation && p.validation.flagged),
     evtCount:countParishEvents(p.id),
     score:sc.score, daysSince:sc.daysSince,
-    svcCount:(p.services||[]).length
+    svcCount:(p.services||[]).length,
+    lastChecked:(p.validation && p.validation.last_checked)||null
   };
 }
 
@@ -948,7 +949,7 @@ function updateStats(shown, total) {
   if (!el) return;
   const flagCount = allRows.filter(function(r){ return r.flagged; }).length;
   const flagText = flagCount > 0 ? ' \u00b7 <span style="color:var(--amber);font-weight:600">' + flagCount + ' flagged</span>' : '';
-  const sortLabels = { priority:'\u21AF Priority', alpha:'A\u2192Z Name', status:'\u25CF Status', flagged:'\u2691 Flagged' };
+  const sortLabels = { priority:'\u21AF Priority', alpha:'A\u2192Z Name', status:'\u25CF Status', flagged:'\u2691 Flagged', verified_newest:'\u2713 Newest', verified_oldest:'\u2713 Oldest' };
   el.innerHTML = '<span>' + (shown === total ? total + ' parishes' : shown + ' of ' + total + ' shown') + flagText + '</span>' +
     '<div style="display:flex;gap:6px;align-items:center">' +
       '<button class="sort-toggle" onclick="openNewParishModal()" title="Create new parish" style="color:var(--green);font-weight:700">+</button>' +
@@ -957,7 +958,7 @@ function updateStats(shown, total) {
     '</div>';
 }
 function cycleSidebarSort() {
-  const modes = ['priority','alpha','status','flagged'];
+  const modes = ['priority','alpha','status','flagged','verified_newest','verified_oldest'];
   sidebarSort = modes[(modes.indexOf(sidebarSort) + 1) % modes.length];
   sortRows(allRows);
   filterList();
@@ -972,6 +973,20 @@ function sortRows(rows) {
     rows.sort((a,b) => (order[a.vs]||0) - (order[b.vs]||0) || a.name.localeCompare(b.name));
   } else if (sidebarSort === 'flagged') {
     rows.sort((a,b) => (b.flagged?1:0) - (a.flagged?1:0) || b.score - a.score);
+  } else if (sidebarSort === 'verified_newest') {
+    rows.sort((a,b) => {
+      if (!a.lastChecked && !b.lastChecked) return a.name.localeCompare(b.name);
+      if (!a.lastChecked) return 1;
+      if (!b.lastChecked) return -1;
+      return b.lastChecked.localeCompare(a.lastChecked) || a.name.localeCompare(b.name);
+    });
+  } else if (sidebarSort === 'verified_oldest') {
+    rows.sort((a,b) => {
+      if (!a.lastChecked && !b.lastChecked) return a.name.localeCompare(b.name);
+      if (!a.lastChecked) return -1;
+      if (!b.lastChecked) return 1;
+      return a.lastChecked.localeCompare(b.lastChecked) || a.name.localeCompare(b.name);
+    });
   }
 }
 function renderList(rows) {
@@ -994,6 +1009,9 @@ function renderList(rows) {
       else if (r.daysSince > 30) badge = '<span class="stale-badge hot">' + r.daysSince + 'd</span>';
       else if (r.daysSince > 14) badge = '<span class="stale-badge warm">' + r.daysSince + 'd</span>';
       else badge = '<span class="stale-badge cool">' + r.daysSince + 'd</span>';
+    } else if (sidebarSort === 'verified_newest' || sidebarSort === 'verified_oldest') {
+      if (r.lastChecked) badge = '<span class="stale-badge cool">' + r.lastChecked.slice(5) + '</span>';
+      else badge = '<span class="stale-badge hot">never</span>';
     }
     // Progress bar from sessionStorage
     let progHtml = '';
