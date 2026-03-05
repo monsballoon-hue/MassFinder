@@ -1,12 +1,12 @@
-const CACHE_NAME = 'massfinder-v2_20260305_01';
+const CACHE_NAME = 'massfinder-v2_20260305_02';
 const SHELL_ASSETS = [
   '/',
   '/index.html',
   '/parish_data.json',
   '/events.json',
   '/manifest.json',
-  '/icon-192.png',
-  '/icon-512.png',
+  '/assets/icon-192.png',
+  '/assets/icon-512.png',
   'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;500;600&display=swap',
   'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css',
   'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js',
