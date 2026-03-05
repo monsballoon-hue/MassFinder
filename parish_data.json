@@ -11483,7 +11483,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_047-smass-sun-0830-sacred",
@@ -11498,7 +11498,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_047-smass-sun-1030-sacred",
@@ -11513,7 +11513,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_047-dmass-mon-0900-sacred",
@@ -11528,7 +11528,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_047-dmass-tue-0900-sacred",
@@ -11543,7 +11543,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_047-dmass-wed-0900-sacred",
@@ -11558,7 +11558,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_047-dmass-thu-0900-sacred",
@@ -11573,7 +11573,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_047-comm-fri-0900-sacred",
@@ -11588,7 +11588,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_047-ador-fri-0930-sacred",
@@ -11603,7 +11603,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_047-conf-sat-1500-sacred",
@@ -11618,7 +11618,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_047-dmass-wed-1730-lent-sacred",
@@ -11633,7 +11633,7 @@
             "is_seasonal": true,
             "season": "lent"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_047-devot-wed-1700-lent-sacred",
@@ -11648,7 +11648,7 @@
             "is_seasonal": true,
             "season": "lent"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_047-stations-fri-1500-lent-sacred",
@@ -11663,21 +11663,96 @@
             "is_seasonal": true,
             "season": "lent"
           },
-          "source": "manual_verification_2026-02"
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_047-htmass-thu-1900-hw",
+          "type": "holy_thursday_mass",
+          "day": "thursday",
+          "time": "19:00",
+          "end_time": null,
+          "location_id": "sacred-heart-church-pittsfield",
+          "language": "en",
+          "notes": "Mass of the Lord's Supper",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_047-gfsvc-fri-1900-hw",
+          "type": "good_friday_service",
+          "day": "friday",
+          "time": "19:00",
+          "end_time": null,
+          "location_id": "sacred-heart-church-pittsfield",
+          "language": "en",
+          "notes": "The Passion of the Lord",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_047-evmass-sat-1900-hw",
+          "type": "easter_vigil_mass",
+          "day": "saturday",
+          "time": "19:00",
+          "end_time": null,
+          "location_id": "sacred-heart-church-pittsfield",
+          "language": "en",
+          "notes": "No 4:00 PM Vigil Mass this day",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_047-smass-sun-0830-easter",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "08:30",
+          "end_time": null,
+          "location_id": "sacred-heart-church-pittsfield",
+          "language": "en",
+          "notes": "Easter Sunday Mass",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_047-smass-sun-1030-easter",
+          "type": "sunday_mass",
+          "day": "sunday",
+          "time": "10:30",
+          "end_time": null,
+          "location_id": "sacred-heart-church-pittsfield",
+          "language": "en",
+          "notes": "Easter Sunday Mass",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "bulletin_2026-03"
         }
       ],
       "validation": {
         "status": "verified",
-        "last_checked": "2026-02-26",
-        "sources": [
-          "bulletin_2026-02 — https://parishesonline.com/organization/sacred-heart-church-01201"
-        ]
+        "last_checked": "2026-03-04",
+        "source": "bulletin_2026-03",
+        "recommended_action": null
       },
       "county": "Berkshire",
       "clergy": [
         {
-          "title": "Pastor",
-          "name": "Fr. Steven Montesanti"
+          "role": "pastor",
+          "name": "Fr. Steven Montesanti",
+          "email": null
         }
       ],
       "bulletin_url": "https://parishesonline.com/organization/sacred-heart-church-01201",
@@ -23068,13 +23143,18 @@
           "stmarys05156@gmail.com"
         ],
         "website": "https://holyfamilyvermont.com/",
-        "office_hours": "M&T 8:00AM-9:00AM (Mass), 9:30AM-4:30PM; W&F 10:00AM-1:00PM",
+        "office_hours": "M/T 9:30am-3:00pm; W/F 10:00am-1:00pm",
         "mailing_address": "10 Pleasant St, Springfield, VT 05156"
       },
       "clergy": [
         {
           "role": "pastor",
           "name": "Fr. Larry Rogelio Organiza",
+          "email": null
+        },
+        {
+          "role": "deacon",
+          "name": "Dcn. Paul Kendall",
           "email": null
         }
       ],
@@ -23092,7 +23172,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_090-dmass-tue-1730-stm",
@@ -23107,7 +23187,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_090-dmass-wed-0900-stj",
@@ -23122,7 +23202,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_090-dmass-fri-0900-stm",
@@ -23137,7 +23217,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_090-smass-sat-1600-stj",
@@ -23152,7 +23232,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_090-smass-sun-0900-stm",
@@ -23167,7 +23247,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_090-conf-tue-1800-stm",
@@ -23182,14 +23262,14 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_090-conf-sat-1500-stj",
           "type": "confession",
           "day": "saturday",
           "time": "15:00",
-          "end_time": "15:30",
+          "end_time": "15:45",
           "location_id": "st-josephs-church-chester",
           "language": "en",
           "notes": null,
@@ -23197,13 +23277,88 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_090-rosary-thu-0900-stm",
+          "type": "rosary",
+          "day": "thursday",
+          "time": "09:00",
+          "end_time": null,
+          "location_id": "st-marys-church-springfield",
+          "language": "en",
+          "notes": "Adoration Chapel; no Mass on Thursdays",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_090-ador-tue-1800-stm",
+          "type": "adoration",
+          "day": "tuesday",
+          "time": "18:00",
+          "end_time": "18:30",
+          "location_id": "st-marys-church-springfield",
+          "language": "en",
+          "notes": "Follows 5:30pm Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_090-rosary-sun-1900-lent",
+          "type": "rosary",
+          "day": "sunday",
+          "time": "19:00",
+          "end_time": null,
+          "location_id": "st-marys-church-springfield",
+          "language": "en",
+          "notes": "Live Rosary during Lent",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_090-rosary-tue-1200-lent",
+          "type": "rosary",
+          "day": "tuesday",
+          "time": "12:00",
+          "end_time": null,
+          "location_id": "st-marys-church-springfield",
+          "language": "en",
+          "notes": "Live Rosary during Lent",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_090-rosary-thu-1200-lent",
+          "type": "rosary",
+          "day": "thursday",
+          "time": "12:00",
+          "end_time": null,
+          "location_id": "st-marys-church-springfield",
+          "language": "en",
+          "notes": "Live Rosary during Lent",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-03"
         }
       ],
       "validation": {
         "status": "verified",
-        "last_checked": "2026-02-27",
-        "source": "website_2026-02",
+        "last_checked": "2026-03-04",
+        "source": "bulletin_2026-03",
         "recommended_action": null
       },
       "visitation": null,
@@ -25869,7 +26024,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_099-smass-sun-0900",
@@ -25883,7 +26038,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_099-smass-sun-1100",
@@ -25897,7 +26052,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_099-vesp-sun-1700",
@@ -25911,7 +26066,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_099-devot-sun-1930",
@@ -25925,7 +26080,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_099-dmass-sat-0700",
@@ -25939,7 +26094,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_099-dmass-sat-0830",
@@ -25953,7 +26108,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_099-rosary-sat-0800",
@@ -25966,7 +26121,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_099-rosary-sat-1700",
@@ -25979,7 +26134,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_099-devot-thu-1930",
@@ -25993,7 +26148,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_099-conf-mon-0915",
@@ -26006,7 +26161,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02",
+          "source": "bulletin_2026-03",
           "end_time": "09:45"
         },
         {
@@ -26020,7 +26175,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02",
+          "source": "bulletin_2026-03",
           "end_time": "20:30"
         },
         {
@@ -26036,7 +26191,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_099-dmass-wkday-0830",
@@ -26051,7 +26206,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_099-rosary-wkday-0800",
@@ -26066,7 +26221,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_099-rosary-wkday-1700",
@@ -26081,13 +26236,13 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         }
       ],
       "validation": {
         "status": "verified",
-        "last_checked": "2026-02-27",
-        "source": "website_2026-02",
+        "last_checked": "2026-03-05",
+        "source": "bulletin_2026-03",
         "recommended_action": null
       },
       "visitation": null,
