@@ -1,7 +1,5 @@
 .DS_Store
 node_modules/
-package-lock.json
-package.json
 freshness-report.json
 review/today-prompt.txt
 review/url-audit.json

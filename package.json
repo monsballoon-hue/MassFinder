@@ -1,0 +1,21 @@
+{
+  "name": "massfinder",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Catholic services directory for Western New England",
+  "scripts": {
+    "migrate": "node scripts/migrate-to-supabase.js",
+    "validate": "ajv validate --spec=draft7 -s parish_data.schema.json -d parish_data.json --errors=text --all-errors -c ajv-formats"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.0"
+  },
+  "devDependencies": {
+    "ajv": "^8.18.0",
+    "ajv-cli": "^5.0.0",
+    "ajv-formats": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'massfinder-v2_20260305_02';
+const CACHE_NAME = 'massfinder-v2_20260306_01';
 const SHELL_ASSETS = [
   '/',
   '/index.html',
@@ -42,14 +42,15 @@ self.addEventListener('fetch', event => {
     'www.googletagmanager.com',
     'www.google-analytics.com',
     'universalis.com',
+    'mgbhmwnaipopdctbihmf.supabase.co',
   ];
   if (NETWORK_ONLY_HOSTS.some(h => url.hostname === h)) {
     // Let the browser handle it directly — no SW involvement
     return;
   }
 
-  // For data files: stale-while-revalidate
-  if (url.pathname.endsWith('parish_data.json') || url.pathname.endsWith('events.json')) {
+  // For API routes and data files: stale-while-revalidate
+  if (url.pathname.startsWith('/api/') || url.pathname.endsWith('parish_data.json') || url.pathname.endsWith('events.json')) {
     event.respondWith(
       caches.open(CACHE_NAME).then(cache =>
         cache.match(event.request).then(cached => {

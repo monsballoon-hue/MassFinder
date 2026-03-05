@@ -891,9 +891,8 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
 <script>
-let allParishes=[],filteredParishes=[],userLat=null,userLng=null,currentSort='name',currentFilter='all',searchQuery='',favorites=[],ycEvents=[],eventsData=[];
-let keepParishIds=new Set();
-function displayName(name,id){if(id&&keepParishIds.has(id))return name;return name.replace(/ (Church|Parish)$/,'')}
+let allChurches=[],filteredChurches=[],userLat=null,userLng=null,currentSort='name',currentFilter='all',searchQuery='',favorites=[],ycEvents=[],eventsData=[];
+function displayName(name){return name.replace(/ (Church|Parish)$/,'')}
 let advancedFilters={types:[],days:[],languages:[]},tempAdvanced={types:[],days:[],languages:[]};
 const DAY_ORDER=['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
 const DAY_NAMES={sunday:'Sunday',monday:'Monday',tuesday:'Tuesday',wednesday:'Wednesday',thursday:'Thursday',friday:'Friday',saturday:'Saturday'};
@@ -984,24 +983,24 @@ function getNext(parish,filter){
 
 // Distance
 function hav(a1,o1,a2,o2){const R=3959,dA=(a2-a1)*Math.PI/180,dO=(o2-o1)*Math.PI/180;const a=Math.sin(dA/2)**2+Math.cos(a1*Math.PI/180)*Math.cos(a2*Math.PI/180)*Math.sin(dO/2)**2;return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a))}
-function getDist(p){if(userLat===null)return null;const l=p.locations&&p.locations[0];if(!l||!l.lat||!l.lng)return null;return hav(userLat,userLng,l.lat,l.lng)}
+function getDist(c){if(userLat===null)return null;if(!c.lat||!c.lng)return null;return hav(userLat,userLng,c.lat,c.lng)}
 function fmtDist(mi){if(mi===null)return'';if(mi<0.1)return'Nearby';return mi<10?mi.toFixed(1)+' mi':Math.round(mi)+' mi'}
 
 // Search
-function matchSearch(p,q){if(!q)return true;const f=[p.name,p.town,p.county,...(p.locations||[]).map(l=>l.name),...(p.locations||[]).map(l=>l.city),...(p.services||[]).map(s=>s.notes||''),...(p.services||[]).map(s=>LANG_NAMES[s.language]||''),...(p.staff||[])].join(' ').toLowerCase();return q.toLowerCase().split(/\s+/).every(w=>f.includes(w))}
+function matchSearch(c,q){if(!q)return true;const f=[c.name,c.city,c.county,c.address,...(c.services||[]).map(s=>s.notes||''),...(c.services||[]).map(s=>LANG_NAMES[s.language]||''),...(c.staff||[])].join(' ').toLowerCase();return q.toLowerCase().split(/\s+/).every(w=>f.includes(w))}
 
 // Advanced filters
 function hasAdv(){return advancedFilters.types.length||advancedFilters.days.length||advancedFilters.languages.length}
-function matchAdv(p){if(!hasAdv())return true;const af=advancedFilters;if(af.types.length){const pt=new Set(p.services.map(s=>s.type));if(!af.types.some(t=>pt.has(t)))return false}if(af.days.length){const pd=new Set(p.services.map(s=>s.day));if(!af.days.some(d=>pd.has(d)))return false}if(af.languages.length){const pl=new Set(p.services.map(s=>s.language));if(!af.languages.some(l=>pl.has(l)))return false}return true}
+function matchAdv(c){if(!hasAdv())return true;const af=advancedFilters;if(af.types.length){const ct=new Set(c.services.map(s=>s.type));if(!af.types.some(t=>ct.has(t)))return false}if(af.days.length){const cd=new Set(c.services.map(s=>s.day));if(!af.days.some(d=>cd.has(d)))return false}if(af.languages.length){const cl=new Set(c.services.map(s=>s.language));if(!af.languages.some(l=>cl.has(l)))return false}return true}
 function renderPills(){const el=document.getElementById('activeFilters');if(!hasAdv()){el.innerHTML='';return}let pills=[];advancedFilters.types.forEach(t=>pills.push({l:SVC[t]||t,k:'types',v:t}));advancedFilters.days.forEach(d=>pills.push({l:DAY_NAMES[d]||d,k:'days',v:d}));advancedFilters.languages.forEach(l=>pills.push({l:LANG_NAMES[l]||l,k:'languages',v:l}));el.innerHTML=pills.map(p=>'<span class="filter-pill">'+esc(p.l)+'<button onclick="removeAdv(\''+p.k+"','"+p.v+"')\" aria-label=\"Remove\">×</button></span>").join('')}
-function removeAdv(k,v){advancedFilters[k]=advancedFilters[k].filter(x=>x!==v);renderPills();updateMFChip();filterParishes();renderCards()}
+function removeAdv(k,v){advancedFilters[k]=advancedFilters[k].filter(x=>x!==v);renderPills();updateMFChip();filterChurches();renderCards()}
 function updateMFChip(){const btn=document.getElementById('moreFiltersBtn');const c=advancedFilters.types.length+advancedFilters.days.length+advancedFilters.languages.length;btn.innerHTML=c>0?'Filters <span class="chip-count">'+c+'</span>':'More Filters';btn.classList.toggle('active',c>0)}
 
 // More Filters overlay
 function openMoreFilters(){tempAdvanced=JSON.parse(JSON.stringify(advancedFilters));renderFiltersBody();document.getElementById('filtersBackdrop').classList.add('open');document.getElementById('filtersOverlay').classList.add('open');document.body.style.overflow='hidden';trapFocus(document.getElementById('filtersOverlay'))}
 function closeMoreFilters(){document.getElementById('filtersBackdrop').classList.remove('open');document.getElementById('filtersOverlay').classList.remove('open');document.body.style.overflow='';releaseFocus()}
 function clearAdvancedFilters(){tempAdvanced={types:[],days:[],languages:[]};renderFiltersBody()}
-function applyAdvancedFilters(){advancedFilters=JSON.parse(JSON.stringify(tempAdvanced));closeMoreFilters();renderPills();updateMFChip();filterParishes();renderCards()}
+function applyAdvancedFilters(){advancedFilters=JSON.parse(JSON.stringify(tempAdvanced));closeMoreFilters();renderPills();updateMFChip();filterChurches();renderCards()}
 function toggleTemp(k,v){if(tempAdvanced[k].includes(v))tempAdvanced[k]=tempAdvanced[k].filter(x=>x!==v);else tempAdvanced[k].push(v);renderFiltersBody()}
 function renderFiltersBody(){
   const body=document.getElementById('filtersBody');let html='';
@@ -1013,31 +1012,31 @@ function renderFiltersBody(){
   html+='<div class="filter-group"><div class="filter-group-title">Day</div><div class="filter-group-grid">';
   for(const d of DAY_ORDER){const ch=tempAdvanced.days.includes(d);html+='<button class="filter-checkbox'+(ch?' checked':'')+'" onclick="toggleTemp(\'days\',\''+d+'\')">'+DAY_NAMES[d]+'</button>'}
   html+='</div></div>';
-  const langs=new Set();allParishes.forEach(p=>p.services.forEach(s=>{if(s.language&&s.language!=='en')langs.add(s.language)}));
+  const langs=new Set();allChurches.forEach(c=>c.services.forEach(s=>{if(s.language&&s.language!=='en')langs.add(s.language)}));
   if(langs.size){html+='<div class="filter-group"><div class="filter-group-title">Language</div><div class="filter-group-grid">';for(const l of langs){const ch=tempAdvanced.languages.includes(l);html+='<button class="filter-checkbox'+(ch?' checked':'')+'" onclick="toggleTemp(\'languages\',\''+l+'\')">'+(LANG_NAMES[l]||l)+'</button>'}html+='</div></div>'}
   body.innerHTML=html;
 }
 
 // Filter + Sort
-function filterParishes(){
-  filteredParishes=allParishes.map(p=>({parish:p,next:getNext(p,currentFilter),distance:getDist(p)}))
-    .filter(item=>{if(!matchSearch(item.parish,searchQuery))return false;if(!matchAdv(item.parish))return false;
+function filterChurches(){
+  filteredChurches=allChurches.map(c=>({church:c,next:getNext(c,currentFilter),distance:getDist(c)}))
+    .filter(item=>{if(!matchSearch(item.church,searchQuery))return false;if(!matchAdv(item.church))return false;
     if(['confession','adoration','latin','spanish','today','weekend','lent'].includes(currentFilter))return item.next!==null;return true});
-  sortParishes();
+  sortChurches();
 }
-function sortParishes(){
-  if(currentSort==='proximity'&&userLat!==null)filteredParishes.sort((a,b)=>(a.distance??9999)-(b.distance??9999));
-  else if(currentSort==='next_service')filteredParishes.sort((a,b)=>{
+function sortChurches(){
+  if(currentSort==='proximity'&&userLat!==null)filteredChurches.sort((a,b)=>(a.distance??9999)-(b.distance??9999));
+  else if(currentSort==='next_service')filteredChurches.sort((a,b)=>{
     if(userLat!==null){const aClose=(a.distance??9999)<=15,bClose=(b.distance??9999)<=15;if(aClose!==bClose)return aClose?-1:1;}
     return (a.next?.minutesUntil??99999)-(b.next?.minutesUntil??99999);
   });
-  else filteredParishes.sort((a,b)=>a.parish.name.localeCompare(b.parish.name));
+  else filteredChurches.sort((a,b)=>a.church.name.localeCompare(b.church.name));
 }
-function toggleSort(){const m=['name','proximity','next_service'];currentSort=m[(m.indexOf(currentSort)+1)%m.length];if(currentSort==='proximity'){if(userLat===null){requestLocation();return}refreshLocation()}updateSortLabel();filterParishes();renderCards()}
+function toggleSort(){const m=['name','proximity','next_service'];currentSort=m[(m.indexOf(currentSort)+1)%m.length];if(currentSort==='proximity'){if(userLat===null){requestLocation();return}refreshLocation()}updateSortLabel();filterChurches();renderCards()}
 function updateSortLabel(){document.getElementById('sortLabel').textContent={name:'By name',proximity:'By distance',next_service:'By next service'}[currentSort]||'By name'}
 
 
-function isVer(p){const v=p.validation;return v&&v.status==='verified'}
+function isVer(c){const v=c.validation;return v&&v.status==='verified'}
 
 // YC Events
 function generateICS(title,date,time,endTime,location,description,url){
@@ -1065,8 +1064,8 @@ function addYCToCalendar(idx,ev){
   if(ev)ev.stopPropagation();
   const e=getUpcomingYC()[idx];if(!e)return;
   const r=resolveYC(e);
-  const loc=(r.locName?r.locName+', ':'')+r.parishName+(r.town?', '+r.town:'');
-  const desc=[e.title,r.parishName,e.notes||'','Added from MassFinder'].filter(Boolean).join('\n');
+  const loc=(r.locName?r.locName+', ':'')+r.churchName+(r.town?', '+r.town:'');
+  const desc=[e.title,r.churchName,e.notes||'','Added from MassFinder'].filter(Boolean).join('\n');
   generateICS(e.title,e.date,e.time,e.end_time||'',loc,desc);
 }
 function getUpcomingYC(){
@@ -1074,10 +1073,8 @@ function getUpcomingYC(){
   return ycEvents.filter(e=>e.date>=today);
 }
 function resolveYC(e){
-  const p=allParishes.find(x=>x.id===e.parish_id)||{};
-  let locName='';
-  for(const l of(p.locations||[])){if(l.id===e.location_id){locName=l.short_name||l.name;break}}
-  return{...e,parishName:p.name||'',town:p.town||'',county:p.county||'',locName};
+  const c=allChurches.find(x=>x.id===e.church_id)||{};
+  return{...e,churchName:c.name||'',town:c.city||'',county:c.county||'',locName:c.short_name||c.name||''};
 }
 function fmtYCDate(d){
   const dt=new Date(d+'T12:00:00');
@@ -1094,7 +1091,7 @@ function renderYCCard(e,delay,idx){
   return '<article class="yc-card" role="listitem" style="animation-delay:'+(delay||0)+'ms" onclick="openEventDetail(\''+e.id+'\')">'
     +'<div class="yc-card-top"><div class="yc-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Young &amp; Catholic</div>'+calBtn+'</div>'
     +'<div class="yc-title">'+esc(e.title)+'</div>'
-    +'<div class="yc-church">'+esc(displayName(r.locName||r.parishName,e.parish_id))+', '+esc(r.town)+'</div>'
+    +'<div class="yc-church">'+esc(displayName(r.locName||r.churchName))+', '+esc(r.town)+'</div>'
     +'<div class="yc-datetime"><span class="yc-date">'+fmtYCDate(e.date)+'</span><span class="yc-time">'+timeStr+'</span></div>'
     +(e.social?'<div class="yc-social-tag">✦ Social gathering included</div>':'')
     +(e.notes?'<div style="font-size:var(--text-xs);color:var(--color-text-tertiary);font-style:italic;margin-top:var(--space-1)">'+esc(e.notes)+'</div>':'')
@@ -1102,7 +1099,7 @@ function renderYCCard(e,delay,idx){
 }
 
 function renderCards(){
-  const el=document.getElementById('cardList'),total=allParishes.length,shown=filteredParishes.length;
+  const el=document.getElementById('cardList'),total=allChurches.length,shown=filteredChurches.length;
   const upcoming=getUpcomingYC();
 
   // Sparse message — show when Today filter returns few results
@@ -1126,18 +1123,18 @@ function renderCards(){
   if(!shown&&!upcoming.length){el.innerHTML='<div class="no-results"><h3>No churches found</h3><p>Try adjusting your search or filters.</p></div>';return}
 
   const checkSvg='<svg class="card-verified" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>';
-  let cards=filteredParishes.map((item,i)=>{
-    const p=item.parish,next=item.next,dist=item.distance,ver=isVer(p),fav=isFav(p.id),d=Math.min(i*25,250);
+  let cards=filteredChurches.map((item,i)=>{
+    const c=item.church,next=item.next,dist=item.distance,ver=isVer(c),fav=isFav(c.id),d=Math.min(i*25,250);
     let statusBadge='';
     if(next?.isLive)statusBadge='<span class="card-live-badge"><span class="pulse-dot"></span>Live</span>';
     else if(next?.isSoon)statusBadge='<span class="card-soon-badge"><span class="pulse-dot"></span>Soon</span>';
     let nh;if(next){nh='<div class="card-next-service"><span class="card-next-time">'+next.timeFormatted+'</span><span class="card-next-label">'+esc(SVC[next.service.type]||next.service.type)+'</span>'+statusBadge+'</div><div class="card-next-day">'+next.dayLabel+'</div>'}
     else{nh='<div class="card-next-service"><span class="card-next-label" style="color:var(--color-text-tertiary)">Check bulletin for times</span></div>'}
-    return '<article class="parish-card" role="listitem" style="animation-delay:'+d+'ms" onclick="openDetail(\''+p.id+'\')">'
-      +'<div class="card-top"><div class="card-name-row"><h3 class="card-name">'+esc(displayName(p.name,p.id))+'</h3>'+(ver?checkSvg:'')+'</div>'
+    return '<article class="parish-card" role="listitem" style="animation-delay:'+d+'ms" onclick="openDetail(\''+c.id+'\')">'
+      +'<div class="card-top"><div class="card-name-row"><h3 class="card-name">'+esc(displayName(c.name))+'</h3>'+(ver?checkSvg:'')+'</div>'
       +'<div class="card-right">'+(dist!==null?'<span class="card-distance">'+fmtDist(dist)+'</span>':'')
-      +'<button class="card-fav'+(fav?' is-fav':'')+'" onclick="toggleFav(\''+p.id+"',event)\" aria-label=\"Favorite\"><svg viewBox=\"0 0 24 24\" fill=\""+(fav?'currentColor':'none')+"\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z\"/></svg></button>"
-      +'</div></div><div class="card-town">'+esc(p.town)+', '+esc(p.state)+'</div>'+nh
+      +'<button class="card-fav'+(fav?' is-fav':'')+'" onclick="toggleFav(\''+c.id+"',event)\" aria-label=\"Favorite\"><svg viewBox=\"0 0 24 24\" fill=\""+(fav?'currentColor':'none')+"\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z\"/></svg></button>"
+      +'</div></div><div class="card-town">'+esc(c.city)+', '+esc(c.state)+'</div>'+nh
       +'</article>';
   });
 
@@ -1145,8 +1142,8 @@ function renderCards(){
 }
 
 // Detail Panel
-function renderCommunityEvents(p){
-  const evts=eventsData.filter(e=>e.parish_id===p.id&&e.category!=='yc'&&isEventActive(e));
+function renderCommunityEvents(c){
+  const evts=eventsData.filter(e=>e.church_id===c.id&&e.category!=='yc'&&isEventActive(e));
   if(!evts.length)return '';
   const today=getNow().toISOString().slice(0,10);
 
@@ -1254,67 +1251,53 @@ function getPastor(p){
 const CLERGY_ROLE_LABEL={pastor:'Pastor',pastor_and_director:'Pastor & Director',provisional_priest:'Provisional Priest',deacon:'Deacon',deacon_emeritus:'Deacon Emeritus',deacon_retired:'Deacon (Retired)'};
 
 function openDetail(id){
-  const p=allParishes.find(x=>x.id===id);if(!p)return;
-  const fav=isFav(p.id),ver=isVer(p),v=p.validation||{},dist=getDist(p),ct=p.contact||{};
-  // Primary location = location with the most services tied to it
-  const loc0=(function(){
-    const locs=p.locations||[];if(locs.length<=1)return locs[0]||null;
-    const counts={};locs.forEach(function(l){counts[l.id]=0;});
-    (p.services||[]).forEach(function(s){if(s.location_id&&counts[s.location_id]!==undefined)counts[s.location_id]++;});
-    var best=locs[0],bestN=counts[locs[0].id]||0;
-    for(var i=1;i<locs.length;i++){var n=counts[locs[i].id]||0;if(n>bestN){best=locs[i];bestN=n;}}
-    return best;
-  })();
-  const mapUrl=loc0?getMapsUrl(loc0.address||loc0.name):'';
-  const domain=ct.website?ct.website.replace(/^https?:\/\//,'').replace(/\/.*/,''):'';
+  const c=allChurches.find(x=>x.id===id);if(!c)return;
+  const fav=isFav(c.id),ver=isVer(c),v=c.validation||{},dist=getDist(c);
+  const mapUrl=c.address?getMapsUrl(c.address):getMapsUrl(c.name);
+  const domain=c.website?c.website.replace(/^https?:\/\//,'').replace(/\/.*/,''):'';
 
   // Badges
   let bg='';
   bg+=ver?'<span class="detail-badge verified"><svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>Verified</span>':'<span class="detail-badge unverified">Unverified</span>';
-  bg+='<span class="detail-badge county">'+esc(p.county)+' County</span>';
-  if(p.established)bg+='<span class="detail-badge county">Est. '+esc(p.established)+'</span>';
+  bg+='<span class="detail-badge county">'+esc(c.county)+' County</span>';
+  if(c.established)bg+='<span class="detail-badge county">Est. '+esc(c.established)+'</span>';
   if(dist!==null)bg+='<span class="detail-badge county">'+fmtDist(dist)+' away</span>';
 
-  // Contact — bulletin/website logic
-  // C1 FIX: bulletin_url lives at parish top level (p.bulletin_url), not inside contact object
-  const bulletinUrl=p.bulletin_url||ct.bulletin_url||'';
-  const thirdActionUrl=bulletinUrl||ct.website||'';
+  // Contact
+  const bulletinUrl=c.bulletin_url||'';
+  const thirdActionUrl=bulletinUrl||c.website||'';
   const thirdActionLabel=bulletinUrl?'Bulletin':'Website';
   const thirdActionIcon=bulletinUrl
     ?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>'
     :'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>';
 
   let chtml='<div class="detail-contact">';
-  const _pastor=getPastor(p);
+  const _pastor=getPastor(c);
   if(_pastor)chtml+='<div class="contact-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><div><span>'+esc(_pastor.name)+'</span><div style="font-size:var(--text-xs);color:var(--color-text-tertiary)">'+esc(CLERGY_ROLE_LABEL[_pastor.role]||_pastor.role)+'</div></div></div>';
-  // Show website as text link ONLY when bulletin URL takes the button (so website isn't lost)
-  if(bulletinUrl&&ct.website)chtml+='<div class="contact-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><a href="'+esc(ct.website)+'" target="_blank" rel="noopener">'+esc(domain)+'</a></div>';
-  if(ct.office_hours)chtml+='<div class="contact-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>'+esc(ct.office_hours)+'</span></div>';
+  if(bulletinUrl&&c.website)chtml+='<div class="contact-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><a href="'+esc(c.website)+'" target="_blank" rel="noopener">'+esc(domain)+'</a></div>';
+  if(c.office_hours)chtml+='<div class="contact-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>'+esc(c.office_hours)+'</span></div>';
   chtml+='</div>';
 
   // Quick actions: Call, Directions, Bulletin (or Website)
   let qa='<div class="detail-quick-actions">';
-  if(ct.phone)qa+='<a class="quick-action" href="tel:'+ct.phone+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>Call</span></a>';
+  if(c.phone)qa+='<a class="quick-action" href="tel:'+c.phone+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>Call</span></a>';
   if(mapUrl)qa+='<a class="quick-action" href="'+mapUrl+'" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg><span>Directions</span></a>';
   if(thirdActionUrl)qa+='<a class="quick-action" href="'+esc(thirdActionUrl)+'" target="_blank" rel="noopener">'+thirdActionIcon+'<span>'+thirdActionLabel+'</span></a>';
-  // Share button (native share or clipboard copy)
-  qa+='<button class="quick-action" onclick="shareParish(\''+esc(displayName(p.name,p.id))+'\',\''+p.id+'\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg><span>Share</span></button>';
+  qa+='<button class="quick-action" onclick="shareParish(\''+esc(displayName(c.name))+'\',\''+c.id+'\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg><span>Share</span></button>';
   qa+='</div>';
 
   // Visitation data
   let visitHtml='';
-  if(p.visitation&&p.visitation.hours_note){
+  if(c.visitation&&c.visitation.hours_note){
     visitHtml='<div style="margin:var(--space-3) 0;padding:var(--space-3) var(--space-4);background:var(--color-verified-bg);border-radius:var(--radius-md);display:flex;align-items:flex-start;gap:var(--space-3)">'
       +'<span style="font-size:1.1em;line-height:1">🕊</span>'
       +'<div><div style="font-size:var(--text-sm);font-weight:var(--weight-semibold);color:var(--color-verified)">Open for Prayer</div>'
-      +'<div style="font-size:var(--text-sm);color:var(--color-text-secondary);margin-top:2px">'+esc(p.visitation.hours_note)+'</div></div></div>';
+      +'<div style="font-size:var(--text-sm);color:var(--color-text-secondary);margin-top:2px">'+esc(c.visitation.hours_note)+'</div></div></div>';
   }
 
-  // Location lookup
-  const locL={};(p.locations||[]).forEach(l=>{locL[l.id]=l.short_name||l.name});
-  const ml=(p.locations||[]).length>1;
-
-  // Accordion sections
+  // Accordion sections (no multi-location — each church is a single location)
+  const locL={};
+  const ml=false;
   const FIRST_DEVOTION_DAYS=['first_friday','first_saturday'];
   const MASS_TYPES=['sunday_mass','daily_mass','communion_service'];
   function isFirstDevotionMass(s){return FIRST_DEVOTION_DAYS.includes(s.day)&&MASS_TYPES.includes(s.type);}
@@ -1328,13 +1311,10 @@ function openDetail(id){
 
   let secHtml='';
   for(const sec of secs){
-    // First Friday/Saturday Masses route to Devotions; non-mass first fri/sat stay in their normal section
     const svcs=sec.k==='devot'
-      ? p.services.filter(s=>sec.types.includes(s.type)||isFirstDevotionMass(s))
-      : p.services.filter(s=>sec.types.includes(s.type)&&!isFirstDevotionMass(s));
+      ? c.services.filter(s=>sec.types.includes(s.type)||isFirstDevotionMass(s))
+      : c.services.filter(s=>sec.types.includes(s.type)&&!isFirstDevotionMass(s));
     if(!svcs.length)continue;
-    // Count only services with times for badge (no-time = by appointment, shouldn't inflate count)
-    // But if ALL are no-time (e.g. Holy Week TBD), show total so badge isn't 0
     const timedCount=svcs.filter(s=>s.time).length;
     const badgeCount=timedCount>0?timedCount:svcs.length;
     const isFirst=sec.k==='mass';
@@ -1345,30 +1325,8 @@ function openDetail(id){
       +'</button><div class="accordion-body'+(isFirst?' open':'')+'"><div class="accordion-body-inner">'+renderSched(svcs,locL,ml,sec.types)+'</div></div></div>';
   }
 
-  // Multi-loc note — location cards with addresses and directions
-  let mlNote='';
-  if(ml)mlNote='<div class="loc-sites">'
-    +'<div class="loc-sites-hdr">'
-    +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:18px;height:18px;color:var(--color-primary-muted);flex-shrink:0"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>'
-    +'<span class="loc-sites-title">Worship Sites</span>'
-    +'</div>'
-    +p.locations.map(function(l){
-      var addr=[l.address,l.city,l.state].filter(Boolean).join(', ');
-      var dirUrl=addr?getMapsUrl(addr):(l.name?getMapsUrl(l.name):'');
-      return '<div class="loc-site-card">'
-        +'<div class="loc-site-info">'
-        +'<div class="loc-site-name">'+esc(l.short_name||l.name)+'</div>'
-        +(addr?'<div class="loc-site-addr">'+esc(addr)+'</div>':'')
-        +'</div>'
-        +(dirUrl?'<a class="loc-site-dir" href="'+dirUrl+'" target="_blank" rel="noopener" title="Get directions">'
-          +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:16px;height:16px"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>'
-          +'</a>':'')
-        +'</div>';
-    }).join('')
-    +'</div>';
-
   // Community events section
-  const ceHtml=renderCommunityEvents(p);
+  const ceHtml=renderCommunityEvents(c);
 
   // Verify prompt + correction form + footer
   const vp='<div class="verify-prompt" id="verifyPrompt"><p>Were these times accurate when you last visited?</p><div class="verify-prompt-btns"><button class="verify-btn yes" onclick="verifyOk(true)">✓ Yes, looks right</button><button class="verify-btn no" onclick="showCorrectionForm()">Not quite</button></div></div>'
@@ -1381,7 +1339,7 @@ function openDetail(id){
     +'<button class="corr-pill" onclick="selectCorrPill(this,\'Other\')">Other</button>'
     +'</div>'
     +'<input type="hidden" id="corrCategory" value="">'
-    +'<input type="hidden" id="corrChurch" value="'+esc(p.name)+'">'
+    +'<input type="hidden" id="corrChurch" value="'+esc(c.name)+'">'
     +'<label class="corr-form-label">Details</label>'
     +'<textarea id="corrMessage" class="corr-input" rows="2" placeholder="Select a category above first…"></textarea>'
     +'<input id="corrEmail" type="email" class="corr-input" placeholder="Your email (optional, for follow-up)" style="resize:none;margin-top:var(--space-2)">'
@@ -1391,11 +1349,11 @@ function openDetail(id){
   let footer='';if(v.last_checked)footer='<div class="detail-verified-footer">Last checked: '+esc(v.last_checked)+(v.bulletin_date?' · Bulletin: '+esc(v.bulletin_date):'')+(v.source?'<br>Source: '+esc(v.source):'')+'</div>';
 
   document.getElementById('detailContent').innerHTML=
-    '<div class="detail-header"><div class="detail-header-top"><h2 class="detail-name">'+esc(displayName(p.name,p.id))+'</h2>'
-    +'<div class="detail-actions"><button class="detail-action-btn fav-btn'+(fav?' fav-active':'')+'" data-id="'+p.id+'" onclick="toggleFav(\''+p.id+'\')" aria-label="Favorite"><svg viewBox="0 0 24 24" fill="'+(fav?'currentColor':'none')+'" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>'
+    '<div class="detail-header"><div class="detail-header-top"><h2 class="detail-name">'+esc(displayName(c.name))+'</h2>'
+    +'<div class="detail-actions"><button class="detail-action-btn fav-btn'+(fav?' fav-active':'')+'" data-id="'+c.id+'" onclick="toggleFav(\''+c.id+'\')" aria-label="Favorite"><svg viewBox="0 0 24 24" fill="'+(fav?'currentColor':'none')+'" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>'
     +'<button class="detail-action-btn" onclick="closeDetail()" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>'
-    +'</div></div><div class="detail-town">'+esc(p.town)+', '+esc({MA:'Massachusetts',CT:'Connecticut',VT:'Vermont',NH:'New Hampshire'}[p.state]||p.state||'Massachusetts')+'</div><div class="detail-badges">'+bg+'</div></div>'
-    +'<div class="detail-body">'+chtml+qa+visitHtml+mlNote+secHtml+ceHtml+vp+footer+'</div>';
+    +'</div></div><div class="detail-town">'+esc(c.city)+', '+esc({MA:'Massachusetts',CT:'Connecticut',VT:'Vermont',NH:'New Hampshire'}[c.state]||c.state||'Massachusetts')+'</div><div class="detail-badges">'+bg+'</div></div>'
+    +'<div class="detail-body">'+chtml+qa+visitHtml+secHtml+ceHtml+vp+footer+'</div>';
 
   document.getElementById('detailBackdrop').classList.add('open');
   document.getElementById('detailPanel').classList.add('open');
@@ -1448,22 +1406,14 @@ const EVT_TYPES={adoration:'Adoration',devotion:'Devotion',sunday_mass:'Mass',da
 function openEventDetail(eventId){
   const evt=eventsData.find(e=>e.id===eventId)||ycEvents.find(e=>e.id===eventId);
   if(!evt)return;
-  const p=allParishes.find(x=>x.id===evt.parish_id)||{};
-  const loc0=p.locations&&p.locations[0];
-  // Resolve location name
-  let locName='';
-  if(evt.location_id){for(const l of(p.locations||[])){if(l.id===evt.location_id){locName=l.short_name||l.name;break}}}
-  // Address: venue override > matched location > first parish location
-  let evtAddress=evt.venue_address;
-  let evtLat=evt.venue_lat,evtLng=evt.venue_lng;
-  if(!evtAddress&&evt.location_id){
-    for(const l of(p.locations||[])){if(l.id===evt.location_id){evtAddress=l.address;evtLat=l.lat;evtLng=l.lng;break}}
-  }
-  if(!evtAddress&&loc0){evtAddress=loc0.address;evtLat=loc0.lat;evtLng=loc0.lng;}
+  const c=allChurches.find(x=>x.id===evt.church_id)||{};
+  // Address: venue override > church address
+  let evtAddress=evt.venue_address||c.address||'';
+  let evtLat=evt.venue_lat||c.lat,evtLng=evt.venue_lng||c.lng;
 
   const mapUrl=evtLat&&evtLng?getMapsUrlCoords(evtLat,evtLng,evtAddress||''):(evtAddress?getMapsUrl(evtAddress):'');
-  const parishDisplayName=displayName(p.name||'',evt.parish_id);
-  const venueName=evt.venue_name||locName||parishDisplayName;
+  const churchDisplayName=displayName(c.name||'');
+  const venueName=evt.venue_name||churchDisplayName;
 
   // Format date — guard for recurring events without a date
   const timeStr=evt.time?fmt12(evt.time):'';
@@ -1529,10 +1479,10 @@ function openEventDetail(eventId){
   }
 
   // Parish link row
-  const parishLink=p.id?'<div class="evt-parish-link" onclick="navEventToParish(\''+p.id+'\')">'
+  const parishLink=c.id?'<div class="evt-parish-link" onclick="navEventToParish(\''+c.id+'\')">'
     +'<div class="evt-parish-link-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/></svg></div>'
     +'<div class="evt-parish-link-text"><div class="evt-parish-link-label">Hosted at</div>'
-    +'<div class="evt-parish-link-name">'+esc(parishDisplayName)+'</div></div>'
+    +'<div class="evt-parish-link-name">'+esc(churchDisplayName)+'</div></div>'
     +'<svg class="evt-parish-link-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div>':'';
 
   // Description & notes
@@ -1559,8 +1509,8 @@ function openEventDetail(eventId){
   if(evt.image_url)imageHtml='<div style="margin:0 calc(-1 * var(--space-5));"><img src="'+esc(evt.image_url)+'" alt="" style="width:100%;max-height:200px;object-fit:cover;"></div>';
 
   // Footer: "See all at this parish"
-  const footerLink=p.id?'<div class="evt-footer-link" onclick="navEventToParish(\''+p.id+'\')">'
-    +'<span>See all services at '+esc(parishDisplayName)+'</span>'
+  const footerLink=c.id?'<div class="evt-footer-link" onclick="navEventToParish(\''+c.id+'\')">'
+    +'<span>See all services at '+esc(churchDisplayName)+'</span>'
     +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div>':'';
 
   document.getElementById('eventDetailContent').innerHTML=
@@ -1580,15 +1530,11 @@ function openEventDetail(eventId){
 function downloadEventIcal(eventId){
   const evt=eventsData.find(e=>e.id===eventId)||ycEvents.find(e=>e.id===eventId);
   if(!evt)return;
-  const p=allParishes.find(x=>x.id===evt.parish_id)||{};
-  let loc=evt.venue_name||'';
-  let addr=evt.venue_address||'';
-  if(!loc&&evt.location_id){for(const l of(p.locations||[])){if(l.id===evt.location_id){loc=l.short_name||l.name;addr=l.address||'';break}}}
-  if(!loc&&p.locations&&p.locations[0]){loc=p.locations[0].name;addr=p.locations[0].address||'';}
-  if(p.town)loc+=(loc?', ':'')+p.town;
-  let evtLat2=evt.venue_lat,evtLng2=evt.venue_lng;
-  if(!evtLat2&&evt.location_id){for(const l of(p.locations||[])){if(l.id===evt.location_id){evtLat2=l.lat;evtLng2=l.lng;break}}}
-  if(!evtLat2&&p.locations&&p.locations[0]){evtLat2=p.locations[0].lat;evtLng2=p.locations[0].lng;}
+  const c=allChurches.find(x=>x.id===evt.church_id)||{};
+  let loc=evt.venue_name||c.name||'';
+  let addr=evt.venue_address||c.address||'';
+  if(c.city)loc+=(loc?', ':'')+c.city;
+  let evtLat2=evt.venue_lat||c.lat,evtLng2=evt.venue_lng||c.lng;
   const mapsUrl=evtLat2&&evtLng2?getMapsUrlCoords(evtLat2,evtLng2,addr||loc):(addr?getMapsUrl(addr):(loc?getMapsUrl(loc):''));
   const desc=[evt.description||'',evt.notes||'',mapsUrl?'Directions: '+mapsUrl:'','From MassFinder'].filter(Boolean).join('\n');
   const icsDate=getNextEventDate(evt)||getNextDateForDay(evt.day);
@@ -1596,10 +1542,10 @@ function downloadEventIcal(eventId){
   generateICS(evt.title,icsDate,evt.time||'',evt.end_time||'',loc,desc,mapsUrl);
 }
 
-function navEventToParish(parishId){
-  // Close event panel, then open parish detail
+function navEventToParish(churchId){
+  // Close event panel, then open church detail
   document.getElementById('eventDetailPanel').classList.remove('open');
-  setTimeout(()=>openDetail(parishId),100);
+  setTimeout(()=>openDetail(churchId),100);
 }
 function shareParish(name,id){
   const url=location.origin+location.pathname+'#'+id;
@@ -1641,9 +1587,9 @@ async function expressInterest(eventId,ev){
   if(btn)btn.disabled=true;
   const e=eventsData.find(x=>x.id===eventId)||ycEvents.find(x=>x.id===eventId);
   if(!e){if(btn)btn.disabled=false;return}
-  const p=allParishes.find(x=>x.id===e.parish_id)||{};
+  const c=allChurches.find(x=>x.id===e.church_id)||{};
   try{
-    await web3submit({subject:'MassFinder Interest: '+e.title,message:'Event: '+e.title+'\nChurch: '+(p.name||'')+'\nCategory: '+(e.category||'')+'\nDate: '+(e.date||'Recurring')+(e.day?'\nDay: '+e.day:'')+(e.time?'\nTime: '+e.time:'')+'\n\nA user expressed interest via MassFinder.'});
+    await web3submit({subject:'MassFinder Interest: '+e.title,message:'Event: '+e.title+'\nChurch: '+(c.name||'')+'\nCategory: '+(e.category||'')+'\nDate: '+(e.date||'Recurring')+(e.day?'\nDay: '+e.day:'')+(e.time?'\nTime: '+e.time:'')+'\n\nA user expressed interest via MassFinder.'});
     showToast('Thanks for your interest!');
     if(btn){btn.innerHTML='&#10003;';setTimeout(()=>{btn.innerHTML='&#9825;';btn.disabled=false},2000)}
   }catch(err){
@@ -1722,7 +1668,7 @@ function addMoreEventToCal(idx){
     dateStr=getNow().toISOString().slice(0,10);
   }
   if(!e.time)return;
-  generateICS(e.title,dateStr,e.time,e.end_time||'',e.parishName,(e.notes||'')+'\n'+e.parishName+'\nAdded from MassFinder');
+  generateICS(e.title,dateStr,e.time,e.end_time||'',e.churchName||'',(e.notes||'')+'\n'+(e.churchName||'')+'\nAdded from MassFinder');
 }
 
 // Render schedule by day — with smart collapsing
@@ -2121,34 +2067,26 @@ function initMap(){
   const defaultIcon=createPinIcon(false);
   const bounds=[];
 
-  for(const p of allParishes){
-    for(const loc of (p.locations||[])){
-      if(!loc.lat||!loc.lng)continue;
-      const marker=L.marker([loc.lat,loc.lng],{icon:defaultIcon});
-      const next=getNext(p,'all');
-      const dist=getDist(p);
+  for(const c of allChurches){
+    if(!c.lat||!c.lng)continue;
+    const marker=L.marker([c.lat,c.lng],{icon:defaultIcon});
+    const next=getNext(c,'all');
+    const dist=getDist(c);
 
-      let popupHtml='<div class="popup-card" onclick="closeMapPopup();openDetail(\''+p.id+'\')">';
-      popupHtml+='<div class="popup-name">'+esc(displayName(p.name,p.id))+'</div>';
-      popupHtml+='<div class="popup-town">'+esc(p.town)+', '+esc(p.state)+'</div>';
-      if(next){
-        popupHtml+='<div class="popup-next"><span class="popup-time">'+next.timeFormatted+'</span>';
-        popupHtml+='<span class="popup-label">'+(SVC[next.service.type]||next.service.type)+'</span></div>';
-        popupHtml+='<div class="popup-day">'+next.dayLabel+'</div>';
-      }
-      if(dist!==null){popupHtml+='<div class="popup-dist">'+fmtDist(dist)+' away</div>'}
-      popupHtml+='</div>';
-
-      marker.bindPopup(popupHtml,{className:'map-popup',closeButton:false,minWidth:240,maxWidth:280});
-
-      // Show different icon if multi-location
-      if((p.locations||[]).length>1&&loc!==p.locations[0]){
-        // keep default, skip adding to bounds for secondary locs
-      }
-
-      cluster.addLayer(marker);
-      bounds.push([loc.lat,loc.lng]);
+    let popupHtml='<div class="popup-card" onclick="closeMapPopup();openDetail(\''+c.id+'\')">';
+    popupHtml+='<div class="popup-name">'+esc(displayName(c.name))+'</div>';
+    popupHtml+='<div class="popup-town">'+esc(c.city)+', '+esc(c.state)+'</div>';
+    if(next){
+      popupHtml+='<div class="popup-next"><span class="popup-time">'+next.timeFormatted+'</span>';
+      popupHtml+='<span class="popup-label">'+(SVC[next.service.type]||next.service.type)+'</span></div>';
+      popupHtml+='<div class="popup-day">'+next.dayLabel+'</div>';
     }
+    if(dist!==null){popupHtml+='<div class="popup-dist">'+fmtDist(dist)+' away</div>'}
+    popupHtml+='</div>';
+
+    marker.bindPopup(popupHtml,{className:'map-popup',closeButton:false,minWidth:240,maxWidth:280});
+    cluster.addLayer(marker);
+    bounds.push([c.lat,c.lng]);
   }
 
   map.addLayer(cluster);
@@ -2198,7 +2136,7 @@ function getSavedChurchEvents(favIds){
 
   const buckets={today:[],coming:[],ongoing:[]};
   const dayOrd={sunday:0,monday:1,tuesday:2,wednesday:3,thursday:4,friday:5,saturday:6};
-  const evts=eventsData.filter(e=>favIds.has(e.parish_id)&&e.category!=='yc'&&isEventActive(e));
+  const evts=eventsData.filter(e=>favIds.has(e.church_id)&&e.category!=='yc'&&isEventActive(e));
 
   for(const e of evts){
     if(e.dates&&e.dates.length){
@@ -2227,8 +2165,8 @@ function getSavedChurchEvents(favIds){
 }
 
 function renderSavedEvt(e){
-  const p=allParishes.find(x=>x.id===e.parish_id)||{};
-  const pName=displayName(p.name||'',e.parish_id);
+  const c=allChurches.find(x=>x.id===e.church_id)||{};
+  const pName=displayName(c.name||'');
   const isLent=isLentSeason()&&(e.category==='liturgical'||e.category==='devotional');
 
   // When text
@@ -2259,7 +2197,7 @@ function renderSavedEvt(e){
 
   const calSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="14" height="14"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
 
-  return '<div class="saved-evt" onclick="openDetail(\''+e.parish_id+'\')">'
+  return '<div class="saved-evt" onclick="openDetail(\''+e.church_id+'\')">'
     +'<div class="ce-item-accent'+(isLent?' saved-lent-accent':' upcoming')+'"></div>'
     +'<div class="ce-item-body">'
     +'<div class="ce-item-title">'+esc(e.title)+'</div>'
@@ -2278,7 +2216,7 @@ function renderCompactYC(e){
   return '<div class="saved-compact-yc" onclick="openEventDetail(\''+e.id+'\')">'
     +'<div class="ce-item-body">'
     +'<div class="ce-item-title">'+esc(e.title)+'</div>'
-    +'<div class="ce-item-when">'+fmtYCDate(e.date)+' · '+timeStr+' · '+esc(displayName(r.locName||r.parishName,e.parish_id))+'</div>'
+    +'<div class="ce-item-when">'+fmtYCDate(e.date)+' · '+timeStr+' · '+esc(displayName(r.locName||r.churchName))+'</div>'
     +'</div>'
     +'<div class="saved-evt-actions">'
     +'<button class="saved-evt-btn" onclick="downloadEventIcal(\''+esc(e.id)+'\');event.stopPropagation()" title="Add to Calendar">'+calSvg+'</button>'
@@ -2289,12 +2227,12 @@ function renderCompactYC(e){
 function renderSaved(){
   const el=document.getElementById('savedList');
   const sub=document.getElementById('savedSubtitle');
-  const favParishes=allParishes.filter(p=>isFav(p.id));
-  const favIds=new Set(favParishes.map(p=>p.id));
+  const favChurches=allChurches.filter(c=>isFav(c.id));
+  const favIds=new Set(favChurches.map(c=>c.id));
 
-  sub.textContent=favParishes.length?favParishes.length+' saved church'+(favParishes.length!==1?'es':''):'Tap the heart on any church to save it';
+  sub.textContent=favChurches.length?favChurches.length+' saved church'+(favChurches.length!==1?'es':''):'Tap the heart on any church to save it';
 
-  if(!favParishes.length){
+  if(!favChurches.length){
     el.innerHTML='<div class="saved-empty">'
       +'<div class="saved-empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>'
       +'<h3>No saved churches yet</h3>'
@@ -2331,7 +2269,7 @@ function renderSaved(){
   }
 
   // ── YC Events (compact) ──
-  const upcoming=getUpcomingYC().filter(e=>favIds.has(e.parish_id));
+  const upcoming=getUpcomingYC().filter(e=>favIds.has(e.church_id));
   if(upcoming.length){
     html+='<div class="saved-section-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Young &amp; Catholic <span class="saved-week-count">'+upcoming.length+'</span></div>';
     html+=upcoming.slice(0,4).map(e=>renderCompactYC(e)).join('');
@@ -2342,33 +2280,33 @@ function renderSaved(){
   // ── Your Churches ──
   // Count active events per parish for badges
   const evtCounts={};
-  eventsData.filter(e=>favIds.has(e.parish_id)&&e.category!=='yc'&&isEventActive(e)).forEach(e=>{evtCounts[e.parish_id]=(evtCounts[e.parish_id]||0)+1});
+  eventsData.filter(e=>favIds.has(e.church_id)&&e.category!=='yc'&&isEventActive(e)).forEach(e=>{evtCounts[e.church_id]=(evtCounts[e.church_id]||0)+1});
 
   html+='<div class="saved-section-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="20" height="20"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/></svg>Your Churches</div>';
 
   // Sort: within 10mi by next service, then beyond 10mi by next service
-  const sortedFav=favParishes.map(p=>({p,next:getNext(p,'all'),dist:getDist(p)}))
+  const sortedFav=favChurches.map(c=>({c,next:getNext(c,'all'),dist:getDist(c)}))
     .sort((a,b)=>{
       const aC=a.dist!==null&&a.dist<=10,bC=b.dist!==null&&b.dist<=10;
       if(aC!==bC)return aC?-1:1;
       return(a.next?.minutesUntil??99999)-(b.next?.minutesUntil??99999);
     });
 
-  html+=sortedFav.map(({p,next,dist})=>{
-    const ver=isVer(p);
+  html+=sortedFav.map(({c,next,dist})=>{
+    const ver=isVer(c);
     let statusBadge='';
     if(next?.isLive)statusBadge='<span class="card-live-badge"><span class="pulse-dot"></span>Live</span>';
     else if(next?.isSoon)statusBadge='<span class="card-soon-badge"><span class="pulse-dot"></span>Soon</span>';
     let nh;
     if(next){nh='<div class="card-next-service"><span class="card-next-time">'+next.timeFormatted+'</span><span class="card-next-label">'+esc(SVC[next.service.type]||next.service.type)+'</span>'+statusBadge+'</div><div class="card-next-day">'+next.dayLabel+'</div>'}
     else{nh='<div class="card-next-service"><span class="card-next-label" style="color:var(--color-text-tertiary)">Check bulletin for times</span></div>'}
-    const ec=evtCounts[p.id];
+    const ec=evtCounts[c.id];
     const evtBadge=ec?'<span class="saved-evt-count">'+ec+' event'+(ec!==1?'s':'')+'</span>':'';
-    return '<article class="parish-card" role="listitem" onclick="openDetail(\''+p.id+'\')">'
-      +'<div class="card-top"><div class="card-name-row"><h3 class="card-name">'+esc(displayName(p.name,p.id))+'</h3>'+(ver?checkSvg:'')+'</div>'
+    return '<article class="parish-card" role="listitem" onclick="openDetail(\''+c.id+'\')">'
+      +'<div class="card-top"><div class="card-name-row"><h3 class="card-name">'+esc(displayName(c.name))+'</h3>'+(ver?checkSvg:'')+'</div>'
       +'<div class="card-right">'+(dist!==null?'<span class="card-distance">'+fmtDist(dist)+'</span>':'')
-      +'<button class="card-fav is-fav" onclick="toggleFav(\''+p.id+"',event);renderSaved()\" aria-label=\"Remove from favorites\"><svg viewBox=\"0 0 24 24\" fill=\"currentColor\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z\"/></svg></button>"
-      +'</div></div><div class="card-town">'+esc(p.town)+', '+esc(p.state)+evtBadge+'</div>'+nh
+      +'<button class="card-fav is-fav" onclick="toggleFav(\''+c.id+"',event);renderSaved()\" aria-label=\"Remove from favorites\"><svg viewBox=\"0 0 24 24\" fill=\"currentColor\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z\"/></svg></button>"
+      +'</div></div><div class="card-town">'+esc(c.city)+', '+esc(c.state)+evtBadge+'</div>'+nh
       +'</article>';
   }).join('');
   el.innerHTML=html;
@@ -2394,7 +2332,7 @@ function renderEventsWidget(){
     return '<div class="event-mini-card" onclick="openEventDetail(\''+e.id+'\')">'
       +'<div class="event-mini-date">'+fmtYCDate(e.date)+'</div>'
       +'<div class="event-mini-title">'+esc(e.title)+'</div>'
-      +'<div class="event-mini-church">'+esc(displayName(r.locName||r.parishName,e.parish_id))+'</div>'
+      +'<div class="event-mini-church">'+esc(displayName(r.locName||r.churchName))+'</div>'
       +'</div>';
   }).join('');
 
@@ -2816,7 +2754,7 @@ async function submitFeedback(){
 // MORE TAB
 // ============================================================
 function renderMore(){
-  const langCount=new Set();allParishes.forEach(p=>p.services.forEach(s=>{if(s.language)langCount.add(s.language)}));
+  const langCount=new Set();allChurches.forEach(c=>c.services.forEach(s=>{if(s.language)langCount.add(s.language)}));
 
   // ── PWA INSTALL CARD ──────────────────────────────────────────────────────
   (function(){
@@ -2868,11 +2806,11 @@ function renderMore(){
   (function(){
     const grid=document.getElementById('aboutStatGrid');
     if(!grid)return;
-    const svcCount=allParishes.reduce((n,p)=>n+(p.services||[]).length,0);
+    const svcCount=allChurches.reduce((n,c)=>n+(c.services||[]).length,0);
     const today=getNow();
     let totalDays=0,checkedCount=0,verCount=0;
-    allParishes.forEach(p=>{
-      const v=p.validation;
+    allChurches.forEach(c=>{
+      const v=c.validation;
       if(v&&v.last_checked){
         const d=new Date(v.last_checked+'T00:00:00');
         totalDays+=Math.max(0,Math.floor((today-d)/(1000*60*60*24)));
@@ -2888,7 +2826,7 @@ function renderMore(){
       var exp=e.end_date||e.date;if(!exp)return true;return exp>=todayStr;
     }).length;
     grid.innerHTML=
-      '<div class="stat-card"><div class="stat-value">'+allParishes.length+'</div><div class="stat-label">Churches</div></div>'
+      '<div class="stat-card"><div class="stat-value">'+allChurches.length+'</div><div class="stat-label">Churches</div></div>'
       +'<div class="stat-card"><div class="stat-value">'+svcCount.toLocaleString()+'</div><div class="stat-label">Services</div></div>'
       +'<div class="stat-card"><div class="stat-value">'+avgLabel+'</div><div class="stat-label">Avg. Data Age</div></div>'
       +'<div class="stat-card"><div class="stat-value">'+activeEvtCount+'</div><div class="stat-label">Active Events</div></div>';
@@ -2897,8 +2835,8 @@ function renderMore(){
   // ── What's Happening: unified YC + Community events ────────────────────
   const upcoming=getUpcomingYC();
   const allCommunityEvents=eventsData.filter(e=>e.category!=='yc'&&isEventActive(e)).map(e=>{
-    const p=allParishes.find(x=>x.id===e.parish_id);
-    return {...e,parishName:p?p.name:'',parishId:e.parish_id};
+    const ch=allChurches.find(x=>x.id===e.church_id);
+    return {...e,churchName:ch?ch.name:'',churchId:e.church_id};
   });
   const hasAnyEvents=upcoming.length||allCommunityEvents.length;
   const whSection=document.getElementById('whatsHappeningSection');
@@ -2910,8 +2848,8 @@ function renderMore(){
     const seenParishes=new Set();
     const ycShow=[];
     for(const e of upcoming){
-      if(seenParishes.has(e.parish_id))continue;
-      seenParishes.add(e.parish_id);
+      if(seenParishes.has(e.church_id))continue;
+      seenParishes.add(e.church_id);
       ycShow.push(e);
       if(ycShow.length>=4)break;
     }
@@ -2919,9 +2857,9 @@ function renderMore(){
     if(ycSeeAll)ycSeeAll.style.display=upcoming.length>4?'block':'none';
     document.getElementById('whYCList').innerHTML=ycShow.length?ycShow.map(e=>{
       const r=resolveYC(e);
-      const isFavE=favSet.has(e.parish_id);
-      const p=allParishes.find(x=>x.id===e.parish_id);
-      const dist=p?getDist(p):null;
+      const isFavE=favSet.has(e.church_id);
+      const ch=allChurches.find(x=>x.id===e.church_id);
+      const dist=ch?getDist(ch):null;
       const isNear=!isFavE&&dist!==null&&dist<=10;
       const indicator=isFavE?'<div class="wh-event-fav">♥ Saved</div>':isNear?'<div class="wh-event-near">📍 '+fmtDist(dist)+'</div>':'';
       const calSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="14" height="14"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
@@ -2929,7 +2867,7 @@ function renderMore(){
         +indicator
         +'<div class="wh-event-date">'+fmtYCDate(e.date)+(e.time?' · '+fmt12(e.time):'')+'</div>'
         +'<div class="wh-event-title">'+esc(e.title)+'</div>'
-        +'<div class="wh-event-church">'+esc(displayName(r.locName||r.parishName,e.parish_id))+'</div>'
+        +'<div class="wh-event-church">'+esc(displayName(r.locName||r.churchName))+'</div>'
         +'<div class="saved-evt-actions" style="margin-top:var(--space-2)">'
         +'<button class="saved-evt-btn" onclick="downloadEventIcal(\''+esc(e.id)+'\');event.stopPropagation()" title="Add to Calendar">'+calSvg+'</button>'
         +'<button class="saved-evt-btn" onclick="expressInterest(\''+esc(e.id)+'\',event)" title="I\'m interested">&#9825;</button>'
@@ -2940,15 +2878,15 @@ function renderMore(){
     const commShow=allCommunityEvents.slice(0,4);
     window._moreEvents=allCommunityEvents.slice(0,10);
     document.getElementById('whCommunityList').innerHTML=commShow.length?commShow.map((e,idx)=>{
-      const p=allParishes.find(x=>x.id===e.parishId);
-      const dist=p?getDist(p):null;
+      const ch=allChurches.find(x=>x.id===e.churchId);
+      const dist=ch?getDist(ch):null;
       const near=dist!==null&&dist<=10?'<div class="wh-event-near">📍 '+fmtDist(dist)+'</div>':'';
       const cCalSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="14" height="14"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
-      return '<div class="wh-event-card" onclick="openDetail(\''+e.parishId+'\')">'
+      return '<div class="wh-event-card" onclick="openDetail(\''+e.churchId+'\')">'
         +near
         +(e.date?'<div class="wh-event-date">'+esc(e.date)+'</div>':e.day?'<div class="wh-event-date">'+esc(DAY_NAMES[e.day]||e.day)+(e.time?' · '+fmt12(e.time):'')+'</div>':'')
         +'<div class="wh-event-title">'+esc(e.title)+'</div>'
-        +'<div class="wh-event-church">'+esc(displayName(e.parishName,e.parishId))+'</div>'
+        +'<div class="wh-event-church">'+esc(displayName(e.churchName))+'</div>'
         +(e.notes?'<div class="wh-event-time">'+esc(e.notes)+'</div>':'')
         +'<div class="saved-evt-actions" style="margin-top:var(--space-2)">'
         +'<button class="saved-evt-btn" onclick="downloadEventIcal(\''+esc(e.id)+'\');event.stopPropagation()" title="Add to Calendar">'+cCalSvg+'</button>'
@@ -3006,15 +2944,15 @@ function renderMore(){
 
 
 // Chips
-document.querySelectorAll('.chip[data-filter]').forEach(chip=>{chip.addEventListener('click',()=>{document.querySelectorAll('.chip[data-filter]').forEach(c=>c.classList.remove('active'));chip.classList.add('active');currentFilter=chip.dataset.filter;if(['today','weekend'].includes(currentFilter)){currentSort='next_service';updateSortLabel()}filterParishes();renderCards()})});
+document.querySelectorAll('.chip[data-filter]').forEach(chip=>{chip.addEventListener('click',()=>{document.querySelectorAll('.chip[data-filter]').forEach(c=>c.classList.remove('active'));chip.classList.add('active');currentFilter=chip.dataset.filter;if(['today','weekend'].includes(currentFilter)){currentSort='next_service';updateSortLabel()}filterChurches();renderCards()})});
 
 // Chip bar scroll affordance — remove mask fade once user has discovered scrolling
 (function(){const bar=document.querySelector('.chip-bar');if(bar)bar.addEventListener('scroll',function(){bar.classList.toggle('scrolled',bar.scrollLeft>8)},{passive:true})})();
 
 // Search
 const sI=document.getElementById('searchInput'),sC=document.getElementById('searchClear');let sT;
-sI.addEventListener('input',()=>{clearTimeout(sT);searchQuery=sI.value.trim();sC.classList.toggle('visible',searchQuery.length>0);sT=setTimeout(()=>{filterParishes();renderCards()},200)});
-sC.addEventListener('click',()=>{sI.value='';searchQuery='';sC.classList.remove('visible');filterParishes();renderCards();sI.focus()});
+sI.addEventListener('input',()=>{clearTimeout(sT);searchQuery=sI.value.trim();sC.classList.toggle('visible',searchQuery.length>0);sT=setTimeout(()=>{filterChurches();renderCards()},200)});
+sC.addEventListener('click',()=>{sI.value='';searchQuery='';sC.classList.remove('visible');filterChurches();renderCards();sI.focus()});
 
 // Geolocation — §2 proximity-triggered, §3 cookie-persisted
 function saveLocationCookie(){
@@ -3037,12 +2975,12 @@ function requestLocation(){
     function(pos){
       userLat=pos.coords.latitude;userLng=pos.coords.longitude;
       saveLocationCookie();
-      currentSort='proximity';updateSortLabel();filterParishes();renderCards();
+      currentSort='proximity';updateSortLabel();filterChurches();renderCards();
     },
     function(err){
       if(err.code===1)showToast('Location access denied — sorting by name');
       else showToast('Could not get location — sorting by name');
-      currentSort='name';updateSortLabel();filterParishes();renderCards();
+      currentSort='name';updateSortLabel();filterChurches();renderCards();
     },
     {enableHighAccuracy:true,timeout:10000,maximumAge:0}
   );
@@ -3058,7 +2996,7 @@ function initLocation(){
         navigator.geolocation.getCurrentPosition(function(pos){
           userLat=pos.coords.latitude;userLng=pos.coords.longitude;
           saveLocationCookie();
-          if(currentSort==='proximity'){filterParishes();renderCards()}
+          if(currentSort==='proximity'){filterChurches();renderCards()}
         },function(){},{enableHighAccuracy:true,timeout:8000,maximumAge:0});
       }
     }).catch(function(){});
@@ -3071,7 +3009,7 @@ function refreshLocation(cb){
   navigator.geolocation.getCurrentPosition(function(pos){
     userLat=pos.coords.latitude;userLng=pos.coords.longitude;
     saveLocationCookie();
-    if(currentSort==='proximity'){filterParishes();renderCards()}
+    if(currentSort==='proximity'){filterChurches();renderCards()}
     if(cb)cb(true);
   },function(){
     if(cb)cb(false);
@@ -3081,20 +3019,27 @@ function refreshLocation(cb){
 function refreshApp(){
   var btn=document.getElementById('refreshBtn');
   if(btn)btn.classList.add('spinning');
-  // 1. Refresh location
   refreshLocation(function(){
-    // 2. Refresh parish data from network (bypass cache)
-    fetch('parish_data.json',{cache:'no-store'}).then(function(r){
-      if(!r.ok)throw new Error('fetch failed');
+    // Try API first, fall back to static JSON
+    fetch('/api/churches',{cache:'no-store'}).then(function(r){
+      if(!r.ok)throw new Error('API failed');
       return r.json();
     }).then(function(data){
-      allParishes=data.parishes||[];
-      filterParishes();renderCards();
-      // Update service worker cache
-      if('caches' in window)caches.open('massfinder-v2_3').then(function(c){c.put(new Request('parish_data.json'),new Response(JSON.stringify(data),{headers:{'Content-Type':'application/json'}}))}).catch(function(){});
+      allChurches=processChurches(data.churches||[]);
+      filterChurches();renderCards();
       showToast('Data refreshed');
     }).catch(function(){
-      showToast('Could not refresh — check connection');
+      // Fallback to static JSON
+      fetch('parish_data.json',{cache:'no-store'}).then(function(r){
+        if(!r.ok)throw new Error('fetch failed');
+        return r.json();
+      }).then(function(data){
+        allChurches=processChurches(parishesToChurches(data.parishes||[]));
+        filterChurches();renderCards();
+        showToast('Data refreshed');
+      }).catch(function(){
+        showToast('Could not refresh — check connection');
+      });
     }).finally(function(){
       if(btn)btn.classList.remove('spinning');
     });
@@ -3163,54 +3108,126 @@ function smartDefault(){const n=getNow(),d=n.getDay(),h=n.getHours();if(d===6&&h
 function esc(s){const d=document.createElement('div');d.textContent=s||'';return d.innerHTML}
 
 // Init
+// Parish→Church ID mapping for favorites migration
+const PARISH_CHURCH_MAP={"parish_001":"st-marys-church-adams","parish_003":"st-john-the-evangelist-church-agawam","parish_004":"newman-catholic-center-amherst","parish_005":"st-brigid-church-amherst","parish_006":"st-francis-church-belchertown","parish_007":"st-christopher-church-brimfield","parish_010":"st-anne-church-chicopee","parish_011":"st-anthony-of-padua-church-chicopee","parish_012":"st-rose-de-lima-church-chicopee","parish_013":"ststans-basilica-chicopee","parish_016":"st-agnes-church-dalton","parish_017":"our-lady-of-the-valley-church-easthampton","parish_018":"st-michael-church-east-longmeadow","parish_019":"sacredheart-church-feedinghills","parish_021":"st-peter-church-great-barrington","parish_022":"blessed-sacrament-church-greenfield","parish_023":"most-holy-redeemer-church-hadley","parish_024":"st-mary-church-hampden","parish_025":"our-lady-of-grace-church-hatfield","parish_026":"our-lady-of-the-hills-church-haydenville","parish_027":"blessed-sacrament-church-holyoke","parish_028":"our-lady-of-the-cross-church-holyoke","parish_029":"st-jerome-church-holyoke","parish_030":"st-theresa-church-south-hadley","parish_031":"immaculate-conception-church-indian-orchard","parish_032":"st-mary-mother-of-the-church-church-lee","parish_033":"st-ann-church-lenox","parish_035":"st-mary-s-church-longmeadow","parish_036":"christ-the-king-church-ludlow","parish_037":"our-lady-of-fatima-church-ludlow","parish_038":"st-elizabeth-church-ludlow","parish_039":"st-patrick-church-monson","parish_041":"st-elizabeth-of-hungary-church-north-adams","parish_042":"seas-church-northampton","parish_043":"st-patrick-church-northfield","parish_044":"st-mary-church-orange","parish_046":"st-thomas-the-apostle-church-palmer","parish_047":"sacred-heart-church-pittsfield","parish_048":"st-charles-chapel-pittsfield","parish_049":"st-joseph-church-pittsfield","parish_050":"st-mark-church-pittsfield","parish_051":"holy-family-church-russell","parish_052":"our-lady-of-the-valley-sheffield","parish_053":"st-joseph-church-shelburne-falls","parish_054":"holy-family-south-deerfield","parish_055":"st-patrick-church-south-hadley","parish_057":"our-lady-of-the-lake-church-southwick","parish_058":"all-souls-church-springfield","parish_059":"blessed-sacrament-church-springfield","parish_060":"holy-cross-church-springfield","parish_061":"holy-name-church-springfield","parish_062":"mary-mother-of-hope-church-springfield","parish_064":"our-lady-of-the-sacred-heart-church-springfield","parish_065":"sacred-heart-church-springfield","parish_066":"st-catherine-of-siena-church-springfield","parish_067":"st-michael-s-cathedral-church-springfield","parish_068":"st-patrick-church-springfield","parish_069":"st-paul-the-apostle-church-springfield","parish_071":"divine-mercy-church-three-rivers","parish_072":"our-lady-of-czestochowa-church-turners-falls","parish_073":"our-lady-of-peace-church-turners-falls","parish_074":"st-marys-church-ware","parish_075":"st-mary-church-ware","parish_076":"st-thomas-the-apostle-church-west-springfield","parish_077":"holy-trinity-church-westfield","parish_078":"our-lady-of-the-blessed-sacrament-church-westfield","parish_079":"st-mary-church-westfield","parish_080":"st-peter-and-st-casimir-church-westfield","parish_082":"st-cecilia-church-wilbraham","parish_083":"sts-patrick-and-raphael-church-williamstown","shrine_001":"divine-mercy-shrine-stockbridge","parish_104":"ihm-church-granby","parish_106":"olmc-church-springfield","parish_107":"sacred-heart-church-milford","parish_084":"holy-family-church-enfield","parish_085":"st-bernard-church-enfield","parish_086":"st-patrick-church-enfield","parish_087":"st-martha-church-enfield","parish_088":"sacred-heart-church-suffield","parish_089":"church-of-the-annunciation-ludlow","parish_090":"st-marys-church-springfield","parish_091":"st-catherine-church-charlestown","parish_092":"st-charles-church-bellows-falls","parish_093":"st-michael-church-brattleboro","parish_094":"st-joseph-church-winsted","parish_095":"immaculate-conception-new-hartford","parish_096":"st-marys-church-simsbury","parish_097":"st-gabriel-church-windsor","parish_098":"st-mary-church-windsor-locks","parish_099":"ihm-chapel-harvard","parish_100":"st-augustine-church-north-branford","parish_101":"st-stanislaus-kostka-winchester","parish_102":"st-patrick-oratory-waterbury"};
+
+// Migrate favorites from old parish IDs to new church IDs
+function migrateFavorites(){
+  let changed=false;
+  favorites=favorites.map(function(id){
+    if(PARISH_CHURCH_MAP[id]){changed=true;return PARISH_CHURCH_MAP[id]}
+    return id;
+  });
+  // Deduplicate
+  favorites=[...new Set(favorites)];
+  if(changed){saveFav();console.log('[MassFinder] Migrated favorites to church IDs')}
+}
+
+// Transform parish_data.json parishes into church objects (for fallback)
+function parishesToChurches(parishes){
+  var churches=[];
+  for(var i=0;i<parishes.length;i++){
+    var p=parishes[i];
+    var locs=p.locations||[];
+    var ct=p.contact||{};
+    if(!locs.length)continue;
+    for(var j=0;j<locs.length;j++){
+      var loc=locs[j];
+      churches.push({
+        id:loc.id,name:loc.name||p.name,short_name:loc.short_name||null,
+        type:loc.type||'church',address:loc.address||null,
+        city:loc.city||p.town,state:loc.state||p.state,
+        zip:loc.zip||p.zip||null,county:p.county||null,
+        lat:loc.lat||null,lng:loc.lng||null,
+        phone:ct.phone||null,website:ct.website||null,
+        office_hours:ct.office_hours||null,
+        established:p.established||null,status:p.status||'active',
+        is_accessible:loc.is_accessible!=null?loc.is_accessible:p.is_accessible,
+        bulletin_url:p.bulletin_url||ct.bulletin_url||null,
+        bulletin_group:locs.length>1?p.id:null,
+        clergy:p.clergy||null,staff:p.staff||[],
+        validation:p.validation||null,visitation:p.visitation||null,
+        services:(p.services||[]).filter(function(s){
+          if(locs.length<=1)return true;
+          return !s.location_id||s.location_id===loc.id;
+        })
+      });
+    }
+  }
+  return churches;
+}
+
+// Filter out inactive/excluded churches and expired services
+function processChurches(churches){
+  var today=new Date().toISOString().slice(0,10);
+  return churches.filter(function(c){
+    return c.status==='active'&&(!c.validation||c.validation.status!=='excluded');
+  }).map(function(c){
+    c.services=(c.services||[]).filter(function(s){
+      if(s.status==='inactive'&&s.end_date&&s.end_date<=today)return false;
+      if(s.effective_date&&s.effective_date>today)return false;
+      return true;
+    });
+    return c;
+  });
+}
+
 async function init(){
   loadFav();
+  migrateFavorites();
   try{
-    const controller=new AbortController();
-    const timeout=setTimeout(()=>controller.abort(),8000);
-    const r=await fetch('parish_data.json',{signal:controller.signal});
-    clearTimeout(timeout);
-    const data=await r.json();
-    allParishes=(data.parishes||[]).filter(p=>p.status==='active'&&(!p.validation||p.validation.status!=='excluded'));
-    // Filter out inactive/not-yet-active services
-    const today = new Date().toISOString().slice(0, 10);
-    allParishes.forEach(p => {
-      p.services = (p.services || []).filter(s => {
-        if (s.status === 'inactive' && s.end_date && s.end_date <= today) return false;
-        if (s.effective_date && s.effective_date > today) return false;
-        return true;
-      });
-    });
-    ycEvents=(data.yc_events||[]).sort((a,b)=>a.date.localeCompare(b.date)||(a.time||'').localeCompare(b.time||''));
-    // Also try loading events.json (standalone events file)
+    // Try API first, fall back to static JSON
+    let churchData=null,useApi=false;
     try{
-      const evtResp=await fetch('events.json',{signal:AbortSignal.timeout(5000)});
-      if(evtResp.ok){
-        const evtData=await evtResp.json();
-        eventsData=(evtData.events||[]).sort((a,b)=>(a.date||'9999').localeCompare(b.date||'9999')||(a.time||'').localeCompare(b.time||''));
-        // Use events.json YC events as canonical source if available
-        const ycFromFile=eventsData.filter(e=>e.category==='yc');
-        if(ycFromFile.length)ycEvents=ycFromFile;
-        console.log('[MassFinder] Loaded events.json:',eventsData.length,'events,',ycFromFile.length,'YC');
-      }else{
-        console.warn('[MassFinder] events.json fetch failed:',evtResp.status);
+      const apiResp=await fetch('/api/churches',{signal:AbortSignal.timeout(8000)});
+      if(apiResp.ok){churchData=await apiResp.json();useApi=true}
+    }catch(e){console.warn('[MassFinder] API unavailable, using static JSON:',e.message)}
+
+    if(!useApi){
+      const controller=new AbortController();
+      const timeout=setTimeout(()=>controller.abort(),8000);
+      const r=await fetch('parish_data.json',{signal:controller.signal});
+      clearTimeout(timeout);
+      const data=await r.json();
+      const churches=parishesToChurches(data.parishes||[]);
+      churchData={churches:churches};
+      // Load YC events from parish_data
+      ycEvents=(data.yc_events||[]).sort((a,b)=>a.date.localeCompare(b.date)||(a.time||'').localeCompare(b.time||''));
+    }
+
+    allChurches=processChurches(churchData.churches||[]);
+
+    // Load events (API first, then static fallback)
+    try{
+      let evtData=null;
+      if(useApi){
+        try{
+          const evtResp=await fetch('/api/events',{signal:AbortSignal.timeout(5000)});
+          if(evtResp.ok)evtData=await evtResp.json();
+        }catch(e){console.warn('[MassFinder] Events API unavailable:',e.message)}
       }
-    }catch(e){console.warn('[MassFinder] events.json not available:',e.message)}
-    console.log('[MassFinder] ycEvents count:',ycEvents.length);
-    // Compute which parishes keep "Parish" label (2+ worship-site locations)
-    keepParishIds=new Set(allParishes.filter(p=>{
-      const worshipSites=(p.locations||[]).filter(l=>['church','chapel','mission'].includes(l.type));
-      return worshipSites.length>=2;
-    }).map(p=>p.id));
+      if(!evtData){
+        const evtResp=await fetch('events.json',{signal:AbortSignal.timeout(5000)});
+        if(evtResp.ok)evtData=await evtResp.json();
+      }
+      if(evtData){
+        eventsData=(evtData.events||[]).sort((a,b)=>(a.date||'9999').localeCompare(b.date||'9999')||(a.time||'').localeCompare(b.time||''));
+        const ycFromEvents=eventsData.filter(e=>e.category==='yc');
+        if(ycFromEvents.length)ycEvents=ycFromEvents;
+        console.log('[MassFinder] Loaded events:',eventsData.length,', YC:',ycFromEvents.length);
+      }
+    }catch(e){console.warn('[MassFinder] events not available:',e.message)}
+    console.log('[MassFinder] churches:',allChurches.length,', ycEvents:',ycEvents.length);
+
     // Show Lent chip if currently in Lent season
     const lentChip=document.getElementById('lentChip');
     if(lentChip&&isLentSeason())lentChip.style.display='';
     const sm=smartDefault();currentFilter=sm;
-    document.querySelectorAll('.chip[data-filter]').forEach(c=>c.classList.toggle('active',c.dataset.filter===sm));
+    document.querySelectorAll('.chip[data-filter]').forEach(ch=>ch.classList.toggle('active',ch.dataset.filter===sm));
     if(['today','weekend'].includes(sm))currentSort='next_service';
-    updateSortLabel();initLocation();filterParishes();renderCards();
-    // Deep link: #parish_001 opens that church's detail
-    if(location.hash){const id=location.hash.slice(1);if(allParishes.find(p=>p.id===id))setTimeout(()=>openDetail(id),400)}
+    updateSortLabel();initLocation();filterChurches();renderCards();
+    // Deep link: #church-id opens that church's detail
+    if(location.hash){const id=location.hash.slice(1);if(allChurches.find(c=>c.id===id))setTimeout(()=>openDetail(id),400)}
     // Register service worker
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js').catch(() => {});
