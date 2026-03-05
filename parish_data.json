@@ -22548,7 +22548,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_088-dmass-tue-0800",
@@ -22563,7 +22563,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_088-dmass-wed-0800",
@@ -22578,7 +22578,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_088-dmass-fri-0800",
@@ -22593,7 +22593,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_088-smass-sat-1600",
@@ -22608,7 +22608,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_088-smass-sun-0830",
@@ -22623,7 +22623,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_088-smass-sun-1030",
@@ -22638,7 +22638,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_088-conf-sat-1430",
@@ -22653,7 +22653,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_088-conf-appt",
@@ -22668,7 +22668,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_088-conf-mon-1515-lent",
@@ -22683,7 +22683,7 @@
             "is_seasonal": true,
             "season": "lent"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_088-conf-mon-1800-lent",
@@ -22698,7 +22698,7 @@
             "is_seasonal": true,
             "season": "lent"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_088-rosary-tue-0730",
@@ -22713,7 +22713,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_088-rosary-1sun-0800",
@@ -22728,7 +22728,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "recurrence": {
             "type": "nth",
             "week": 1
@@ -22747,7 +22747,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_088-ador-fri-0730",
@@ -22762,13 +22762,13 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         }
       ],
       "validation": {
         "status": "verified",
-        "last_checked": "2026-02-27",
-        "source": "bulletin_2026-02",
+        "last_checked": "2026-03-05",
+        "source": "bulletin_2026-03",
         "recommended_action": null
       },
       "visitation": null,
@@ -23727,7 +23727,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_092-dmass-tue-0800-stc",
@@ -23742,7 +23742,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_092-dmass-thu-0800-stc",
@@ -23757,7 +23757,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_092-dmass-fri-0800-stc",
@@ -23772,7 +23772,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_092-dmass-fri-1000-olv",
@@ -23787,7 +23787,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_092-smass-sat-1600-stc",
@@ -23802,7 +23802,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_092-smass-sun-0900-stc",
@@ -23817,7 +23817,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_092-smass-sun-1100-olv",
@@ -23832,7 +23832,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_092-smass-sun-1230-cos",
@@ -23847,7 +23847,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_092-smass-sat-1630-cos",
@@ -23862,7 +23862,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_092-conf-sat-1500-stc",
@@ -23877,7 +23877,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_092-conf-sun-after-olv",
@@ -23892,7 +23892,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_092-ador-mon-0700-stc",
@@ -23907,7 +23907,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_092-ador-tue-0700-stc",
@@ -23922,7 +23922,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_092-ador-wed-0700-stc",
@@ -23937,7 +23937,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_092-ador-thu-0700-stc",
@@ -23952,7 +23952,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_092-stations-fri-1045-olv-lent",
@@ -23967,13 +23967,13 @@
             "is_seasonal": true,
             "season": "lent"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         }
       ],
       "validation": {
         "status": "verified",
-        "last_checked": "2026-02-27",
-        "source": "bulletin_2026-02",
+        "last_checked": "2026-03-05",
+        "source": "bulletin_2026-03",
         "recommended_action": null
       },
       "visitation": null,
@@ -24012,7 +24012,7 @@
           "stmichael@vermontcatholic.org"
         ],
         "website": "https://www.stmichaelvt.com/",
-        "office_hours": "Mon-Fri 9:00AM-4:00PM"
+        "office_hours": "Mon-Fri 9:00AM-12:00PM, 1:00PM-4:00PM"
       },
       "clergy": [
         {
@@ -24040,7 +24040,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_093-dmass-wed-0845",
@@ -24055,7 +24055,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_093-dmass-thu-1715",
@@ -24070,7 +24070,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_093-dmass-fri-0900",
@@ -24085,7 +24085,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_093-smass-sat-1600",
@@ -24100,7 +24100,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_093-smass-sun-0800",
@@ -24115,7 +24115,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_093-smass-sun-1030",
@@ -24130,7 +24130,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_093-conf-tue-1800",
@@ -24145,7 +24145,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_093-conf-wed-0930",
@@ -24160,7 +24160,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_093-conf-thu-1800",
@@ -24175,7 +24175,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_093-conf-fri-0945",
@@ -24190,7 +24190,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_093-conf-sat-1445",
@@ -24205,7 +24205,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_093-ador-daily-0930",
@@ -24220,7 +24220,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_093-ador-fri-0930",
@@ -24235,7 +24235,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_093-hh-1fri-1445",
@@ -24250,7 +24250,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_093-rosary-tue-1645",
@@ -24265,7 +24265,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_093-rosary-wed-0815",
@@ -24280,7 +24280,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_093-rosary-thu-1645",
@@ -24295,7 +24295,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_093-rosary-fri-0830",
@@ -24310,7 +24310,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_093-rosary-sun-0730",
@@ -24325,7 +24325,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_093-devot-morning-prayer",
@@ -24341,7 +24341,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_093-vesp-evening-prayer",
@@ -24357,13 +24357,13 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         }
       ],
       "validation": {
         "status": "verified",
-        "last_checked": "2026-02-27",
-        "source": "website_2026-02",
+        "last_checked": "2026-03-05",
+        "source": "bulletin_2026-03",
         "recommended_action": null
       },
       "visitation": null,
@@ -24430,7 +24430,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_094-smass-sat-1600",
@@ -24445,7 +24445,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_094-smass-sun-0800",
@@ -24460,7 +24460,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_094-smass-sun-1000",
@@ -24475,7 +24475,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_094-smass-sun-1800",
@@ -24490,7 +24490,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_094-dmass-holyday-1600",
@@ -24505,7 +24505,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_094-dmass-holyday-0800",
@@ -24520,7 +24520,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_094-dmass-holyday-1900",
@@ -24535,7 +24535,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_094-conf-sat-1430",
@@ -24550,7 +24550,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_094-conf-appt",
@@ -24565,7 +24565,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_094-conf-mon-1800-lent",
@@ -24580,7 +24580,7 @@
             "is_seasonal": true,
             "season": "lent"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_094-ador-1fri-0830",
@@ -24595,7 +24595,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_094-stations-fri-1900-lent",
@@ -24610,7 +24610,7 @@
             "is_seasonal": true,
             "season": "lent"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_094-dmass-wkday-0800",
@@ -24625,13 +24625,13 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         }
       ],
       "validation": {
         "status": "verified",
-        "last_checked": "2026-02-27",
-        "source": "bulletin_2026-02",
+        "last_checked": "2026-03-05",
+        "source": "bulletin_2026-03",
         "recommended_action": null
       },
       "visitation": null,
@@ -24712,7 +24712,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_095-dmass-tue-0800-ic",
@@ -24727,7 +24727,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_095-dmass-wed-0800-ic",
@@ -24742,7 +24742,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_095-dmass-wed-1900-ihom",
@@ -24757,7 +24757,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_095-dmass-fri-0800-ic",
@@ -24772,7 +24772,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_095-smass-sat-1700-ihom",
@@ -24787,7 +24787,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_095-smass-sun-0800-ic",
@@ -24802,7 +24802,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_095-smass-sun-0930-ihom",
@@ -24817,7 +24817,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_095-smass-sun-1130-ic",
@@ -24832,7 +24832,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_095-conf-mon-1700-ic",
@@ -24847,7 +24847,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_095-conf-wed-1800-ihom",
@@ -24862,7 +24862,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_095-conf-sat-1530-ihom",
@@ -24877,7 +24877,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_095-conf-appt",
@@ -24892,7 +24892,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_095-ador-mon-1700-ic",
@@ -24907,7 +24907,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_095-ador-tue-1700-ihom",
@@ -24922,7 +24922,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_095-ador-wed-1700-ihom",
@@ -24937,7 +24937,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_095-holyhour-1fri-0830-ic",
@@ -24952,7 +24952,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_095-holyhour-1fri-1900-ihom",
@@ -24967,7 +24967,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_095-holyhour-mon-1200-ic",
@@ -24982,7 +24982,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_095-rosary-thu-1830-ihom",
@@ -24997,7 +24997,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_095-stations-fri-1210-ic-lent",
@@ -25012,7 +25012,7 @@
             "is_seasonal": true,
             "season": "lent"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_095-stations-fri-1900-ihom-lent",
@@ -25027,13 +25027,13 @@
             "is_seasonal": true,
             "season": "lent"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         }
       ],
       "validation": {
         "status": "verified",
-        "last_checked": "2026-02-27",
-        "source": "bulletin_2026-02",
+        "last_checked": "2026-03-05",
+        "source": "bulletin_2026-03",
         "recommended_action": null
       },
       "visitation": null,
@@ -25096,7 +25096,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_096-dmass-tue-0800",
@@ -25111,7 +25111,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_096-dmass-wed-0800",
@@ -25126,7 +25126,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_096-dmass-thu-0800",
@@ -25141,7 +25141,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_096-smass-sat-1700",
@@ -25156,7 +25156,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_096-smass-sun-0800",
@@ -25171,7 +25171,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_096-smass-sun-0930",
@@ -25186,7 +25186,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_096-smass-sun-1100",
@@ -25201,7 +25201,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_096-conf-sat-1530",
@@ -25216,7 +25216,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_096-conf-tue-1800",
@@ -25231,7 +25231,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_096-conf-appt",
@@ -25246,7 +25246,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_096-conf-thu-0830-lent",
@@ -25261,7 +25261,7 @@
             "is_seasonal": true,
             "season": "lent"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_096-ador-tue-1800",
@@ -25276,7 +25276,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_096-ador-thu-0845",
@@ -25291,7 +25291,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_096-stations-fri-1900-lent",
@@ -25306,7 +25306,7 @@
             "is_seasonal": true,
             "season": "lent"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_096-devot-tue-1915-lent",
@@ -25321,13 +25321,13 @@
             "is_seasonal": true,
             "season": "lent"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         }
       ],
       "validation": {
         "status": "verified",
-        "last_checked": "2026-02-27",
-        "source": "bulletin_2026-02",
+        "last_checked": "2026-03-05",
+        "source": "bulletin_2026-03",
         "recommended_action": null
       },
       "visitation": null,
@@ -25414,7 +25414,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_097-dmass-tue-0730-sg",
@@ -25429,7 +25429,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_097-dmass-wed-0730-sj",
@@ -25444,7 +25444,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_097-dmass-fri-0730-sj",
@@ -25459,7 +25459,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_097-smass-sat-1600-sg",
@@ -25474,7 +25474,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_097-smass-sun-0730-sg",
@@ -25489,7 +25489,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_097-smass-sun-0930-sj",
@@ -25504,7 +25504,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_097-smass-sun-1130-sg",
@@ -25519,7 +25519,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_097-conf-sat-1500-sg",
@@ -25534,7 +25534,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_097-conf-appt",
@@ -25549,7 +25549,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_097-conf-mon-1800-sg-lent",
@@ -25564,7 +25564,7 @@
             "is_seasonal": true,
             "season": "lent"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_097-rosary-sun-sg",
@@ -25579,7 +25579,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_097-rosary-sun-sj",
@@ -25594,22 +25594,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
-        },
-        {
-          "id": "parish_097-stations-fri-1200-sj-lent",
-          "type": "stations_of_cross",
-          "day": "friday",
-          "time": "12:00",
-          "end_time": null,
-          "location_id": "st-joseph-church-windsor",
-          "language": "en",
-          "notes": "March 13, 20, 27",
-          "seasonal": {
-            "is_seasonal": true,
-            "season": "lent"
-          },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_097-stations-fri-1800-sj-lent",
@@ -25624,7 +25609,7 @@
             "is_seasonal": true,
             "season": "lent"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_097-holyhour-fri-1100-sj-lent",
@@ -25639,7 +25624,7 @@
             "is_seasonal": true,
             "season": "lent"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_097-divmerc-fri-1900-sj-lent",
@@ -25654,7 +25639,7 @@
             "is_seasonal": true,
             "season": "lent"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_097-ador-wkday-0800-stjo",
@@ -25669,13 +25654,13 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         }
       ],
       "validation": {
         "status": "verified",
-        "last_checked": "2026-02-27",
-        "source": "bulletin_2026-02",
+        "last_checked": "2026-03-05",
+        "source": "bulletin_2026-03",
         "recommended_action": null
       },
       "visitation": null,
@@ -25724,10 +25709,10 @@
       "contact": {
         "phone": "860-623-2524",
         "emails": [
-          "office@marygateofheaven.org"
+          "businessmanager@marygateofheaven.org"
         ],
         "website": "https://stmarystrobertwl.org/",
-        "office_hours": "Mon-Thu 8:00AM-3:00PM"
+        "office_hours": "Mon-Thu 8:00AM-4:30PM; Fri 8:00AM-1:00PM"
       },
       "clergy": [
         {
@@ -25760,7 +25745,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_098-smass-sun-0700-sm",
@@ -25775,7 +25760,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_098-smass-sun-0900-sr",
@@ -25790,7 +25775,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_098-smass-sun-1100-sm",
@@ -25805,7 +25790,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_098-conf-sat-1530-sr",
@@ -25820,7 +25805,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_098-ador-wed-1500-sm",
@@ -25835,7 +25820,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_098-devot-tue-1815-sr",
@@ -25850,7 +25835,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_098-rosary-mon-0815-sm",
@@ -25865,7 +25850,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_098-rosary-tue-1100-sm",
@@ -25880,7 +25865,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_098-rosary-sun-1500-sr",
@@ -25895,7 +25880,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_098-divmerc-sun-1530-sr",
@@ -25910,7 +25895,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_098-conf-mon-1800-sm-lent",
@@ -25925,7 +25910,7 @@
             "is_seasonal": true,
             "season": "lent"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_098-stations-fri-1900-sm-lent",
@@ -25940,7 +25925,7 @@
             "is_seasonal": true,
             "season": "lent"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_098-dmass-wkday-0730-stma",
@@ -25955,13 +25940,73 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_098-htmass-thu-1900-sm",
+          "type": "holy_thursday_mass",
+          "day": "holy_thursday",
+          "time": "19:00",
+          "end_time": null,
+          "location_id": "st-mary-church-windsor-locks",
+          "language": "en",
+          "notes": "Mass of the Lord's Supper",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_098-gfserv-fri-1500-sr",
+          "type": "good_friday_service",
+          "day": "good_friday",
+          "time": "15:00",
+          "end_time": null,
+          "location_id": "st-robert-bellarmine-windsor-locks",
+          "language": "en",
+          "notes": "Passion of the Lord",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_098-evmass-sat-2000-sr",
+          "type": "easter_vigil_mass",
+          "day": "holy_saturday",
+          "time": "20:00",
+          "end_time": null,
+          "location_id": "st-robert-bellarmine-windsor-locks",
+          "language": "en",
+          "notes": null,
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_098-smass-easter-0900-sr",
+          "type": "sunday_mass",
+          "day": "easter_sunday",
+          "time": "09:00",
+          "end_time": null,
+          "location_id": "st-robert-bellarmine-windsor-locks",
+          "language": "en",
+          "notes": "Easter Sunday Mass",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "holy_week"
+          },
+          "source": "bulletin_2026-03"
         }
       ],
       "validation": {
         "status": "verified",
-        "last_checked": "2026-02-27",
-        "source": "bulletin_2026-02",
+        "last_checked": "2026-03-05",
+        "source": "bulletin_2026-03",
         "recommended_action": null
       },
       "visitation": null,
@@ -26314,7 +26359,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_100-dmass-tue-0900-sa",
@@ -26329,7 +26374,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_100-dmass-tue-1800-sa",
@@ -26345,7 +26390,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_100-dmass-wed-0900-sa",
@@ -26360,7 +26405,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_100-dmass-fri-0900-sa",
@@ -26375,7 +26420,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_100-dmass-sat-0900-sa",
@@ -26390,7 +26435,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_100-smass-sat-1630-sa",
@@ -26405,7 +26450,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_100-smass-sun-0900-sm",
@@ -26420,7 +26465,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_100-smass-sun-1100-sa",
@@ -26435,7 +26480,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_100-conf-mon-1700-sa",
@@ -26450,7 +26495,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_100-ador-mon-1700-sa",
@@ -26465,7 +26510,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_100-ador-1fri-1700-sa",
@@ -26480,7 +26525,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "website_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_100-conf-mon-0830-sa",
@@ -26495,7 +26540,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_100-conf-tue-0830-sa",
@@ -26510,7 +26555,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_100-conf-wed-0830-sa",
@@ -26525,7 +26570,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_100-conf-fri-0830-sa",
@@ -26540,7 +26585,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_100-conf-sat-0830-sa",
@@ -26555,7 +26600,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_100-conf-sat-1600-sa",
@@ -26570,13 +26615,73 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_100-ador-wed-1700-sb",
+          "type": "adoration",
+          "day": "wednesday",
+          "time": "17:00",
+          "end_time": "18:00",
+          "location_id": null,
+          "language": "en",
+          "notes": "At St. Barnabas; with opportunity for Confession",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_100-conf-wed-1700-sb",
+          "type": "confession",
+          "day": "wednesday",
+          "time": "17:00",
+          "end_time": "18:00",
+          "location_id": null,
+          "language": "en",
+          "notes": "During Adoration at St. Barnabas",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_100-dmass-holyday-0900-sa",
+          "type": "daily_mass",
+          "day": "holyday",
+          "time": "09:00",
+          "end_time": null,
+          "location_id": "st-augustine-church-north-branford",
+          "language": "en",
+          "notes": "Holy Day Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_100-dmass-holyday-1800-sm",
+          "type": "daily_mass",
+          "day": "holyday",
+          "time": "18:00",
+          "end_time": null,
+          "location_id": "st-monica-church-northford",
+          "language": "en",
+          "notes": "Holy Day Mass",
+          "seasonal": {
+            "is_seasonal": false,
+            "season": "year_round"
+          },
+          "source": "bulletin_2026-03"
         }
       ],
       "validation": {
         "status": "verified",
-        "last_checked": "2026-02-27",
-        "source": "website_2026-02",
+        "last_checked": "2026-03-05",
+        "source": "bulletin_2026-03",
         "recommended_action": null
       },
       "visitation": null,
@@ -26644,7 +26749,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_101-smass-sun-1030",
@@ -26660,7 +26765,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_101-vesp-sun-1300",
@@ -26676,7 +26781,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_101-dmass-mon-0900",
@@ -26692,7 +26797,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_101-dmass-tue-0715",
@@ -26708,7 +26813,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_101-dmass-wed-0715",
@@ -26724,7 +26829,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_101-dmass-wed-1130",
@@ -26740,7 +26845,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_101-dmass-thu-0715",
@@ -26756,7 +26861,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_101-dmass-fri-0800",
@@ -26772,7 +26877,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_101-dmass-fri-1800",
@@ -26788,7 +26893,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_101-dmass-sat-0900",
@@ -26804,7 +26909,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_101-conf-sun-0800",
@@ -26819,7 +26924,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "rite": "tridentine"
         },
         {
@@ -26835,7 +26940,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "rite": "tridentine"
         },
         {
@@ -26851,7 +26956,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "rite": "tridentine"
         },
         {
@@ -26867,7 +26972,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "rite": "tridentine"
         },
         {
@@ -26883,7 +26988,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "rite": "tridentine"
         },
         {
@@ -26899,7 +27004,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "rite": "tridentine"
         },
         {
@@ -26915,7 +27020,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "rite": "tridentine"
         },
         {
@@ -26931,7 +27036,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "rite": "tridentine"
         },
         {
@@ -26947,7 +27052,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "rite": "tridentine"
         },
         {
@@ -26963,14 +27068,46 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "rite": "tridentine"
+        },
+        {
+          "id": "parish_101-stations-fri-1845-lent",
+          "type": "stations_of_cross",
+          "day": "friday",
+          "time": "18:45",
+          "end_time": null,
+          "location_id": null,
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "After Friday evening Mass; followed by soup supper (BYO)",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-03"
+        },
+        {
+          "id": "parish_101-ador-sun-1300-lent",
+          "type": "adoration",
+          "day": "sunday",
+          "time": "13:00",
+          "end_time": null,
+          "location_id": null,
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "Holy Hour during Sundays of Lent",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-03"
         }
       ],
       "validation": {
         "status": "verified",
-        "last_checked": "2026-02-27",
-        "source": "bulletin_2026-02",
+        "last_checked": "2026-03-05",
+        "source": "bulletin_2026-03",
         "recommended_action": null
       },
       "visitation": null,
@@ -27018,11 +27155,6 @@
           "role": "pastor",
           "name": "Canon Matthew Weaver",
           "email": null
-        },
-        {
-          "role": "provisional_priest",
-          "name": "Abbé Luke Ball",
-          "email": null
         }
       ],
       "services": [
@@ -27040,7 +27172,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_102-smass-sun-1030",
@@ -27056,7 +27188,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_102-dmass-mon-1800",
@@ -27072,7 +27204,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_102-dmass-tue-0800",
@@ -27088,7 +27220,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_102-dmass-wed-1200",
@@ -27104,7 +27236,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_102-dmass-thu-0800",
@@ -27120,7 +27252,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_102-dmass-fri-1800",
@@ -27136,7 +27268,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_102-dmass-sat-0800",
@@ -27152,7 +27284,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_102-ador-sun-1700",
@@ -27167,7 +27299,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_102-ador-mon-1700",
@@ -27182,7 +27314,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_102-ador-tue-1700",
@@ -27197,7 +27329,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_102-ador-wed-1000",
@@ -27212,7 +27344,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_102-ador-thu-1700",
@@ -27227,7 +27359,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_102-ador-fri-1700",
@@ -27242,7 +27374,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_102-ador-1sat-0845",
@@ -27257,7 +27389,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02"
+          "source": "bulletin_2026-03"
         },
         {
           "id": "parish_102-conf-sun-0800",
@@ -27272,7 +27404,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "rite": "tridentine"
         },
         {
@@ -27288,7 +27420,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "rite": "tridentine"
         },
         {
@@ -27304,7 +27436,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "rite": "tridentine"
         },
         {
@@ -27320,7 +27452,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "rite": "tridentine"
         },
         {
@@ -27336,7 +27468,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "rite": "tridentine"
         },
         {
@@ -27352,7 +27484,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "rite": "tridentine"
         },
         {
@@ -27368,7 +27500,7 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "rite": "tridentine"
         },
         {
@@ -27384,14 +27516,30 @@
             "is_seasonal": false,
             "season": "year_round"
           },
-          "source": "bulletin_2026-02",
+          "source": "bulletin_2026-03",
           "rite": "tridentine"
+        },
+        {
+          "id": "parish_102-stations-fri-1845-lent",
+          "type": "stations_of_cross",
+          "day": "friday",
+          "time": "18:45",
+          "end_time": null,
+          "location_id": null,
+          "language": "la",
+          "rite": "tridentine",
+          "notes": "After 6:00PM Friday Mass; followed by soup supper in hall",
+          "seasonal": {
+            "is_seasonal": true,
+            "season": "lent"
+          },
+          "source": "bulletin_2026-03"
         }
       ],
       "validation": {
         "status": "verified",
-        "last_checked": "2026-02-27",
-        "source": "bulletin_2026-02",
+        "last_checked": "2026-03-05",
+        "source": "bulletin_2026-03",
         "recommended_action": null
       },
       "visitation": null,

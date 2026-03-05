@@ -1446,7 +1446,7 @@
       "end_time": "19:30",
       "frequency": "weekly",
       "notes": "St. Robert's Hall classroom",
-      "source": "bulletin_2026-02",
+      "source": "bulletin_2026-03",
       "seasonal": {
         "is_seasonal": false,
         "season": "year_round"
@@ -3117,6 +3117,67 @@
       "venue_name": "St. Bernard Church",
       "venue_address": "426 Hazard Ave, Enfield, CT 06082",
       "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_094-evt-legion-of-mary",
+      "category": "devotional",
+      "title": "Legion of Mary",
+      "parish_id": "parish_094",
+      "day": "wednesday",
+      "time": "11:30",
+      "end_time": null,
+      "notes": "Franciscan Center Library. All are welcome.",
+      "venue_name": "St. Joseph Church — Franciscan Center",
+      "venue_address": "31 Oak St, Winsted, CT 06098",
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_095-evt-fish-fry-2026",
+      "category": "social",
+      "title": "Fish Fry-Days",
+      "parish_id": "parish_095",
+      "dates": [
+        "2026-02-27",
+        "2026-03-27"
+      ],
+      "time": "17:00",
+      "end_time": "19:00",
+      "notes": "KofC Council #1140. Fish dinner $17 adults/$12 children, Mac & Cheese $10/$7. Under 6 free. Dine in or take out. Order at kofc1140.org or call 860-733-9372.",
+      "venue_name": "Immaculate Heart of Mary Church",
+      "venue_address": "78 Litchfield Rd, Harwinton, CT 06791",
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_095-evt-lenten-bible-study-2026",
+      "category": "educational",
+      "title": "Lenten Bible Study: The Gospel According to Matthew",
+      "parish_id": "parish_095",
+      "dates": [
+        "2026-03-10",
+        "2026-03-24",
+        "2026-03-31"
+      ],
+      "time": "18:00",
+      "end_time": "19:00",
+      "notes": "Led by Fr. John. Held at Social Center. Live-streamed on YouTube.",
+      "venue_name": "Our Lady of Hope Parish — Social Center",
+      "venue_address": "60 Town Hill Rd, New Hartford, CT 06057",
+      "source": "bulletin_2026-03"
+    },
+    {
+      "id": "parish_098-evt-contemplative-prayer",
+      "category": "devotional",
+      "title": "Contemplative Prayer",
+      "parish_id": "parish_098",
+      "day": "wednesday",
+      "time": "19:00",
+      "end_time": "20:00",
+      "notes": "Via Zoom. Contact parish office for link.",
+      "source": "bulletin_2026-03",
+      "seasonal": {
+        "is_seasonal": false,
+        "season": "year_round"
+      }
     }
   ]
 }
