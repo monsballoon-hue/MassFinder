@@ -274,3 +274,4 @@ MassFinder is a static vanilla JS progressive web app — no framework, no backe
 | `MassFinder_V2_Build_Plan.md` | Detailed 6-batch build sequence with contributor system and donation model |
 | `MassFinder_V2_Dev_Setup.md` | Developer workstation setup — Node.js, CLI tools, VSCode extensions, accounts |
 | `MassFinder_Open_Source_Guide.md` | GitHub community setup — issues, templates, contributor outreach strategy |
+| `SETUP_RUNBOOK.md` | Step-by-step checklist — accounts, CLI tools, extensions, env vars |
