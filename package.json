@@ -8,7 +8,9 @@
     "validate": "ajv validate --spec=draft7 -s parish_data.schema.json -d parish_data.json --errors=text --all-errors -c ajv-formats"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.49.0"
+    "@anthropic-ai/sdk": "^0.78.0",
+    "@supabase/supabase-js": "^2.49.0",
+    "pdf2pic": "^3.2.0"
   },
   "devDependencies": {
     "ajv": "^8.18.0",
