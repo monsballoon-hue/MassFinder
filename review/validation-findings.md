@@ -271,26 +271,28 @@ Accumulated during parish-by-parish bulletin review. Used to inform admin panel 
 
 ---
 
-## Schema / Convention Questions
+## Schema / Convention Questions — ALL RESOLVED (2026-03-04)
 
-| # | Question | Context |
-|---|----------|---------|
-| 1 | Should we add `second_sunday`, `third_sunday` etc. as day values? | Currently only `first_sunday` exists. St. Stanislaus has a 2nd Sunday devotion — we used `sunday` + `recurrence: {week: 2}` which works but is inconsistent with `first_sunday` pattern |
-| 2 | Should `first_sunday` day value make `recurrence` redundant? | Currently nothing prevents setting both. Admin panel should auto-clear recurrence when a `first_*` day is selected. |
-| 3 | Saturday Mass type heuristic — where's the vigil cutoff? | Proposed: before 2 PM = `daily_mass`, 2 PM+ = likely `sunday_mass` vigil. Needs convention in DATA_STANDARDS.md. |
-| 4 | Holy day obligation Masses — `sunday_mass` or `daily_mass`? | Both were used for St. Agnes holy days. Convention unclear. Proposal: use `daily_mass` with `holyday`/`holyday_eve` day (obligation is implied by the day value). |
-| 5 | Should events.json support a `description` field (longer text) + `contact` object? | Current `notes` is a short string. User wants to surface volunteer signup, phone numbers, meal details. Propose: `description` (markdown string) + `contact: {name, phone, email}`. |
-| 6 | Holy Week services: one-time dates vs recurring day values? | Currently using day values (`palm_sunday`, `easter_sunday`, etc.) which repeat annually. Alternative: use actual dates in events.json. Day values feel right since these are permanent schedule items. |
-| 7 | **Bulletin date-listing vs. recurring service** — how to parse? | Bulletins often list "Adoration on Monday March 09" for what's actually a recurring service. Convention needed: cross-reference past bulletins; if same service appears weekly/monthly, enter as recurring. If truly one-off, use events.json with a `date`. |
-| 8 | **Cross-parish events in bulletins** — where do they go? | Bulletins advertise events at other locations (e.g., Lenten Retreat at Jericho Center in Holyoke). Options: (a) Skip entirely, (b) Add as event with no `parish_id` (regional event), (c) Add to the hosting parish if in our data, (d) Add to the bulletin parish with `external: true` flag. Recommendation: if the host is in our data, add there. If not, add as a regional event with `parish_id: null` and a `location` object (see below). |
-| 8b | **External event `location` object schema** | When `parish_id` is null (no linked parish), events need a standalone location for calendar invites (.ics LOCATION field) and map links (Apple Maps / Google Maps). Proposed schema: `location: { name: "Jericho Celebration Center", address: "537 Northampton St", city: "Holyoke", state: "MA", zip: "01040" }`. The app can build a map URL from address+city+state+zip and a full address string for .ics exports. When `parish_id` IS set, the existing `location_id` reference handles this. |
-| 9 | **Mon-Thu Mass schedule — need a day value?** | `weekday` = Mon-Fri. No way to express Mon-Thu cleanly. Currently using 4 individual entries which is correct but verbose. Consider adding `mon_thu` or just accept individual entries as the convention for non-standard weekday patterns. |
-| 10 | **Mon-Sat devotions/confession — `daily` vs `weekday`+`saturday`?** | `daily` = all 7 days. `weekday` = Mon-Fri. For Mon-Sat patterns (common for pre-Mass devotions/confession), we need `weekday` + separate `saturday` entry. Could add `mon_sat` day value, or accept 2 entries as convention. |
-| 11 | **Church address vs. office address in location data** | Some parishes have the church on a different street than the office. Location should always be the CHURCH address (where services happen), not the mailing/office address. Office address belongs in `contact`. Propose adding `contact.office_address` field. |
-| 12 | **Confession on a single weekday covering Mon-Sat range** | parish_028 had confession listed as just `monday` when it meant Mon-Sat. Admin panel should warn if a confession entry uses a single weekday — prompt: "Did you mean weekday (Mon-Fri) or daily?" |
-| 13 | **Bilingual Mass language tagging** | Masses celebrated in two languages (e.g., "English/Polish") — currently tagged as primary language with notes. Should we support `languages: ["en", "pl"]` array? Or is `language` + notes sufficient? Affects search/filter if users filter by language. |
-| 14 | **Holy Saturday as a day value** | Need `holy_saturday` for tomb visits, food blessings, Easter Vigil prep. Currently not in DATA_STANDARDS.md day values list. Easter Vigil uses `easter_vigil` but pre-vigil events need a separate day. |
-| 15 | **Cultural/ethnic traditions as service types** | Polish Swieconka (food blessing), Resurrection Procession — these are cultural liturgical traditions. Currently using `adoration` or `easter_sunday_mass` with notes. Consider adding `blessing` service type for food blessings, or keep as notes. |
+All 15 questions below were resolved during the March 2026 validation batch. Decisions are codified in `DATA_STANDARDS.md`.
+
+| # | Question | Resolution |
+|---|----------|------------|
+| 1 | Add `second_sunday`, `third_sunday` etc.? | **NO.** Only `first_friday` and `first_saturday` get special day values (devotional significance). All other nth-week patterns use base day + `recurrence: { type: "nth", week: N }`. Deprecated: `first_sunday`, `first_thursday`, `fourth_friday`. |
+| 2 | `first_sunday` makes recurrence redundant? | **YES.** `first_*` day values encode the pattern; recurrence is redundant. Admin panel should auto-clear recurrence when `first_*` is selected. |
+| 3 | Saturday Mass vigil cutoff? | **2:00 PM.** Before 2 PM = `daily_mass`. 2 PM or later = `sunday_mass` (vigil). Codified in DATA_STANDARDS.md. |
+| 4 | Holy day Masses — `sunday_mass` or `daily_mass`? | **`daily_mass`** with `holyday` or `holyday_eve` day value. Obligation is implied by the day value, not the type. |
+| 5 | Events `description` + contact fields? | **YES.** Added `description` (markdown), `contact_name`, `contact_email`, `contact_phone`, `venue_name`, `venue_address` to events schema. |
+| 6 | Holy Week: dates vs day values? | **Day values.** Holy Week services use `holy_thursday`, `good_friday`, `palm_sunday`, `easter_vigil`, `easter_sunday` day values (permanent annual schedule). Not events.json. |
+| 7 | Bulletin date-listing vs recurring? | **Default to recurring.** "Adoration on Monday March 09" → enter as `day: "monday"`. Only use events.json if clearly one-time. Cross-reference past bulletins when possible. |
+| 8 | Cross-parish events? | **Host parish if in data.** If host not in data → regional event with `parish_id: null` + `venue_name` + `venue_address`. |
+| 8b | External event location schema? | **Flat fields.** `venue_name` + `venue_address` (full string). App builds map URLs from `venue_address`. |
+| 9 | Mon-Thu day value? | **NO new value.** Use 4 individual entries (mon/tue/wed/thu). Accept verbosity over adding rare day values. |
+| 10 | Mon-Sat pattern? | **`weekday` + `saturday`** (2 records). No `mon_sat` value. |
+| 11 | Church vs office address? | **Church address in `locations[]`.** Office address in `contact.office_address` if different. |
+| 12 | Single-weekday confession covering range? | **Admin warning needed.** If confession uses a single weekday day, warn "Did you mean weekday (Mon-Fri)?". |
+| 13 | Bilingual language tagging? | **`languages` array.** Use `languages: ["es", "en"]` for bilingual services. Takes precedence over `language` for filtering. Schema supports this. |
+| 14 | Holy Saturday day value? | **YES, added.** `holy_saturday` for daytime events (food blessings, tomb visits). `easter_vigil` for the vigil Mass (Saturday night). |
+| 15 | Cultural/ethnic service types? | **Added `blessing` type** for food blessings (Swieconka). Added `gorzkie_zale` for Polish Lenten devotion. Resurrection Procession uses `easter_sunday_mass` with notes. |
 
 ---
 

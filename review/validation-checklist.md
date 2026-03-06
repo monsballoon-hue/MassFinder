@@ -20,12 +20,16 @@ Run every check against each parish during bulletin validation. When a new issue
 - [ ] **Holy Day Mass** → `daily_mass` with `holyday` or `holyday_eve` day (never `sunday_mass`)
 - [ ] **Specific devotion types used** — not generic `devotion` when a specific type exists (divine_mercy, rosary, miraculous_medal, holy_hour, benediction, gorzkie_zale, blessing, novena, vespers)
 - [ ] **Devotions buried in notes** — if a rosary, divine mercy, or other devotion is mentioned in another service's notes, extract it as its own service entry
+- [ ] **Standalone benediction vs paired** — standalone = `benediction` type; paired with adoration = fold into `adoration` entry with note
+- [ ] **Perpetual adoration threshold** — only use `perpetual_adoration` for truly 24/7 chapels; posted hours = `adoration`
+- [ ] **Communion service vs Mass alternating** — communion is default (no recurrence), Mass is the exception (with recurrence)
 
 ## 3. Day Values
 
 - [ ] **No deprecated values**: `first_sunday`, `first_thursday`, `fourth_friday` → convert to base day + recurrence
 - [ ] **`weekday` only valid when Mon–Fri are identical** (same time, location, language, seasonal scope)
 - [ ] **Friday different from Mon-Thu?** → use 4 individual entries + separate Friday entry (don't use `weekday`)
+- [ ] **Mon-Thu (no Friday)** → 4 individual entries (monday, tuesday, wednesday, thursday) — no shorthand exists
 - [ ] **Mon-Sat pattern** → `weekday` + separate `saturday` entry (2 records, not 6)
 - [ ] **Nth-week patterns** → use base day + `recurrence: { type: "nth", week: N }` (except first_friday/first_saturday)
 
@@ -37,7 +41,7 @@ Run every check against each parish during bulletin validation. When a new issue
 - [ ] **Adoration**: scheduled hours, First Friday extended hours
 - [ ] **First Friday/Saturday**: Mass, adoration, rosary if listed
 - [ ] **Holy Day Masses**: vigil + feast day times
-- [ ] **Holy Week**: Holy Thursday Mass, Good Friday Stations, Good Friday Passion (minimum set)
+- [ ] **Holy Week**: minimum set = `holy_thursday_mass`, `good_friday_service` (Passion), `stations_of_cross` on `good_friday`, `easter_vigil_mass`, `palm_sunday_mass`, `easter_sunday_mass`
 - [ ] **Lenten services**: Stations of the Cross, extra confessions, Lenten daily Mass if different from regular
 - [ ] **Devotions**: rosary, divine mercy, miraculous medal, holy hour, benediction — each as own service
 - [ ] **Prayer groups**: bible study (→ event), prayer for priests (→ service if recurring)
@@ -47,13 +51,13 @@ Run every check against each parish during bulletin validation. When a new issue
 
 - [ ] **Uses `role` field** (not `title`)
 - [ ] **Lead priest + one deacon only** — drop parochial vicars, priests in residence, retired clergy
-- [ ] **Valid roles**: `pastor`, `pastor_and_director`, `provisional_priest`, `deacon`, `deacon_emeritus`, `deacon_retired`
+- [ ] **Valid roles**: `pastor`, `pastor_and_director`, `administrator`, `co_pastor`, `rector`, `provisional_priest`, `pastoral_minister`, `deacon`, `deacon_emeritus`, `deacon_retired` (see DATA_STANDARDS.md for full list)
 - [ ] **Not empty** — every active parish should have at least the pastor
 
 ## 6. Language
 
 - [ ] **Non-English services tagged correctly** — `language: "es"`, `"pl"`, `"pt"`, `"la"`
-- [ ] **Bilingual services** → `languages: ["es", "en"]` array (future; currently `language` + notes)
+- [ ] **Bilingual services** → `languages: ["es", "en"]` array (schema supports this; takes precedence over `language` for filtering)
 - [ ] **Language not just defaulting to `en`** for non-English parishes
 
 ## 7. Seasonal Services
@@ -61,11 +65,12 @@ Run every check against each parish during bulletin validation. When a new issue
 - [ ] **Lenten services flagged** — `seasonal: { is_seasonal: true, season: "lent" }`
 - [ ] **Lenten overlap with regular schedule**: if a Lenten service replaces a regular one at the same time, both entries exist (seasonal one overrides during Lent)
 - [ ] **Holy Week services** — `seasonal.season: "holy_week"`
+- [ ] **Valid seasonal values only** — `year_round` (default), `lent`, `advent`, `holy_week`, `easter_season`, `academic_year`, `summer`. NOT `christmas` or `easter` (deprecated)
 
 ## 8. Format & Metadata
 
-- [ ] **Source updated** to current bulletin: `source: "bulletin_2026-03"`
-- [ ] **Validation set**: `status: "verified"`, `last_checked: "2026-03-04"`, `bulletin_date: "2026-03"`
+- [ ] **Source updated** to current bulletin: `source: "bulletin_YYYY-MM"`
+- [ ] **Validation set**: `status: "verified"`, `last_checked: "YYYY-MM-DD"`, `bulletin_date: "YYYY-MM"`
 - [ ] **Confession end_times present** — if bulletin gives a range, capture both start and end
 - [ ] **Time format**: 24-hour `"HH:MM"` — no AM/PM strings
 - [ ] **Recurrence on communion service**: verify the recurrence is on the EXCEPTION (mass on 3rd Friday), not the regular service

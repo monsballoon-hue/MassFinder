@@ -1,24 +1,27 @@
 # MassFinder Development Roadmap
 
-**Last updated:** 2026-03-05
-**Status:** V1 stable on `main` — V2 planning complete, implementation beginning
+**Last updated:** 2026-03-06
+**Status:** Batch 1 (Supabase) complete, Batch 2 (bulletin parsing) in progress
 
 ---
 
-## Where we are today (V1)
+## Where we are today
 
-MassFinder is a static vanilla JS progressive web app — no framework, no backend, no database. Everything runs client-side.
+MassFinder is a vanilla JS PWA with a Supabase backend. Frontend is framework-free. Data served via Supabase REST API with static JSON as offline fallback.
 
 | Metric | Count |
 |--------|-------|
-| Parishes | 96 active + 1 shrine |
-| Services tracked | 1,420 |
-| Community events | ~200 |
-| Parishes with bulletin URLs | 93 (96%) |
-| Parishes validated | 28 of 96 |
-| States covered | MA, CT, VT, NH, NY |
+| Parishes | 93 active |
+| Churches (worship sites) | 119 |
+| Services tracked | ~1,407 |
+| Community events | ~203 |
+| Parishes validated | 28 of 93 |
+| States covered | MA, CT, VT, NH |
 
-**Stack:** HTML/CSS/JS → Vercel CDN → static JSON files → service worker for offline
+**Stack:** HTML/CSS/JS → Vercel → Supabase (PostgreSQL) → service worker for offline
+
+**Completed:** Batch 1 (database migration), Batch 2 (bulletin parsing pipeline — core engine working, review UI built)
+**In progress:** Batch 2 refinement (prompt accuracy, review UI polish, edit modal validation)
 
 **What works well:** Find tab with filters/search/sort, Map tab with Leaflet markers, Saved tab with favorites, More tab with readings/liturgical calendar/devotional guides, deep linking, distance-based sorting, language badges, seasonal (Lent) filtering, multi-location parish support, admin panel for data editing.
 
@@ -34,8 +37,8 @@ MassFinder is a static vanilla JS progressive web app — no framework, no backe
 
 ## The 6 batches
 
-### Batch 1: Database Foundation (Weeks 1–2)
-> _Detailed spec: `MassFinder_Bulletin_Platform_Roadmap.md` § Phase 0_
+### Batch 1: Database Foundation — COMPLETE
+> _Deployed to production. Supabase project: `mgbhmwnaipopdctbihmf.supabase.co`_
 
 **Goal:** Move `parish_data.json` and `events.json` into Supabase. Serve via Vercel API routes. Keep static files as offline fallback. Zero UI changes.
 
@@ -55,8 +58,8 @@ MassFinder is a static vanilla JS progressive web app — no framework, no backe
 
 ---
 
-### Batch 2: Bulletin Parsing Pipeline (Weeks 3–5)
-> _Detailed spec: `MassFinder_Bulletin_Platform_Roadmap.md` § Pipeline, `MassFinder_V2_Build_Plan.md` § Batch 2_
+### Batch 2: Bulletin Parsing Pipeline — IN PROGRESS
+> _Core pipeline working. Review UI built. Prompt refinement ongoing._
 
 **Goal:** Build the engine that reads bulletin PDFs and produces structured data.
 
@@ -195,8 +198,6 @@ MassFinder is a static vanilla JS progressive web app — no framework, no backe
 
 ## Dev environment requirements
 
-> _Full guide: `MassFinder_V2_Dev_Setup.md`_
-
 **Must have:**
 - Node.js 18+ via nvm (`nvm install 20`)
 - Vercel CLI (`npm install -g vercel`)
@@ -266,12 +267,15 @@ MassFinder is a static vanilla JS progressive web app — no framework, no backe
 
 ## Document index
 
-| Document | Purpose |
-|----------|---------|
-| `ROADMAP.md` (this file) | Master plan — what, when, why |
-| `MassFinder_Bulletin_Platform_Roadmap.md` | Deep technical architecture — schema, pipeline code, prompt engineering, cost analysis |
-| `MassFinder_UX_Vision.md` | User experience vision — what the app should feel like, tab restructuring, subscriptions, accessibility |
-| `MassFinder_V2_Build_Plan.md` | Detailed 6-batch build sequence with contributor system and donation model |
-| `MassFinder_V2_Dev_Setup.md` | Developer workstation setup — Node.js, CLI tools, VSCode extensions, accounts |
-| `MassFinder_Open_Source_Guide.md` | GitHub community setup — issues, templates, contributor outreach strategy |
-| `SETUP_RUNBOOK.md` | Step-by-step checklist — accounts, CLI tools, extensions, env vars |
+| Document | Purpose | Status |
+|----------|---------|--------|
+| `ROADMAP.md` (this file) | Master plan — what, when, why | Active |
+| `MassFinder_V2_Build_Plan.md` | Detailed 6-batch build sequence with contributor system and donation model | Active |
+| `MassFinder_UX_Vision.md` | User experience vision — what the app should feel like | Active |
+| `MassFinder_Open_Source_Guide.md` | GitHub community setup — issues, templates, contributor outreach | Active |
+| `STYLE_GUIDE.md` | Design conventions and visual standards | Active |
+| `TERMINOLOGY.md` | Project terminology definitions | Active |
+| `ANTI_PATTERNS.md` | Common mistakes and anti-patterns to avoid | Active |
+| `PERSONAS.md` | User personas | Active |
+| `INTEGRATIONS.md` | External service integrations reference | Active |
+| `archive/` | Superseded planning docs (Batch2 plan, Platform Roadmap, Dev Setup, Setup Runbook) | Archived |

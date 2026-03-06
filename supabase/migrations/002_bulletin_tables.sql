@@ -25,9 +25,9 @@ CREATE TABLE IF NOT EXISTS bulletins (
   UNIQUE(church_id, bulletin_date)
 );
 
-CREATE INDEX idx_bulletins_church_id ON bulletins (church_id);
-CREATE INDEX idx_bulletins_status ON bulletins (status);
-CREATE INDEX idx_bulletins_date ON bulletins (bulletin_date);
+CREATE INDEX IF NOT EXISTS idx_bulletins_church_id ON bulletins (church_id);
+CREATE INDEX IF NOT EXISTS idx_bulletins_status ON bulletins (status);
+CREATE INDEX IF NOT EXISTS idx_bulletins_date ON bulletins (bulletin_date);
 
 -- Bulletin items: individual extracted entries
 CREATE TABLE IF NOT EXISTS bulletin_items (
@@ -57,14 +57,14 @@ CREATE TABLE IF NOT EXISTS bulletin_items (
   updated_at      TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE INDEX idx_bulletin_items_bulletin_id ON bulletin_items (bulletin_id);
-CREATE INDEX idx_bulletin_items_church_id ON bulletin_items (church_id);
-CREATE INDEX idx_bulletin_items_category ON bulletin_items (category);
-CREATE INDEX idx_bulletin_items_status ON bulletin_items (status);
-CREATE INDEX idx_bulletin_items_event_date ON bulletin_items (event_date);
+CREATE INDEX IF NOT EXISTS idx_bulletin_items_bulletin_id ON bulletin_items (bulletin_id);
+CREATE INDEX IF NOT EXISTS idx_bulletin_items_church_id ON bulletin_items (church_id);
+CREATE INDEX IF NOT EXISTS idx_bulletin_items_category ON bulletin_items (category);
+CREATE INDEX IF NOT EXISTS idx_bulletin_items_status ON bulletin_items (status);
+CREATE INDEX IF NOT EXISTS idx_bulletin_items_event_date ON bulletin_items (event_date);
 
 -- Full-text search on bulletin items
-CREATE INDEX idx_bulletin_items_search ON bulletin_items
+CREATE INDEX IF NOT EXISTS idx_bulletin_items_search ON bulletin_items
   USING GIN (to_tsvector('english', coalesce(title, '') || ' ' || coalesce(description, '')));
 
 -- Parish profiles: per-church context for prompt injection
@@ -88,19 +88,30 @@ ALTER TABLE bulletins ENABLE ROW LEVEL SECURITY;
 ALTER TABLE bulletin_items ENABLE ROW LEVEL SECURITY;
 ALTER TABLE parish_profiles ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Public read bulletins" ON bulletins FOR SELECT USING (true);
-CREATE POLICY "Public read bulletin_items" ON bulletin_items FOR SELECT USING (true);
-CREATE POLICY "Public read parish_profiles" ON parish_profiles FOR SELECT USING (true);
+DO $$ BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Public read bulletins') THEN
+    CREATE POLICY "Public read bulletins" ON bulletins FOR SELECT USING (true);
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Public read bulletin_items') THEN
+    CREATE POLICY "Public read bulletin_items" ON bulletin_items FOR SELECT USING (true);
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Public read parish_profiles') THEN
+    CREATE POLICY "Public read parish_profiles" ON parish_profiles FOR SELECT USING (true);
+  END IF;
+END $$;
 
 -- Updated_at triggers (reuses update_updated_at() from migration 001)
+DROP TRIGGER IF EXISTS set_bulletins_updated_at ON bulletins;
 CREATE TRIGGER set_bulletins_updated_at
   BEFORE UPDATE ON bulletins
   FOR EACH ROW EXECUTE FUNCTION update_updated_at();
 
+DROP TRIGGER IF EXISTS set_bulletin_items_updated_at ON bulletin_items;
 CREATE TRIGGER set_bulletin_items_updated_at
   BEFORE UPDATE ON bulletin_items
   FOR EACH ROW EXECUTE FUNCTION update_updated_at();
 
+DROP TRIGGER IF EXISTS set_parish_profiles_updated_at ON parish_profiles;
 CREATE TRIGGER set_parish_profiles_updated_at
   BEFORE UPDATE ON parish_profiles
   FOR EACH ROW EXECUTE FUNCTION update_updated_at();

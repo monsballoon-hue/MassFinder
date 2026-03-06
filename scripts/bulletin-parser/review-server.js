@@ -11,6 +11,63 @@ var sb = require('@supabase/supabase-js');
 
 var supabase = sb.createClient(config.SUPABASE_URL, config.SUPABASE_SERVICE_ROLE_KEY);
 
+// ── Validation enums (must match DATA_STANDARDS.md + schema) ──
+var VALID_ITEM_TYPES = ['service', 'event', 'notice'];
+var VALID_SERVICE_CATS = ['mass','confession','adoration','perpetual_adoration','rosary','stations_of_cross','novena','holy_hour','divine_mercy','miraculous_medal','anointing_of_sick','communion_service','prayer_group','benediction','vespers','devotion','blessing','gorzkie_zale','holy_thursday_mass','good_friday_service','easter_vigil_mass','palm_sunday_mass','easter_sunday_mass'];
+var VALID_EVENT_CATS = ['fish_fry','pancake_breakfast','potluck','dinner_dance','trivia_night','movie_night','game_night','picnic','festival','bible_study','book_club','speaker_series','retreat','mission','adult_education','youth_group','choir','senior_group','fraternal','performance','concert'];
+var VALID_NOTICE_CATS = ['weather_closure','schedule_change','office_hours_change'];
+var VALID_CATEGORIES = VALID_SERVICE_CATS.concat(VALID_EVENT_CATS).concat(VALID_NOTICE_CATS).concat(['general']);
+var VALID_RECURRING = [null, 'weekly', 'monthly', 'one_time'];
+var VALID_SEASONAL = [null, 'year_round', 'lent', 'advent', 'holy_week', 'easter_season', 'academic_year', 'summer'];
+var VALID_DAYS = [null, 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday',
+  'weekday', 'daily', 'first_friday', 'first_saturday', 'holyday', 'holyday_eve',
+  'good_friday', 'holy_thursday', 'holy_saturday', 'easter_vigil',
+  'palm_sunday', 'easter_sunday', 'civil_holiday'];
+var VALID_LANGUAGES = [null, 'en', 'es', 'pl', 'pt', 'fr', 'la', 'vi'];
+var TIME_RE = /^([01]\d|2[0-3]):[0-5]\d$/;
+var DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+
+function validateItemUpdate(data) {
+  var errors = [];
+  if (data.item_type !== undefined && VALID_ITEM_TYPES.indexOf(data.item_type) < 0) {
+    errors.push('Invalid item_type: ' + data.item_type);
+  }
+  if (data.category !== undefined && VALID_CATEGORIES.indexOf(data.category) < 0) {
+    errors.push('Invalid category: ' + data.category);
+  }
+  if (data.day !== undefined && VALID_DAYS.indexOf(data.day) < 0) {
+    errors.push('Invalid day: ' + data.day);
+  }
+  if (data.recurring !== undefined && VALID_RECURRING.indexOf(data.recurring) < 0) {
+    errors.push('Invalid recurring: ' + data.recurring);
+  }
+  if (data.seasonal !== undefined && VALID_SEASONAL.indexOf(data.seasonal) < 0) {
+    errors.push('Invalid seasonal: ' + data.seasonal);
+  }
+  if (data.language !== undefined && data.language !== null) {
+    // Support comma-separated bilingual values like "es,en"
+    var langs = String(data.language).split(',');
+    for (var li = 0; li < langs.length; li++) {
+      if (VALID_LANGUAGES.indexOf(langs[li].trim()) < 0) {
+        errors.push('Invalid language: ' + langs[li].trim());
+      }
+    }
+  }
+  if (data.event_time && !TIME_RE.test(data.event_time)) {
+    errors.push('Invalid time format (expected HH:MM): ' + data.event_time);
+  }
+  if (data.end_time && !TIME_RE.test(data.end_time)) {
+    errors.push('Invalid end_time format (expected HH:MM): ' + data.end_time);
+  }
+  if (data.event_date && !DATE_RE.test(data.event_date)) {
+    errors.push('Invalid date format (expected YYYY-MM-DD): ' + data.event_date);
+  }
+  if (data.end_date && !DATE_RE.test(data.end_date)) {
+    errors.push('Invalid end_date format (expected YYYY-MM-DD): ' + data.end_date);
+  }
+  return errors;
+}
+
 var PORT = 3456;
 var MANUAL_DIR = path.resolve(__dirname, '../../bulletins-manual');
 var IMG_CACHE_DIR = path.resolve(__dirname, '../../.tmp-review-images');
@@ -39,11 +96,34 @@ var server = http.createServer(function(req, res) {
     return;
   }
 
-  // API: update single item
+  // API: update single item (status + optional field edits)
   if (urlPath === '/api/update-item' && req.method === 'POST') {
     readBody(req, function(data) {
-      supabase.from('bulletin_items').update({ status: data.status })
-        .eq('id', data.id).then(function(r) {
+      var id = data.id;
+      if (!id) return jsonResp(res, 400, { error: 'id is required' });
+
+      // Validate enum fields before writing
+      var valErrors = validateItemUpdate(data);
+      if (valErrors.length > 0) {
+        return jsonResp(res, 400, { error: valErrors.join('; ') });
+      }
+
+      var updates = {};
+      // Always include status if provided
+      if (data.status) updates.status = data.status;
+      // Allow editing any bulletin_items field
+      var editableFields = [
+        'title', 'category', 'item_type', 'description', 'original_text',
+        'day', 'event_date', 'event_time', 'end_time', 'end_date', 'location',
+        'contact_name', 'contact_phone', 'contact_email', 'registration_url',
+        'recurring', 'seasonal', 'language', 'host_parish', 'confidence'
+      ];
+      editableFields.forEach(function(f) {
+        if (data[f] !== undefined) updates[f] = data[f];
+      });
+      if (data.tags !== undefined) updates.tags = data.tags;
+      supabase.from('bulletin_items').update(updates)
+        .eq('id', id).then(function(r) {
           if (r.error) return jsonResp(res, 500, { error: r.error.message });
           jsonResp(res, 200, { ok: true });
         });
@@ -59,6 +139,19 @@ var server = http.createServer(function(req, res) {
           if (r.error) return jsonResp(res, 500, { error: r.error.message });
           jsonResp(res, 200, { ok: true, count: data.ids.length });
         });
+    });
+    return;
+  }
+
+  // API: get existing parish data for diff comparison
+  if (urlPath === '/api/existing-data') {
+    var query = parseQuery(parts[1] || '');
+    var churchId = query.church_id;
+    if (!churchId) return jsonResp(res, 400, { error: 'church_id required' });
+    getExistingData(churchId).then(function(data) {
+      jsonResp(res, 200, data);
+    }).catch(function(err) {
+      jsonResp(res, 500, { error: err.message });
     });
     return;
   }
@@ -89,6 +182,134 @@ var server = http.createServer(function(req, res) {
   res.writeHead(404); res.end('Not found');
 });
 
+function parseQuery(qs) {
+  var result = {};
+  if (!qs) return result;
+  qs.split('&').forEach(function(pair) {
+    var parts = pair.split('=');
+    if (parts.length === 2) result[decodeURIComponent(parts[0])] = decodeURIComponent(parts[1]);
+  });
+  return result;
+}
+
+// Load existing services/events from parish_data.json and events.json for diff
+var parishDataPath = path.resolve(__dirname, '../../parish_data.json');
+var eventsDataPath = path.resolve(__dirname, '../../events.json');
+var parishDataCache = null;
+var eventsDataCache = null;
+
+// Map from Supabase church IDs to parish_data.json parish IDs
+var churchMapPath = path.resolve(__dirname, '../../parish_to_church_map.json');
+var churchToParishMap = {};
+try {
+  var mapData = JSON.parse(fs.readFileSync(churchMapPath, 'utf8'));
+  // Reverse: we need church_id -> parish_id
+  Object.keys(mapData).forEach(function(parishId) {
+    var churchId = mapData[parishId];
+    if (!churchToParishMap[churchId]) churchToParishMap[churchId] = [];
+    churchToParishMap[churchId].push(parishId);
+  });
+} catch(e) { console.log('Note: parish_to_church_map.json not found, diff will use name matching'); }
+
+function loadParishData() {
+  if (!parishDataCache) {
+    try { parishDataCache = JSON.parse(fs.readFileSync(parishDataPath, 'utf8')); } catch(e) { parishDataCache = { parishes: [] }; }
+  }
+  return parishDataCache;
+}
+
+function loadEventsData() {
+  if (!eventsDataCache) {
+    try { eventsDataCache = JSON.parse(fs.readFileSync(eventsDataPath, 'utf8')); } catch(e) { eventsDataCache = { events: [] }; }
+  }
+  return eventsDataCache;
+}
+
+function getExistingData(churchId) {
+  var pd = loadParishData();
+  var ev = loadEventsData();
+
+  // Find parish by church map or name matching
+  var parishIds = churchToParishMap[churchId] || [];
+  var parish = null;
+  for (var i = 0; i < pd.parishes.length; i++) {
+    if (parishIds.indexOf(pd.parishes[i].id) >= 0) {
+      parish = pd.parishes[i];
+      break;
+    }
+  }
+
+  // Fallback: match by name similarity using church name from Supabase
+  if (!parish) {
+    return supabase.from('churches').select('name, city').eq('id', churchId).single()
+      .then(function(r) {
+        var church = r.data || {};
+        var churchName = (church.name || '').toLowerCase();
+        for (var j = 0; j < pd.parishes.length; j++) {
+          if (pd.parishes[j].name.toLowerCase().indexOf(churchName) >= 0 ||
+              churchName.indexOf(pd.parishes[j].name.toLowerCase()) >= 0) {
+            parish = pd.parishes[j];
+            break;
+          }
+        }
+        return buildExistingResult(parish, churchId, ev);
+      });
+  }
+
+  return Promise.resolve(buildExistingResult(parish, churchId, ev));
+}
+
+function buildExistingResult(parish, churchId, ev) {
+  var services = [];
+  var clergy = [];
+  var events = [];
+
+  if (parish) {
+    services = (parish.services || []).map(function(s) {
+      return {
+        id: s.id,
+        type: s.type,
+        day: s.day,
+        time: s.time,
+        end_time: s.end_time,
+        location_id: s.location_id,
+        language: s.language,
+        notes: s.notes,
+        seasonal: s.seasonal,
+        recurrence: s.recurrence
+      };
+    });
+    clergy = parish.clergy || [];
+
+    // Find events for this parish
+    events = (ev.events || []).filter(function(e) {
+      return e.parish_id === parish.id;
+    }).map(function(e) {
+      return {
+        id: e.id,
+        category: e.category,
+        title: e.title,
+        date: e.date,
+        dates: e.dates,
+        day: e.day,
+        time: e.time,
+        end_time: e.end_time,
+        description: e.description,
+        location_id: e.location_id,
+        tags: e.tags
+      };
+    });
+  }
+
+  return {
+    parishId: parish ? parish.id : null,
+    parishName: parish ? parish.name : null,
+    services: services,
+    clergy: clergy,
+    events: events
+  };
+}
+
 function jsonResp(res, code, data) {
   res.writeHead(code, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify(data));
@@ -102,7 +323,7 @@ function readBody(req, cb) {
 
 function getBulletins() {
   return supabase.from('bulletins')
-    .select('id, church_id, bulletin_date, page_count, status, parse_cost_usd')
+    .select('id, church_id, bulletin_date, page_count, status, parse_cost_usd, raw_extraction')
     .order('church_id')
     .then(function(bRes) {
       if (bRes.error) throw new Error(bRes.error.message);
@@ -125,6 +346,7 @@ function getBulletins() {
               });
               return bulletins.map(function(b) {
                 var church = churches[b.church_id] || {};
+                var raw = b.raw_extraction || {};
                 return {
                   id: b.id, churchId: b.church_id,
                   churchName: church.name || b.church_id,
@@ -133,6 +355,8 @@ function getBulletins() {
                   pageCount: b.page_count,
                   cost: b.parse_cost_usd,
                   items: itemsByBulletin[b.id] || [],
+                  massSchedule: raw.massSchedule || [],
+                  clergy: raw.clergy || [],
                 };
               });
             });

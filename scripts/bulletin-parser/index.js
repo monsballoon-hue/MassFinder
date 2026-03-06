@@ -142,6 +142,8 @@ function processChurch(church) {
           allItems: parseResult.allItems,
           pageResults: parseResult.pageResults,
           totalCost: parseResult.totalCost,
+          massSchedule: parseResult.massSchedule,
+          clergy: parseResult.clergy,
         }).then(function(storeResult) {
           console.log('  Stored: bulletin #' + storeResult.bulletinId + ', ' + storeResult.itemCount + ' items');
 

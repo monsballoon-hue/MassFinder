@@ -158,6 +158,32 @@ For multiple weeks (e.g., "1st & 3rd Tuesday"):
 
 When `languages` array is present, it takes precedence over `language` for filtering. The UI should display "Bilingual (Spanish/English)" rather than raw codes.
 
+### Seasonal Values
+
+Every service has a `seasonal` object with `is_seasonal` (boolean) and `season` (string):
+
+```json
+// Year-round (default for most services):
+{ "seasonal": { "is_seasonal": false, "season": "year_round" } }
+
+// Seasonal:
+{ "seasonal": { "is_seasonal": true, "season": "lent" } }
+```
+
+| Season Value | When | `is_seasonal` |
+|-------------|------|---------------|
+| `year_round` | Always active (default) | `false` |
+| `lent` | Ash Wednesday through Holy Thursday | `true` |
+| `advent` | 4 weeks before Christmas | `true` |
+| `holy_week` | Palm Sunday through Easter | `true` |
+| `easter_season` | Easter through Pentecost | `true` |
+| `academic_year` | School year (Sept–June) — services that change location seasonally | `true` |
+| `summer` | Summer schedule (June–Aug) | `true` |
+
+The schema also allows `winter` and `ordinary_time` but these are not currently used.
+
+**Do NOT use:** `christmas`, `easter` (deprecated — use `advent` and `easter_season` respectively).
+
 ### Location & Address Conventions
 
 - **Location address** = the **church/chapel address** (where services happen), never the office/mailing address.
@@ -172,11 +198,56 @@ When a bulletin lists a service on a specific date (e.g., "Adoration on Monday M
 - **Only use events.json** if the service is clearly one-time (unique event, not on the weekly schedule).
 - Cross-reference past bulletins when possible. If the same service appeared previously on the same weekday, it's recurring.
 
+### Benediction Rule
+
+- **Standalone Benediction** (scheduled on its own): use `type: "benediction"`
+- **Benediction paired with Adoration** (e.g., "Adoration 3-4 PM with Benediction"): fold into the `adoration` entry with a note — do NOT create a separate `benediction` service
+
+### Perpetual Adoration Threshold
+
+- `perpetual_adoration`: only for truly **24/7** adoration chapels (open around the clock, every day)
+- `adoration`: for all scheduled-hours adoration, even if 15-16 hours/day, 7 days/week — if there are posted open/close times, it's `adoration`, not `perpetual_adoration`
+
+### Devotion Cycle Principle
+
+When a parish has a sequence of devotions (e.g., Rosary 6:25 AM → Mass 7:00 AM → Divine Mercy 7:30 AM), create **separate service entries** for each devotion. Do not collapse them into one entry with notes. Each devotion should be independently discoverable via search and filtering.
+
+### "After Mass" Confession Estimation
+
+When a bulletin says "Confession after Mass" with no specific time, **estimate the start time** as Mass start + 45 minutes. Add an explanatory note (e.g., `notes: "After 5:30 PM Vigil Mass"`). This ensures the service appears in time-based searches and sorting.
+
+### Communion Service / Mass Alternating Weeks
+
+When a parish alternates between a communion service (most weeks) and a Mass (e.g., 3rd Friday), model as:
+- **Communion service** as the default entry (no recurrence) — this is what happens most weeks
+- **Mass** with `recurrence: { type: "nth", week: N }` — this is the exception
+- The recurrence goes on the **exception** (the Mass), not on the default (communion service)
+
 ### Clergy Conventions
 
 - Use the `clergy` array (not `staff`) for pastor/deacon names.
 - Keep **lead priest + one deacon** only. Drop parochial vicars, priests in residence, retired deacons, etc.
-- Use `role` field (not `title`): `pastor`, `pastor_and_director`, `provisional_priest`, `deacon`, `deacon_emeritus`, `deacon_retired`.
+- Use `role` field (not `title`).
+
+**Valid roles (by priority):**
+
+| Role | Use For |
+|------|---------|
+| `pastor` | Parish pastor (most common) |
+| `pastor_and_director` | Pastor who is also director of a merged community |
+| `administrator` | Parish administrator (when no pastor is assigned) |
+| `co_pastor` | Co-pastor in a shared leadership arrangement |
+| `rector` | Rector (typically at basilicas or shrines) |
+| `vice_rector` | Vice rector |
+| `provisional_priest` | Temporary/supply priest |
+| `pastoral_minister` | Lay pastoral minister (when no priest is assigned) |
+| `deacon` | Active deacon |
+| `deacon_emeritus` | Emeritus deacon (still serving) |
+| `deacon_retired` | Retired deacon |
+
+**Roles that exist in data but should NOT be added for new entries** (per "lead priest + one deacon" rule):
+- `parochial_vicar` — exists on 4 parishes, do not add new ones
+- `retired_in_residence` — exists on 2 parishes, do not add new ones
 
 ---
 

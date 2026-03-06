@@ -32,6 +32,8 @@ function storeResults(opts) {
       pageResults: opts.pageResults.map(function(pr) {
         return { page_type: pr.page_type, notes: pr.notes, item_count: pr.items.length };
       }),
+      massSchedule: opts.massSchedule || [],
+      clergy: opts.clergy || [],
     },
     parse_cost_usd: opts.totalCost,
     parse_model: config.PARSE_MODEL,
@@ -57,9 +59,12 @@ function storeResults(opts) {
           return {
             bulletin_id: bulletinId,
             church_id: opts.churchId,
+            item_type: item.item_type,
             category: item.category,
             title: item.title,
+            original_text: item.original_text,
             description: item.description,
+            day: item.day,
             event_date: item.event_date,
             event_time: item.event_time,
             end_time: item.end_time,
@@ -70,11 +75,14 @@ function storeResults(opts) {
             contact_email: item.contact_email,
             registration_url: item.registration_url,
             recurring: item.recurring,
+            seasonal: item.seasonal,
+            language: item.language,
+            host_parish: item.host_parish,
             tags: item.tags,
             source_page: item.source_page,
             confidence: item.confidence,
             is_new: true,
-            status: 'pending',
+            status: item._flagged ? 'flagged' : 'pending',
           };
         });
 
