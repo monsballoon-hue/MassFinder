@@ -139,10 +139,11 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .results-sort svg { width: 14px; height: 14px; }
 
 /* REFRESH BUTTON */
-.results-refresh { color: var(--color-text-tertiary); padding: var(--space-2); border-radius: var(--radius-sm); min-height: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; }
-.results-refresh:hover { background: var(--color-surface-hover); }
-.results-refresh svg { width: 16px; height: 16px; transition: transform 0.3s ease; }
-.results-refresh.spinning svg { animation: spin 0.8s linear infinite; }
+.pull-indicator { text-align: center; overflow: hidden; height: 0; transition: height 0.2s ease; }
+.pull-indicator-inner { padding: var(--space-2) 0; display: flex; align-items: center; justify-content: center; gap: var(--space-2); font-size: var(--text-xs); color: var(--color-text-tertiary); }
+.pull-indicator svg { width: 18px; height: 18px; color: var(--color-text-tertiary); transition: transform 0.2s ease; }
+.pull-indicator.ready svg { transform: rotate(180deg); color: var(--color-accent); }
+.pull-indicator.refreshing svg { animation: spin 0.8s linear infinite; color: var(--color-accent); }
 @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
 /* LOCATION PROMPT */
@@ -472,24 +473,21 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .saved-week-section summary::before { content: '\25B6'; font-size: 10px; color: var(--color-text-tertiary); transition: transform var(--transition-fast); }
 .saved-week-section details[open]>summary::before { transform: rotate(90deg); }
 .saved-week-count { font-size: var(--text-xs); color: var(--color-accent-text); font-weight: var(--weight-medium); background: var(--color-accent-pale); padding: 2px 8px; border-radius: var(--radius-full); }
-.saved-evt { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); background: var(--color-surface); border-radius: var(--radius-md); box-shadow: var(--shadow-card); margin-bottom: var(--space-2); cursor: pointer; transition: box-shadow var(--transition-fast); }
-.saved-evt:hover { box-shadow: var(--shadow-card-hover); }
-.saved-evt .ce-item-accent { width: 3px; border-radius: 2px; align-self: stretch; min-height: 32px; flex-shrink: 0; }
-.saved-evt .ce-item-body { flex: 1; min-width: 0; }
-.saved-evt .ce-item-title { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.saved-evt .ce-item-when { font-size: var(--text-xs); color: var(--color-text-secondary); margin-top: 1px; }
+.saved-evt-unified { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border-light); cursor: pointer; transition: background var(--transition-fast); }
+.saved-evt-unified:last-child { border-bottom: none; }
+.saved-evt-unified:hover { background: var(--color-surface-hover); margin: 0 calc(-1 * var(--space-3)); padding-left: var(--space-3); padding-right: var(--space-3); border-radius: var(--radius-sm); }
+.saved-evt-unified-body { flex: 1; min-width: 0; }
+.saved-evt-unified-title { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-text-primary); line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.saved-evt-unified-when { font-size: var(--text-xs); color: var(--color-text-secondary); margin-top: 1px; }
+.saved-evt-chevron { flex-shrink: 0; color: var(--color-text-tertiary); }
+.evt-yc-badge { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; color: white; background: var(--color-accent); padding: 2px 8px; border-radius: var(--radius-full); margin-left: 8px; vertical-align: 1px; }
+.evt-yc-row { background: rgba(184,150,63,0.06); margin: 0 calc(-1 * var(--space-3)); padding-left: var(--space-3); padding-right: var(--space-3); border-radius: var(--radius-sm); }
 .saved-evt-actions { display: flex; gap: var(--space-1); flex-shrink: 0; }
 .saved-evt-btn { width: 32px; height: 32px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--color-text-tertiary); background: none; border: 1px solid var(--color-border-light); cursor: pointer; transition: all var(--transition-fast); }
 .saved-evt-btn:hover { background: var(--color-surface-hover); color: var(--color-text-secondary); }
 .saved-evt-btn:disabled { opacity: 0.5; cursor: default; }
-.saved-lent-accent { background: #7C3AED !important; }
 .saved-evt-count { font-size: var(--text-xs); color: var(--color-accent-text); font-weight: var(--weight-medium); background: var(--color-accent-pale); padding: 1px 6px; border-radius: var(--radius-full); margin-left: var(--space-1); }
 .saved-section-title { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 700; color: var(--color-text-primary); margin: var(--space-4) 0 var(--space-2); display: flex; align-items: center; gap: var(--space-2); }
-.saved-compact-yc { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); background: linear-gradient(135deg, #FBF8F1 0%, #F5EDD8 100%); border-left: 3px solid var(--color-accent); border-radius: var(--radius-md); box-shadow: var(--shadow-card); margin-bottom: var(--space-2); cursor: pointer; transition: box-shadow var(--transition-fast); }
-.saved-compact-yc:hover { box-shadow: var(--shadow-card-hover); }
-.saved-compact-yc .ce-item-body { flex: 1; min-width: 0; }
-.saved-compact-yc .ce-item-title { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.saved-compact-yc .ce-item-when { font-size: var(--text-xs); color: var(--color-text-secondary); margin-top: 1px; }
 .saved-section-divider { height: 1px; background: var(--color-border-light); margin: var(--space-4) 0; }
 
 /* MORE TAB */
@@ -530,15 +528,15 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .events-widget-header { display: flex; align-items: center; justify-content: space-between; padding: var(--space-3) var(--space-4) var(--space-2); }
 .events-widget-label { font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.06em; }
 .events-widget-seeall { font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--color-accent-text); }
-.events-widget-strip { display: flex; gap: var(--space-3); overflow-x: auto; padding: 0 var(--space-4) var(--space-2); scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.events-widget-strip { display: flex; gap: var(--space-2); overflow-x: auto; padding: 0 var(--space-4) var(--space-2); scrollbar-width: none; -webkit-overflow-scrolling: touch; }
 .events-widget-strip::-webkit-scrollbar { display: none; }
-.event-mini-card { flex-shrink: 0; width: 140px; background: var(--color-surface); border-left: 2px solid var(--color-accent); border-radius: var(--radius-sm); padding: var(--space-2) var(--space-3); cursor: pointer; box-shadow: var(--shadow-card); transition: box-shadow var(--transition-fast); }
-.event-mini-card:hover { box-shadow: var(--shadow-card-hover); }
-.event-mini-fav { display: flex; align-items: center; gap: 3px; font-size: 10px; font-weight: var(--weight-semibold); color: var(--color-fav); margin-bottom: 2px; }
+.event-mini-card { flex-shrink: 0; width: 164px; background: var(--color-surface); border: 1px solid var(--color-border-light); border-radius: var(--radius-md); padding: var(--space-3); cursor: pointer; transition: background var(--transition-fast); }
+.event-mini-card:hover { background: var(--color-surface-hover); }
+.event-mini-date-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-1); }
+.event-mini-date { font-size: 11px; font-weight: var(--weight-semibold); color: var(--color-accent-text); }
+.event-mini-badge { font-size: 9px; font-weight: 700; letter-spacing: 0.05em; color: white; background: var(--color-accent); padding: 1px 6px; border-radius: var(--radius-full); }
+.event-mini-title { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-text-primary); line-height: 1.3; margin-bottom: 3px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .event-mini-church { font-size: 11px; color: var(--color-text-tertiary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.event-mini-title { font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--color-text-primary); line-height: 1.3; margin-bottom: 2px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.event-mini-date { font-size: 11px; font-weight: var(--weight-semibold); color: var(--color-accent-text); margin-bottom: 2px; }
-.event-mini-near { display: inline-flex; align-items: center; gap: 3px; font-size: 10px; color: var(--color-info); font-weight: var(--weight-semibold); margin-bottom: 2px; }
 
 /* SPARSE MESSAGE */
 .sparse-msg { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--space-4) var(--space-2); }
@@ -601,15 +599,13 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .devot-sub[open] summary { border-bottom: 1px solid var(--color-border-light); }
 .devot-sub .devot-body { padding: var(--space-3) var(--space-4) var(--space-4); }
 
-/* WHAT'S HAPPENING — two-column equal layout */
-.wh-grid { display: grid; grid-template-columns: 1fr 1px 1fr; gap: 0 var(--space-4); margin-top: var(--space-2); }
-.wh-divider { background: var(--color-border-light); }
-.wh-col { min-width: 0; }
-.wh-col-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-3); padding-bottom: var(--space-2); border-bottom: 2px solid var(--color-border-light); }
-.wh-col-label { font-size: var(--text-xs); font-weight: var(--weight-semibold); text-transform: uppercase; letter-spacing: 0.06em; }
-.wh-col-label.yc-label { color: var(--color-accent-text); }
-.wh-col-label.community-label { color: var(--color-primary); }
-.wh-col-seeall { font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--color-info); }
+/* WHAT'S HAPPENING — two-column layout */
+.wh-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-top: var(--space-2); }
+.wh-col-left, .wh-col-right { min-width: 0; }
+.wh-col-label { font-size: var(--text-xs); font-weight: var(--weight-semibold); text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-tertiary); padding-bottom: var(--space-2); border-bottom: 2px solid var(--color-border-light); margin-bottom: var(--space-1); }
+.wh-ticker-wrap { overflow: hidden; position: relative; -webkit-mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%); mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%); }
+.wh-ticker { animation: tickerScroll linear infinite; }
+@keyframes tickerScroll { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
 .wh-event-card { padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border-light); cursor: pointer; transition: background var(--transition-fast); }
 .wh-event-card:last-child { border-bottom: none; }
 .wh-event-card:hover { background: var(--color-surface-hover); margin: 0 calc(-1 * var(--space-2)); padding-left: var(--space-2); padding-right: var(--space-2); border-radius: var(--radius-sm); }
@@ -620,12 +616,6 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .wh-event-fav { display: inline-flex; align-items: center; gap: 2px; font-size: 10px; color: var(--color-fav); font-weight: var(--weight-semibold); margin-bottom: 2px; }
 .wh-event-near { font-size: 10px; color: var(--color-info); font-weight: var(--weight-semibold); margin-bottom: 2px; }
 .wh-empty { font-size: var(--text-xs); color: var(--color-text-tertiary); font-style: italic; }
-.fb-type-grid { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-3); }
-.fb-type-btn { padding: var(--space-2) var(--space-3); border: 1.5px solid var(--color-border); border-radius: var(--radius-full); font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--color-text-secondary); background: var(--color-surface); transition: all var(--transition-fast); min-height: 40px; }
-.fb-type-btn.selected { background: var(--color-primary); color: white; border-color: var(--color-primary); }
-.fb-submit { width: 100%; padding: var(--space-3); border-radius: var(--radius-md); background: var(--color-primary); color: white; font-size: var(--text-sm); font-weight: var(--weight-semibold); min-height: 44px; margin-top: var(--space-3); transition: opacity var(--transition-fast); }
-.fb-submit:disabled { opacity: 0.5; }
-.fb-thanks { text-align: center; padding: var(--space-4); font-size: var(--text-sm); color: var(--color-verified); font-weight: var(--weight-medium); display: none; }
 
 /* SCHEDULE LOCATION BADGE (multi-location detail panel) */
 .schedule-loc-badge { display: inline-flex; align-items: center; font-size: 11px; font-weight: var(--weight-semibold); color: var(--color-primary); background: var(--color-info-bg); border: 1px solid rgba(52,120,198,0.2); padding: 2px 8px; border-radius: var(--radius-full); margin-top: 3px; }
@@ -709,15 +699,13 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 
   <div class="results-info">
     <span id="resultsCount" class="results-count"></span>
-    <button id="refreshBtn" class="results-refresh" onclick="refreshApp()" title="Refresh data &amp; location">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-    </button>
     <button class="results-sort" onclick="toggleSort()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 5h10M11 9h7M11 13h4M3 17l3 3 3-3M6 18V4"/></svg>
       <span id="sortLabel">By name</span>
     </button>
   </div>
 
+  <div id="pullIndicator" class="pull-indicator"><div class="pull-indicator-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="7 13 12 18 17 13"/><line x1="12" y1="18" x2="12" y2="6"/></svg><span id="pullText">Pull to refresh</span></div></div>
   <div id="sparseMsg" class="sparse-msg" style="display:none"><div class="sparse-msg-inner">Fewer services on weekdays — <button onclick="document.querySelector('[data-filter=weekend]').click()">try This Weekend</button> for Sunday Mass times.</div></div>
   <div id="eventsWidget" class="events-widget-wrap"></div>
   <div id="cardList" class="card-list" role="list" aria-label="Churches">
@@ -749,23 +737,69 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
     <!-- PWA INSTALL CARD (hidden if installed) -->
     <div id="moreInstallCard"></div>
 
-    <!-- WHAT'S HAPPENING: YC Events + Community Events, equal prominence -->
+    <!-- ABOUT + WHAT'S COMING -->
+    <div class="more-section">
+      <h2 class="more-section-title">About MassFinder</h2>
+      <div class="stat-grid" id="aboutStatGrid"></div>
+      <p style="font-size:var(--text-sm);color:var(--color-text-secondary)">A stewardship project for Catholics in Western New England — find Mass times, Confession, Adoration, events, and more across the region.</p>
+      <details class="coming-soon-details" style="margin-top:var(--space-3)">
+        <summary style="cursor:pointer;font-weight:var(--weight-semibold);font-size:var(--text-sm);color:var(--color-accent);display:flex;align-items:center;gap:var(--space-2)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Something bigger is coming
+        </summary>
+        <div style="margin-top:var(--space-3);font-size:var(--text-sm);color:var(--color-text-secondary);line-height:1.6">
+          <p style="margin-bottom:var(--space-3)">We're building toward a single, living bulletin for Catholics across the region — every parish, one place, always current. The goal is to help unite the Body of Christ as one across Western New England.</p>
+          <ul style="padding-left:var(--space-4);margin:0 0 var(--space-3) 0">
+            <li style="margin-bottom:var(--space-2)"><strong>Every bulletin, one place.</strong> Events and announcements from across the region — searchable, subscribable, and always up to date.</li>
+            <li style="margin-bottom:var(--space-2)"><strong>Find what matters to you.</strong> Retreats, service opportunities, youth events — browse by what draws you in.</li>
+            <li style="margin-bottom:var(--space-2)"><strong>Your parishes, always in reach.</strong> Stay connected to the communities you care about most.</li>
+            <li><strong>Schedule changes, before you leave.</strong> Know what's different this week — not after you've made the drive.</li>
+          </ul>
+          <p style="margin-bottom:var(--space-2)">This is actively being built. You may notice rough edges or things that don't look quite right — that's expected. We're improving every part of the app and appreciate your patience as it comes together.</p>
+        </div>
+      </details>
+      <div class="more-links-inline" style="margin-top:var(--space-3)">
+        <a class="more-link-pill" href="https://diospringfield.org" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          Diocese
+        </a>
+        <button class="more-link-pill" onclick="showMoreCorrection()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Submit a Correction
+        </button>
+      </div>
+      <div id="moreCorrectionForm" style="display:none;padding:var(--space-4) 0">
+        <label class="corr-form-label" style="margin-top:0">Church name</label>
+        <input id="moreCorrChurch" type="text" placeholder="e.g. St. Michael Parish, Springfield" class="corr-input" style="resize:none">
+        <label class="corr-form-label">What's wrong?</label>
+        <div class="corr-pills" id="moreCorrPills">
+          <button class="corr-pill" onclick="selectMoreCorrPill(this,'Wrong time')">Wrong time</button>
+          <button class="corr-pill" onclick="selectMoreCorrPill(this,'Mass cancelled or moved')">Mass cancelled or moved</button>
+          <button class="corr-pill" onclick="selectMoreCorrPill(this,'Missing a service')">Missing a service</button>
+          <button class="corr-pill" onclick="selectMoreCorrPill(this,'Other')">Other</button>
+        </div>
+        <input type="hidden" id="moreCorrCategory" value="">
+        <label class="corr-form-label">Details</label>
+        <textarea id="moreCorrMessage" class="corr-input" rows="2" placeholder="Select a category above first…"></textarea>
+        <input id="moreCorrEmail" type="email" class="corr-input" placeholder="Your email (optional, for follow-up)" style="resize:none;margin-top:var(--space-2)">
+        <button onclick="submitMoreCorrection()" style="margin-top:var(--space-3);width:100%;padding:var(--space-3);border-radius:var(--radius-md);background:var(--color-primary);color:white;font-size:var(--text-sm);font-weight:var(--weight-semibold);min-height:44px">Submit Correction</button>
+        <div id="moreCorrThanks" style="display:none;text-align:center;padding:var(--space-3);font-size:var(--text-sm);color:var(--color-verified);font-weight:var(--weight-medium)">Thank you! We'll review your correction.</div>
+      </div>
+    </div>
+
+    <!-- WHAT'S HAPPENING: YC left, All Events right -->
     <div class="more-section" id="whatsHappeningSection" style="display:none">
       <h2 class="more-section-title">What's Happening</h2>
-      <div class="wh-grid">
-        <div class="wh-col" id="whYCCol">
-          <div class="wh-col-header">
-            <span class="wh-col-label yc-label">Young &amp; Catholic</span>
-            <button class="wh-col-seeall" id="whYCSeeAll" style="display:none" onclick="document.querySelector('[data-filter=yc]').click();switchTab('panelFind',document.querySelector('[data-tab=panelFind]'))">See all</button>
-          </div>
-          <div id="whYCList"><p class="wh-empty">No upcoming YC events.</p></div>
+      <div class="wh-two-col">
+        <div class="wh-col-left">
+          <div class="wh-col-label">Young &amp; Catholic</div>
+          <div id="whYCList"></div>
         </div>
-        <div class="wh-divider"></div>
-        <div class="wh-col" id="whCommunityCol">
-          <div class="wh-col-header">
-            <span class="wh-col-label community-label">Community Events</span>
+        <div class="wh-col-right">
+          <div class="wh-col-label">Upcoming Events</div>
+          <div class="wh-ticker-wrap" id="whTickerWrap">
+            <div class="wh-ticker" id="whTicker"></div>
           </div>
-          <div id="whCommunityList"><p class="wh-empty">No upcoming events.</p></div>
         </div>
       </div>
     </div>
@@ -796,58 +830,7 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
       <div id="devotionalCards"></div>
     </div>
 
-    <!-- FEEDBACK FORM -->
-    <div class="more-section">
-      <h2 class="more-section-title">Share Your Feedback</h2>
-      <p>Help us make MassFinder better. Suggestions, missing features, or anything else on your mind.</p>
-      <div id="feedbackFormWrap">
-        <div class="fb-type-grid" id="fbTypeGrid">
-          <button class="fb-type-btn" onclick="selectFbType(this,'Suggestion')">Suggestion</button>
-          <button class="fb-type-btn" onclick="selectFbType(this,'Missing feature')">Missing feature</button>
-          <button class="fb-type-btn" onclick="selectFbType(this,'Coverage gap')">Coverage gap</button>
-          <button class="fb-type-btn" onclick="selectFbType(this,'Other')">Other</button>
-        </div>
-        <input type="hidden" id="fbType" value="">
-        <textarea id="fbMessage" class="corr-input" rows="3" placeholder="Tell us what's on your mind…"></textarea>
-        <input id="fbEmail" type="email" class="corr-input" placeholder="Email (optional — for follow-up)" style="margin-top:var(--space-2);resize:none">
-        <button class="fb-submit" onclick="submitFeedback()">Send Feedback</button>
-        <div class="fb-thanks" id="fbThanks">Thank you — your feedback means a lot. God bless!</div>
-      </div>
-    </div>
-
-    <!-- ABOUT + CORRECTION -->
-    <div class="more-section">
-      <h2 class="more-section-title">About MassFinder</h2>
-      <div class="stat-grid" id="aboutStatGrid"></div>
-      <p>MassFinder is a stewardship project — built for our Catholic community across Western New England to find Mass times, Confession, Adoration, and other services nearby. If something looks off or you have suggestions, please submit a correction. Your feedback keeps the data accurate for everyone.</p>
-      <div class="more-links-inline">
-        <a class="more-link-pill" href="https://diospringfield.org" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-          Diocese
-        </a>
-        <button class="more-link-pill" onclick="showMoreCorrection()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-          Submit a Correction
-        </button>
-      </div>
-      <div id="moreCorrectionForm" style="display:none;padding:var(--space-4) 0">
-        <label class="corr-form-label" style="margin-top:0">Church name</label>
-        <input id="moreCorrChurch" type="text" placeholder="e.g. St. Michael Parish, Springfield" class="corr-input" style="resize:none">
-        <label class="corr-form-label">What's wrong?</label>
-        <div class="corr-pills" id="moreCorrPills">
-          <button class="corr-pill" onclick="selectMoreCorrPill(this,'Wrong time')">Wrong time</button>
-          <button class="corr-pill" onclick="selectMoreCorrPill(this,'Mass cancelled or moved')">Mass cancelled or moved</button>
-          <button class="corr-pill" onclick="selectMoreCorrPill(this,'Missing a service')">Missing a service</button>
-          <button class="corr-pill" onclick="selectMoreCorrPill(this,'Other')">Other</button>
-        </div>
-        <input type="hidden" id="moreCorrCategory" value="">
-        <label class="corr-form-label">Details</label>
-        <textarea id="moreCorrMessage" class="corr-input" rows="2" placeholder="Select a category above first…"></textarea>
-        <input id="moreCorrEmail" type="email" class="corr-input" placeholder="Your email (optional, for follow-up)" style="resize:none;margin-top:var(--space-2)">
-        <button onclick="submitMoreCorrection()" style="margin-top:var(--space-3);width:100%;padding:var(--space-3);border-radius:var(--radius-md);background:var(--color-primary);color:white;font-size:var(--text-sm);font-weight:var(--weight-semibold);min-height:44px">Submit Correction</button>
-        <div id="moreCorrThanks" style="display:none;text-align:center;padding:var(--space-3);font-size:var(--text-sm);color:var(--color-verified);font-weight:var(--weight-medium)">Thank you! We'll review your correction.</div>
-      </div>
-    </div>
+    <!-- (Feedback form removed — correction form is in About section above) -->
 
     <div class="more-footer" id="moreFooter"></div>
   </div>
@@ -2226,64 +2209,51 @@ function getSavedChurchEvents(favIds){
   return buckets;
 }
 
-function renderSavedEvt(e){
-  const p=allParishes.find(x=>x.id===e.parish_id)||{};
-  const pName=displayName(p.name||'',e.parish_id);
-  const isLent=isLentSeason()&&(e.category==='liturgical'||e.category==='devotional');
-
-  // When text
-  let whenParts=[];
-  if(e.dates&&e.dates.length){
-    const next=getNextEventDate(e);
-    const rem=getRemainingDates(e);
-    if(next){
+function renderUnifiedEvt(e,isYC){
+  // Resolve parish + when text for any event type
+  let pid,pName,whenParts=[],onclick;
+  if(isYC){
+    pid=e.parish_id;
+    const r=resolveYC(e);
+    pName=displayName(r.locName||r.parishName,pid);
+    whenParts.push(fmtYCDate(e.date));
+    if(e.time)whenParts.push(fmt12(e.time));
+    onclick="openEventDetail('"+e.id+"')";
+  }else{
+    pid=e.parish_id;
+    const p=allParishes.find(x=>x.id===pid)||{};
+    pName=displayName(p.name||'',pid);
+    if(e.dates&&e.dates.length){
+      const next=getNextEventDate(e);
+      if(next){
+        const todayStr=getNow().toISOString().slice(0,10);
+        const tmrw=new Date(getNow());tmrw.setDate(tmrw.getDate()+1);
+        if(next===todayStr)whenParts.push('Today');
+        else if(next===tmrw.toISOString().slice(0,10))whenParts.push('Tomorrow');
+        else{const d=new Date(next+'T12:00:00');whenParts.push(d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}));}
+      }
+    }else if(e.date){
       const todayStr=getNow().toISOString().slice(0,10);
       const tmrw=new Date(getNow());tmrw.setDate(tmrw.getDate()+1);
-      if(next===todayStr)whenParts.push('Today');
-      else if(next===tmrw.toISOString().slice(0,10))whenParts.push('Tomorrow');
-      else{const d=new Date(next+'T12:00:00');whenParts.push(d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}));}
+      if(e.date===todayStr)whenParts.push('Today');
+      else if(e.date===tmrw.toISOString().slice(0,10))whenParts.push('Tomorrow');
+      else{const d=new Date(e.date+'T12:00:00');whenParts.push(d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}));}
+    }else if(e.day){
+      whenParts.push((DAY_NAMES[e.day]||e.day)+'s');
     }
-    if(rem.length>1)whenParts.push(rem.length+' dates left');
-  }else if(e.date){
-    const d=new Date(e.date+'T12:00:00');
-    const todayStr=getNow().toISOString().slice(0,10);
-    const tmrw=new Date(getNow());tmrw.setDate(tmrw.getDate()+1);
-    if(e.date===todayStr)whenParts.push('Today');
-    else if(e.date===tmrw.toISOString().slice(0,10))whenParts.push('Tomorrow');
-    else whenParts.push(d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}));
-  }else if(e.day){
-    whenParts.push((DAY_NAMES[e.day]||e.day)+'s');
+    if(e.time)whenParts.push(fmt12(e.time));
+    onclick="openDetail('"+pid+"')";
   }
-  if(e.time)whenParts.push(fmt12(e.time));
-  whenParts.push(pName);
 
-  const calSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="14" height="14"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
+  const ycBadge=isYC?'<span class="evt-yc-badge">YC</span>':'';
 
-  return '<div class="saved-evt" onclick="openDetail(\''+e.parish_id+'\')">'
-    +'<div class="ce-item-accent'+(isLent?' saved-lent-accent':' upcoming')+'"></div>'
-    +'<div class="ce-item-body">'
-    +'<div class="ce-item-title">'+esc(e.title)+'</div>'
-    +'<div class="ce-item-when">'+whenParts.join(' · ')+'</div>'
+  return '<div class="saved-evt-unified'+(isYC?' evt-yc-row':'')+'" onclick="'+onclick+'">'
+    +'<div class="saved-evt-unified-body">'
+    +'<div class="saved-evt-unified-title">'+esc(e.title)+ycBadge+'</div>'
+    +'<div class="saved-evt-unified-when">'+whenParts.join(' · ')+' · '+esc(pName)+'</div>'
     +'</div>'
-    +'<div class="saved-evt-actions">'
-    +'<button class="saved-evt-btn" onclick="downloadEventIcal(\''+esc(e.id)+'\');event.stopPropagation()" title="Add to Calendar">'+calSvg+'</button>'
-    +'<button class="saved-evt-btn" onclick="expressInterest(\''+esc(e.id)+'\',event)" title="I\'m interested">&#9825;</button>'
-    +'</div></div>';
-}
-
-function renderCompactYC(e){
-  const r=resolveYC(e);
-  const timeStr=fmt12(e.time)+(e.end_time?' – '+fmt12(e.end_time):'');
-  const calSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="14" height="14"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
-  return '<div class="saved-compact-yc" onclick="openEventDetail(\''+e.id+'\')">'
-    +'<div class="ce-item-body">'
-    +'<div class="ce-item-title">'+esc(e.title)+'</div>'
-    +'<div class="ce-item-when">'+fmtYCDate(e.date)+' · '+timeStr+' · '+esc(displayName(r.locName||r.parishName,e.parish_id))+'</div>'
-    +'</div>'
-    +'<div class="saved-evt-actions">'
-    +'<button class="saved-evt-btn" onclick="downloadEventIcal(\''+esc(e.id)+'\');event.stopPropagation()" title="Add to Calendar">'+calSvg+'</button>'
-    +'<button class="saved-evt-btn" onclick="expressInterest(\''+esc(e.id)+'\',event)" title="I\'m interested">&#9825;</button>'
-    +'</div></div>';
+    +'<svg class="saved-evt-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="16" height="16"><polyline points="9 18 15 12 9 6"/></svg>'
+    +'</div>';
 }
 
 function renderSaved(){
@@ -2306,36 +2276,31 @@ function renderSaved(){
 
   let html='';
 
-  // ── This Week at Your Churches ──
+  // ── Events at Your Churches (merged, chronological, max 3 + disclosure) ──
   const buckets=getSavedChurchEvents(favIds);
-  const totalEvts=buckets.today.length+buckets.coming.length+buckets.ongoing.length;
-  if(totalEvts){
-    html+='<div class="saved-section-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="20" height="20"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>This Week at Your Churches</div>';
-
-    if(buckets.today.length){
-      html+='<div class="saved-week-section"><details open><summary>Today <span class="saved-week-count">'+buckets.today.length+'</span></summary>';
-      html+=buckets.today.map(e=>renderSavedEvt(e)).join('');
-      html+='</details></div>';
-    }
-    if(buckets.coming.length){
-      html+='<div class="saved-week-section"><details open><summary>Coming Up <span class="saved-week-count">'+buckets.coming.length+'</span></summary>';
-      html+=buckets.coming.map(e=>renderSavedEvt(e)).join('');
-      html+='</details></div>';
-    }
-    if(buckets.ongoing.length){
-      html+='<div class="saved-week-section"><details><summary>Ongoing <span class="saved-week-count">'+buckets.ongoing.length+'</span></summary>';
-      html+=buckets.ongoing.map(e=>renderSavedEvt(e)).join('');
-      html+='</details></div>';
-    }
-    html+='<div class="saved-section-divider"></div>';
-  }
-
-  // ── YC Events (compact) ──
   const upcoming=getUpcomingYC().filter(e=>favIds.has(e.parish_id));
-  if(upcoming.length){
-    html+='<div class="saved-section-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Young &amp; Catholic <span class="saved-week-count">'+upcoming.length+'</span></div>';
-    html+=upcoming.slice(0,4).map(e=>renderCompactYC(e)).join('');
-    if(upcoming.length>4)html+='<div style="text-align:center;padding:var(--space-2) 0"><button style="font-size:var(--text-sm);font-weight:var(--weight-semibold);color:var(--color-accent-text);padding:var(--space-2) var(--space-4)" onclick="document.querySelector(\'[data-filter=yc]\').click();switchTab(\'panelFind\',document.querySelector(\'[data-tab=panelFind]\'))">See all YC events →</button></div>';
+  // Tag each with a sortable date and isYC flag
+  const todayStr=getNow().toISOString().slice(0,10);
+  const merged=[];
+  [...buckets.today,...buckets.coming,...buckets.ongoing].forEach(e=>{
+    const sd=e.date||(e.dates&&e.dates.length?getNextEventDate(e):null)||todayStr;
+    merged.push({e,isYC:false,sortDate:sd});
+  });
+  upcoming.forEach(e=>{
+    merged.push({e,isYC:true,sortDate:e.date||todayStr});
+  });
+  merged.sort((a,b)=>a.sortDate<b.sortDate?-1:a.sortDate>b.sortDate?1:0);
+
+  if(merged.length){
+    const show=merged.slice(0,3);
+    const rest=merged.slice(3);
+    html+='<div class="saved-section-title">Events at Your Churches</div>';
+    html+=show.map(m=>renderUnifiedEvt(m.e,m.isYC)).join('');
+    if(rest.length){
+      html+='<details class="saved-week-section"><summary style="cursor:pointer;font-size:var(--text-sm);font-weight:var(--weight-semibold);color:var(--color-accent-text);padding:var(--space-2) 0">'+rest.length+' more</summary>';
+      html+=rest.map(m=>renderUnifiedEvt(m.e,m.isYC)).join('');
+      html+='</details>';
+    }
     html+='<div class="saved-section-divider"></div>';
   }
 
@@ -2399,7 +2364,7 @@ function renderEventsWidget(){
   }).join('');
 
   const seeAll=upcoming.length>6?'<button class="events-widget-seeall" onclick="document.querySelector(\'[data-filter=yc]\').click()">See all '+upcoming.length+' →</button>':'';
-  el.innerHTML='<div class="events-widget-header"><span class="events-widget-label">Upcoming Events</span>'+seeAll+'</div>'
+  el.innerHTML='<div class="events-widget-header"><span class="events-widget-label">Upcoming Young &amp; Catholic Events</span>'+seeAll+'</div>'
     +'<div class="events-widget-strip">'+cards+'</div>';
 }
 
@@ -2786,31 +2751,7 @@ const DEVOTIONAL_GUIDES=[
 ];
 
 // ============================================================
-// FEEDBACK (Formspree)
-// ============================================================
-let _fbType='';
-function selectFbType(btn,val){
-  document.querySelectorAll('#fbTypeGrid .fb-type-btn').forEach(b=>b.classList.remove('selected'));
-  btn.classList.add('selected');_fbType=val;
-  document.getElementById('fbType').value=val;
-}
-async function submitFeedback(){
-  const msg=document.getElementById('fbMessage').value.trim();
-  const email=document.getElementById('fbEmail').value.trim();
-  if(!_fbType){document.getElementById('fbTypeGrid').style.outline='2px solid var(--color-error)';return}
-  if(!msg){document.getElementById('fbMessage').style.borderColor='var(--color-error)';return}
-  const thanks=document.getElementById('fbThanks');
-  document.getElementById('feedbackFormWrap').style.display='none';
-  thanks.style.display='block';thanks.textContent='Sending\u2026';thanks.style.color='';
-  try{
-    await web3submit({subject:'MassFinder Feedback ['+_fbType+']',feedback_type:_fbType,message:msg,email:email||'(not provided)',from_name:'MassFinder Feedback'});
-    thanks.textContent='Thank you \u2014 your feedback means a lot. God bless!';
-  }catch(e){
-    console.warn('Feedback email failed:',e);
-    thanks.textContent='Could not send \u2014 please check your connection and try again.';
-    thanks.style.color='var(--color-error)';
-  }
-}
+// (Feedback form removed — correction form remains in About section)
 
 // ============================================================
 // MORE TAB
@@ -2904,57 +2845,69 @@ function renderMore(){
   const whSection=document.getElementById('whatsHappeningSection');
   if(whSection&&hasAnyEvents){
     whSection.style.display='block';
-
-    // YC column — strictly chronological, one event per parish in the preview
     const favSet=new Set(favorites);
-    const seenParishes=new Set();
-    const ycShow=[];
-    for(const e of upcoming){
-      if(seenParishes.has(e.parish_id))continue;
-      seenParishes.add(e.parish_id);
-      ycShow.push(e);
-      if(ycShow.length>=4)break;
-    }
-    const ycSeeAll=document.getElementById('whYCSeeAll');
-    if(ycSeeAll)ycSeeAll.style.display=upcoming.length>4?'block':'none';
-    document.getElementById('whYCList').innerHTML=ycShow.length?ycShow.map(e=>{
-      const r=resolveYC(e);
-      const isFavE=favSet.has(e.parish_id);
-      const p=allParishes.find(x=>x.id===e.parish_id);
-      const dist=p?getDist(p):null;
-      const isNear=!isFavE&&dist!==null&&dist<=10;
-      const indicator=isFavE?'<div class="wh-event-fav">♥ Saved</div>':isNear?'<div class="wh-event-near">📍 '+fmtDist(dist)+'</div>':'';
-      const calSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="14" height="14"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
-      return '<div class="wh-event-card" onclick="openEventDetail(\''+e.id+'\')">'
-        +indicator
-        +'<div class="wh-event-date">'+fmtYCDate(e.date)+(e.time?' · '+fmt12(e.time):'')+'</div>'
-        +'<div class="wh-event-title">'+esc(e.title)+'</div>'
-        +'<div class="wh-event-church">'+esc(displayName(r.locName||r.parishName,e.parish_id))+'</div>'
-        +'<div class="saved-evt-actions" style="margin-top:var(--space-2)">'
-        +'<button class="saved-evt-btn" onclick="downloadEventIcal(\''+esc(e.id)+'\');event.stopPropagation()" title="Add to Calendar">'+calSvg+'</button>'
-        +'<button class="saved-evt-btn" onclick="expressInterest(\''+esc(e.id)+'\',event)" title="I\'m interested">&#9825;</button>'
-        +'</div></div>';
-    }).join(''):'<p class="wh-empty">No upcoming YC events.</p>';
 
-    // Community events column — up to 4 items
-    const commShow=allCommunityEvents.slice(0,4);
-    window._moreEvents=allCommunityEvents.slice(0,10);
-    document.getElementById('whCommunityList').innerHTML=commShow.length?commShow.map((e,idx)=>{
-      const p=allParishes.find(x=>x.id===e.parishId);
+    // Build unified event card
+    function whCard(e,isYC){
+      const pid=isYC?e.parish_id:e.parishId;
+      const p=allParishes.find(x=>x.id===pid);
       const dist=p?getDist(p):null;
-      const near=dist!==null&&dist<=10?'<div class="wh-event-near">📍 '+fmtDist(dist)+'</div>':'';
-      const cCalSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="14" height="14"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
-      return '<div class="wh-event-card" onclick="openDetail(\''+e.parishId+'\')">'
-        +near
+      const isFav=favSet.has(pid);
+      const indicator=isFav?'<div class="wh-event-fav">♥ Saved</div>':(dist!==null&&dist<=10?'<div class="wh-event-near">📍 '+fmtDist(dist)+'</div>':'');
+      if(isYC){
+        const r=resolveYC(e);
+        return '<div class="wh-event-card" onclick="openEventDetail(\''+e.id+'\')">'
+          +indicator
+          +'<div class="wh-event-date">'+fmtYCDate(e.date)+(e.time?' · '+fmt12(e.time):'')+'</div>'
+          +'<div class="wh-event-title">'+esc(e.title)+'</div>'
+          +'<div class="wh-event-church">'+esc(displayName(r.locName||r.parishName,pid))+'</div></div>';
+      }
+      return '<div class="wh-event-card" onclick="openDetail(\''+pid+'\')">'
+        +indicator
         +(e.date?'<div class="wh-event-date">'+esc(e.date)+'</div>':e.day?'<div class="wh-event-date">'+esc(DAY_NAMES[e.day]||e.day)+(e.time?' · '+fmt12(e.time):'')+'</div>':'')
         +'<div class="wh-event-title">'+esc(e.title)+'</div>'
-        +'<div class="wh-event-church">'+esc(displayName(e.parishName,e.parishId))+'</div>'
-        +(e.notes?'<div class="wh-event-time">'+esc(e.notes)+'</div>':'')
-        +'<div class="saved-evt-actions" style="margin-top:var(--space-2)">'
-        +'<button class="saved-evt-btn" onclick="downloadEventIcal(\''+esc(e.id)+'\');event.stopPropagation()" title="Add to Calendar">'+cCalSvg+'</button>'
-        +'<button class="saved-evt-btn" onclick="expressInterest(\''+esc(e.id)+'\',event)" title="I\'m interested">&#9825;</button>'
-        +'</div></div>';
-    }).join(''):'<p class="wh-empty">No upcoming events.</p>';
+        +'<div class="wh-event-church">'+esc(displayName(e.parishName,pid))+'</div></div>';
+    }
+
+    // Left column: YC events (up to 4)
+    const seenP=new Set();
+    const ycPreview=[];
+    for(const e of upcoming){if(!seenP.has(e.parish_id)){seenP.add(e.parish_id);ycPreview.push(e);if(ycPreview.length>=4)break;}}
+    document.getElementById('whYCList').innerHTML=ycPreview.length
+      ?ycPreview.map(e=>whCard(e,true)).join('')
+      :'<p class="wh-empty" style="padding:var(--space-3) 0;font-size:var(--text-xs);color:var(--color-text-tertiary);font-style:italic">No upcoming YC events.</p>';
+
+    // Right column: scrolling ticker of all events, chronological
+    const todayStr2=getNow().toISOString().slice(0,10);
+    const allSorted=allCommunityEvents.map(e=>{
+      let sd=e.date||(e.dates&&e.dates.length?e.dates.find(function(d){return d>=todayStr2})||e.dates[0]:null)||todayStr2;
+      return {e,sd};
+    }).sort((a,b)=>a.sd<b.sd?-1:a.sd>b.sd?1:0);
+
+    const tickerEl=document.getElementById('whTicker');
+    const wrap=document.getElementById('whTickerWrap');
+    if(allSorted.length){
+      const cards=allSorted.map(m=>whCard(m.e,false)).join('');
+      tickerEl.innerHTML=cards;
+      // Pause on hover
+      wrap.addEventListener('mouseenter',function(){tickerEl.style.animationPlayState='paused';});
+      wrap.addEventListener('mouseleave',function(){tickerEl.style.animationPlayState='running';});
+      // After layout: set height to match YC, then duplicate content enough to scroll
+      setTimeout(function(){
+        var ycCol=document.getElementById('whYCList');
+        if(ycCol) wrap.style.height=ycCol.offsetHeight+'px';
+        // Always duplicate enough to guarantee scroll
+        var repeats=Math.max(Math.ceil(wrap.offsetHeight/Math.max(tickerEl.scrollHeight,1))+1,2);
+        var repeated='';
+        for(var rr=0;rr<repeats;rr++) repeated+=cards;
+        tickerEl.innerHTML=repeated;
+        var dur=Math.max(allSorted.length*6,24);
+        tickerEl.style.animationDuration=dur+'s';
+      },80);
+    }else{
+      tickerEl.innerHTML='<p style="padding:var(--space-3) 0;font-size:var(--text-xs);color:var(--color-text-tertiary);font-style:italic">No upcoming events.</p>';
+      tickerEl.style.animation='none';
+    }
   }
 
   // Liturgical calendar
@@ -2998,7 +2951,7 @@ function renderMore(){
   }
 
   // Footer
-  document.getElementById('moreFooter').innerHTML='MassFinder v2';
+  document.getElementById('moreFooter').innerHTML='MassFinder v1';
 
   // Trigger readings fetch async (also populates saint card)
   fetchReadings();
@@ -3079,8 +3032,8 @@ function refreshLocation(cb){
 }
 
 function refreshApp(){
-  var btn=document.getElementById('refreshBtn');
-  if(btn)btn.classList.add('spinning');
+  var pull=document.getElementById('pullIndicator');
+  if(pull){pull.className='pull-indicator refreshing';pull.style.height='36px';document.getElementById('pullText').textContent='Refreshing…';}
   // 1. Refresh location
   refreshLocation(function(){
     // 2. Refresh parish data from network (bypass cache)
@@ -3096,10 +3049,49 @@ function refreshApp(){
     }).catch(function(){
       showToast('Could not refresh — check connection');
     }).finally(function(){
-      if(btn)btn.classList.remove('spinning');
+      if(pull){pull.className='pull-indicator';pull.style.height='0';document.getElementById('pullText').textContent='Pull to refresh';}
     });
   });
 }
+
+// ── Pull-to-refresh gesture ──
+(function(){
+  var panel=document.getElementById('panelFind');
+  if(!panel)return;
+  var pull=document.getElementById('pullIndicator');
+  var startY=0,pulling=false,threshold=60;
+
+  panel.addEventListener('touchstart',function(e){
+    if(window.scrollY>5)return;
+    startY=e.touches[0].clientY;
+    pulling=true;
+  },{passive:true});
+
+  panel.addEventListener('touchmove',function(e){
+    if(!pulling)return;
+    var dy=e.touches[0].clientY-startY;
+    if(dy<0){pulling=false;return;}
+    var h=Math.min(dy*0.4,50);
+    pull.style.height=h+'px';
+    if(dy>threshold){
+      pull.className='pull-indicator ready';
+      document.getElementById('pullText').textContent='Release to refresh';
+    }else{
+      pull.className='pull-indicator';
+      document.getElementById('pullText').textContent='Pull to refresh';
+    }
+  },{passive:true});
+
+  panel.addEventListener('touchend',function(){
+    if(!pulling)return;
+    pulling=false;
+    if(pull.classList.contains('ready')){
+      refreshApp();
+    }else{
+      pull.style.height='0';
+    }
+  },{passive:true});
+})();
 
 // Focus trap for modals (B5)
 let _focusTrapEl=null,_focusTrapHandler=null;
