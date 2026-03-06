@@ -12,20 +12,25 @@ module.exports = async function handler(req, res) {
   try {
     var supabase = getSupabase();
 
-    // Fetch churches and services in parallel
+    // Fetch churches, services (paginated — Supabase caps at 1000 rows), and metadata
     var churchesPromise = supabase
       .from('churches')
       .select('*')
       .order('city', { ascending: true })
-      .order('name', { ascending: true })
-      .limit(1000);
+      .order('name', { ascending: true });
 
-    // Supabase default limit is 1000 rows — we have ~1400 services
-    var servicesPromise = supabase
+    // Supabase max rows per request is 1000 — paginate services
+    var services1Promise = supabase
       .from('services')
       .select('*')
       .order('church_id', { ascending: true })
-      .limit(5000);
+      .range(0, 999);
+
+    var services2Promise = supabase
+      .from('services')
+      .select('*')
+      .order('church_id', { ascending: true })
+      .range(1000, 1999);
 
     var metaPromise = supabase
       .from('metadata')
@@ -33,19 +38,23 @@ module.exports = async function handler(req, res) {
       .eq('key', 'parish_data_metadata')
       .single();
 
-    var results = await Promise.all([churchesPromise, servicesPromise, metaPromise]);
+    var results = await Promise.all([churchesPromise, services1Promise, services2Promise, metaPromise]);
 
     var churchResult = results[0];
-    var serviceResult = results[1];
-    var metaResult = results[2];
+    var svc1Result = results[1];
+    var svc2Result = results[2];
+    var metaResult = results[3];
 
     if (churchResult.error) throw churchResult.error;
-    if (serviceResult.error) throw serviceResult.error;
+    if (svc1Result.error) throw svc1Result.error;
+    if (svc2Result.error) throw svc2Result.error;
+
+    var allServices = svc1Result.data.concat(svc2Result.data);
 
     // Group services by church_id
     var servicesByChurch = {};
-    for (var i = 0; i < serviceResult.data.length; i++) {
-      var s = serviceResult.data[i];
+    for (var i = 0; i < allServices.length; i++) {
+      var s = allServices[i];
       if (!servicesByChurch[s.church_id]) {
         servicesByChurch[s.church_id] = [];
       }
