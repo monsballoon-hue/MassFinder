@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bulletin Review — MassFinder</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-primary: #2C3E5A;
+  --color-primary-light: #3D5278;
+  --color-primary-muted: #6B7A94;
+  --color-accent: #B8963F;
+  --color-accent-text: #7D6520;
+  --color-accent-pale: #F5EDD8;
+  --color-bg: #F8F7F4;
+  --color-surface: #FFFFFF;
+  --color-surface-hover: #F5F3EF;
+  --color-text-primary: #1A1E26;
+  --color-text-secondary: #5C6370;
+  --color-text-tertiary: #747981;
+  --color-verified: #4A7C59;
+  --color-verified-bg: #EDF5F0;
+  --color-warning: #D97706;
+  --color-warning-bg: #FEF5E7;
+  --color-error: #B91C1C;
+  --color-info: #3478C6;
+  --color-info-bg: #EFF6FF;
+  --color-border: #E5E2DC;
+  --color-border-light: #EFECE7;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --text-xs: 0.8125rem; --text-sm: 0.9375rem; --text-base: 1.0625rem;
+  --weight-regular: 400; --weight-medium: 500; --weight-semibold: 600;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-5: 20px; --space-6: 24px; --space-8: 32px;
+  --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px; --radius-full: 999px;
+  --shadow-card: 0 1px 3px rgba(26,30,38,0.06), 0 4px 12px rgba(26,30,38,0.04);
+  --shadow-elevated: 0 4px 16px rgba(26,30,38,0.10), 0 12px 40px rgba(26,30,38,0.08);
+  --transition-fast: 150ms cubic-bezier(0.25,0.46,0.45,0.94);
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; }
+body { font-family: var(--font-body); font-size: var(--text-base); color: var(--color-text-primary); background: var(--color-bg); line-height: 1.5; overflow: hidden; height: 100vh; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+::selection { background: var(--color-accent-pale); }
+
+/* LAYOUT */
+.app { display: grid; grid-template-columns: 280px 1fr; grid-template-rows: auto 1fr; height: 100vh; }
+.header { grid-column: 1 / -1; background: var(--color-primary); color: white; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; z-index: 100; }
+.header-left { display: flex; align-items: center; gap: 12px; }
+.header-logo { width: 28px; height: 28px; background: var(--color-accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+.header-logo svg { width: 16px; height: 16px; }
+.header h1 { font-family: var(--font-display); font-size: 18px; font-weight: 600; }
+.header-stats { font-size: var(--text-xs); opacity: 0.7; display: flex; gap: 16px; }
+.header-keys { font-size: 11px; opacity: 0.5; }
+.header-keys kbd { display: inline-block; padding: 1px 5px; border: 1px solid rgba(255,255,255,0.3); border-radius: 3px; font-family: inherit; margin: 0 1px; }
+
+/* SIDEBAR */
+.sidebar { background: var(--color-surface); border-right: 1px solid var(--color-border-light); overflow-y: auto; }
+.sidebar-group { padding: 8px 0; }
+.church-btn { display: block; width: 100%; text-align: left; padding: 10px 16px; border-bottom: 1px solid var(--color-border-light); transition: background var(--transition-fast); position: relative; }
+.church-btn:hover { background: var(--color-surface-hover); }
+.church-btn.active { background: var(--color-info-bg); }
+.church-btn.active::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--color-primary); }
+.church-name { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-text-primary); line-height: 1.3; }
+.church-meta { font-size: var(--text-xs); color: var(--color-text-tertiary); margin-top: 1px; }
+.church-progress { height: 3px; background: var(--color-border-light); border-radius: 2px; margin-top: 6px; overflow: hidden; }
+.church-progress-bar { height: 100%; border-radius: 2px; transition: width 0.3s; }
+.church-counts { display: flex; gap: 6px; margin-top: 5px; }
+.count-pill { font-size: 11px; font-weight: var(--weight-semibold); padding: 1px 7px; border-radius: var(--radius-full); }
+.count-pending { background: var(--color-warning-bg); color: var(--color-warning); }
+.count-approved { background: var(--color-verified-bg); color: var(--color-verified); }
+.count-rejected { background: #FCEAEA; color: var(--color-error); }
+.church-done { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; border-radius: 50%; background: var(--color-verified); color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+
+/* MAIN CONTENT */
+.main { display: flex; overflow: hidden; }
+
+/* IMAGE PANEL */
+.image-panel { flex: 0 0 50%; display: flex; flex-direction: column; border-right: 1px solid var(--color-border-light); background: #E8E6E1; }
+.page-tabs { display: flex; align-items: center; gap: 4px; padding: 8px 12px; background: var(--color-surface); border-bottom: 1px solid var(--color-border-light); flex-shrink: 0; flex-wrap: wrap; }
+.page-tab { width: 32px; height: 28px; border-radius: 6px; font-size: 13px; font-weight: var(--weight-semibold); color: var(--color-text-secondary); background: var(--color-bg); border: 1px solid var(--color-border); transition: all var(--transition-fast); display: flex; align-items: center; justify-content: center; }
+.page-tab:hover { background: var(--color-surface-hover); border-color: var(--color-text-tertiary); }
+.page-tab.active { background: var(--color-primary); color: white; border-color: var(--color-primary); }
+.page-tab.has-items { position: relative; }
+.page-tab.has-items::after { content: ''; position: absolute; top: -2px; right: -2px; width: 6px; height: 6px; border-radius: 50%; background: var(--color-accent); }
+.page-label { font-size: var(--text-xs); color: var(--color-text-tertiary); margin-left: 8px; }
+.image-zoom { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+.image-zoom button { width: 28px; height: 28px; border-radius: 6px; font-size: 16px; color: var(--color-text-secondary); background: var(--color-bg); border: 1px solid var(--color-border); display: flex; align-items: center; justify-content: center; }
+.image-zoom button:hover { background: var(--color-surface-hover); }
+.image-zoom span { font-size: 12px; color: var(--color-text-tertiary); min-width: 36px; text-align: center; }
+.image-scroll { flex: 1; overflow: auto; display: flex; justify-content: center; padding: 8px; }
+.image-scroll img { display: block; transition: width 0.2s; }
+.no-image { flex: 1; display: flex; align-items: center; justify-content: center; color: var(--color-text-tertiary); font-size: var(--text-sm); }
+
+/* ITEMS PANEL */
+.items-panel { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: var(--color-bg); }
+.items-toolbar { display: flex; align-items: center; gap: 8px; padding: 8px 16px; background: var(--color-surface); border-bottom: 1px solid var(--color-border-light); flex-shrink: 0; flex-wrap: wrap; }
+.toolbar-btn { padding: 5px 12px; border-radius: var(--radius-sm); font-size: var(--text-xs); font-weight: var(--weight-semibold); border: 1.5px solid var(--color-border); background: var(--color-surface); transition: all var(--transition-fast); }
+.toolbar-btn:hover { background: var(--color-surface-hover); }
+.toolbar-btn.approve { color: var(--color-verified); border-color: var(--color-verified); }
+.toolbar-btn.approve:hover { background: var(--color-verified); color: white; }
+.toolbar-btn.reject { color: var(--color-error); border-color: var(--color-error); }
+.toolbar-btn.reject:hover { background: var(--color-error); color: white; }
+.toolbar-sep { width: 1px; height: 20px; background: var(--color-border); }
+.toolbar-filter { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+.toolbar-filter label { font-size: 11px; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.05em; }
+.filter-chip { padding: 4px 10px; border-radius: var(--radius-full); font-size: 12px; font-weight: var(--weight-medium); border: 1px solid var(--color-border); color: var(--color-text-secondary); background: var(--color-surface); transition: all var(--transition-fast); }
+.filter-chip:hover { background: var(--color-surface-hover); }
+.filter-chip.active { background: var(--color-primary); color: white; border-color: var(--color-primary); }
+
+/* ITEMS LIST */
+.items-scroll { flex: 1; overflow-y: auto; padding: 12px 16px; }
+.item-card { background: var(--color-surface); border-radius: var(--radius-md); box-shadow: var(--shadow-card); padding: 12px 16px; margin-bottom: 8px; border-left: 4px solid transparent; transition: all var(--transition-fast); cursor: pointer; position: relative; }
+.item-card:hover { box-shadow: 0 2px 8px rgba(26,30,38,0.08), 0 8px 24px rgba(26,30,38,0.06); }
+.item-card.focused { outline: 2px solid var(--color-primary); outline-offset: -2px; }
+.item-card.on-page { background: #FFFDF5; }
+.item-card.s-pending { border-left-color: var(--color-warning); }
+.item-card.s-approved { border-left-color: var(--color-verified); opacity: 0.65; }
+.item-card.s-approved:hover, .item-card.s-approved.focused { opacity: 1; }
+.item-card.s-rejected { border-left-color: var(--color-error); opacity: 0.45; }
+.item-card.s-rejected:hover, .item-card.s-rejected.focused { opacity: 1; }
+.item-header { display: flex; align-items: flex-start; gap: 8px; }
+.item-title { font-size: var(--text-sm); font-weight: var(--weight-semibold); flex: 1; line-height: 1.35; }
+.item-conf { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: var(--radius-full); flex-shrink: 0; }
+.conf-high { background: var(--color-verified-bg); color: var(--color-verified); }
+.conf-med { background: var(--color-warning-bg); color: var(--color-warning); }
+.conf-low { background: #FCEAEA; color: var(--color-error); }
+.item-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+.item-tag { font-size: 11px; padding: 1px 8px; border-radius: var(--radius-full); background: var(--color-bg); color: var(--color-text-secondary); font-weight: var(--weight-medium); }
+.tag-cat { background: var(--color-info-bg); color: var(--color-info); }
+.tag-page { background: var(--color-accent-pale); color: var(--color-accent-text); cursor: pointer; }
+.tag-page:hover { background: var(--color-accent); color: white; }
+.tag-date { background: #F3E8FF; color: #7C3AED; }
+.tag-time { background: #FFF1F2; color: #BE123C; }
+.tag-recurring { background: var(--color-verified-bg); color: var(--color-verified); }
+.tag-status { font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; }
+.tag-status.ts-approved { background: var(--color-verified-bg); color: var(--color-verified); }
+.tag-status.ts-rejected { background: #FCEAEA; color: var(--color-error); }
+.tag-status.ts-pending { background: var(--color-warning-bg); color: var(--color-warning); }
+.item-desc { font-size: var(--text-xs); color: var(--color-text-secondary); margin-top: 6px; line-height: 1.5; }
+.item-details { font-size: 11px; color: var(--color-text-tertiary); margin-top: 4px; line-height: 1.5; }
+.item-actions { display: flex; gap: 6px; margin-top: 8px; }
+.act-btn { padding: 4px 14px; border-radius: var(--radius-sm); font-size: var(--text-xs); font-weight: var(--weight-semibold); border: 1.5px solid; transition: all var(--transition-fast); }
+.act-approve { color: var(--color-verified); border-color: var(--color-verified); }
+.act-approve:hover, .act-approve.active { background: var(--color-verified); color: white; }
+.act-reject { color: var(--color-error); border-color: var(--color-error); }
+.act-reject:hover, .act-reject.active { background: var(--color-error); color: white; }
+.act-reset { color: var(--color-text-tertiary); border-color: var(--color-border); }
+.act-reset:hover { background: var(--color-surface-hover); }
+.act-key { font-size: 10px; opacity: 0.6; margin-left: 3px; }
+
+/* TOAST */
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--color-primary); color: white; padding: 10px 24px; border-radius: var(--radius-full); font-size: var(--text-sm); font-weight: var(--weight-medium); box-shadow: var(--shadow-elevated); transition: transform 0.3s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.3s; opacity: 0; z-index: 200; pointer-events: none; }
+.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+/* EMPTY STATE */
+.empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--color-text-tertiary); text-align: center; padding: 40px; }
+.empty-state h2 { font-family: var(--font-display); font-size: 20px; color: var(--color-text-primary); margin-bottom: 4px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <div class="header-left">
+      <div class="header-logo"><svg viewBox="0 0 100 100" fill="none"><rect x="30" y="5" width="18" height="70" rx="3" fill="white"/><rect x="8" y="22" width="62" height="18" rx="3" fill="white"/></svg></div>
+      <h1>Bulletin Review</h1>
+    </div>
+    <div id="headerStats" class="header-stats"></div>
+    <div class="header-keys">
+      <kbd>J</kbd><kbd>K</kbd> navigate &nbsp;
+      <kbd>A</kbd> approve &nbsp;
+      <kbd>R</kbd> reject &nbsp;
+      <kbd>P</kbd> reset &nbsp;
+      <kbd>1</kbd>-<kbd>9</kbd> pages &nbsp;
+      <kbd>[</kbd><kbd>]</kbd> churches
+    </div>
+  </div>
+  <div class="sidebar" id="sidebar"></div>
+  <div class="main" id="main">
+    <div class="empty-state"><h2>Loading bulletins...</h2></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+var bulletins = [];
+var currentIdx = -1; // sidebar index
+var focusedItem = -1; // item index in filtered list
+var filterStatus = 'all';
+var zoomLevel = 100;
+var currentPage = 1;
+
+// ── DATA ──
+function load() {
+  fetch('/api/bulletins').then(function(r) { return r.json(); }).then(function(data) {
+    bulletins = data;
+    // Sort: most pending first
+    bulletins.sort(function(a, b) {
+      var ap = a.items.filter(function(i) { return i.status === 'pending'; }).length;
+      var bp = b.items.filter(function(i) { return i.status === 'pending'; }).length;
+      return bp - ap;
+    });
+    renderSidebar();
+    updateStats();
+    // Restore last viewed or pick first with pending
+    var saved = localStorage.getItem('review_last_church');
+    var startIdx = 0;
+    if (saved) {
+      for (var i = 0; i < bulletins.length; i++) {
+        if (bulletins[i].churchId === saved) { startIdx = i; break; }
+      }
+    }
+    selectChurch(startIdx);
+  });
+}
+
+function updateStats() {
+  var t = 0, p = 0, a = 0, r = 0;
+  bulletins.forEach(function(b) { b.items.forEach(function(i) {
+    t++; if (i.status === 'pending') p++; else if (i.status === 'approved') a++; else r++;
+  }); });
+  document.getElementById('headerStats').innerHTML =
+    '<span>' + t + ' total</span>' +
+    '<span style="color:#FFD580">' + p + ' pending</span>' +
+    '<span style="color:#7FE0A0">' + a + ' approved</span>' +
+    '<span style="color:#FF8888">' + r + ' rejected</span>';
+}
+
+// ── SIDEBAR ──
+function renderSidebar() {
+  var html = '';
+  bulletins.forEach(function(b, idx) {
+    var pend = 0, appr = 0, rej = 0;
+    b.items.forEach(function(i) {
+      if (i.status === 'pending') pend++;
+      else if (i.status === 'approved') appr++;
+      else rej++;
+    });
+    var total = b.items.length;
+    var reviewed = appr + rej;
+    var pct = total > 0 ? Math.round(reviewed / total * 100) : 100;
+    var done = pend === 0 && total > 0;
+    var barColor = done ? 'var(--color-verified)' : 'var(--color-accent)';
+    var cls = idx === currentIdx ? ' active' : '';
+
+    html += '<button class="church-btn' + cls + '" onclick="selectChurch(' + idx + ')">' +
+      '<div class="church-name">' + esc(b.churchName) + '</div>' +
+      '<div class="church-meta">' + esc(b.churchCity) + ' &middot; ' + b.bulletinDate + ' &middot; ' + total + ' items</div>' +
+      '<div class="church-progress"><div class="church-progress-bar" style="width:' + pct + '%;background:' + barColor + '"></div></div>' +
+      '<div class="church-counts">' +
+        (pend > 0 ? '<span class="count-pill count-pending">' + pend + ' pending</span>' : '') +
+        (appr > 0 ? '<span class="count-pill count-approved">' + appr + '</span>' : '') +
+        (rej > 0 ? '<span class="count-pill count-rejected">' + rej + '</span>' : '') +
+      '</div>' +
+      (done ? '<div class="church-done">&#10003;</div>' : '') +
+    '</button>';
+  });
+  document.getElementById('sidebar').innerHTML = html;
+}
+
+function selectChurch(idx) {
+  if (idx < 0 || idx >= bulletins.length) return;
+  currentIdx = idx;
+  currentPage = 1;
+  focusedItem = -1;
+  filterStatus = 'all';
+  zoomLevel = 100;
+  localStorage.setItem('review_last_church', bulletins[idx].churchId);
+  renderSidebar();
+  renderMain();
+  // Auto-focus first pending item
+  var filtered = getFiltered();
+  for (var i = 0; i < filtered.length; i++) {
+    if (filtered[i].status === 'pending') { setFocus(i); return; }
+  }
+  if (filtered.length > 0) setFocus(0);
+}
+
+// ── MAIN VIEW ──
+function cur() { return bulletins[currentIdx]; }
+
+function getFiltered() {
+  if (!cur()) return [];
+  return cur().items.filter(function(i) {
+    return filterStatus === 'all' || i.status === filterStatus;
+  });
+}
+
+function renderMain() {
+  if (!cur()) return;
+  var b = cur();
+  var html = '<div class="image-panel" id="imagePanel">' + renderPageTabs(b) +
+    '<div class="image-scroll" id="imageScroll">' + renderImage(b) + '</div></div>' +
+    '<div class="items-panel">' + renderToolbar(b) +
+    '<div class="items-scroll" id="itemsScroll">' + renderItems() + '</div></div>';
+  document.getElementById('main').innerHTML = html;
+}
+
+function renderPageTabs(b) {
+  var itemPages = {};
+  b.items.forEach(function(i) { if (i.source_page) itemPages[i.source_page] = true; });
+  var html = '<div class="page-tabs">';
+  for (var p = 1; p <= b.pageCount; p++) {
+    var cls = 'page-tab' + (p === currentPage ? ' active' : '') + (itemPages[p] ? ' has-items' : '');
+    html += '<button class="' + cls + '" onclick="goPage(' + p + ')">' + p + '</button>';
+  }
+  html += '<span class="page-label">Page ' + currentPage + ' of ' + b.pageCount + '</span>';
+  html += '<div class="image-zoom">' +
+    '<button onclick="zoom(-1)">-</button>' +
+    '<span id="zoomLabel">' + zoomLevel + '%</span>' +
+    '<button onclick="zoom(1)">+</button>' +
+    '<button onclick="zoomFit()" style="font-size:12px;width:auto;padding:0 8px">Fit</button>' +
+  '</div>';
+  html += '</div>';
+  return html;
+}
+
+function renderImage(b) {
+  return '<img id="pageImg" src="/images/' + b.churchId + '/page_' + currentPage + '.png" ' +
+    'style="width:' + zoomLevel + '%" onerror="this.parentElement.innerHTML=\'<div class=no-image>No image for this page</div>\'">';
+}
+
+function renderToolbar(b) {
+  var pending = b.items.filter(function(i) { return i.status === 'pending'; });
+  var highConf = pending.filter(function(i) { return i.confidence >= 0.9; });
+  var onPage = pending.filter(function(i) { return i.source_page === currentPage; });
+
+  var html = '<div class="items-toolbar">';
+  if (pending.length > 0) {
+    html += '<button class="toolbar-btn approve" onclick="bulkApprove(\'all\')">Approve All (' + pending.length + ')</button>';
+  }
+  if (highConf.length > 0 && highConf.length < pending.length) {
+    html += '<button class="toolbar-btn approve" onclick="bulkApprove(\'high\')">Approve 90%+ (' + highConf.length + ')</button>';
+  }
+  if (onPage.length > 0) {
+    html += '<button class="toolbar-btn approve" onclick="bulkApprove(\'page\')">Approve Page ' + currentPage + ' (' + onPage.length + ')</button>';
+  }
+  if (pending.length > 0) {
+    html += '<button class="toolbar-btn reject" onclick="bulkReject()">Reject All</button>';
+  }
+
+  html += '<div class="toolbar-filter">';
+  ['all','pending','approved','rejected'].forEach(function(s) {
+    var label = s === 'all' ? 'All' : s.charAt(0).toUpperCase() + s.slice(1);
+    var count = s === 'all' ? b.items.length : b.items.filter(function(i) { return i.status === s; }).length;
+    html += '<button class="filter-chip' + (filterStatus === s ? ' active' : '') + '" onclick="setFilter(\'' + s + '\')">' + label + ' (' + count + ')</button>';
+  });
+  html += '</div></div>';
+  return html;
+}
+
+function renderItems() {
+  var items = getFiltered();
+  if (items.length === 0) return '<div class="empty-state"><h2>No items</h2><p>Try changing the filter above.</p></div>';
+  var html = '';
+  items.forEach(function(item, idx) {
+    var confCls = item.confidence >= 0.9 ? 'conf-high' : (item.confidence >= 0.7 ? 'conf-med' : 'conf-low');
+    var onPage = item.source_page === currentPage ? ' on-page' : '';
+    var focused = idx === focusedItem ? ' focused' : '';
+    html += '<div class="item-card s-' + item.status + onPage + focused + '" id="item-' + idx + '" onclick="setFocus(' + idx + ')" data-page="' + (item.source_page || '') + '">';
+    html += '<div class="item-header">';
+    html += '<div class="item-title">' + esc(item.title) + '</div>';
+    html += '<span class="item-conf ' + confCls + '">' + Math.round(item.confidence * 100) + '%</span>';
+    html += '</div>';
+
+    html += '<div class="item-tags">';
+    html += '<span class="item-tag tag-cat">' + esc(item.category) + '</span>';
+    if (item.source_page) html += '<span class="item-tag tag-page" onclick="event.stopPropagation();goPage(' + item.source_page + ')">p.' + item.source_page + '</span>';
+    if (item.event_date) html += '<span class="item-tag tag-date">' + esc(item.event_date) + '</span>';
+    if (item.event_time) html += '<span class="item-tag tag-time">' + esc(item.event_time) + '</span>';
+    if (item.recurring) html += '<span class="item-tag tag-recurring">recurring</span>';
+    html += '<span class="item-tag tag-status ts-' + item.status + '">' + item.status + '</span>';
+    html += '</div>';
+
+    if (item.description) html += '<div class="item-desc">' + esc(item.description) + '</div>';
+
+    var det = [];
+    if (item.location) det.push(item.location);
+    if (item.contact_name) det.push(item.contact_name);
+    if (item.contact_phone) det.push(item.contact_phone);
+    if (item.contact_email) det.push(item.contact_email);
+    if (det.length) html += '<div class="item-details">' + esc(det.join(' · ')) + '</div>';
+
+    html += '<div class="item-actions">';
+    if (item.status !== 'approved') html += '<button class="act-btn act-approve" onclick="event.stopPropagation();setStatus(' + idx + ',\'approved\')">Approve<span class="act-key">A</span></button>';
+    if (item.status !== 'rejected') html += '<button class="act-btn act-reject" onclick="event.stopPropagation();setStatus(' + idx + ',\'rejected\')">Reject<span class="act-key">R</span></button>';
+    if (item.status !== 'pending') html += '<button class="act-btn act-reset" onclick="event.stopPropagation();setStatus(' + idx + ',\'pending\')">Reset<span class="act-key">P</span></button>';
+    html += '</div>';
+    html += '</div>';
+  });
+  return html;
+}
+
+// ── ACTIONS ──
+function setStatus(filteredIdx, status) {
+  var items = getFiltered();
+  var item = items[filteredIdx];
+  if (!item) return;
+
+  fetch('/api/update-item', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id: item.id, status: status })
+  });
+
+  // Update local state
+  item.status = status;
+  toast(esc(item.title.substring(0, 40)) + ' → ' + status);
+  renderSidebar();
+  updateStats();
+  renderMain();
+
+  // Auto-advance to next pending item
+  var newFiltered = getFiltered();
+  var nextPending = -1;
+  for (var i = filteredIdx; i < newFiltered.length; i++) {
+    if (newFiltered[i].status === 'pending') { nextPending = i; break; }
+  }
+  if (nextPending === -1) {
+    for (var j = 0; j < filteredIdx && j < newFiltered.length; j++) {
+      if (newFiltered[j].status === 'pending') { nextPending = j; break; }
+    }
+  }
+  if (nextPending >= 0) setFocus(nextPending);
+  else if (newFiltered.length > 0) setFocus(Math.min(filteredIdx, newFiltered.length - 1));
+}
+
+function bulkApprove(mode) {
+  var b = cur();
+  var ids = [];
+  b.items.forEach(function(i) {
+    if (i.status !== 'pending') return;
+    if (mode === 'all') ids.push(i.id);
+    else if (mode === 'high' && i.confidence >= 0.9) ids.push(i.id);
+    else if (mode === 'page' && i.source_page === currentPage) ids.push(i.id);
+  });
+  if (ids.length === 0) return;
+
+  fetch('/api/bulk-update', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ ids: ids, status: 'approved' })
+  });
+
+  b.items.forEach(function(i) {
+    if (ids.indexOf(i.id) >= 0) i.status = 'approved';
+  });
+  toast('Approved ' + ids.length + ' items');
+  focusedItem = -1;
+  renderSidebar();
+  updateStats();
+  renderMain();
+}
+
+function bulkReject() {
+  var b = cur();
+  var ids = [];
+  b.items.forEach(function(i) { if (i.status === 'pending') ids.push(i.id); });
+  if (ids.length === 0) return;
+
+  fetch('/api/bulk-update', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ ids: ids, status: 'rejected' })
+  });
+
+  b.items.forEach(function(i) {
+    if (ids.indexOf(i.id) >= 0) i.status = 'rejected';
+  });
+  toast('Rejected ' + ids.length + ' items');
+  focusedItem = -1;
+  renderSidebar();
+  updateStats();
+  renderMain();
+}
+
+// ── NAVIGATION ──
+function setFocus(idx) {
+  var items = getFiltered();
+  if (idx < 0 || idx >= items.length) return;
+  focusedItem = idx;
+
+  // Auto-switch page to match the focused item
+  var item = items[idx];
+  if (item.source_page && item.source_page !== currentPage) {
+    currentPage = item.source_page;
+  }
+
+  renderMain();
+
+  // Scroll focused item into view
+  var el = document.getElementById('item-' + idx);
+  if (el) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+}
+
+function goPage(p) {
+  currentPage = p;
+  renderMain();
+  // Keep focus but re-render
+  if (focusedItem >= 0) {
+    var el = document.getElementById('item-' + focusedItem);
+    if (el) el.scrollIntoView({ block: 'nearest' });
+  }
+}
+
+function setFilter(s) {
+  filterStatus = s;
+  focusedItem = -1;
+  renderMain();
+}
+
+function zoom(dir) {
+  zoomLevel = Math.max(50, Math.min(250, zoomLevel + dir * 25));
+  var img = document.getElementById('pageImg');
+  if (img) img.style.width = zoomLevel + '%';
+  var label = document.getElementById('zoomLabel');
+  if (label) label.textContent = zoomLevel + '%';
+}
+
+function zoomFit() {
+  zoomLevel = 100;
+  var img = document.getElementById('pageImg');
+  if (img) img.style.width = '100%';
+  var label = document.getElementById('zoomLabel');
+  if (label) label.textContent = '100%';
+}
+
+// ── KEYBOARD ──
+document.addEventListener('keydown', function(e) {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  var items = getFiltered();
+
+  switch (e.key) {
+    case 'j': case 'ArrowDown':
+      e.preventDefault();
+      setFocus(Math.min(focusedItem + 1, items.length - 1));
+      break;
+    case 'k': case 'ArrowUp':
+      e.preventDefault();
+      setFocus(Math.max(focusedItem - 1, 0));
+      break;
+    case 'a':
+      if (focusedItem >= 0 && items[focusedItem]) setStatus(focusedItem, 'approved');
+      break;
+    case 'r':
+      if (focusedItem >= 0 && items[focusedItem]) setStatus(focusedItem, 'rejected');
+      break;
+    case 'p':
+      if (focusedItem >= 0 && items[focusedItem]) setStatus(focusedItem, 'pending');
+      break;
+    case '[':
+      selectChurch(Math.max(currentIdx - 1, 0));
+      break;
+    case ']':
+      selectChurch(Math.min(currentIdx + 1, bulletins.length - 1));
+      break;
+    case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9':
+      var pg = parseInt(e.key);
+      if (cur() && pg <= cur().pageCount) goPage(pg);
+      break;
+  }
+});
+
+// ── TOAST ──
+var toastTimer;
+function toast(msg) {
+  var el = document.getElementById('toast');
+  el.innerHTML = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function() { el.classList.remove('show'); }, 1800);
+}
+
+function esc(s) {
+  if (!s) return '';
+  var d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+load();
+</script>
+</body>
+</html>
