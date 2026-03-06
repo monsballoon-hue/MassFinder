@@ -25,10 +25,23 @@ function loadEnv() {
   }
 }
 
-// ── Determine primary location (most services) ──
+// ── Worship location types (create churches for these only) ──
+var WORSHIP_TYPES = ['church', 'chapel', 'mission', 'shrine', 'cathedral'];
+function isWorshipLocation(loc) {
+  // Locations with worship types, OR locations with no type but church-like name
+  if (!loc.type) return /church|chapel|basilica|cathedral|shrine|oratory/i.test(loc.name || '');
+  return WORSHIP_TYPES.indexOf(loc.type) >= 0;
+}
+
+// ── Determine primary location (most services, worship locations only) ──
 function getPrimaryLocationId(parish) {
-  var locs = parish.locations || [];
-  if (locs.length <= 1) return locs[0] ? locs[0].id : null;
+  var locs = (parish.locations || []).filter(isWorshipLocation);
+  if (locs.length === 0) {
+    // No worship locations — fall back to first location
+    var allLocs = parish.locations || [];
+    return allLocs[0] ? allLocs[0].id : null;
+  }
+  if (locs.length <= 1) return locs[0].id;
   var counts = {};
   locs.forEach(function(l) { counts[l.id] = 0; });
   (parish.services || []).forEach(function(s) {
@@ -199,15 +212,19 @@ async function main() {
     var p = parishes[i];
     var locs = p.locations || [];
 
-    // Determine bulletin_group: multi-location parishes share a bulletin
-    var bulletinGroup = locs.length > 1 ? p.id : null;
+    // Filter to worship locations only (churches, chapels, shrines, etc.)
+    var worshipLocs = locs.filter(isWorshipLocation);
+    var nonWorshipLocs = locs.filter(function(l) { return !isWorshipLocation(l); });
+
+    // Determine bulletin_group: multi-worship-location parishes share a bulletin
+    var bulletinGroup = worshipLocs.length > 1 ? p.id : null;
 
     // Determine primary location for assigning orphan services
     var primaryLocId = getPrimaryLocationId(p);
 
-    if (locs.length === 0) {
-      // No locations — create a synthetic church from parish data
-      console.warn('  WARN: Parish', p.id, 'has no locations — creating synthetic church');
+    if (worshipLocs.length === 0) {
+      // No worship locations — create a synthetic church from parish data
+      console.warn('  WARN: Parish', p.id, 'has no worship locations — creating synthetic church');
       var syntheticId = p.id.replace('parish_', 'church-') + '-' + (p.town || 'unknown').toLowerCase().replace(/\s+/g, '-');
       var syntheticLoc = {
         id: syntheticId,
@@ -221,6 +238,8 @@ async function main() {
       churchRows.push(buildChurchRow(p, syntheticLoc, null));
       parishToChurchMap[p.id] = syntheticId;
       locationToChurchMap[syntheticId] = syntheticId;
+      // Map non-worship location IDs to this synthetic church too
+      nonWorshipLocs.forEach(function(l) { locationToChurchMap[l.id] = syntheticId; });
 
       // All services go to this synthetic church
       (p.services || []).forEach(function(s) {
@@ -232,18 +251,27 @@ async function main() {
     // Set primary church for this parish
     parishToChurchMap[p.id] = primaryLocId;
 
-    // Create one church per location
-    for (var j = 0; j < locs.length; j++) {
-      var loc = locs[j];
+    // Create one church per WORSHIP location only
+    for (var j = 0; j < worshipLocs.length; j++) {
+      var loc = worshipLocs[j];
       churchRows.push(buildChurchRow(p, loc, bulletinGroup));
       locationToChurchMap[loc.id] = loc.id;
+    }
+
+    // Map non-worship location IDs to the primary worship location
+    // (so services at offices/halls get assigned to the main church)
+    for (var j = 0; j < nonWorshipLocs.length; j++) {
+      locationToChurchMap[nonWorshipLocs[j].id] = primaryLocId;
+      if (nonWorshipLocs[j].id !== primaryLocId) {
+        console.log('  Redirecting non-worship location', nonWorshipLocs[j].id, '(' + (nonWorshipLocs[j].name || 'unnamed') + ') →', primaryLocId);
+      }
     }
 
     // Assign services to churches
     (p.services || []).forEach(function(s) {
       var churchId;
       if (s.location_id && locationToChurchMap[s.location_id]) {
-        churchId = s.location_id;
+        churchId = locationToChurchMap[s.location_id];
       } else {
         // No location_id — assign to primary location
         churchId = primaryLocId;
@@ -268,7 +296,36 @@ async function main() {
   }
   serviceRows = dedupedServices;
 
+  // Deduplicate churches by ID (shared locations like st-christopher-church-brimfield)
+  var seenChurch = {};
+  var dedupedChurches = [];
+  for (var i = 0; i < churchRows.length; i++) {
+    if (!seenChurch[churchRows[i].id]) {
+      seenChurch[churchRows[i].id] = true;
+      dedupedChurches.push(churchRows[i]);
+    }
+  }
+  if (dedupedChurches.length !== churchRows.length) {
+    console.log('  Deduplicated churches:', churchRows.length, '→', dedupedChurches.length);
+  }
+  churchRows = dedupedChurches;
+
   console.log('\nTransformed:', churchRows.length, 'churches,', serviceRows.length, 'services');
+
+  // ── Clean up: delete existing rows then re-insert ──
+  // This ensures stale non-worship locations are removed
+  console.log('\n--- Clearing existing data ---');
+  var delEvents = await supabase.from('events').delete().neq('id', '');
+  if (delEvents.error) console.warn('  events delete:', delEvents.error.message);
+  else console.log('  Cleared events');
+
+  var delServices = await supabase.from('services').delete().neq('id', '');
+  if (delServices.error) console.warn('  services delete:', delServices.error.message);
+  else console.log('  Cleared services');
+
+  var delChurches = await supabase.from('churches').delete().neq('id', '');
+  if (delChurches.error) console.warn('  churches delete:', delChurches.error.message);
+  else console.log('  Cleared churches');
 
   // ── Upsert churches ──
   console.log('\n--- Upserting churches ---');

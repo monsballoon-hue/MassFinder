@@ -17,12 +17,15 @@ module.exports = async function handler(req, res) {
       .from('churches')
       .select('*')
       .order('city', { ascending: true })
-      .order('name', { ascending: true });
+      .order('name', { ascending: true })
+      .limit(1000);
 
+    // Supabase default limit is 1000 rows — we have ~1400 services
     var servicesPromise = supabase
       .from('services')
       .select('*')
-      .order('church_id', { ascending: true });
+      .order('church_id', { ascending: true })
+      .limit(5000);
 
     var metaPromise = supabase
       .from('metadata')

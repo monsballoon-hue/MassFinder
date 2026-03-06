@@ -3125,14 +3125,25 @@ function migrateFavorites(){
 
 // Transform parish_data.json parishes into church objects (for fallback)
 function parishesToChurches(parishes){
+  var WORSHIP_TYPES=['church','chapel','mission','shrine','cathedral'];
+  function isWorship(loc){
+    if(!loc.type)return /church|chapel|basilica|cathedral|shrine|oratory/i.test(loc.name||'');
+    return WORSHIP_TYPES.indexOf(loc.type)>=0;
+  }
   var churches=[];
   for(var i=0;i<parishes.length;i++){
     var p=parishes[i];
     var locs=p.locations||[];
     var ct=p.contact||{};
     if(!locs.length)continue;
-    for(var j=0;j<locs.length;j++){
-      var loc=locs[j];
+    var wLocs=locs.filter(isWorship);
+    if(!wLocs.length)wLocs=[locs[0]]; // fallback to first if no worship locs
+    // Build set of worship location IDs for service assignment
+    var wIds={};
+    for(var k=0;k<wLocs.length;k++)wIds[wLocs[k].id]=true;
+    var bulletinGroup=wLocs.length>1?p.id:null;
+    for(var j=0;j<wLocs.length;j++){
+      var loc=wLocs[j];
       churches.push({
         id:loc.id,name:loc.name||p.name,short_name:loc.short_name||null,
         type:loc.type||'church',address:loc.address||null,
@@ -3144,12 +3155,16 @@ function parishesToChurches(parishes){
         established:p.established||null,status:p.status||'active',
         is_accessible:loc.is_accessible!=null?loc.is_accessible:p.is_accessible,
         bulletin_url:p.bulletin_url||ct.bulletin_url||null,
-        bulletin_group:locs.length>1?p.id:null,
+        bulletin_group:bulletinGroup,
         clergy:p.clergy||null,staff:p.staff||[],
         validation:p.validation||null,visitation:p.visitation||null,
         services:(p.services||[]).filter(function(s){
-          if(locs.length<=1)return true;
-          return !s.location_id||s.location_id===loc.id;
+          if(wLocs.length<=1)return true;
+          // Service goes to this church if: location_id matches, or location_id is non-worship, or no location_id (assign to first worship loc)
+          if(!s.location_id)return j===0;
+          if(s.location_id===loc.id)return true;
+          if(!wIds[s.location_id])return j===0; // non-worship location → assign to first worship loc
+          return false;
         })
       });
     }

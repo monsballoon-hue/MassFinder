@@ -15,7 +15,8 @@ module.exports = async function handler(req, res) {
     var eventsPromise = supabase
       .from('events')
       .select('*')
-      .order('date', { ascending: true });
+      .order('date', { ascending: true })
+      .limit(2000);
 
     var metaPromise = supabase
       .from('metadata')
