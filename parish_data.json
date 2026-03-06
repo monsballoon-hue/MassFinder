@@ -6958,8 +6958,8 @@
           "state": "MA",
           "zip": "01040",
           "is_accessible": null,
-          "lat": null,
-          "lng": null,
+          "lat": 42.2053,
+          "lng": -72.5951,
           "short_name": "Immaculate Conception"
         }
       ],
@@ -7218,8 +7218,8 @@
           "is_accessible": null,
           "accessibility_notes": null,
           "notes": "Chapel on premises for weekday Masses",
-          "lat": null,
-          "lng": null
+          "lat": 42.2443,
+          "lng": -72.572
         }
       ],
       "contact": {
@@ -7829,13 +7829,13 @@
           "id": "st-mary-of-the-lakes-otis",
           "name": "St. Mary of the Lakes",
           "type": "church",
-          "address": "Rts. 8 & 23, Otis, MA",
+          "address": "72 North Main Road",
           "city": "Otis",
           "state": "MA",
-          "zip": null,
+          "zip": "01253",
           "is_accessible": null,
-          "lat": null,
-          "lng": null,
+          "lat": 42.1952,
+          "lng": -73.0928,
           "short_name": "St. Mary of the Lakes"
         }
       ],
@@ -9238,8 +9238,8 @@
           "state": "MA",
           "zip": "01056",
           "is_accessible": null,
-          "lat": null,
-          "lng": null,
+          "lat": 42.1583,
+          "lng": -72.4689,
           "short_name": "Little Shepherds Chapel"
         }
       ],
@@ -13538,8 +13538,8 @@
           "state": "MA",
           "zip": "01341",
           "is_accessible": null,
-          "lat": null,
-          "lng": null,
+          "lat": 42.5079,
+          "lng": -72.7103,
           "short_name": "St. Mark's",
           "notes": "Mission church of Holy Family Parish"
         }
@@ -18044,8 +18044,8 @@
           "is_accessible": null,
           "accessibility_notes": null,
           "notes": null,
-          "lat": null,
-          "lng": null
+          "lat": 42.256,
+          "lng": -72.2408
         }
       ],
       "contact": {
@@ -20715,8 +20715,8 @@
           "is_accessible": null,
           "accessibility_notes": null,
           "notes": null,
-          "lat": null,
-          "lng": null
+          "lat": 42.2584,
+          "lng": -72.5154
         }
       ],
       "contact": {
@@ -20909,8 +20909,8 @@
           "is_accessible": null,
           "accessibility_notes": null,
           "notes": null,
-          "lat": null,
-          "lng": null
+          "lat": 42.0973,
+          "lng": -72.5838
         }
       ],
       "contact": {
@@ -21168,8 +21168,8 @@
           "is_accessible": null,
           "accessibility_notes": null,
           "notes": "Chapel of the Holy Spouses (Mary and Joseph) on premises",
-          "lat": null,
-          "lng": null
+          "lat": 42.1436,
+          "lng": -71.5121
         }
       ],
       "contact": {
