@@ -237,27 +237,38 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .event-detail-panel.open { transform: translateY(0); }
 @media (min-width: 768px) { .event-detail-panel { left: 50%; right: auto; width: 100%; max-width: var(--max-width); transform: translate(-50%, 100%); } .event-detail-panel.open { transform: translate(-50%, 0); } }
 
-.evt-header { padding: var(--space-2) var(--space-5) var(--space-4); }
+.evt-color-bar { height: 4px; border-radius: var(--radius-lg) var(--radius-lg) 0 0; margin: 0 calc(-1 * 0px); }
+.evt-color-bar.yc { background: linear-gradient(90deg, var(--color-accent), #D4AF5A); }
+.evt-color-bar.community { background: linear-gradient(90deg, var(--color-primary), #4A6FA5); }
+.evt-header { padding: var(--space-3) var(--space-5) 0; }
 .evt-header-top { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-3); }
 .evt-title { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 700; color: var(--color-text-primary); line-height: 1.25; flex: 1; }
 .evt-close { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--color-text-secondary); transition: all var(--transition-fast); flex-shrink: 0; }
 .evt-close:hover { background: var(--color-surface-hover); }
 .evt-close svg { width: 22px; height: 22px; }
-.evt-badges { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-3); }
+.evt-badges { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-2); }
 .evt-badge { display: inline-flex; align-items: center; gap: 4px; font-size: var(--text-xs); font-weight: var(--weight-semibold); padding: 5px 12px; border-radius: var(--radius-full); }
 .evt-badge.yc { color: var(--color-accent-text); background: var(--color-accent-pale); }
 .evt-badge.community { color: var(--color-primary); background: var(--color-info-bg); }
-.evt-badge.date-badge { color: var(--color-primary); background: rgba(44,62,90,0.08); font-weight: var(--weight-semibold); }
-.evt-badge.time-badge { color: var(--color-text-secondary); background: var(--color-surface-hover); }
 .evt-badge.social-badge { color: #0F766E; background: #E0F7F5; }
 .evt-badge.type-badge { color: var(--color-text-secondary); background: var(--color-surface-hover); text-transform: capitalize; }
-.evt-badge.countdown-badge { color: var(--color-verified); background: var(--color-verified-bg); }
-.evt-badge.countdown-badge.imminent { color: #B45309; background: #FEF3C7; }
+.evt-info-rows { padding: var(--space-3) var(--space-5) 0; display: flex; flex-direction: column; gap: 0; }
+.evt-info-row { display: flex; align-items: flex-start; gap: var(--space-3); padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border-light); }
+.evt-info-row:last-child { border-bottom: none; }
+.evt-info-row svg { width: 18px; height: 18px; color: var(--color-text-tertiary); flex-shrink: 0; margin-top: 1px; }
+.evt-info-row-content { flex: 1; }
+.evt-info-primary { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-text-primary); line-height: 1.4; }
+.evt-info-time { font-weight: var(--weight-medium); color: var(--color-text-secondary); }
+.evt-info-secondary { font-size: var(--text-xs); color: var(--color-text-tertiary); margin-top: 1px; line-height: 1.3; }
 
 /* COMMUNITY EVENTS in parish detail */
 .community-events-section { margin-top: var(--space-4); border-top: 1px solid var(--color-border-light); padding-top: var(--space-4); }
-.community-events-header { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3); }
+.community-events-header { display: flex; align-items: center; gap: var(--space-3); cursor: pointer; list-style: none; }
+.community-events-header::-webkit-details-marker { display: none; }
 .community-events-header svg { width: 20px; height: 20px; color: var(--color-accent-text); flex-shrink: 0; }
+.ce-chevron { width: 18px; height: 18px; color: var(--color-text-tertiary); margin-left: auto; transition: transform 0.2s ease; }
+.community-events-section[open] .ce-chevron { transform: rotate(180deg); }
+.community-events-section[open] .community-events-header { margin-bottom: var(--space-3); }
 .community-events-title { font-size: var(--text-base); font-weight: var(--weight-semibold); color: var(--color-text-primary); }
 .community-events-count { font-size: var(--text-xs); color: var(--color-accent-text); font-weight: var(--weight-medium); background: var(--color-accent-pale); padding: 2px 8px; border-radius: var(--radius-full); }
 .ce-group-label { font-size: 11px; font-weight: var(--weight-semibold); text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-tertiary); margin: var(--space-3) 0 var(--space-2); }
@@ -275,29 +286,25 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 
 .evt-body { padding: 0 var(--space-5) var(--space-8); }
 
+
 .evt-parish-link { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-4) 0; border-bottom: 1px solid var(--color-border-light); cursor: pointer; transition: background var(--transition-fast); margin: 0 calc(-1 * var(--space-5)); padding-left: var(--space-5); padding-right: var(--space-5); }
 .evt-parish-link:hover { background: var(--color-surface-hover); }
-.evt-parish-link-icon { width: 36px; height: 36px; border-radius: 50%; background: var(--color-bg); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.evt-parish-link-icon { width: 40px; height: 40px; border-radius: var(--radius-md); background: var(--color-bg); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .evt-parish-link-icon svg { width: 18px; height: 18px; color: var(--color-primary); }
 .evt-parish-link-text { flex: 1; }
-.evt-parish-link-label { font-size: var(--text-xs); color: var(--color-text-tertiary); font-weight: var(--weight-medium); text-transform: uppercase; letter-spacing: 0.04em; }
-.evt-parish-link-name { font-size: var(--text-base); font-weight: var(--weight-semibold); color: var(--color-primary); }
-.evt-parish-link-chevron { width: 20px; height: 20px; color: var(--color-text-tertiary); flex-shrink: 0; }
+.evt-parish-link-label { font-size: var(--text-xs); color: var(--color-text-tertiary); font-weight: var(--weight-medium); }
+.evt-parish-link-name { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-primary); }
+.evt-parish-link-chevron { width: 18px; height: 18px; color: var(--color-text-tertiary); flex-shrink: 0; }
 
 .evt-description { padding: var(--space-4) 0; border-bottom: 1px solid var(--color-border-light); }
-.evt-description p { font-size: var(--text-sm); color: var(--color-text-secondary); line-height: 1.6; }
-.evt-notes-callout { margin-top: var(--space-3); padding: var(--space-3) var(--space-4); background: var(--color-warning-bg); border-radius: var(--radius-sm); font-size: var(--text-sm); color: var(--color-warning); font-style: italic; }
+.evt-description p { font-size: var(--text-base); color: var(--color-text-secondary); line-height: 1.7; }
+.evt-notes-callout { margin-top: var(--space-3); padding: var(--space-3) var(--space-4); background: var(--color-warning-bg); border-radius: var(--radius-sm); font-size: var(--text-sm); color: var(--color-warning); font-style: italic; line-height: 1.5; }
 
-.evt-actions { display: flex; gap: var(--space-3); padding: var(--space-4) 0; border-bottom: 1px solid var(--color-border-light); flex-wrap: wrap; }
-.evt-action-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: var(--space-1); padding: var(--space-3); border-radius: var(--radius-md); background: var(--color-bg); transition: background var(--transition-fast); text-decoration: none; min-height: 44px; min-width: 80px; }
+.evt-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-2); padding: var(--space-4) 0; }
+.evt-action-btn { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: var(--space-3) var(--space-2); border-radius: var(--radius-md); background: var(--color-bg); transition: background var(--transition-fast); text-decoration: none; min-height: 44px; }
 .evt-action-btn:hover { background: var(--color-surface-hover); text-decoration: none; }
 .evt-action-btn svg { width: 22px; height: 22px; color: var(--color-primary); }
-.evt-action-btn span { font-size: var(--text-xs); font-weight: var(--weight-medium); color: var(--color-text-secondary); text-align: center; }
-
-.evt-footer-link { display: flex; align-items: center; justify-content: center; gap: var(--space-2); margin-top: var(--space-6); padding: var(--space-4); background: var(--color-bg); border-radius: var(--radius-md); cursor: pointer; transition: background var(--transition-fast); }
-.evt-footer-link:hover { background: var(--color-surface-hover); }
-.evt-footer-link span { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-primary); }
-.evt-footer-link svg { width: 16px; height: 16px; color: var(--color-text-tertiary); }
+.evt-action-btn span { font-size: 11px; font-weight: var(--weight-medium); color: var(--color-text-secondary); text-align: center; line-height: 1.2; }
 
 /* Contact & Actions */
 .detail-contact { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-5) 0; border-bottom: 1px solid var(--color-border-light); }
@@ -525,13 +532,15 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .events-widget-seeall { font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--color-accent-text); }
 .events-widget-strip { display: flex; gap: var(--space-2); overflow-x: auto; padding: 0 var(--space-4) var(--space-2); scrollbar-width: none; -webkit-overflow-scrolling: touch; }
 .events-widget-strip::-webkit-scrollbar { display: none; }
-.event-mini-card { flex-shrink: 0; width: 164px; background: var(--color-surface); border: 1px solid var(--color-border-light); border-radius: var(--radius-md); padding: var(--space-3); cursor: pointer; transition: background var(--transition-fast); }
-.event-mini-card:hover { background: var(--color-surface-hover); }
-.event-mini-date-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-1); }
-.event-mini-date { font-size: 11px; font-weight: var(--weight-semibold); color: var(--color-accent-text); }
-.event-mini-badge { font-size: 9px; font-weight: 700; letter-spacing: 0.05em; color: white; background: var(--color-accent); padding: 1px 6px; border-radius: var(--radius-full); }
-.event-mini-title { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-text-primary); line-height: 1.3; margin-bottom: 3px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.event-mini-church { font-size: 11px; color: var(--color-text-tertiary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.event-mini-card { flex-shrink: 0; width: 172px; background: rgba(184,150,63,0.06); border: 1px solid var(--color-border-light); border-radius: var(--radius-md); padding: var(--space-3); cursor: pointer; transition: background var(--transition-fast); display: flex; gap: var(--space-3); align-items: flex-start; }
+.event-mini-card:hover { background: rgba(184,150,63,0.12); }
+.event-mini-date-badge { flex-shrink: 0; width: 40px; text-align: center; background: var(--color-surface); border-radius: var(--radius-sm); padding: 4px 0; border: 1px solid var(--color-border-light); }
+.event-mini-date-month { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-accent); line-height: 1; }
+.event-mini-date-day { font-size: var(--text-lg); font-weight: 700; color: var(--color-text-primary); line-height: 1.2; }
+.event-mini-body { flex: 1; min-width: 0; }
+.event-mini-title { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-text-primary); line-height: 1.3; margin-bottom: 2px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.event-mini-time { font-size: 11px; font-weight: var(--weight-medium); color: var(--color-text-secondary); margin-bottom: 1px; }
+.event-mini-church { font-size: 11px; color: var(--color-text-tertiary); line-height: 1.3; }
 
 /* SPARSE MESSAGE */
 .sparse-msg { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--space-4) var(--space-2); }
@@ -1175,26 +1184,27 @@ function renderCommunityEvents(p){
       +'</div></div>';
   }
 
-  let html='<div class="community-events-section">'
-    +'<div class="community-events-header">'
+  let inner='';
+  if(upcoming.length&&ongoing.length){
+    inner+='<div class="ce-group-label">Upcoming</div>';
+    inner+=upcoming.map(e=>renderItem(e,true)).join('');
+    inner+='<div class="ce-group-label">Ongoing</div>';
+    inner+=ongoing.map(e=>renderItem(e,false)).join('');
+  }else if(upcoming.length){
+    inner+=upcoming.map(e=>renderItem(e,true)).join('');
+  }else{
+    inner+=ongoing.map(e=>renderItem(e,false)).join('');
+  }
+
+  return '<details class="community-events-section" open>'
+    +'<summary class="community-events-header">'
     +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>'
     +'<span class="community-events-title">Community Life</span>'
     +'<span class="community-events-count">'+total+'</span>'
-    +'</div>';
-
-  if(upcoming.length&&ongoing.length){
-    html+='<div class="ce-group-label">Upcoming</div>';
-    html+=upcoming.map(e=>renderItem(e,true)).join('');
-    html+='<div class="ce-group-label">Ongoing</div>';
-    html+=ongoing.map(e=>renderItem(e,false)).join('');
-  }else if(upcoming.length){
-    html+=upcoming.map(e=>renderItem(e,true)).join('');
-  }else{
-    html+=ongoing.map(e=>renderItem(e,false)).join('');
-  }
-
-  html+='</div>';
-  return html;
+    +'<svg class="ce-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>'
+    +'</summary>'
+    +inner
+    +'</details>';
 }
 
 const CLERGY_RANK={pastor:1,pastor_and_director:2,provisional_priest:3,deacon:4,deacon_emeritus:5,deacon_retired:6};
@@ -1237,10 +1247,9 @@ function openDetail(id){
 
   let chtml='<div class="detail-contact">';
   const _pastor=getPastor(p);
-  if(_pastor)chtml+='<div class="contact-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><div><span>'+esc(_pastor.name)+'</span><div style="font-size:var(--text-xs);color:var(--color-text-tertiary)">'+esc(CLERGY_ROLE_LABEL[_pastor.role]||_pastor.role)+'</div></div></div>';
+  if(_pastor)chtml+='<div class="contact-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>'+esc(_pastor.name)+' <span style="color:var(--color-text-tertiary);font-weight:var(--weight-medium)">· '+esc(CLERGY_ROLE_LABEL[_pastor.role]||_pastor.role)+'</span></span></div>';
   // Show website as text link ONLY when bulletin URL takes the button (so website isn't lost)
   if(bulletinUrl&&ct.website)chtml+='<div class="contact-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><a href="'+esc(ct.website)+'" target="_blank" rel="noopener">'+esc(domain)+'</a></div>';
-  if(ct.office_hours)chtml+='<div class="contact-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>'+esc(ct.office_hours)+'</span></div>';
   chtml+='</div>';
 
   // Quick actions: Call, Directions, Bulletin (or Website)
@@ -1401,10 +1410,8 @@ function openEventDetail(eventId){
   if(!evt)return;
   const p=allParishes.find(x=>x.id===evt.parish_id)||{};
   const loc0=p.locations&&p.locations[0];
-  // Resolve location name
   let locName='';
   if(evt.location_id){for(const l of(p.locations||[])){if(l.id===evt.location_id){locName=l.short_name||l.name;break}}}
-  // Address: venue override > matched location > first parish location
   let evtAddress=evt.venue_address;
   let evtLat=evt.venue_lat,evtLng=evt.venue_lng;
   if(!evtAddress&&evt.location_id){
@@ -1415,79 +1422,77 @@ function openEventDetail(eventId){
   const mapUrl=evtLat&&evtLng?getMapsUrlCoords(evtLat,evtLng,evtAddress||''):(evtAddress?getMapsUrl(evtAddress):'');
   const parishDisplayName=displayName(p.name||'',evt.parish_id);
   const venueName=evt.venue_name||locName||parishDisplayName;
+  const isYC=evt.category==='yc';
+  const isCommunity=evt.category==='community';
 
-  // Format date — guard for recurring events without a date
+  // Format date
   const timeStr=evt.time?fmt12(evt.time):'';
   const endStr=evt.end_time?' – '+fmt12(evt.end_time):'';
   let dateStr='';
   if(evt.dates&&evt.dates.length){
-    // Multi-date series
-    const fmtOpts={month:'short',day:'numeric'};
+    var fmtOpts={month:'short',day:'numeric'};
     dateStr=evt.dates.map(function(ds){return new Date(ds+'T12:00:00').toLocaleDateString('en-US',fmtOpts)}).join(', ');
   }else if(evt.date){
-    const d=new Date(evt.date+'T12:00:00');
-    dateStr=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+    var d=new Date(evt.date+'T12:00:00');
+    dateStr=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
   }else if(evt.day){
-    dateStr=(DAY_NAMES[evt.day]||evt.day)+'s'+(evt.time?' · '+timeStr:'');
+    dateStr=(DAY_NAMES[evt.day]||evt.day)+'s';
   }else{dateStr='Ongoing'}
 
-  // Badges
-  let badges='';
-  // Category badge
-  if(evt.category==='yc')badges+='<span class="evt-badge yc">Young & Catholic</span>';
-  else if(evt.category==='community')badges+='<span class="evt-badge community">Community</span>';
-  // Date badge
-  const today=getNow().toISOString().slice(0,10);
-  if(evt.dates&&evt.dates.length){
-    const remaining=getRemainingDates(evt);
-    badges+='<span class="evt-badge date-badge">'+esc(dateStr)+'</span>';
-    if(remaining.length)badges+='<span class="evt-badge countdown-badge">'+remaining.length+' date'+(remaining.length!==1?'s':'')+' remaining</span>';
-  }else if(evt.date){
-    const tomorrow=new Date(getNow());tomorrow.setDate(tomorrow.getDate()+1);
-    const tomorrowStr=tomorrow.toISOString().slice(0,10);
-    let dateBadgeText=dateStr;
-    if(evt.date===today)dateBadgeText='Today · '+dateStr.split(', ').slice(1).join(', ');
-    else if(evt.date===tomorrowStr)dateBadgeText='Tomorrow · '+dateStr.split(', ').slice(1).join(', ');
-    badges+='<span class="evt-badge date-badge">'+dateBadgeText+'</span>';
-  }else{
-    badges+='<span class="evt-badge date-badge">'+esc(dateStr)+'</span>';
-  }
-  // Time badge
-  if(timeStr)badges+='<span class="evt-badge time-badge">'+timeStr+endStr+'</span>';
-  // Type badge
-  const typeLabel=EVT_TYPES[evt.type]||evt.type;
+  // ── Color bar ──
+  var colorBar='<div class="evt-color-bar'+(isYC?' yc':isCommunity?' community':'')+'"></div>';
+
+  // ── Badges (category + type + social only) ──
+  var badges='';
+  if(isYC)badges+='<span class="evt-badge yc">Young & Catholic</span>';
+  else if(isCommunity)badges+='<span class="evt-badge community">Community</span>';
+  var typeLabel=EVT_TYPES[evt.type]||evt.type;
   if(typeLabel)badges+='<span class="evt-badge type-badge">'+esc(typeLabel)+'</span>';
-  // Social badge
-  if(evt.social)badges+='<span class="evt-badge social-badge">✦ Social gathering</span>';
-  // Countdown badge (only for dated events)
+  if(evt.social)badges+='<span class="evt-badge social-badge">Social gathering</span>';
+
+  // ── Single date/time row with countdown as secondary ──
+  var today=getNow().toISOString().slice(0,10);
+  var dateLine=dateStr+(timeStr?' · '+timeStr+endStr:'');
+  var dateSecondary='';
+  // Multi-date remaining count
+  if(evt.dates&&evt.dates.length){
+    var remaining=getRemainingDates(evt);
+    if(remaining.length)dateSecondary=remaining.length+' date'+(remaining.length!==1?'s':'')+' remaining';
+  }
+  // Countdown for single-date events
   if(evt.date){
-    const evtDateTime=new Date(evt.date+'T'+(evt.time||'12:00'));
-    const nowMs=getNow().getTime();
-    const diffMs=evtDateTime.getTime()-nowMs;
+    var evtDateTime=new Date(evt.date+'T'+(evt.time||'12:00'));
+    var diffMs=evtDateTime.getTime()-getNow().getTime();
     if(diffMs>0){
-      const diffMins=Math.floor(diffMs/60000);
-      const diffHrs=Math.floor(diffMins/60);
-      const diffDays=Math.floor(diffHrs/24);
-      let countdownText='';
-      let imminent=false;
-      if(diffMins<60){countdownText='In '+diffMins+' minute'+(diffMins!==1?'s':'');imminent=true}
-      else if(diffHrs<24){countdownText='In '+diffHrs+' hour'+(diffHrs!==1?'s':'');imminent=diffHrs<=3}
-      else if(diffDays===1){countdownText='In 1 day'}
-      else if(diffDays<30){countdownText='In '+diffDays+' days'}
-      else{const diffWeeks=Math.floor(diffDays/7);countdownText='In '+diffWeeks+' week'+(diffWeeks!==1?'s':'')}
-      badges+='<span class="evt-badge countdown-badge'+(imminent?' imminent':'')+'">'+countdownText+'</span>';
+      var diffMins=Math.floor(diffMs/60000);
+      var diffHrs=Math.floor(diffMins/60);
+      var diffDays=Math.floor(diffHrs/24);
+      if(diffMins<60)dateSecondary='Starting in '+diffMins+' minute'+(diffMins!==1?'s':'');
+      else if(diffHrs<24)dateSecondary='Starting in '+diffHrs+' hour'+(diffHrs!==1?'s':'');
+      else if(diffDays===1)dateSecondary='Tomorrow';
+      else if(diffDays<30)dateSecondary='In '+diffDays+' days';
+      else{var diffWeeks=Math.floor(diffDays/7);dateSecondary='In '+diffWeeks+' week'+(diffWeeks!==1?'s':'')}
     }
   }
+  var dateDisplay=esc(dateStr)+(timeStr?' <span class="evt-info-time">'+timeStr+endStr+'</span>':'');
+  var infoRow='<div class="evt-info-rows"><div class="evt-info-row">'
+    +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>'
+    +'<div class="evt-info-row-content"><div class="evt-info-primary">'+dateDisplay+'</div>'
+    +(dateSecondary?'<div class="evt-info-secondary">'+dateSecondary+'</div>':'')
+    +'</div></div></div>';
 
-  // Parish link row
-  const parishLink=p.id?'<div class="evt-parish-link" onclick="navEventToParish(\''+p.id+'\')">'
-    +'<div class="evt-parish-link-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/></svg></div>'
-    +'<div class="evt-parish-link-text"><div class="evt-parish-link-label">Hosted at</div>'
-    +'<div class="evt-parish-link-name">'+esc(parishDisplayName)+'</div></div>'
-    +'<svg class="evt-parish-link-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div>':'';
+  // ── Parish link row (single path to parish card) ──
+  var parishLink='';
+  if(p.id){
+    parishLink='<div class="evt-parish-link" onclick="navEventToParish(\''+p.id+'\')">'
+      +'<div class="evt-parish-link-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/></svg></div>'
+      +'<div class="evt-parish-link-text"><div class="evt-parish-link-label">Hosted by</div>'
+      +'<div class="evt-parish-link-name">'+esc(parishDisplayName)+'</div></div>'
+      +'<svg class="evt-parish-link-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div>';
+  }
 
-  // Description & notes
-  let descHtml='';
+  // ── Description & notes ──
+  var descHtml='';
   if(evt.description||evt.notes){
     descHtml='<div class="evt-description">';
     if(evt.description)descHtml+='<p>'+esc(evt.description)+'</p>';
@@ -1495,30 +1500,27 @@ function openEventDetail(eventId){
     descHtml+='</div>';
   }
 
-  // Actions: Directions, Add to Calendar, Registration, Flyer
-  let actions='<div class="evt-actions">';
+  // ── Image (optional hero) ──
+  var imageHtml='';
+  if(evt.image_url)imageHtml='<div style="margin:0 calc(-1 * var(--space-5));border-radius:var(--radius-md);overflow:hidden"><img src="'+esc(evt.image_url)+'" alt="" style="width:100%;max-height:220px;object-fit:cover;display:block"></div>';
+
+  // ── Actions: Directions, Calendar, Interested ──
+  var actions='<div class="evt-actions">';
   if(mapUrl)actions+='<a class="evt-action-btn" href="'+mapUrl+'" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg><span>Directions</span></a>';
-  // iCal download
-  actions+='<button class="evt-action-btn" onclick="downloadEventIcal(\''+esc(evt.id)+'\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>Add to Calendar</span></button>';
-  if(evt.registration_url)actions+='<a class="evt-action-btn" href="'+esc(evt.registration_url)+'" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg><span>Register</span></a>';
-  if(evt.flyer_url)actions+='<a class="evt-action-btn" href="'+esc(evt.flyer_url)+'" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span>View Flyer</span></a>';
-  actions+='<button class="evt-action-btn" onclick="expressInterest(\''+esc(evt.id)+'\',event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span>I\'m Interested</span></button>';
+  actions+='<button class="evt-action-btn" onclick="downloadEventIcal(\''+esc(evt.id)+'\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>Calendar</span></button>';
+  actions+='<button class="evt-action-btn" onclick="expressInterest(\''+esc(evt.id)+'\',event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span>Interested</span></button>';
   actions+='</div>';
 
-  // Image (optional hero)
-  let imageHtml='';
-  if(evt.image_url)imageHtml='<div style="margin:0 calc(-1 * var(--space-5));"><img src="'+esc(evt.image_url)+'" alt="" style="width:100%;max-height:200px;object-fit:cover;"></div>';
-
-  // Footer: "See all at this parish"
-  const footerLink=p.id?'<div class="evt-footer-link" onclick="navEventToParish(\''+p.id+'\')">'
-    +'<span>See all services at '+esc(parishDisplayName)+'</span>'
-    +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div>':'';
-
+  // ── Assemble ──
   document.getElementById('eventDetailContent').innerHTML=
-    '<div class="evt-header"><div class="evt-header-top"><h2 class="evt-title">'+esc(evt.title)+'</h2>'
+    colorBar
+    +'<div class="evt-header"><div class="evt-header-top"><h2 class="evt-title">'+esc(evt.title)+'</h2>'
     +'<button class="evt-close" onclick="closeEventDetail()" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>'
-    +'</div><div class="evt-badges">'+badges+'</div></div>'
-    +'<div class="evt-body">'+imageHtml+parishLink+descHtml+actions+footerLink+'</div>';
+    +'</div>'
+    +(badges?'<div class="evt-badges">'+badges+'</div>':'')
+    +'</div>'
+    +infoRow
+    +'<div class="evt-body">'+imageHtml+parishLink+descHtml+actions+'</div>';
 
   document.getElementById('detailBackdrop').classList.add('open');
   document.getElementById('eventDetailPanel').classList.add('open');
@@ -2300,10 +2302,18 @@ function renderEventsWidget(){
 
   const cards=ordered.map((e,i)=>{
     const r=resolveYC(e);
+    const dt=new Date(e.date+'T12:00:00');
+    const mon=dt.toLocaleDateString('en-US',{month:'short'}).toUpperCase();
+    const day=dt.getDate();
+    const timeStr=e.time?fmt12(e.time):'';
+    const loc=displayName(r.locName||r.parishName,e.parish_id);
+    const town=r.town;
+    const locLine=town?loc+' · '+town:loc;
     return '<div class="event-mini-card" onclick="openEventDetail(\''+e.id+'\')">'
-      +'<div class="event-mini-date">'+fmtYCDate(e.date)+'</div>'
-      +'<div class="event-mini-title">'+esc(e.title)+'</div>'
-      +'<div class="event-mini-church">'+esc(displayName(r.locName||r.parishName,e.parish_id))+'</div>'
+      +'<div class="event-mini-date-badge"><div class="event-mini-date-month">'+mon+'</div><div class="event-mini-date-day">'+day+'</div></div>'
+      +'<div class="event-mini-body"><div class="event-mini-title">'+esc(e.title)+'</div>'
+      +(timeStr?'<div class="event-mini-time">'+timeStr+'</div>':'')
+      +'<div class="event-mini-church">'+esc(locLine)+'</div></div>'
       +'</div>';
   }).join('');
 
