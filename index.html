@@ -753,33 +753,6 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
           <p style="margin-bottom:var(--space-2)">This is actively being built. You may notice rough edges or things that don't look quite right — that's expected. We're improving every part of the app and appreciate your patience as it comes together.</p>
         </div>
       </details>
-      <div class="more-links-inline" style="margin-top:var(--space-3)">
-        <a class="more-link-pill" href="https://diospringfield.org" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-          Diocese
-        </a>
-        <button class="more-link-pill" onclick="showMoreCorrection()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-          Submit a Correction
-        </button>
-      </div>
-      <div id="moreCorrectionForm" style="display:none;padding:var(--space-4) 0">
-        <label class="corr-form-label" style="margin-top:0">Church name</label>
-        <input id="moreCorrChurch" type="text" placeholder="e.g. St. Michael Parish, Springfield" class="corr-input" style="resize:none">
-        <label class="corr-form-label">What's wrong?</label>
-        <div class="corr-pills" id="moreCorrPills">
-          <button class="corr-pill" onclick="selectMoreCorrPill(this,'Wrong time')">Wrong time</button>
-          <button class="corr-pill" onclick="selectMoreCorrPill(this,'Mass cancelled or moved')">Mass cancelled or moved</button>
-          <button class="corr-pill" onclick="selectMoreCorrPill(this,'Missing a service')">Missing a service</button>
-          <button class="corr-pill" onclick="selectMoreCorrPill(this,'Other')">Other</button>
-        </div>
-        <input type="hidden" id="moreCorrCategory" value="">
-        <label class="corr-form-label">Details</label>
-        <textarea id="moreCorrMessage" class="corr-input" rows="2" placeholder="Select a category above first…"></textarea>
-        <input id="moreCorrEmail" type="email" class="corr-input" placeholder="Your email (optional, for follow-up)" style="resize:none;margin-top:var(--space-2)">
-        <button onclick="submitMoreCorrection()" style="margin-top:var(--space-3);width:100%;padding:var(--space-3);border-radius:var(--radius-md);background:var(--color-primary);color:white;font-size:var(--text-sm);font-weight:var(--weight-semibold);min-height:44px">Submit Correction</button>
-        <div id="moreCorrThanks" style="display:none;text-align:center;padding:var(--space-3);font-size:var(--text-sm);color:var(--color-verified);font-weight:var(--weight-medium)">Thank you! We'll review your correction.</div>
-      </div>
     </div>
 
     <!-- WHAT'S HAPPENING: YC left, All Events right -->
@@ -1665,27 +1638,6 @@ async function submitCorrection(){
     thanks.style.color='var(--color-error)';
   }
 }
-function showMoreCorrection(){const f=document.getElementById('moreCorrectionForm');f.style.display=f.style.display==='none'?'block':'none'}
-function selectMoreCorrPill(btn,val){document.querySelectorAll('#moreCorrPills .corr-pill').forEach(p=>p.classList.remove('selected'));btn.classList.add('selected');document.getElementById('moreCorrCategory').value=val;document.getElementById('moreCorrMessage').placeholder=CORR_PLACEHOLDERS[val]||'Tell us what needs updating';}
-async function submitMoreCorrection(){
-  const church=document.getElementById('moreCorrChurch').value.trim();
-  const category=document.getElementById('moreCorrCategory').value;
-  const msg=document.getElementById('moreCorrMessage').value.trim();
-  const email=document.getElementById('moreCorrEmail').value.trim();
-  if(!category){document.getElementById('moreCorrPills').style.outline='2px solid var(--color-error)';return}
-  if(!msg){document.getElementById('moreCorrMessage').style.borderColor='var(--color-error)';return}
-  const thanks=document.getElementById('moreCorrThanks');
-  document.getElementById('moreCorrectionForm').querySelectorAll('input,textarea,button').forEach(el=>el.style.display='none');
-  thanks.style.display='block';thanks.textContent='Sending\u2026';thanks.style.color='';
-  try{
-    await web3submit({subject:'MassFinder Correction ['+category+']: '+(church||'General'),church:church||'(general)',category:category,message:msg,email:email||'(not provided)'});
-    thanks.textContent='Thank you! We\u2019ll review your correction.';
-  }catch(e){
-    console.warn('More correction email failed:',e);
-    thanks.textContent='Could not send \u2014 please check your connection and try again.';
-    thanks.style.color='var(--color-error)';
-  }
-}
 function addMoreEventToCal(idx){
   const e=(window._moreEvents||[])[idx];if(!e)return;
   // Build a synthetic date — use next occurrence of the day
@@ -2046,6 +1998,7 @@ function switchTab(id,btn){
   document.querySelectorAll('.tab-item').forEach(t=>{t.classList.remove('active');t.setAttribute('aria-selected','false')});
   document.getElementById(id).classList.add('active');
   btn.classList.add('active');btn.setAttribute('aria-selected','true');
+  window.scrollTo(0,0);
   if(id==='panelMap'&&!mapInitialized){initMap();mapInitialized=true}
   if(id==='panelMap'&&mapInitialized&&window._map){setTimeout(()=>window._map.invalidateSize(),100)}
   if(id==='panelMap'){refreshLocation(function(ok){if(ok&&window._map&&userLat!==null)window._map.setView([userLat,userLng],13)})}
