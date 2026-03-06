@@ -3021,16 +3021,17 @@ function refreshApp(){
   if(btn)btn.classList.add('spinning');
   refreshLocation(function(){
     // Try API first, fall back to static JSON
-    fetch('/api/churches',{cache:'no-store'}).then(function(r){
+    fetch('/api/churches',{cache:'no-store',signal:AbortSignal.timeout(8000)}).then(function(r){
       if(!r.ok)throw new Error('API failed');
       return r.json();
     }).then(function(data){
-      allChurches=processChurches(data.churches||[]);
+      if(!Array.isArray(data.churches)||!data.churches.length)throw new Error('invalid response');
+      allChurches=processChurches(data.churches);
       filterChurches();renderCards();
       showToast('Data refreshed');
     }).catch(function(){
       // Fallback to static JSON
-      fetch('parish_data.json',{cache:'no-store'}).then(function(r){
+      fetch('parish_data.json',{cache:'no-store',signal:AbortSignal.timeout(8000)}).then(function(r){
         if(!r.ok)throw new Error('fetch failed');
         return r.json();
       }).then(function(data){
@@ -3195,7 +3196,11 @@ async function init(){
     let churchData=null,useApi=false;
     try{
       const apiResp=await fetch('/api/churches',{signal:AbortSignal.timeout(8000)});
-      if(apiResp.ok){churchData=await apiResp.json();useApi=true}
+      if(apiResp.ok){
+        const data=await apiResp.json();
+        if(Array.isArray(data.churches)&&data.churches.length){churchData=data;useApi=true}
+        else{console.warn('[MassFinder] API returned empty/invalid churches, falling back to static JSON')}
+      }
     }catch(e){console.warn('[MassFinder] API unavailable, using static JSON:',e.message)}
 
     if(!useApi){
@@ -3246,6 +3251,9 @@ async function init(){
     // Register service worker
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js').catch(() => {});
+      navigator.serviceWorker.addEventListener('message', function(e) {
+        if (e.data && e.data.type === 'CACHE_UPDATED') refreshApp();
+      });
     }
   }catch(err){
     const isTimeout=err.name==='AbortError';

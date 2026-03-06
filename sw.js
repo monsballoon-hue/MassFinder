@@ -1,4 +1,4 @@
-const CACHE_NAME = 'massfinder-v2_20260306_01';
+const CACHE_NAME = 'massfinder-v2_20260306_02';
 const SHELL_ASSETS = [
   '/',
   '/index.html',
@@ -24,9 +24,16 @@ self.addEventListener('install', event => {
 
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
-    )
+    caches.keys().then(keys => {
+      var old = keys.filter(k => k !== CACHE_NAME);
+      return Promise.all(old.map(k => caches.delete(k))).then(() => {
+        if (old.length) {
+          self.clients.matchAll().then(clients => {
+            clients.forEach(c => c.postMessage({ type: 'CACHE_UPDATED' }));
+          });
+        }
+      });
+    })
   );
   self.clients.claim();
 });
@@ -50,14 +57,20 @@ self.addEventListener('fetch', event => {
   }
 
   // For API routes and data files: stale-while-revalidate
-  if (url.pathname.startsWith('/api/') || url.pathname.endsWith('parish_data.json') || url.pathname.endsWith('events.json')) {
+  if (url.pathname.startsWith('/api/') || url.pathname === '/parish_data.json' || url.pathname === '/events.json') {
     event.respondWith(
       caches.open(CACHE_NAME).then(cache =>
         cache.match(event.request).then(cached => {
           const fetchPromise = fetch(event.request).then(response => {
             if (response.ok) cache.put(event.request, response.clone());
             return response;
-          }).catch(() => cached);
+          }).catch(() => {
+            if (cached) return cached;
+            return new Response(JSON.stringify({ error: 'offline' }), {
+              status: 503,
+              headers: { 'Content-Type': 'application/json' }
+            });
+          });
           return cached || fetchPromise;
         })
       )

@@ -30,12 +30,13 @@ module.exports = async function handler(req, res) {
     var metaResult = results[1];
 
     if (eventResult.error) throw eventResult.error;
+    if (metaResult.error) throw metaResult.error;
 
     var metadata = metaResult.data ? metaResult.data.data : {};
 
     res.status(200).json({
       metadata: metadata,
-      events: eventResult.data
+      events: Array.isArray(eventResult.data) ? eventResult.data : []
     });
   } catch (err) {
     console.error('GET /api/events error:', err);

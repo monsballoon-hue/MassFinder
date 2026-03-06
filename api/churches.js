@@ -48,8 +48,14 @@ module.exports = async function handler(req, res) {
     if (churchResult.error) throw churchResult.error;
     if (svc1Result.error) throw svc1Result.error;
     if (svc2Result.error) throw svc2Result.error;
+    if (metaResult.error) throw metaResult.error;
 
-    var allServices = svc1Result.data.concat(svc2Result.data);
+    var svc1Data = Array.isArray(svc1Result.data) ? svc1Result.data : [];
+    var svc2Data = Array.isArray(svc2Result.data) ? svc2Result.data : [];
+    if (svc2Data.length === 1000) {
+      console.warn('GET /api/churches: second service batch hit 1000-row cap — data may be truncated. Add a third batch.');
+    }
+    var allServices = svc1Data.concat(svc2Data);
 
     // Group services by church_id
     var servicesByChurch = {};
@@ -62,7 +68,8 @@ module.exports = async function handler(req, res) {
     }
 
     // Nest services into each church
-    var churches = churchResult.data.map(function(c) {
+    var churchRows = Array.isArray(churchResult.data) ? churchResult.data : [];
+    var churches = churchRows.map(function(c) {
       c.services = servicesByChurch[c.id] || [];
       return c;
     });
