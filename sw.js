@@ -1,4 +1,4 @@
-const CACHE_NAME = 'massfinder-v2_20260307_01';
+const CACHE_NAME = 'massfinder-v2_20260307_04';
 const SHELL_ASSETS = [
   '/',
   '/index.html',
@@ -50,6 +50,8 @@ self.addEventListener('fetch', event => {
     'www.google-analytics.com',
     'universalis.com',
     'mgbhmwnaipopdctbihmf.supabase.co',
+    'litcal.johnromanodorazio.com',
+    'query.bibleget.io',
   ];
   if (NETWORK_ONLY_HOSTS.some(h => url.hostname === h)) {
     // Let the browser handle it directly — no SW involvement

@@ -586,6 +586,7 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .litu-name { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-text-primary); }
 .litu-type { font-size: var(--text-xs); color: var(--color-text-tertiary); margin-top: 2px; }
 .litu-soon { display: inline-block; margin-top: 4px; font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--color-accent-text); background: var(--color-accent-pale); padding: 1px 8px; border-radius: var(--radius-full); }
+.litu-hdo { display: inline-block; margin-left: var(--space-2); font-size: 10px; font-weight: var(--weight-semibold); color: white; background: var(--color-primary); padding: 1px 6px; border-radius: var(--radius-full); vertical-align: middle; }
 
 /* DEVOTIONAL CARDS */
 .devot-card { border: 1px solid var(--color-border-light); border-radius: var(--radius-md); margin-bottom: var(--space-3); overflow: hidden; background: var(--color-surface); }
@@ -653,21 +654,29 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .loc-site-dir:hover { background: var(--color-surface-hover); }
 
 /* SAINT OF THE DAY */
-.saint-card { background: var(--color-surface); border-radius: var(--radius-md); padding: var(--space-5); box-shadow: var(--shadow-card); border-left: 3px solid var(--color-accent); }
+.saint-card { background: var(--color-surface); border-radius: var(--radius-md); padding: var(--space-5); box-shadow: var(--shadow-card); border-left: 3px solid var(--color-accent); transition: border-color 0.3s ease; }
+.saint-card[data-lit-color="purple"] { border-left-color: #6B21A8; }
+.saint-card[data-lit-color="red"]    { border-left-color: #DC2626; }
+.saint-card[data-lit-color="white"]  { border-left-color: #94A3B8; }
+.saint-card[data-lit-color="green"]  { border-left-color: #16A34A; }
+.saint-card[data-lit-color="rose"]   { border-left-color: #DB2777; }
 .saint-feast { font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--color-accent-text); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: var(--space-2); }
 .saint-name { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 700; color: var(--color-text-primary); line-height: 1.3; }
 .saint-subtitle { font-size: var(--text-sm); color: var(--color-text-secondary); margin-top: var(--space-1); line-height: 1.4; }
-.saint-links { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-4); }
-.saint-source { display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-3) var(--space-4); background: var(--color-info-bg); border-radius: var(--radius-md); font-size: var(--text-sm); color: var(--color-info); font-weight: var(--weight-medium); text-decoration: none; }
-.saint-source:hover { text-decoration: none; background: #dbeafe; }
+.saint-verse { font-style: italic; font-size: var(--text-sm); color: var(--color-text-secondary); line-height: 1.5; margin-top: var(--space-3); }
+.saint-verse-ref { font-style: normal; font-size: var(--text-xs); color: var(--color-text-tertiary); white-space: nowrap; }
 
 /* READING TEXT — Lectionary formatting */
-.reading-text .verse-num { font-size: 0.75em; font-weight: var(--weight-semibold); color: var(--color-accent-text); vertical-align: super; line-height: 0; margin-right: 1px; }
+.reading-text .verse-num { font-size: 0.85em; font-weight: var(--weight-semibold); color: var(--color-accent-text); vertical-align: baseline; margin-right: 4px; }
 .reading-text .psalm-refrain { display: block; font-style: italic; font-weight: var(--weight-semibold); color: var(--color-primary); margin: var(--space-3) 0; padding-left: var(--space-4); border-left: 2px solid var(--color-accent); line-height: 1.6; }
 .reading-text .psalm-verse { display: block; margin: var(--space-2) 0 var(--space-2) var(--space-4); line-height: 1.7; }
 .reading-text .psalm-verse-line { display: block; padding-left: var(--space-3); text-indent: calc(-1 * var(--space-3)); }
 .reading-text .reading-intro { display: block; font-style: italic; color: var(--color-text-tertiary); margin-bottom: var(--space-3); }
 .reading-text .reading-conclusion { display: block; font-weight: var(--weight-semibold); color: var(--color-text-primary); margin-top: var(--space-4); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.04em; }
+.reading-text .reading-verse { margin: var(--space-2) 0; line-height: 1.7; }
+.reading-text .psalm-r-marker { display: block; font-style: italic; font-weight: var(--weight-semibold); color: var(--color-accent-text); margin: var(--space-2) 0 var(--space-2) var(--space-4); font-size: var(--text-sm); }
+.reading-text .psalm-indent { padding-left: var(--space-5); }
+.reading-copyright { font-size: var(--text-xs); color: var(--color-text-tertiary); margin-top: var(--space-4); line-height: 1.4; }
 
 /* CONFESSION GUIDE ENHANCEMENTS */
 .conf-act { background: var(--color-accent-pale); border: 1px solid rgba(184,150,63,0.25); border-radius: var(--radius-md); padding: var(--space-4); margin-top: var(--space-4); }
@@ -780,13 +789,11 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
     </div>
 
 
-    <!-- SAINT OF THE DAY — commented out, fetch not working reliably -->
-    <!--
+    <!-- SAINT OF THE DAY — powered by LitCal API -->
     <div class="more-section">
-      <h2 class="more-section-title">🌟 Today's Celebration</h2>
-      <div id="saintOfDayCard"><div class="saint-card"><div class="saint-feast">Loading…</div><div class="saint-name" style="font-size:var(--text-base);color:var(--color-text-tertiary);font-family:var(--font-body);font-weight:var(--weight-regular)">Fetching today's feast day…</div></div></div>
+      <h2 class="more-section-title">Today's Celebration</h2>
+      <div id="saintOfDayCard"><div class="saint-card"><div class="saint-feast">Loading…</div><div class="saint-name" style="font-size:var(--text-base);color:var(--color-text-tertiary);font-family:var(--font-body);font-weight:var(--weight-regular)">Fetching today's celebration…</div></div></div>
     </div>
-    -->
 
     <!-- DAILY READINGS -->
     <div class="more-section">
@@ -934,26 +941,27 @@ function getNextDateForDay(dayName){
 function fmt12(t){if(!t)return'';const[h,m]=t.split(':').map(Number);const ap=h>=12?'PM':'AM',h12=h===0?12:h>12?h-12:h;return m===0?h12+' '+ap:h12+':'+String(m).padStart(2,'0')+' '+ap}
 function toMin(t){if(!t)return null;const[h,m]=t.split(':').map(Number);return h*60+m}
 
-// Liturgical season helpers
-function getEaster(year){
-  const a=year%19,b=Math.floor(year/100),c=year%100;
-  const d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25);
-  const g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30;
-  const i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7;
-  const m=Math.floor((a+11*h+22*l)/451);
-  const month=Math.floor((h+l-7*m+114)/31),day=((h+l-7*m+114)%31)+1;
-  return new Date(year,month-1,day);
-}
+// Liturgical season helpers — uses LitCal cache when available, Easter computation fallback
 function isLentSeason(){
-  const now=getNow(),year=now.getFullYear();
-  const easter=getEaster(year);
-  const holySat=new Date(easter.getTime());holySat.setDate(easter.getDate()-1);
-  const ashWed=new Date(easter.getTime());ashWed.setDate(easter.getDate()-46);
-  // Normalize to midnight for date-only comparison
-  const today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
-  const ash=new Date(ashWed.getFullYear(),ashWed.getMonth(),ashWed.getDate());
-  const sat=new Date(holySat.getFullYear(),holySat.getMonth(),holySat.getDate());
-  return today>=ash&&today<=sat;
+  // Prefer LitCal cached data (populated when More tab loads)
+  if(window._litcalCache&&window._litcalCache.events){
+    var now=getNow(),m=now.getMonth()+1,d=now.getDate();
+    var today=window._litcalCache.events.filter(function(e){return e.month===m&&e.day===d});
+    if(today.length)return today[0].liturgical_season==='LENT';
+  }
+  // Fallback: compute Easter via Anonymous Gregorian algorithm
+  var now=getNow(),year=now.getFullYear();
+  var a=year%19,b=Math.floor(year/100),c=year%100;
+  var dd=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25);
+  var g=Math.floor((b-f+1)/3),h=(19*a+b-dd-g+15)%30;
+  var i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7;
+  var mn=Math.floor((a+11*h+22*l)/451);
+  var eMonth=Math.floor((h+l-7*mn+114)/31),eDay=((h+l-7*mn+114)%31)+1;
+  var easter=new Date(year,eMonth-1,eDay);
+  var ashWed=new Date(easter);ashWed.setDate(easter.getDate()-46);
+  var holySat=new Date(easter);holySat.setDate(easter.getDate()-1);
+  var td=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  return td>=ashWed&&td<=holySat;
 }
 function getNext(parish,filter){
   const now=getNow(),curMin=now.getHours()*60+now.getMinutes(),curDI=now.getDay();
@@ -2353,48 +2361,78 @@ function renderEventsWidget(){
 }
 
 // ============================================================
-// LITURGICAL CALENDAR
+// LITURGICAL CALENDAR — powered by LitCal API
 // ============================================================
 function getLiturgicalEvents(){
-  const now=getNow();
-  const today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
-  const events=[];
+  if(window._litcalCache&&window._litcalCache.events){
+    return getLiturgicalEventsFromLitCal(window._litcalCache.events);
+  }
+  return []; // LitCal not loaded yet — calendar re-renders after fetch
+}
 
-  // Generate for current year and next
-  [now.getFullYear(), now.getFullYear()+1].forEach(year=>{
-    const easter=getEaster(year);
-    function easterOffset(days){const d=new Date(easter);d.setDate(d.getDate()+days);return d}
-    function fixed(m,d){return new Date(year,m-1,d)}
+function getLiturgicalEventsFromLitCal(events){
+  var now=getNow();
+  var today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  var cutoff=new Date(today.getTime()+90*24*60*60*1000); // 90 days ahead
+  var gradeLabels={3:'Memorial',4:'Feast',5:'Feast of the Lord',6:'Solemnity',7:'Solemnity'};
+  var colorMap={purple:'#6B21A8',red:'#DC2626',white:'#94A3B8',green:'#16A34A',rose:'#DB2777'};
 
-    const cal=[
-      {date:easterOffset(-46),name:'Ash Wednesday',type:'Beginning of Lent'},
-      {date:fixed(3,19),name:'St. Joseph',type:'Solemnity'},
-      {date:fixed(3,25),name:'Annunciation',type:'Solemnity'},
-      {date:easterOffset(-7),name:'Palm Sunday',type:'Beginning of Holy Week'},
-      {date:easterOffset(-3),name:'Holy Thursday',type:'Mass of the Lord\'s Supper'},
-      {date:easterOffset(-2),name:'Good Friday',type:'Celebration of the Passion'},
-      {date:easterOffset(0),name:'Easter Sunday',type:'Solemnity — Holy Day of Obligation'},
-      {date:easterOffset(7),name:'Divine Mercy Sunday',type:'Feast'},
-      {date:easterOffset(39),name:'Ascension Thursday',type:'Holy Day of Obligation'},
-      {date:easterOffset(49),name:'Pentecost Sunday',type:'Solemnity'},
-      {date:fixed(8,15),name:'Assumption of Mary',type:'Holy Day of Obligation'},
-      {date:fixed(11,1),name:'All Saints\' Day',type:'Holy Day of Obligation'},
-      {date:fixed(12,8),name:'Immaculate Conception',type:'Holy Day of Obligation'},
-      {date:fixed(12,25),name:'Christmas',type:'Holy Day of Obligation'},
-      {date:fixed(1,1),name:'Mary, Mother of God',type:'Holy Day of Obligation'},
-    ];
-    events.push(...cal);
+  var upcoming=events.filter(function(e){
+    var d=new Date(e.date);
+    if(d<today||d>cutoff)return false;
+    if(e.is_vigil_mass)return false;
+    // Show Feasts (4+) and HDOs
+    if(e.grade>=4&&e.grade<7)return true;
+    if(e.holy_day_of_obligation)return true;
+    // Grade 7: only Triduum, key markers, and Divine Mercy Sunday
+    if(e.grade===7){
+      var notableKeys={'AshWednesday':1,'PalmSun':1,'HolyThurs':1,'GoodFri':1,'HolySat':1,'EasterVigil':1,'Easter':1,'Easter2':1,'Pentecost':1,'ChristmasDay':1,'Christmas':1};
+      var k=e.event_key||'';
+      if(notableKeys[k])return true;
+    }
+    return false;
   });
 
-  // Filter to future events, sort by date, return next 3
-  return events
-    .filter(e=>e.date>=today)
-    .sort((a,b)=>a.date-b.date)
-    .slice(0,3)
-    .map(e=>{
-      const diff=Math.round((e.date-today)/(1000*60*60*24));
-      return{...e,daysAway:diff};
-    });
+  // Deduplicate by date — keep highest grade per day
+  var byDate={};
+  upcoming.forEach(function(e){
+    var key=e.year+'-'+e.month+'-'+e.day;
+    if(!byDate[key]||e.grade>byDate[key].grade)byDate[key]=e;
+  });
+
+  return Object.keys(byDate).map(function(key){
+    var e=byDate[key];
+    var d=new Date(e.date);
+    var diff=Math.round((d-today)/(1000*60*60*24));
+    var typeLabel=e.holy_day_of_obligation?'Holy Day of Obligation':(gradeLabels[e.grade]||'');
+    if(e.grade_display)typeLabel=e.grade_display;
+    var color=(e.color&&e.color[0])||'green';
+    return {date:d,name:e.name,type:typeLabel,daysAway:diff,color:color,colorHex:colorMap[color]||'#16A34A',hdo:!!e.holy_day_of_obligation};
+  }).sort(function(a,b){return a.date-b.date}).slice(0,3);
+}
+
+function renderLiturgicalCalendar(el){
+  if(!el)el=document.getElementById('liturgicalContent');
+  if(!el)return;
+  var evts=getLiturgicalEvents();
+  if(!evts.length){
+    var msg=window._litcalCache?'No upcoming observances.':'Loading…';
+    el.innerHTML='<p style="font-size:var(--text-sm);color:var(--color-text-tertiary)">'+msg+'</p>';
+    return;
+  }
+  var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  // Suppress type label if all items share the same one (e.g. all "Solemnity")
+  var allSameType=evts.length>1&&evts.every(function(e){return e.type===evts[0].type});
+  el.innerHTML=evts.map(function(e){
+    var soon=e.daysAway<=7?'<span class="litu-soon">'+(e.daysAway===0?'Today':e.daysAway===1?'Tomorrow':'In '+e.daysAway+' days')+'</span>':'';
+    var hdoBadge=e.hdo?'<span class="litu-hdo">Obligation</span>':'';
+    var typeText=allSameType?'':esc(e.type);
+    var showType=typeText||hdoBadge;
+    return '<div class="litu-event">'
+      +'<div class="litu-date-badge" style="background:'+e.colorHex+'"><div class="litu-month">'+months[e.date.getMonth()]+'</div><div class="litu-day">'+e.date.getDate()+'</div></div>'
+      +'<div><div class="litu-name">'+esc(e.name)+'</div>'+(showType?'<div class="litu-type">'+typeText+hdoBadge+'</div>':'')+soon+'</div>'
+      +'</div>';
+  }).join('');
 }
 
 // ============================================================
@@ -2421,9 +2459,6 @@ async function fetchReadings(){
     const data=await resp.json();
     if(!data.sections||!data.sections.length)throw new Error('no sections');
 
-    // ── Populate saint card from the feast title ──────────────────────────
-    if(data.title)renderSaintFromTitle(data.title,now);
-
     // Filter out Verse Before the Gospel / Alleluia / Sequence
     const sections=data.sections.filter(s=>{
       const h=s.heading.toLowerCase();
@@ -2445,71 +2480,279 @@ async function fetchReadings(){
         +'</div>'
         +(hasText?chevron:'')
         +'</div>'
-        +(hasText?'<div class="reading-text">'+formatReadingText(s.text,s.heading)+'</div>':'')
+        +(hasText?'<div class="reading-text" id="reading-text-'+i+'">'+formatReadingText(s.text,s.heading)+'</div>':'')
         +'</div>';
     }).join('');
+    html+='<div class="reading-copyright">Scripture texts from the New American Bible, Revised Edition © 2010, 1991, 1986, 1970 Confraternity of Christian Doctrine, Washington, D.C.</div>';
     html+=usccbLink;
     el.innerHTML=html;
+
+    // Enhance with BibleGet verse-by-verse formatting (non-blocking)
+    sections.forEach(function(s,i){
+      if(!s.ref||!s.text)return;
+      var textEl=document.getElementById('reading-text-'+i);
+      if(!textEl)return;
+      var isPsalm=s.heading.toLowerCase().indexOf('psalm')!==-1||s.heading.toLowerCase().indexOf('responsorial')!==-1;
+      enhanceWithBibleGet(textEl,s.ref,s.text,s.heading,isPsalm);
+    });
   }catch(e){
     el.innerHTML=usccbLink;
-    renderSaintFallback(now);
   }
 }
 
-// ── Saint of the Day — populated from the readings API title ─────────────────
-// Links to Universalis "About Today" page for saint biographies.
-function renderSaintFromTitle(title,now){
+// ── Saint of the Day — powered by LitCal API ────────────────────────────────
+// Fetches the US liturgical calendar and renders today's feast/saint.
+
+async function fetchLiturgicalDay(){
+  const now=getNow();
+  const year=now.getFullYear();
+  // In-memory cache — one fetch per session per year
+  if(window._litcalCache&&window._litcalCache.year===year){
+    return filterToday(window._litcalCache.events,now);
+  }
+  try{
+    const resp=await fetch(
+      'https://litcal.johnromanodorazio.com/api/v5/calendar/nation/US/'+year,
+      {signal:AbortSignal.timeout(10000)}
+    );
+    if(!resp.ok)throw new Error('LitCal '+resp.status);
+    const data=await resp.json();
+    window._litcalCache={year:year,events:data.litcal||[]};
+    return filterToday(window._litcalCache.events,now);
+  }catch(e){
+    console.warn('[MassFinder] LitCal fetch failed:',e.message);
+    return null;
+  }
+}
+
+function filterToday(events,now){
+  const month=now.getMonth()+1,day=now.getDate();
+  return events.filter(function(evt){return evt.month===month&&evt.day===day});
+}
+
+function renderSaintCard(events){
   const el=document.getElementById('saintOfDayCard');
   if(!el)return;
+  const now=getNow();
   const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
   const dateLabel=months[now.getMonth()]+' '+now.getDate();
-  const pad2=n=>String(n).padStart(2,'0');
-  const dateSlug=now.getFullYear()+pad2(now.getMonth()+1)+pad2(now.getDate());
-  const aboutTodayUrl='https://universalis.com/'+dateSlug+'/today.htm';
-  const massUrl='https://universalis.com/'+dateSlug+'/mass.htm';
 
-  let rank='',celebration=title,subtitle='';
-  const rankPrefixes=[
-    {prefix:'Solemnity of',label:'Solemnity'},
-    {prefix:'Feast of',label:'Feast'},
-    {prefix:'Memorial of',label:'Memorial'},
-    {prefix:'Optional Memorial of',label:'Optional Memorial'}
-  ];
-  for(const r of rankPrefixes){
-    if(title.toLowerCase().startsWith(r.prefix.toLowerCase())){
-      rank=r.label;celebration=title.slice(r.prefix.length).trim();break;
-    }
+  // No LitCal data — fallback
+  if(!events||!events.length){
+    el.innerHTML='<div class="saint-card">'
+      +'<div class="saint-feast">'+esc(dateLabel)+'</div>'
+      +'<div class="saint-name" style="font-size:var(--text-base);font-family:var(--font-body);font-weight:var(--weight-regular);color:var(--color-text-secondary)">Could not load today\'s celebration</div>'
+      +'</div>';
+    return;
   }
-  const isOrdinaryWeekday=!rank&&/^(monday|tuesday|wednesday|thursday|friday|saturday)\s+(of\s+the|after)/i.test(title);
-  if(isOrdinaryWeekday){
-    celebration=title;
-    const orMatch=title.match(/\s+or\s+(.+)$/i);
-    if(orMatch){celebration=title.slice(0,orMatch.index);subtitle=orMatch[1].trim()}
-  }
-  let feastLabel=rank?(rank+' · '+dateLabel):dateLabel;
 
-  const extLinkSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="14" height="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>';
-  el.innerHTML='<div class="saint-card">'
+  // Filter out vigil masses and plain weekdays if a saint/feast exists
+  var meaningful=events.filter(function(e){return !e.is_vigil_mass});
+  var saints=meaningful.filter(function(e){return e.grade>=1});
+  var pick=saints.length?saints.sort(function(a,b){return b.grade-a.grade})[0]:meaningful[0];
+  if(!pick)pick=events[0];
+
+  // Grade label
+  var gradeLabels={0:'',1:'Commemoration',2:'Optional Memorial',3:'Memorial',4:'Feast',5:'Feast of the Lord',6:'Solemnity',7:'Solemnity'};
+  var rank=gradeLabels[pick.grade]||'';
+  if(pick.holy_day_of_obligation)rank=(rank?rank+' · ':'')+'Holy Day of Obligation';
+  var feastLabel=rank?(rank+' · '+dateLabel):dateLabel;
+
+  // Liturgical color for card accent
+  var color=(pick.color&&pick.color[0])||'green';
+
+  // Season subtitle for ordinary weekdays
+  var subtitle='';
+  if(pick.grade===0&&pick.liturgical_season_lcl){
+    subtitle=pick.liturgical_season_lcl;
+  }
+
+  el.innerHTML='<div class="saint-card" data-lit-color="'+esc(color)+'">'
     +'<div class="saint-feast">'+esc(feastLabel)+'</div>'
-    +'<div class="saint-name">'+esc(celebration)+'</div>'
-    +(subtitle?'<div class="saint-subtitle">Optional: '+esc(subtitle)+'</div>':'')
-    +'<div class="saint-links">'
-    +'<a class="saint-source" href="'+aboutTodayUrl+'" target="_blank" rel="noopener">'+extLinkSvg+'About today</a>'
-    +'<a class="saint-source" href="'+massUrl+'" target="_blank" rel="noopener">'+extLinkSvg+'Readings</a>'
-    +'</div></div>';
+    +'<div class="saint-name">'+esc(pick.name)+'</div>'
+    +(subtitle?'<div class="saint-subtitle">'+esc(subtitle)+'</div>':'')
+    +'<div id="saintVerse"></div>'
+    +'</div>';
+
+  // Fetch gospel acclamation verse async (non-blocking)
+  var accRef=pick.readings&&pick.readings.gospel_acclamation;
+  if(accRef)fetchAcclamationVerse(accRef);
 }
 
-function renderSaintFallback(now){
-  const el=document.getElementById('saintOfDayCard');
+// ── BibleGet: fetch a single verse for the saint card ────────────────────────
+
+var BIBLE_BOOK_MAP={
+  'Genesis':'Gen','Exodus':'Ex','Leviticus':'Lev','Numbers':'Num','Deuteronomy':'Deut',
+  'Joshua':'Josh','Judges':'Judg','Ruth':'Ruth','1 Samuel':'1Sam','2 Samuel':'2Sam',
+  '1 Kings':'1Kgs','2 Kings':'2Kgs','1 Chronicles':'1Chr','2 Chronicles':'2Chr',
+  'Ezra':'Ezra','Nehemiah':'Neh','Tobit':'Tob','Judith':'Jdt','Esther':'Est',
+  '1 Maccabees':'1Macc','2 Maccabees':'2Macc','Job':'Job','Psalm':'Ps','Proverbs':'Prov',
+  'Ecclesiastes':'Eccl','Song of Songs':'Song','Wisdom':'Wis','Sirach':'Sir',
+  'Isaiah':'Isa','Jeremiah':'Jer','Lamentations':'Lam','Baruch':'Bar','Ezekiel':'Ezek',
+  'Daniel':'Dan','Hosea':'Hos','Joel':'Joel','Amos':'Am','Obadiah':'Ob','Jonah':'Jon',
+  'Micah':'Mic','Nahum':'Nah','Habakkuk':'Hab','Zephaniah':'Zep','Haggai':'Hag',
+  'Zechariah':'Zech','Malachi':'Mal','Matthew':'Mt','Mark':'Mk','Marc':'Mk',
+  'Luke':'Lk','John':'Jn','Acts':'Acts','Romans':'Rom',
+  '1 Corinthians':'1Cor','2 Corinthians':'2Cor','Galatians':'Gal','Ephesians':'Eph',
+  'Philippians':'Phil','Colossians':'Col','1 Thessalonians':'1Thess','2 Thessalonians':'2Thess',
+  '1 Timothy':'1Tim','2 Timothy':'2Tim','Titus':'Titus','Philemon':'Phlm',
+  'Hebrews':'Heb','Hewbrews':'Heb','James':'Jas','1 Peter':'1Pet','2 Peter':'2Pet',
+  '1 John':'1Jn','2 John':'2Jn','3 John':'3Jn','Jude':'Jude','Revelation':'Rev'
+};
+
+function convertRefToBibleGet(ref){
+  if(!ref)return null;
+  ref=ref.replace(/^Cf\.\s+/i,'');
+  if(ref.indexOf('|')!==-1)ref=ref.split('|')[0];
+  ref=ref.replace(/(\d+)[a-d]/g,'$1');
+  ref=ref.replace(/\(\d+\)/g,'');
+  var m=ref.match(/^(\d?\s*[A-Za-z]+)\s+/);
+  if(!m)return ref;
+  var book=m[1].trim();
+  var rest=ref.slice(m[0].length).replace(/\s+/g,'');
+  return (BIBLE_BOOK_MAP[book]||book)+rest;
+}
+
+function cleanBibleGetText(text){
+  return text.replace(/<\/?(?:pof|poi|poil|po|sm)>/g,'').replace(/\n/g,' ').trim();
+}
+
+async function fetchAcclamationVerse(ref){
+  var el=document.getElementById('saintVerse');
   if(!el)return;
-  const pad2=n=>String(n).padStart(2,'0');
-  const dateSlug=now.getFullYear()+pad2(now.getMonth()+1)+pad2(now.getDate());
-  const aboutTodayUrl='https://universalis.com/'+dateSlug+'/today.htm';
-  const extLinkSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="14" height="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>';
-  el.innerHTML='<div class="saint-card">'
-    +'<div class="saint-name" style="font-size:var(--text-base);font-family:var(--font-body);font-weight:var(--weight-regular);color:var(--color-text-secondary)">See today\'s feast day at Universalis</div>'
-    +'<div class="saint-links"><a class="saint-source" href="'+aboutTodayUrl+'" target="_blank" rel="noopener">'+extLinkSvg+'About today</a></div>'
-    +'</div>';
+  var query=convertRefToBibleGet(ref);
+  if(!query)return;
+  try{
+    var resp=await fetch(
+      'https://query.bibleget.io/v3/?query='+encodeURIComponent(query)+'&version=NABRE',
+      {signal:AbortSignal.timeout(8000)}
+    );
+    if(!resp.ok)return;
+    var data=await resp.json();
+    if(!data.results||!data.results.length)return;
+    var text=data.results.map(function(v){return cleanBibleGetText(v.text)}).join(' ');
+    if(!text)return;
+    el.innerHTML='<div class="saint-verse">'
+      +'"'+esc(text)+'"'
+      +'<span class="saint-verse-ref"> — '+esc(ref)+'</span>'
+      +'</div>';
+  }catch(e){/* silent — verse is optional */}
+}
+
+// ── BibleGet: enhance reading drawers with verse-by-verse text ───────────────
+
+async function enhanceWithBibleGet(textEl,ref,fallbackText,heading,isPsalm){
+  var query=convertRefToBibleGet(ref);
+  if(!query)return;
+  try{
+    var resp=await fetch(
+      'https://query.bibleget.io/v3/?query='+encodeURIComponent(query)+'&version=NABRE',
+      {signal:AbortSignal.timeout(8000)}
+    );
+    if(!resp.ok)return;
+    var data=await resp.json();
+    if(!data.results||!data.results.length)return;
+
+    var html='';
+    // For psalms, extract refrain from the original readings API text
+    if(isPsalm){
+      var refrain=extractPsalmRefrain(fallbackText);
+      if(refrain)html+='<span class="psalm-refrain">R. '+esc(refrain)+'</span>';
+      var stanzaBreaks=parseStanzaBreaks(ref);
+      html+=renderPsalmVerses(data.results,stanzaBreaks);
+    }else{
+      // Prose: intro line from original, then BibleGet verses, then conclusion
+      var intro=extractIntroLine(fallbackText);
+      var conclusion=extractConclusionLine(fallbackText);
+      if(intro)html+='<span class="reading-intro">'+esc(intro)+'</span>';
+      html+=renderProseVerses(data.results);
+      if(conclusion)html+='<span class="reading-conclusion">'+esc(conclusion)+'</span>';
+    }
+    textEl.innerHTML=html;
+  }catch(e){/* keep fallback */}
+}
+
+function renderProseVerses(verses){
+  var html='';
+  verses.forEach(function(v){
+    var text=v.text||'';
+    text=text.replace(/<\/?(?:pof|poi|poil|po|sm)>/g,'').replace(/\n/g,' ').trim();
+    if(!text)return;
+    html+='<p class="reading-verse"><span class="verse-num">'+v.chapter+':'+v.verse+'</span> '+esc(text)+'</p>';
+  });
+  return html;
+}
+
+function parseStanzaBreaks(ref){
+  // "Psalm 103:1-2, 3-4, 9-10, 11-12" → set of last verse in each group: {2, 4, 10, 12}
+  if(!ref)return {};
+  var breaks={};
+  // Strip book name, get just the ranges: "1-2, 3-4, 9-10, 11-12"
+  var m=ref.match(/[\d][\d\s,\-]+$/);
+  if(!m)return breaks;
+  var ranges=m[0].split(',');
+  // Mark the end verse of each range (except the last) as a stanza break
+  for(var i=0;i<ranges.length-1;i++){
+    var range=ranges[i].trim();
+    var dash=range.indexOf('-');
+    var endVerse=dash!==-1?range.substring(dash+1).trim():range.trim();
+    breaks[parseInt(endVerse)]=true;
+  }
+  return breaks;
+}
+
+function renderPsalmVerses(verses,stanzaBreaks){
+  var html='';
+  var stanza=[];
+  verses.forEach(function(v,i){
+    var text=v.text||'';
+    var lines=text.split('\n').filter(function(l){return l.trim()});
+    lines.forEach(function(line){
+      var cleaned=line.replace(/<\/?(?:sm)>/g,'').trim();
+      if(!cleaned)return;
+      var isIndent=cleaned.indexOf('<poi>')!==-1||cleaned.indexOf('<poil>')!==-1;
+      cleaned=cleaned.replace(/<\/?(?:pof|poi|poil|po)>/g,'').trim();
+      if(!cleaned)return;
+      var cls='psalm-verse-line';
+      if(isIndent)cls+=' psalm-indent';
+      stanza.push('<span class="'+cls+'">'+esc(cleaned)+'</span>');
+    });
+    // Insert R. marker at stanza boundaries from the reference groupings
+    var vNum=parseInt(v.verse);
+    if(stanzaBreaks[vNum]&&stanza.length){
+      html+='<span class="psalm-verse">'+stanza.join('')+'</span>';
+      html+='<span class="psalm-r-marker">R.</span>';
+      stanza=[];
+    }
+  });
+  if(stanza.length)html+='<span class="psalm-verse">'+stanza.join('')+'</span>';
+  return html;
+}
+
+function extractPsalmRefrain(raw){
+  if(!raw)return '';
+  // Match "R. (optional ref) refrain text." — capture only up to the first period
+  var m=raw.match(/R[\.\:]\s*(?:\([^)]+\)\s*)?([^\.!]+[\.!]?)/i);
+  return m?m[1].trim():'';
+}
+
+function extractIntroLine(raw){
+  if(!raw)return '';
+  var lines=raw.split('\n').map(function(l){return l.trim()}).filter(Boolean);
+  for(var i=0;i<Math.min(3,lines.length);i++){
+    if(/^A reading from\b/i.test(lines[i])||/^A letter of\b/i.test(lines[i])||/^The beginning of\b/i.test(lines[i]))
+      return lines[i];
+  }
+  return '';
+}
+
+function extractConclusionLine(raw){
+  if(!raw)return '';
+  var lines=raw.split('\n').map(function(l){return l.trim()}).filter(Boolean);
+  for(var i=lines.length-1;i>=Math.max(0,lines.length-3);i--){
+    if(/^The (word|Gospel) of the Lord\.?\s*$/i.test(lines[i]))return lines[i];
+  }
+  return '';
 }
 
 function toggleReading(id){
@@ -2906,22 +3149,10 @@ function renderMore(){
     }).join(''):'<p class="wh-empty">No upcoming events.</p>';
   }
 
-  // Liturgical calendar
-  const lituEl=document.getElementById('liturgicalContent');
+  // Liturgical calendar — re-renders after LitCal fetch completes
+  var lituEl=document.getElementById('liturgicalContent');
   if(lituEl){
-    const evts=getLiturgicalEvents();
-    if(evts.length){
-      const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-      lituEl.innerHTML=evts.map(e=>{
-        const soon=e.daysAway<=7?'<span class="litu-soon">'+(e.daysAway===0?'Today':e.daysAway===1?'Tomorrow':'In '+e.daysAway+' days')+'</span>':'';
-        return '<div class="litu-event">'
-          +'<div class="litu-date-badge"><div class="litu-month">'+months[e.date.getMonth()]+'</div><div class="litu-day">'+e.date.getDate()+'</div></div>'
-          +'<div><div class="litu-name">'+esc(e.name)+'</div><div class="litu-type">'+esc(e.type)+'</div>'+soon+'</div>'
-          +'</div>';
-      }).join('');
-    } else {
-      lituEl.innerHTML='<p style="font-size:var(--text-sm);color:var(--color-text-tertiary)">No upcoming observances in the next few weeks.</p>';
-    }
+    renderLiturgicalCalendar(lituEl);
   }
 
   // Devotional guides
@@ -2949,8 +3180,12 @@ function renderMore(){
   // Footer
   document.getElementById('moreFooter').innerHTML='MassFinder v2';
 
-  // Trigger readings fetch async (also populates saint card)
+  // Trigger readings and saint card fetches independently
   fetchReadings();
+  fetchLiturgicalDay().then(function(events){
+    renderSaintCard(events);
+    renderLiturgicalCalendar(); // Re-render with LitCal data now cached
+  });
 }
 
 
