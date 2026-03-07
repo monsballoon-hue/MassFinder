@@ -28,7 +28,7 @@ var VALID_CATEGORIES = [
 var VALID_RECURRING = [null, 'weekly', 'monthly', 'one_time'];
 var VALID_SEASONAL = [null, 'year_round', 'lent', 'advent', 'holy_week', 'easter_season', 'academic_year', 'summer'];
 var VALID_DAYS = [null, 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday',
-  'weekday', 'daily', 'first_friday', 'first_saturday', 'holyday', 'holyday_eve',
+  'first_friday', 'first_saturday', 'holyday', 'holyday_eve',
   'good_friday', 'holy_thursday', 'holy_saturday', 'easter_vigil',
   'palm_sunday', 'easter_sunday', 'civil_holiday'];
 var TIME_RE = /^([01]\d|2[0-3]):[0-5]\d$/;
@@ -44,9 +44,10 @@ var client = new Anthropic({ apiKey: config.ANTHROPIC_API_KEY });
  * @param {string} churchName
  * @param {string} churchTown
  * @param {object} [profile] - parish profile for context
+ * @param {boolean} [useSchedulePrompt] - use focused schedule prompt
  * @returns {Promise<object>} { items: [...], page_type, notes, usage, cost }
  */
-function parsePage(imageBuffer, pageNumber, totalPages, churchName, churchTown, profile) {
+function parsePage(imageBuffer, pageNumber, totalPages, churchName, churchTown, profile, useSchedulePrompt) {
   var base64 = imageBuffer.toString('base64');
 
   // Detect media type from buffer header
@@ -55,7 +56,12 @@ function parsePage(imageBuffer, pageNumber, totalPages, churchName, churchTown, 
     mediaType = 'image/jpeg';
   }
 
-  var promptText = prompt.buildPrompt(churchName, churchTown, pageNumber, totalPages, profile);
+  var promptText;
+  if (useSchedulePrompt && prompt.buildSchedulePrompt) {
+    promptText = prompt.buildSchedulePrompt(churchName, churchTown, pageNumber, totalPages, profile);
+  } else {
+    promptText = prompt.buildPrompt(churchName, churchTown, pageNumber, totalPages, profile);
+  }
 
   return client.messages.create({
     model: config.PARSE_MODEL,
@@ -328,18 +334,68 @@ function parsePage(imageBuffer, pageNumber, totalPages, churchName, churchTown, 
       // This is a blob — split into individual items
       console.log('      [split] Breaking "' + item.title + '" into ' + times.length + ' individual Mass items');
       var textLow = text.toLowerCase();
+
+      // Build position-aware day map for smarter day inference
+      var dayPositions = [];
+      var dayKeywords = [
+        { word: 'sunday', day: 'sunday' },
+        { word: 'saturday', day: 'saturday' },
+        { word: 'weekday', day: 'weekday' },
+        { word: 'mon-fri', day: 'weekday' },
+        { word: 'monday through friday', day: 'weekday' },
+        { word: 'monday - friday', day: 'weekday' },
+        { word: 'holy day', day: 'holyday' },
+      ];
+      dayKeywords.forEach(function(dk) {
+        var pos = textLow.indexOf(dk.word);
+        while (pos !== -1) {
+          dayPositions.push({ pos: pos, day: dk.day });
+          pos = textLow.indexOf(dk.word, pos + dk.word.length);
+        }
+      });
+      dayPositions.sort(function(a, b) { return a.pos - b.pos; });
+
       times.forEach(function(t) {
-        // Determine day context from surrounding text
-        var isSaturday = textLow.indexOf('saturday') !== -1 || textLow.indexOf('sat ') !== -1;
-        var isSunday = textLow.indexOf('sunday') !== -1 || textLow.indexOf('sun ') !== -1;
-        var title = 'Mass';
+        // Find this time's position in the text to match nearest day keyword
+        var timePos = textLow.indexOf(t);
+        if (timePos === -1) {
+          // Try 12hr format lookup
+          var hr12 = parseInt(t.split(':')[0], 10);
+          var min12 = t.split(':')[1];
+          var search12 = (hr12 > 12 ? hr12 - 12 : hr12) + ':' + min12;
+          timePos = textLow.indexOf(search12);
+        }
+
+        // Find nearest day keyword BEFORE this time position
         var inferredDay = null;
-        // Try to infer day for this specific time
-        // Look for patterns like "Saturday: 9:00 AM" or "Sunday 7:30, 9:00"
-        if (isSaturday && t < '14:00') { title = 'Daily Mass'; inferredDay = 'saturday'; }
-        else if (isSaturday && t >= '14:00') { title = 'Vigil Mass'; inferredDay = 'saturday'; }
-        else if (isSunday) { title = 'Sunday Mass'; inferredDay = 'sunday'; }
-        else title = 'Daily Mass';
+        if (timePos !== -1) {
+          for (var d = dayPositions.length - 1; d >= 0; d--) {
+            if (dayPositions[d].pos < timePos) {
+              inferredDay = dayPositions[d].day;
+              break;
+            }
+          }
+        }
+
+        // Fallback: simple keyword scan if position matching failed
+        if (!inferredDay) {
+          if (textLow.indexOf('saturday') !== -1 || textLow.indexOf('sat ') !== -1) {
+            inferredDay = 'saturday';
+          } else if (textLow.indexOf('sunday') !== -1 || textLow.indexOf('sun ') !== -1) {
+            inferredDay = 'sunday';
+          }
+        }
+
+        var title = 'Mass';
+        if (inferredDay === 'saturday' && t < '14:00') { title = 'Daily Mass'; }
+        else if (inferredDay === 'saturday' && t >= '14:00') { title = 'Vigil Mass'; }
+        else if (inferredDay === 'sunday') { title = 'Sunday Mass'; }
+        else if (inferredDay === 'weekday') { title = 'Daily Mass'; }
+        else if (inferredDay === 'holyday') { title = 'Holy Day Mass'; }
+        else {
+          title = 'Daily Mass';
+          inferredDay = 'weekday'; // Default for unassociated times
+        }
 
         splitItems.push({
           item_type: 'service',
@@ -394,6 +450,23 @@ function parsePage(imageBuffer, pageNumber, totalPages, churchName, churchTown, 
         console.log('      [filter] Dropped (mass intention): ' + item.title);
         return false;
       }
+      // Drop items assigned to sibling churches in multi-site parishes
+      if (profile && profile.sibling_locations && profile.sibling_locations.length) {
+        var loc = (item.location || '').toLowerCase();
+        var hostP = (item.host_parish || '').toLowerCase();
+        var titleLow2 = (item.title || '').toLowerCase();
+        var isSibling = false;
+        for (var sl = 0; sl < profile.sibling_locations.length; sl++) {
+          var sib = profile.sibling_locations[sl].toLowerCase();
+          if (loc === sib || loc.indexOf(sib) !== -1 ||
+              hostP.indexOf(sib) !== -1 || titleLow2.indexOf(sib) !== -1) {
+            console.log('      [filter] Dropped (sibling location ' + profile.sibling_locations[sl] + '): ' + item.title);
+            isSibling = true;
+            break;
+          }
+        }
+        if (isSibling) return false;
+      }
       // Drop low-confidence items (Claude hedging = likely noise)
       if (item.confidence < 0.5) {
         console.log('      [filter] Dropped (confidence ' + item.confidence + '): ' + item.title);
@@ -408,6 +481,12 @@ function parsePage(imageBuffer, pageNumber, totalPages, churchName, churchTown, 
     });
     if (preFilterCount > items.length) {
       console.log('      [filter] Kept ' + items.length + '/' + preFilterCount + ' items');
+    }
+
+    // Warn if early pages return 0 items (likely missed schedule content)
+    if (items.length === 0 && pageNumber <= 3) {
+      console.log('      [WARN] Page ' + pageNumber + ' returned 0 items (page_type: ' +
+        (parsed.page_type || 'unknown') + ', notes: ' + (parsed.notes || 'none') + ')');
     }
 
     // Extract clergy and mass_schedule from page-level output
@@ -435,6 +514,18 @@ function parsePage(imageBuffer, pageNumber, totalPages, churchName, churchTown, 
  * @returns {Promise<object>} { allItems: [...], pageResults: [...], totalCost }
  */
 function parseAllPages(pages, churchName, churchTown, profile) {
+  // Filter skip_pages from profile before parsing
+  if (profile && profile.skip_pages && profile.skip_pages.length) {
+    var skipSet = {};
+    profile.skip_pages.forEach(function(p) { skipSet[p] = true; });
+    var beforeLen = pages.length;
+    pages = pages.filter(function(p) { return !skipSet[p.page]; });
+    if (pages.length < beforeLen) {
+      console.log('  [skip] Skipped ' + (beforeLen - pages.length) + ' page(s) per profile: ' +
+        profile.skip_pages.join(', '));
+    }
+  }
+
   var allItems = [];
   var pageResults = [];
   var totalCost = 0;
@@ -510,11 +601,17 @@ function parseAllPages(pages, churchName, churchTown, profile) {
 
     var page = pages[i];
     i++;
-    console.log('    Parsing page ' + page.page + '/' + pages.length + '...');
+    // Determine if this page should use the schedule-focused prompt
+    var useSchedulePrompt = (page.page <= 2);
+    if (profile && profile.schedule_pages) {
+      useSchedulePrompt = profile.schedule_pages.indexOf(page.page) !== -1;
+    }
+    console.log('    Parsing page ' + page.page + '/' + pages.length +
+      (useSchedulePrompt ? ' (schedule prompt)' : '') + '...');
 
     return parsePage(
       page.buffer, page.page, pages.length,
-      churchName, churchTown, profile
+      churchName, churchTown, profile, useSchedulePrompt
     ).then(function(result) {
       var svcCount = result.items.filter(function(it) { return it.item_type === 'service'; }).length;
       var evtCount = result.items.filter(function(it) { return it.item_type === 'event'; }).length;
@@ -618,10 +715,11 @@ function deduplicateItems(items) {
       }
 
       // Path 2: Same recurring service with same time AND same day (duplicate schedule formats)
+      // Both must have day values and they must match — no wildcard on null
       if (!isDupe && itemA.item_type === 'service' && itemB.item_type === 'service' &&
           itemA.recurring && itemB.recurring &&
           itemA.event_time && itemB.event_time && itemA.event_time === itemB.event_time &&
-          (itemA.day === itemB.day || !itemA.day || !itemB.day)) {
+          itemA.day && itemB.day && itemA.day === itemB.day) {
         isDupe = true;
       }
 

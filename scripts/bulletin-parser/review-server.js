@@ -86,6 +86,99 @@ var server = http.createServer(function(req, res) {
     return;
   }
 
+  // V2 review UI
+  if (urlPath === '/v2' || urlPath === '/v2/') {
+    var v2Path = path.join(__dirname, 'review-v2.html');
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end(fs.readFileSync(v2Path, 'utf8'));
+    return;
+  }
+
+  // V2 API: list v2 bulletins with change summaries
+  if (urlPath === '/api/v2/bulletins') {
+    getV2Bulletins().then(function(data) {
+      jsonResp(res, 200, data);
+    }).catch(function(err) {
+      jsonResp(res, 500, { error: err.message });
+    });
+    return;
+  }
+
+  // V2 API: get changes for a specific bulletin
+  if (urlPath === '/api/v2/changes') {
+    var query = parseQuery(parts[1] || '');
+    var bulletinId = query.bulletin_id;
+    if (!bulletinId) return jsonResp(res, 400, { error: 'bulletin_id required' });
+    getV2Changes(parseInt(bulletinId)).then(function(data) {
+      jsonResp(res, 200, data);
+    }).catch(function(err) {
+      jsonResp(res, 500, { error: err.message });
+    });
+    return;
+  }
+
+  // V2 API: get known services for a church
+  if (urlPath === '/api/v2/services') {
+    var query = parseQuery(parts[1] || '');
+    var svcChurchId = query.church_id;
+    if (!svcChurchId) return jsonResp(res, 400, { error: 'church_id required' });
+    var loader = require('./load-services');
+    var ctx = loader.getChurchContext(svcChurchId);
+    if (!ctx) return jsonResp(res, 404, { error: 'Church not found: ' + svcChurchId });
+    jsonResp(res, 200, {
+      parishName: ctx.parishName,
+      locationName: ctx.locationName,
+      services: ctx.services,
+      clergy: ctx.clergy
+    });
+    return;
+  }
+
+  // V2 API: update a change item (approve/reject/edit)
+  if (urlPath === '/api/v2/update-change' && req.method === 'POST') {
+    readBody(req, function(data) {
+      var id = data.id;
+      if (!id) return jsonResp(res, 400, { error: 'id required' });
+      var updates = {};
+      if (data.status) updates.status = data.status;
+      if (data.title !== undefined) updates.title = data.title;
+      if (data.description !== undefined) updates.description = data.description;
+      if (data.event_date !== undefined) updates.event_date = data.event_date;
+      if (data.event_time !== undefined) updates.event_time = data.event_time;
+      if (data.event_end_time !== undefined) updates.event_end_time = data.event_end_time;
+      if (data.category !== undefined) updates.category = data.category;
+      if (data.notes !== undefined) updates.notes = data.notes;
+      if (data.service_type !== undefined) updates.service_type = data.service_type;
+      if (data.day !== undefined) updates.day = data.day;
+      if (data.time !== undefined) updates.time = data.time;
+      if (data.end_time !== undefined) updates.end_time = data.end_time;
+      if (data.language !== undefined) updates.language = data.language;
+      if (data.seasonal !== undefined) updates.seasonal = data.seasonal;
+      if (data.new_value !== undefined) updates.new_value = data.new_value;
+      if (data.location !== undefined) updates.location = data.location;
+      if (data.effective_date !== undefined) updates.effective_date = data.effective_date;
+      if (data.confidence !== undefined) updates.confidence = data.confidence;
+      supabase.from('bulletin_changes').update(updates)
+        .eq('id', id).then(function(r) {
+          if (r.error) return jsonResp(res, 500, { error: r.error.message });
+          jsonResp(res, 200, { ok: true });
+        });
+    });
+    return;
+  }
+
+  // V2 API: bulk approve/reject changes
+  if (urlPath === '/api/v2/bulk-update' && req.method === 'POST') {
+    readBody(req, function(data) {
+      supabase.from('bulletin_changes').update({ status: data.status })
+        .in('id', data.ids).then(function(r) {
+          if (r.error) return jsonResp(res, 500, { error: r.error.message });
+          jsonResp(res, 200, { ok: true, count: data.ids.length });
+        });
+    });
+    return;
+  }
+
   // API: list bulletins with items + church info
   if (urlPath === '/api/bulletins') {
     getBulletins().then(function(data) {
@@ -398,8 +491,86 @@ function pregenerate() {
   next();
 }
 
+// ── V2 data functions ──
+
+function getV2Bulletins() {
+  return supabase.from('bulletins')
+    .select('id, church_id, bulletin_date, page_count, status, parse_cost_usd, pipeline_version, text_quality, services_confirmed, services_total')
+    .eq('pipeline_version', 2)
+    .order('bulletin_date', { ascending: false })
+    .then(function(bRes) {
+      if (bRes.error) throw new Error(bRes.error.message);
+      var bulletins = bRes.data || [];
+      var bulletinIds = bulletins.map(function(b) { return b.id; });
+      if (bulletinIds.length === 0) return [];
+
+      // Get change counts per bulletin
+      return supabase.from('bulletin_changes')
+        .select('bulletin_id, change_type, status')
+        .in('bulletin_id', bulletinIds)
+        .then(function(cRes) {
+          if (cRes.error) throw new Error(cRes.error.message);
+          var changes = cRes.data || [];
+
+          // Get church names
+          var churchIds = bulletins.map(function(b) { return b.church_id; });
+          return supabase.from('churches').select('id, name, city')
+            .in('id', churchIds).then(function(chRes) {
+              var churches = {};
+              (chRes.data || []).forEach(function(c) { churches[c.id] = c; });
+
+              // Aggregate change counts per bulletin
+              var changeCounts = {};
+              changes.forEach(function(ch) {
+                var key = ch.bulletin_id;
+                if (!changeCounts[key]) changeCounts[key] = { confirmed: 0, modified: 0, not_found: 0, new_service: 0, event: 0, notice: 0, pending: 0 };
+                changeCounts[key][ch.change_type] = (changeCounts[key][ch.change_type] || 0) + 1;
+                if (ch.status === 'pending') changeCounts[key].pending++;
+              });
+
+              return bulletins.map(function(b) {
+                var church = churches[b.church_id] || {};
+                var counts = changeCounts[b.id] || {};
+                return {
+                  id: b.id,
+                  churchId: b.church_id,
+                  churchName: church.name || b.church_id,
+                  churchCity: church.city || '',
+                  bulletinDate: b.bulletin_date,
+                  textQuality: b.text_quality,
+                  confirmed: counts.confirmed || 0,
+                  modified: counts.modified || 0,
+                  notFound: counts.not_found || 0,
+                  newServices: counts.new_service || 0,
+                  events: counts.event || 0,
+                  notices: counts.notice || 0,
+                  pending: counts.pending || 0,
+                  servicesConfirmed: b.services_confirmed,
+                  servicesTotal: b.services_total,
+                  cost: b.parse_cost_usd,
+                  pageCount: b.page_count || 0,
+                };
+              });
+            });
+        });
+    });
+}
+
+function getV2Changes(bulletinId) {
+  return supabase.from('bulletin_changes')
+    .select('*')
+    .eq('bulletin_id', bulletinId)
+    .order('change_type')
+    .then(function(res) {
+      if (res.error) throw new Error(res.error.message);
+      return res.data || [];
+    });
+}
+
 server.listen(PORT, function() {
   console.log('\n  Bulletin Review UI');
-  console.log('  http://localhost:' + PORT + '\n');
+  console.log('  V1: http://localhost:' + PORT + '/');
+  console.log('  V2: http://localhost:' + PORT + '/v2/');
+  console.log('');
   pregenerate();
 });

@@ -5,6 +5,8 @@
 //   node scripts/bulletin-parser/index.js --church <id>      # parse one church
 //   node scripts/bulletin-parser/index.js --review           # review pending items
 
+var fs = require('fs');
+var path = require('path');
 var config = require('./config');
 var fetcher = require('./fetch-bulletin');
 var converter = require('./pdf-to-images');
@@ -12,6 +14,16 @@ var parser = require('./parse-page');
 var store = require('./store-results');
 var diff = require('./diff-engine');
 var sb = require('@supabase/supabase-js');
+
+// Load parish profiles for context injection into Claude prompt
+var profilesPath = path.resolve(__dirname, 'parish-profiles.json');
+var allProfiles = {};
+try {
+  allProfiles = JSON.parse(fs.readFileSync(profilesPath, 'utf8'));
+  console.log('Loaded ' + Object.keys(allProfiles).length + ' parish profiles');
+} catch(e) {
+  console.log('WARNING: Could not load parish-profiles.json: ' + e.message);
+}
 
 var supabase = sb.createClient(config.SUPABASE_URL, config.SUPABASE_SERVICE_ROLE_KEY);
 
@@ -125,7 +137,12 @@ function processChurch(church) {
       console.log('  Got ' + pages.length + ' pages, sending to Claude...');
 
       // Step 3: Parse with Claude Vision
-      return parser.parseAllPages(pages, church.name, church.city, null).then(function(parseResult) {
+      var profile = allProfiles[church.id] || null;
+      if (profile) {
+        console.log('  Using parish profile' +
+          (profile.skip_pages && profile.skip_pages.length ? ' (skip pages: ' + profile.skip_pages.join(',') + ')' : ''));
+      }
+      return parser.parseAllPages(pages, church.name, church.city, profile).then(function(parseResult) {
         console.log('  Extracted ' + parseResult.allItems.length + ' items ($' + parseResult.totalCost.toFixed(4) + ')');
 
         // Determine bulletin date

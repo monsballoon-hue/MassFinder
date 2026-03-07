@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bulletin Review — V2</title>
+<style>
+:root {
+  --chrome: #1D1D1F;
+  --sidebar-bg: #F2F2F7;
+  --viewer-bg: #2C2C2E;
+  --surface: #FFFFFF;
+  --bg: #F5F5F7;
+  --border: #D1D1D6;
+  --border-dark: #48484A;
+  --text: #1D1D1F;
+  --text2: #8E8E93;
+  --text3: #C7C7CC;
+  --blue: #5B9BD5;
+  --green: #6BAF7D;
+  --orange: #C9915A;
+  --red: #C47A7A;
+  --purple: #9A8BB8;
+  --indigo: #8887B5;
+  --radius: 10px;
+  --radius-sm: 6px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+  background: var(--chrome);
+  color: var(--text);
+  height: 100vh;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+#app { display: flex; flex-direction: column; height: 100vh; }
+
+/* ── Header ── */
+header {
+  background: var(--chrome);
+  color: #F5F5F7;
+  padding: 0 16px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-dark);
+  font-size: 13px;
+  -webkit-app-region: drag;
+}
+#sidebar-toggle {
+  width: 28px; height: 28px;
+  border: none; background: none;
+  color: var(--text3);
+  cursor: pointer; font-size: 16px;
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  -webkit-app-region: no-drag;
+}
+#sidebar-toggle:hover { background: rgba(255,255,255,0.1); }
+header h1 { font-size: 13px; font-weight: 600; letter-spacing: -0.01em; }
+.header-stats {
+  display: flex; gap: 14px;
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--text3);
+}
+.stat-dot {
+  display: inline-block;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+#help-btn {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  border: 1px solid var(--border-dark);
+  background: none; color: var(--text3);
+  cursor: pointer; font-size: 11px; font-weight: 600;
+  -webkit-app-region: no-drag;
+}
+#help-btn:hover { background: rgba(255,255,255,0.1); }
+
+/* ── Main ── */
+#main { display: flex; flex: 1; overflow: hidden; }
+
+/* ── Sidebar ── */
+#sidebar {
+  width: 240px;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  flex-shrink: 0;
+  transition: width 0.2s ease, opacity 0.2s ease;
+  overflow: hidden;
+}
+#sidebar.collapsed { width: 0; border-right: none; opacity: 0; pointer-events: none; }
+#sidebar-header {
+  padding: 10px 12px 6px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+#sidebar-header h2 { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text2); }
+#sort-select {
+  font-size: 11px; border: none;
+  background: transparent; color: var(--text2);
+  cursor: pointer;
+}
+#bulletin-list { flex: 1; overflow-y: auto; padding: 4px 8px 8px; }
+.bull-card {
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  margin-bottom: 2px;
+  border-left: 3px solid transparent;
+  transition: background 0.1s;
+}
+.bull-card:hover { background: rgba(0,0,0,0.04); }
+.bull-card.active { background: var(--surface); border-left-color: #7A9AB5; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+.bull-name { font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 6px; }
+.bull-meta { font-size: 11px; color: var(--text2); margin-top: 1px; }
+.bull-progress { display: flex; align-items: center; gap: 6px; margin-top: 5px; }
+.progress-bar { flex: 1; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 2px; }
+.progress-label { font-size: 10px; color: var(--text2); min-width: 28px; text-align: right; }
+.badge-count {
+  background: #B07070; color: white;
+  font-size: 10px; font-weight: 600;
+  padding: 0 5px; border-radius: 8px;
+  min-width: 16px; text-align: center;
+  line-height: 16px;
+}
+.badge-done { color: var(--green); font-size: 12px; }
+
+/* ── Content ── */
+#content { flex: 1; display: flex; overflow: hidden; }
+
+/* ── PDF Panel ── */
+#pdf-panel {
+  flex: 1;
+  display: flex; flex-direction: column;
+  background: var(--viewer-bg);
+  min-width: 0;
+}
+#page-tabs {
+  display: flex; gap: 1px;
+  padding: 6px 10px;
+  background: #3A3A3C;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.page-tab {
+  padding: 3px 10px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: #AEAEB2;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  position: relative;
+}
+.page-tab:hover { background: rgba(255,255,255,0.08); color: #F5F5F7; }
+.page-tab.active { background: rgba(255,255,255,0.12); color: #E5E5EA; }
+.page-dot {
+  position: absolute; top: 2px; right: 2px;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: #C9A06A;
+}
+#page-tabs .zoom-group {
+  margin-left: auto;
+  display: flex; align-items: center; gap: 4px;
+}
+.zoom-btn {
+  width: 24px; height: 24px;
+  border: none; border-radius: 4px;
+  background: transparent; color: #AEAEB2;
+  cursor: pointer; font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+}
+.zoom-btn:hover { background: rgba(255,255,255,0.08); color: #F5F5F7; }
+#zoom-level { font-size: 11px; color: #8E8E93; min-width: 32px; text-align: center; }
+#pdf-viewer {
+  flex: 1; overflow: auto;
+  display: flex; justify-content: center; align-items: flex-start;
+  padding: 16px;
+}
+#pdf-img { display: block; max-width: none; height: auto; }
+#pdf-empty {
+  display: flex; align-items: center; justify-content: center;
+  color: #636366; font-size: 14px;
+  width: 100%; height: 100%;
+}
+
+/* ── Review Panel ── */
+#review-panel {
+  width: 380px;
+  display: flex; flex-direction: column;
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  flex-shrink: 0;
+}
+#review-header {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px; font-weight: 600;
+}
+#review-summary {
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--border);
+  display: flex; gap: 10px; flex-wrap: wrap;
+  font-size: 12px; color: var(--text2);
+}
+.summary-item { display: flex; align-items: center; gap: 4px; }
+#review-toolbar {
+  padding: 6px 14px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px;
+}
+#review-toolbar:empty { display: none; padding: 0; border: none; }
+.filter-toggle {
+  padding: 3px 8px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--bg);
+  font-size: 11px;
+  cursor: pointer;
+  color: var(--text2);
+}
+.filter-toggle.active { background: #5B7A95; color: white; border-color: #5B7A95; }
+#wizard-area { flex: 1; padding: 14px; overflow-y: auto; }
+.wizard-nav {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.nav-btn {
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  cursor: pointer; font-size: 12px;
+}
+.nav-btn:disabled { opacity: 0.3; cursor: default; }
+.nav-btn:hover:not(:disabled) { background: var(--bg); }
+.wizard-counter { font-size: 12px; color: var(--text2); }
+.wizard-card {
+  background: var(--bg);
+  border-radius: var(--radius);
+  padding: 16px;
+  border: 1px solid var(--border);
+}
+.change-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.change-badge.modified { background: #F5EDE3; color: #8A6E42; }
+.change-badge.new_service { background: #E8EEF5; color: #4A6B8A; }
+.change-badge.event { background: #EEEAF3; color: #6B5A82; }
+.change-badge.notice { background: #F3EDE3; color: #7A6840; }
+.card-title { font-size: 15px; font-weight: 600; margin: 8px 0; letter-spacing: -0.01em; }
+.card-fields {
+  display: grid; grid-template-columns: auto 1fr;
+  gap: 4px 10px; margin: 10px 0;
+  font-size: 13px;
+}
+.fl { color: var(--text2); font-weight: 500; }
+.diff-old { background: #F2E4E5; padding: 1px 5px; border-radius: 3px; text-decoration: line-through; color: #8B5A5A; }
+.diff-new { background: #E2EFE5; padding: 1px 5px; border-radius: 3px; color: #4A7A52; }
+.card-note { font-size: 12px; color: var(--text2); margin-top: 6px; line-height: 1.4; }
+.confidence {
+  font-size: 11px; color: var(--text2); margin-top: 8px;
+  display: flex; align-items: center; gap: 8px;
+}
+.conf-bar {
+  flex: 1; height: 4px; background: var(--border);
+  border-radius: 2px; overflow: hidden; max-width: 120px;
+}
+.conf-fill { height: 100%; border-radius: 2px; }
+.conf-high { background: var(--green); }
+.conf-med { background: var(--orange); }
+.conf-low { background: var(--red); }
+.wizard-actions { display: flex; gap: 8px; margin-top: 14px; }
+.btn {
+  padding: 6px 16px; border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer; font-size: 13px; font-weight: 500;
+  transition: opacity 0.15s;
+}
+.btn:hover { opacity: 0.85; }
+.btn-approve { background: var(--green); color: white; }
+.btn-reject { background: var(--red); color: white; }
+.btn-edit { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
+.btn-primary { background: var(--blue); color: white; }
+.btn-secondary { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
+.btn-sm { padding: 3px 10px; font-size: 11px; }
+.btn-ghost { background: none; border: none; color: var(--blue); cursor: pointer; font-size: 12px; padding: 0; }
+
+/* ── Services ref ── */
+#services-ref { border-top: 1px solid var(--border); }
+#services-ref summary {
+  padding: 8px 14px; cursor: pointer;
+  font-size: 12px; font-weight: 500; color: var(--text2);
+  list-style: none;
+}
+#services-ref summary::before { content: '\25B8  '; }
+#services-ref[open] summary::before { content: '\25BE  '; }
+#services-list { padding: 0 14px 10px; max-height: 260px; overflow-y: auto; }
+.svc-row {
+  display: flex; align-items: center; gap: 6px;
+  padding: 3px 0; font-size: 12px;
+  border-bottom: 1px solid #F0F0F0;
+}
+.svc-num { color: var(--text3); min-width: 22px; font-variant-numeric: tabular-nums; }
+.svc-type { font-weight: 500; }
+.svc-detail { color: var(--text2); }
+.svc-status { margin-left: auto; font-size: 11px; }
+.svc-ok { color: var(--green); }
+.svc-miss { color: var(--text3); }
+.svc-mod { color: var(--orange); }
+
+/* ── Modal ── */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100;
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+}
+.modal-content {
+  background: var(--surface);
+  border-radius: 12px;
+  width: 440px; max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.35);
+}
+.modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+}
+.modal-header h3 { font-size: 15px; font-weight: 600; }
+.modal-close { width: 24px; height: 24px; border: none; background: none; font-size: 18px; cursor: pointer; color: var(--text2); }
+.modal-body { padding: 16px 18px; }
+.modal-footer {
+  padding: 10px 18px;
+  border-top: 1px solid var(--border);
+  display: flex; gap: 8px; justify-content: flex-end;
+}
+.form-group { margin-bottom: 12px; }
+.form-group label { display: block; font-size: 12px; font-weight: 500; color: var(--text2); margin-bottom: 3px; }
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%; padding: 7px 9px;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  font-size: 13px; font-family: inherit;
+  background: var(--surface);
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  outline: none; border-color: #7A9AB5; box-shadow: 0 0 0 3px rgba(91,123,149,0.12);
+}
+.form-group textarea { resize: vertical; min-height: 56px; }
+.form-group input[readonly] { background: var(--bg); color: var(--text2); }
+
+/* ── Help ── */
+.shortcuts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 16px 18px; }
+.shortcut { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text2); }
+.shortcut kbd {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 22px; padding: 1px 6px;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 3px; font-family: 'SF Mono', Menlo, monospace;
+  font-size: 11px; color: var(--text);
+}
+
+/* ── Toast ── */
+.toast {
+  position: fixed; bottom: 16px; right: 16px;
+  padding: 8px 16px; border-radius: var(--radius-sm);
+  color: white; font-size: 13px; font-weight: 500;
+  z-index: 200; transition: opacity 0.3s;
+  display: flex; align-items: center; gap: 10px;
+}
+.toast.success { background: var(--green); }
+.toast.error { background: var(--red); }
+.toast.hidden { opacity: 0; pointer-events: none; }
+.toast .undo-link {
+  background: rgba(255,255,255,0.25); color: white;
+  border: none; border-radius: 3px;
+  padding: 2px 8px; font-size: 12px; font-weight: 600;
+  cursor: pointer;
+}
+.toast .undo-link:hover { background: rgba(255,255,255,0.4); }
+
+/* ── Empty ── */
+.empty-state {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 32px; color: var(--text3); text-align: center;
+}
+.empty-icon { font-size: 36px; margin-bottom: 8px; }
+.onboard-steps { text-align: left; margin-top: 14px; font-size: 12px; color: var(--text2); line-height: 1.8; }
+.onboard-steps li { margin-bottom: 2px; }
+.onboard-steps strong { color: var(--text); font-weight: 600; }
+
+/* ── Tooltips ── */
+[data-tip] { position: relative; cursor: help; }
+[data-tip]:hover::after {
+  content: attr(data-tip);
+  position: absolute; bottom: 100%; left: 50%;
+  transform: translateX(-50%); margin-bottom: 6px;
+  background: var(--chrome); color: #F5F5F7;
+  padding: 5px 10px; border-radius: 5px;
+  font-size: 11px; font-weight: 400;
+  white-space: nowrap; z-index: 50;
+  pointer-events: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+/* ── List view ── */
+.view-toggle { display: flex; gap: 0; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+.view-toggle button {
+  padding: 2px 10px; border: none; background: var(--bg);
+  font-size: 11px; cursor: pointer; color: var(--text2);
+  border-right: 1px solid var(--border);
+}
+.view-toggle button:last-child { border-right: none; }
+.view-toggle button.active { background: #5B7A95; color: white; }
+.list-area { flex: 1; padding: 10px 14px; overflow-y: auto; }
+.list-item {
+  padding: 10px 12px; margin-bottom: 6px;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  background: var(--bg); font-size: 13px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.list-item:hover { border-color: var(--blue); }
+.list-item .li-top { display: flex; align-items: center; gap: 6px; }
+.list-item .li-title { font-weight: 600; font-size: 13px; flex: 1; }
+.list-item .li-detail { font-size: 12px; color: var(--text2); line-height: 1.4; }
+.list-item .li-actions { display: flex; gap: 6px; margin-top: 4px; }
+.list-item .li-conf { font-size: 11px; color: var(--text3); margin-left: auto; }
+.list-item.reviewed { opacity: 0.55; }
+.list-item.reviewed:hover { opacity: 0.8; }
+.li-status { font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 3px; }
+.li-status.approved { background: #E2EFE5; color: #4A7A52; }
+.li-status.rejected { background: #F2E4E5; color: #8B5A5A; }
+.li-undo {
+  font-size: 11px; color: var(--blue); background: none;
+  border: none; cursor: pointer; padding: 0;
+  margin-left: 6px; opacity: 0; transition: opacity 0.15s;
+}
+.list-item.reviewed:hover .li-undo { opacity: 1; }
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <button id="sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/><line x1="5.5" y1="1" x2="5.5" y2="15" stroke="currentColor" stroke-width="1.2"/></svg>
+    </button>
+    <h1>Bulletin Review</h1>
+    <div id="stats" class="header-stats"></div>
+    <button id="help-btn" onclick="toggleHelp()">?</button>
+  </header>
+  <div id="main">
+    <aside id="sidebar">
+      <div id="sidebar-header">
+        <h2>Bulletins</h2>
+        <label style="font-size:11px;color:var(--text3)">Sort:
+        <select id="sort-select" onchange="renderSidebar()">
+          <option value="pending">Needs Review</option>
+          <option value="date">Date</option>
+          <option value="name">Church Name</option>
+        </select></label>
+      </div>
+      <div id="bulletin-list"></div>
+    </aside>
+    <div id="content">
+      <div id="pdf-panel">
+        <div id="page-tabs">
+          <span class="zoom-group">
+            <button class="zoom-btn" onclick="zoomOut()">&minus;</button>
+            <span id="zoom-level">Fit</span>
+            <button class="zoom-btn" onclick="zoomIn()">+</button>
+            <button class="zoom-btn" onclick="zoomReset()" style="font-size:11px;width:auto;padding:0 6px">Fit</button>
+          </span>
+        </div>
+        <div id="pdf-viewer">
+          <img id="pdf-img" style="display:none">
+          <div id="pdf-empty">Select a bulletin to begin</div>
+        </div>
+      </div>
+      <div id="review-panel">
+        <div id="review-header"></div>
+        <div id="review-summary"></div>
+        <div id="review-toolbar"></div>
+        <div id="wizard-area">
+          <div class="empty-state">
+            <div class="empty-icon" style="font-size:28px">&#128196;</div>
+            <div style="font-size:14px;font-weight:600;color:var(--text)">Welcome to Bulletin Review</div>
+            <ol class="onboard-steps">
+              <li><strong>Pick a bulletin</strong> from the sidebar (red badges = needs review)</li>
+              <li><strong>Look at the PDF</strong> in the center to see the actual bulletin</li>
+              <li><strong>Review each item</strong> on the right &mdash; Approve or Reject</li>
+              <li>When done, the green checkmark appears. Move to the next one!</li>
+            </ol>
+            <div style="margin-top:10px;font-size:11px;color:var(--text3)">Press <kbd style="background:var(--bg);border:1px solid var(--border);border-radius:3px;padding:1px 5px;font-family:'SF Mono',Menlo,monospace;font-size:10px">?</kbd> anytime for keyboard shortcuts</div>
+          </div>
+        </div>
+        <details id="services-ref" style="display:none">
+          <summary id="services-summary">Known Services</summary>
+          <div id="services-list"></div>
+        </details>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="edit-modal" class="modal-overlay" style="display:none"></div>
+<div id="help-modal" class="modal-overlay" style="display:none">
+  <div class="modal-content" style="width:500px">
+    <div class="modal-header">
+      <h3>Quick Guide</h3>
+      <button class="modal-close" onclick="toggleHelp()">&times;</button>
+    </div>
+    <div style="padding:16px 18px 8px;font-size:13px;color:var(--text2);line-height:1.6">
+      <p style="margin-bottom:10px"><strong style="color:var(--text)">What you're doing:</strong> The AI compared each church bulletin against our known schedule. You're reviewing what it found that's different.</p>
+      <p style="margin-bottom:10px"><strong style="color:var(--green)">Approve</strong> = "Yes, this is real." &nbsp; <strong style="color:var(--red)">Reject</strong> = "No, ignore this."</p>
+      <p style="margin-bottom:4px"><strong style="color:var(--text)">Tip:</strong> Use <strong>List</strong> view first to scan for duplicates, then <strong>Wizard</strong> for careful one-by-one review.</p>
+    </div>
+    <div style="padding:4px 18px 6px"><hr style="border:none;border-top:1px solid var(--border)"></div>
+    <div style="padding:2px 18px 4px;font-size:12px;font-weight:600;color:var(--text2)">Keyboard Shortcuts</div>
+    <div class="shortcuts-grid">
+      <div class="shortcut"><kbd>A</kbd> Approve</div>
+      <div class="shortcut"><kbd>R</kbd> Reject</div>
+      <div class="shortcut"><kbd>E</kbd> Edit</div>
+      <div class="shortcut"><kbd>N</kbd> Next unreviewed</div>
+      <div class="shortcut"><kbd>J</kbd> / <kbd>&darr;</kbd> Next item</div>
+      <div class="shortcut"><kbd>K</kbd> / <kbd>&uarr;</kbd> Prev item</div>
+      <div class="shortcut"><kbd>[</kbd> Prev bulletin</div>
+      <div class="shortcut"><kbd>]</kbd> Next bulletin</div>
+      <div class="shortcut"><kbd>1-9</kbd> PDF page</div>
+      <div class="shortcut"><kbd>?</kbd> This help</div>
+      <div class="shortcut"><kbd>Esc</kbd> Close modal</div>
+    </div>
+  </div>
+</div>
+<div id="toast" class="toast hidden"></div>
+
+<script>
+// ── STATE ──
+var state = {
+  bulletins: [],
+  bulletinIdx: -1,
+  changes: [],
+  services: [],
+  wizardIdx: 0,
+  page: 1,
+  zoom: 0,  // 0 = fit-to-width
+  imgNatW: 0,
+  imgNatH: 0,
+  viewMode: 'wizard'  // 'wizard' or 'list'
+};
+
+// ── HELPERS ──
+function fmtTime(t) {
+  if (!t) return '';
+  var p = t.split(':'), h = parseInt(p[0], 10), m = p[1];
+  return (h > 12 ? h - 12 : h === 0 ? 12 : h) + ':' + m + ' ' + (h >= 12 ? 'PM' : 'AM');
+}
+function fmtDate(d) {
+  if (!d) return '';
+  var mo = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var p = d.split('-');
+  return mo[parseInt(p[1], 10) - 1] + ' ' + parseInt(p[2], 10) + ', ' + p[0];
+}
+function fmtType(t) {
+  return t ? t.replace(/_/g, ' ').replace(/\b\w/g, function(c) { return c.toUpperCase(); }) : '';
+}
+function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;'); }
+
+function seasonStr(s) {
+  if (!s) return '';
+  if (typeof s === 'object' && s.is_seasonal) return s.season;
+  if (typeof s === 'string' && s !== 'year_round') return s;
+  return '';
+}
+
+function getPending() {
+  return state.changes.filter(function(c) { return c.status === 'pending'; });
+}
+
+function getPageFiltered(items) {
+  var hasPageData = items.some(function(c) { return c.source_page != null; });
+  if (!hasPageData) return items;
+  return items.filter(function(c) { return c.source_page == null || c.source_page === state.page; });
+}
+
+function findSvc(num) {
+  for (var i = 0; i < state.services.length; i++) {
+    if (state.services[i].num === num) return state.services[i];
+  }
+  return null;
+}
+
+// ── TOAST ──
+var toastTimer = null;
+function toast(msg, type, undoId) {
+  var el = document.getElementById('toast');
+  el.innerHTML = esc(msg) + (undoId ? ' <button class="undo-link" onclick="undoAction(' + undoId + ')">Undo</button>' : '');
+  el.className = 'toast ' + (type || 'success');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function() { el.className = 'toast hidden'; }, undoId ? 4000 : 2500);
+}
+
+// ── API ──
+function apiFetch(url) { return fetch(url).then(function(r) { return r.json(); }); }
+function apiPost(url, d) {
+  return fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d) })
+    .then(function(r) { return r.json(); });
+}
+
+function loadBulletins() {
+  return apiFetch('/api/v2/bulletins').then(function(data) {
+    state.bulletins = data || [];
+    renderHeader();
+    renderSidebar();
+    for (var i = 0; i < state.bulletins.length; i++) {
+      if (state.bulletins[i].pending > 0) { selectBulletin(i); return; }
+    }
+    if (state.bulletins.length > 0) selectBulletin(0);
+  });
+}
+
+function selectBulletin(idx) {
+  if (idx < 0 || idx >= state.bulletins.length) return;
+  state.bulletinIdx = idx;
+  state.page = 1;
+  state.wizardIdx = 0;
+  state.zoom = 0;
+  var b = state.bulletins[idx];
+  var p1 = apiFetch('/api/v2/changes?bulletin_id=' + b.id).then(function(d) { state.changes = d || []; });
+  var p2 = apiFetch('/api/v2/services?church_id=' + b.churchId).then(function(d) {
+    state.services = d.services || [];
+  }).catch(function() { state.services = []; });
+  Promise.all([p1, p2]).then(function() {
+    renderSidebar();
+    renderPdf();
+    renderReview();
+  });
+}
+
+// ── ACTIONS ──
+function doAction(status) {
+  var items = getPending();
+  if (state.wizardIdx >= items.length) return;
+  var item = items[state.wizardIdx];
+  apiPost('/api/v2/update-change', { id: item.id, status: status }).then(function(r) {
+    if (!r.ok) return toast('Error: ' + (r.error || 'unknown'), 'error');
+    for (var i = 0; i < state.changes.length; i++) {
+      if (state.changes[i].id === item.id) { state.changes[i].status = status; break; }
+    }
+    state.bulletins[state.bulletinIdx].pending = Math.max(0, state.bulletins[state.bulletinIdx].pending - 1);
+    toast(status === 'approved' ? 'Approved' : 'Rejected', 'success', item.id);
+    var np = getPending();
+    if (state.wizardIdx >= np.length) state.wizardIdx = Math.max(0, np.length - 1);
+    renderHeader(); renderSidebar(); renderReview();
+  });
+}
+
+function undoAction(id) {
+  apiPost('/api/v2/update-change', { id: id, status: 'pending' }).then(function(r) {
+    if (!r.ok) return toast('Undo failed', 'error');
+    for (var i = 0; i < state.changes.length; i++) {
+      if (state.changes[i].id === id) { state.changes[i].status = 'pending'; break; }
+    }
+    state.bulletins[state.bulletinIdx].pending += 1;
+    toast('Undone');
+    renderHeader(); renderSidebar(); renderReview();
+  });
+}
+function approve() { doAction('approved'); }
+function reject() { doAction('rejected'); }
+function nextItem() { var p = getPending(); if (state.wizardIdx < p.length - 1) { state.wizardIdx++; renderWizard(); } }
+function prevItem() { if (state.wizardIdx > 0) { state.wizardIdx--; renderWizard(); } }
+
+function bulkApprove() {
+  var items = getPending();
+  if (items.length === 0) return;
+  if (!confirm('Approve all ' + items.length + ' pending items?')) return;
+  var ids = items.map(function(c) { return c.id; });
+  apiPost('/api/v2/bulk-update', { ids: ids, status: 'approved' }).then(function(r) {
+    if (!r.ok) return toast('Error', 'error');
+    items.forEach(function(item) {
+      for (var i = 0; i < state.changes.length; i++) {
+        if (state.changes[i].id === item.id) { state.changes[i].status = 'approved'; break; }
+      }
+    });
+    state.bulletins[state.bulletinIdx].pending = Math.max(0, state.bulletins[state.bulletinIdx].pending - ids.length);
+    state.wizardIdx = 0;
+    toast('Approved ' + ids.length + ' items');
+    renderHeader(); renderSidebar(); renderReview();
+  });
+}
+
+function bulkReject() {
+  var items = getPending();
+  if (items.length === 0 || !confirm('Reject ' + items.length + ' items?')) return;
+  var ids = items.map(function(c) { return c.id; });
+  apiPost('/api/v2/bulk-update', { ids: ids, status: 'rejected' }).then(function(r) {
+    if (!r.ok) return toast('Error', 'error');
+    items.forEach(function(item) {
+      for (var i = 0; i < state.changes.length; i++) {
+        if (state.changes[i].id === item.id) { state.changes[i].status = 'rejected'; break; }
+      }
+    });
+    state.bulletins[state.bulletinIdx].pending = Math.max(0, state.bulletins[state.bulletinIdx].pending - ids.length);
+    state.wizardIdx = 0;
+    toast('Rejected ' + ids.length + ' items');
+    renderHeader(); renderSidebar(); renderReview();
+  });
+}
+
+function navBulletin(dir) {
+  var i = state.bulletinIdx + dir;
+  if (i >= 0 && i < state.bulletins.length) selectBulletin(i);
+}
+
+function nextBulletinWithPending() {
+  for (var i = state.bulletinIdx + 1; i < state.bulletins.length; i++) {
+    if (state.bulletins[i].pending > 0) { selectBulletin(i); return; }
+  }
+  for (var j = 0; j < state.bulletinIdx; j++) {
+    if (state.bulletins[j].pending > 0) { selectBulletin(j); return; }
+  }
+}
+
+// ── SIDEBAR ──
+function toggleSidebar() {
+  var sb = document.getElementById('sidebar');
+  sb.classList.toggle('collapsed');
+  localStorage.setItem('v2_sidebar', sb.classList.contains('collapsed') ? '0' : '1');
+  // Refit PDF after transition
+  setTimeout(function() { if (state.zoom === 0 && state.imgNatW) applyZoom(); }, 250);
+}
+
+// ── ZOOM ──
+function applyZoom() {
+  var img = document.getElementById('pdf-img');
+  if (!state.imgNatW || !state.imgNatH) return;
+  var viewer = document.getElementById('pdf-viewer');
+  var cw = viewer.clientWidth - 32;
+  var ratio = state.imgNatH / state.imgNatW;
+  var w;
+  if (state.zoom === 0) {
+    w = Math.min(state.imgNatW, cw);
+    document.getElementById('zoom-level').textContent = 'Fit';
+  } else {
+    var base = Math.min(state.imgNatW, cw);
+    w = Math.round(base * state.zoom / 100);
+    document.getElementById('zoom-level').textContent = state.zoom + '%';
+  }
+  img.style.width = w + 'px';
+  img.style.height = Math.round(w * ratio) + 'px';
+}
+function zoomIn() { state.zoom = (state.zoom === 0 ? 125 : Math.min(state.zoom + 25, 300)); applyZoom(); }
+function zoomOut() { state.zoom = (state.zoom === 0 ? 75 : Math.max(state.zoom - 25, 50)); applyZoom(); }
+function zoomReset() { state.zoom = 0; applyZoom(); }
+function setPage(p) { state.page = p; state.wizardIdx = 0; renderPdf(); renderReview(); }
+
+window.addEventListener('resize', function() { if (state.imgNatW && state.imgNatH) applyZoom(); });
+
+// ── RENDERING ──
+function renderHeader() {
+  var tot = 0, conf = 0, pend = 0, evts = 0, done = 0;
+  state.bulletins.forEach(function(b) { tot++; conf += b.confirmed || 0; pend += b.pending || 0; evts += b.events || 0; if (b.pending === 0) done++; });
+  document.getElementById('stats').innerHTML =
+    '<span data-tip="Bulletins reviewed: ' + done + ' of ' + tot + '"><span class="stat-dot" style="background:var(--text3)"></span>' + done + '/' + tot + ' done</span>' +
+    '<span data-tip="Services matching our database"><span class="stat-dot" style="background:var(--green)"></span>' + conf + ' confirmed</span>' +
+    '<span data-tip="Items waiting for your review"><span class="stat-dot" style="background:var(--orange)"></span>' + pend + ' pending</span>' +
+    '<span data-tip="Community events found"><span class="stat-dot" style="background:var(--indigo)"></span>' + evts + ' events</span>';
+}
+
+function renderSidebar() {
+  var sorted = state.bulletins.slice();
+  var sv = document.getElementById('sort-select').value;
+  if (sv === 'pending') sorted.sort(function(a, b) { return b.pending - a.pending; });
+  else if (sv === 'name') sorted.sort(function(a, b) { return a.churchName.localeCompare(b.churchName); });
+
+  var h = '';
+  sorted.forEach(function(b) {
+    var oi = state.bulletins.indexOf(b);
+    var act = oi === state.bulletinIdx;
+    var rate = b.servicesTotal > 0 ? Math.round(((b.confirmed || 0) / b.servicesTotal) * 100) : 100;
+    var fc = b.pending > 0 ? 'var(--orange)' : 'var(--green)';
+    h += '<div class="bull-card' + (act ? ' active' : '') + '" onclick="selectBulletin(' + oi + ')">' +
+      '<div class="bull-name">' + esc(b.churchName) +
+      (b.pending > 0 ? ' <span class="badge-count">' + b.pending + '</span>' : ' <span class="badge-done">&#10003;</span>') +
+      '</div>' +
+      '<div class="bull-meta">' + esc(b.churchCity) + ' &middot; ' + b.bulletinDate + '</div>' +
+      '<div class="bull-progress">' +
+        '<div class="progress-bar"><div class="progress-fill" style="width:' + rate + '%;background:' + fc + '"></div></div>' +
+        '<span class="progress-label">' + rate + '%</span>' +
+      '</div></div>';
+  });
+  document.getElementById('bulletin-list').innerHTML = h;
+}
+
+function renderPdf() {
+  var b = state.bulletins[state.bulletinIdx];
+  if (!b) return;
+  var pc = b.pageCount || 0;
+
+  // Determine which pages have pending items
+  var pagePending = {};
+  getPending().forEach(function(c) { if (c.source_page) pagePending[c.source_page] = true; });
+
+  // Build page tabs + zoom controls
+  var th = '';
+  for (var p = 1; p <= pc; p++) {
+    th += '<button class="page-tab' + (p === state.page ? ' active' : '') +
+      '" onclick="setPage(' + p + ')">' + p +
+      (pagePending[p] ? '<span class="page-dot"></span>' : '') + '</button>';
+  }
+  th += '<span class="zoom-group">' +
+    '<button class="zoom-btn" onclick="zoomOut()">&minus;</button>' +
+    '<span id="zoom-level">' + (state.zoom === 0 ? 'Fit' : state.zoom + '%') + '</span>' +
+    '<button class="zoom-btn" onclick="zoomIn()">+</button>' +
+    '<button class="zoom-btn" onclick="zoomReset()" style="font-size:10px;width:auto;padding:0 5px">Fit</button>' +
+    '</span>';
+  document.getElementById('page-tabs').innerHTML = th;
+
+  var img = document.getElementById('pdf-img');
+  var empty = document.getElementById('pdf-empty');
+  if (pc > 0) {
+    img.onload = function() {
+      state.imgNatW = img.naturalWidth;
+      state.imgNatH = img.naturalHeight;
+      img.style.display = 'block';
+      empty.style.display = 'none';
+      applyZoom();
+    };
+    img.onerror = function() {
+      state.imgNatW = 0;
+      state.imgNatH = 0;
+      img.style.display = 'none';
+      empty.style.display = 'flex';
+      empty.textContent = 'No image for page ' + state.page;
+    };
+    img.src = '/images/' + b.churchId + '/page_' + state.page + '.png';
+  } else {
+    img.style.display = 'none';
+    empty.style.display = 'flex';
+    empty.textContent = 'No PDF images available';
+  }
+}
+
+function renderReview() {
+  if (state.bulletinIdx < 0) return;
+  var b = state.bulletins[state.bulletinIdx];
+  var ct = { confirmed: 0, modified: 0, not_found: 0, new_service: 0, event: 0, notice: 0 };
+  state.changes.forEach(function(c) { ct[c.change_type] = (ct[c.change_type] || 0) + 1; });
+
+  // Header
+  document.getElementById('review-header').innerHTML =
+    '<span style="color:var(--text2);font-weight:400;font-size:12px">' + esc(b.churchCity) + '</span> ' +
+    esc(b.churchName);
+
+  // Summary dots with tooltips
+  var sm = '';
+  sm += '<span class="summary-item" data-tip="Services that match what we already have"><span class="stat-dot" style="background:var(--green)"></span>' + ct.confirmed + ' confirmed</span>';
+  if (ct.modified) sm += '<span class="summary-item" data-tip="Services with a different time or detail"><span class="stat-dot" style="background:var(--orange)"></span>' + ct.modified + ' modified</span>';
+  if (ct.not_found) sm += '<span class="summary-item" data-tip="Not in this bulletin (doesn\'t mean cancelled)"><span class="stat-dot" style="background:var(--text3)"></span>' + ct.not_found + ' not found</span>';
+  if (ct.new_service) sm += '<span class="summary-item" data-tip="Services not in our database yet"><span class="stat-dot" style="background:var(--blue)"></span>' + ct.new_service + ' new</span>';
+  if (ct.event) sm += '<span class="summary-item" data-tip="One-time events (socials, fundraisers, etc.)"><span class="stat-dot" style="background:var(--indigo)"></span>' + ct.event + ' events</span>';
+  if (ct.notice) sm += '<span class="summary-item" data-tip="Temporary announcements or closures"><span class="stat-dot" style="background:var(--orange)"></span>' + ct.notice + ' notices</span>';
+  document.getElementById('review-summary').innerHTML = sm;
+
+  // Toolbar: bulk actions
+  var allPending = getPending();
+  var tb = '';
+  if (allPending.length > 0) {
+    tb += '<button class="btn btn-approve btn-sm" onclick="bulkApprove()">&#10003; Approve All (' + allPending.length + ')</button>';
+    tb += '<button class="btn btn-reject btn-sm" onclick="bulkReject()">&#10005; Reject</button>';
+  }
+  tb += '<span style="margin-left:auto"><span class="view-toggle">' +
+    '<button' + (state.viewMode === 'wizard' ? ' class="active"' : '') + ' onclick="setView(\'wizard\')">Wizard</button>' +
+    '<button' + (state.viewMode === 'list' ? ' class="active"' : '') + ' onclick="setView(\'list\')">List</button>' +
+    '</span></span>';
+  document.getElementById('review-toolbar').innerHTML = tb;
+
+  if (state.viewMode === 'list') renderList();
+  else renderWizard();
+  renderServices();
+}
+
+function setView(mode) {
+  state.viewMode = mode;
+  renderReview();
+}
+
+function renderWizard() {
+  var area = document.getElementById('wizard-area');
+  var pending = getPending();
+
+  if (pending.length === 0) {
+    if (state.changes.length > 0) {
+      var nconf = 0; state.changes.forEach(function(c) { if (c.change_type === 'confirmed') nconf++; });
+      var napp = 0, nrej = 0; state.changes.forEach(function(c) { if (c.status === 'approved') napp++; if (c.status === 'rejected') nrej++; });
+      area.innerHTML = '<div class="empty-state">' +
+        '<div class="empty-icon" style="color:var(--green)">&#10003;</div>' +
+        '<div style="font-size:15px;font-weight:600;color:var(--green)">All Done!</div>' +
+        '<div style="margin-top:6px;font-size:12px;color:var(--text2);line-height:1.6">' +
+          nconf + ' services confirmed<br>' +
+          (napp ? napp + ' approved' : '') +
+          (napp && nrej ? ' &middot; ' : '') +
+          (nrej ? nrej + ' rejected' : '') +
+        '</div>' +
+        '<button class="btn btn-primary btn-sm" style="margin-top:14px" onclick="nextBulletinWithPending()">Next Bulletin &rarr;</button>' +
+        '</div>';
+    } else {
+      area.innerHTML = '<div class="empty-state"><div class="empty-icon">&#10003;</div>' +
+        '<div style="font-size:13px">No pending items</div></div>';
+    }
+    return;
+  }
+
+  if (state.wizardIdx >= pending.length) state.wizardIdx = pending.length - 1;
+  var item = pending[state.wizardIdx];
+
+  // Auto-flip PDF to the page this item was found on
+  if (item.source_page != null && item.source_page !== state.page) {
+    state.page = item.source_page;
+    renderPdf();
+  }
+  var h = '';
+
+  // Nav
+  h += '<div class="wizard-nav">' +
+    '<button class="nav-btn" onclick="prevItem()"' + (state.wizardIdx === 0 ? ' disabled' : '') + '>&larr;</button>' +
+    '<span class="wizard-counter">' + (state.wizardIdx + 1) + ' / ' + pending.length + '</span>' +
+    '<button class="nav-btn" onclick="nextItem()"' + (state.wizardIdx >= pending.length - 1 ? ' disabled' : '') + '>&rarr;</button>' +
+    '</div>';
+
+  // Card
+  h += '<div class="wizard-card">';
+  h += '<span class="change-badge ' + item.change_type + '">' + fmtType(item.change_type) + '</span>';
+  if (item.source_page) h += '<span style="float:right;font-size:11px;color:var(--text3)">pg ' + item.source_page + '</span>';
+
+  if (item.change_type === 'modified') {
+    var svc = findSvc(item.service_num);
+    var svcLabel = svc ? fmtType(svc.type) : 'Service #' + item.service_num;
+    if (svc) svcLabel += ' &mdash; ' + fmtType(svc.day || '') + ' ' + fmtTime(svc.time);
+    h += '<div class="card-title">' + svcLabel + '</div>';
+    h += '<div class="card-fields">';
+    h += '<span class="fl">What changed</span><span>' + fmtType(item.field_changed) + '</span>';
+    h += '<span class="fl">We have</span><span class="diff-old">' + esc(item.old_value) +
+      (item.field_changed === 'time' ? ' (' + fmtTime(item.old_value) + ')' : '') + '</span>';
+    h += '<span class="fl">Bulletin says</span><span class="diff-new">' + esc(item.new_value) +
+      (item.field_changed === 'time' ? ' (' + fmtTime(item.new_value) + ')' : '') + '</span>';
+    h += '</div>';
+    if (svc && svc.language && svc.language !== 'en') h += '<div class="card-note">Language: ' + svc.language + '</div>';
+  }
+
+  else if (item.change_type === 'new_service') {
+    h += '<div class="card-title">' + fmtType(item.service_type || '') + '</div>';
+    h += '<div class="card-fields">';
+    if (item.day) h += '<span class="fl">Day</span><span>' + fmtType(item.day) + '</span>';
+    if (item.time) h += '<span class="fl">Time</span><span>' + fmtTime(item.time) + '</span>';
+    if (item.end_time) h += '<span class="fl">End</span><span>' + fmtTime(item.end_time) + '</span>';
+    if (item.language && item.language !== 'en') h += '<span class="fl">Lang</span><span>' + esc(item.language) + '</span>';
+    if (item.seasonal) h += '<span class="fl">Season</span><span>' + fmtType(item.seasonal) + '</span>';
+    if (item.notes) h += '<span class="fl">Notes</span><span>' + esc(item.notes) + '</span>';
+    h += '</div>';
+  }
+
+  else if (item.change_type === 'event') {
+    h += '<div class="card-title">' + esc(item.title || 'Untitled Event') + '</div>';
+    h += '<div class="card-fields">';
+    if (item.event_date) h += '<span class="fl">Date</span><span>' + fmtDate(item.event_date) + '</span>';
+    if (item.event_time) h += '<span class="fl">Time</span><span>' + fmtTime(item.event_time) +
+      (item.event_end_time ? ' &ndash; ' + fmtTime(item.event_end_time) : '') + '</span>';
+    if (item.location) h += '<span class="fl">Location</span><span>' + esc(item.location) + '</span>';
+    if (item.category) h += '<span class="fl">Category</span><span>' + fmtType(item.category) + '</span>';
+    h += '</div>';
+    if (item.description) h += '<div class="card-note">' + esc(item.description) + '</div>';
+  }
+
+  else if (item.change_type === 'notice') {
+    h += '<div class="card-title">' + esc(item.title || 'Notice') + '</div>';
+    h += '<div class="card-fields">';
+    if (item.effective_date) h += '<span class="fl">Effective</span><span>' + fmtDate(item.effective_date) + '</span>';
+    h += '</div>';
+    if (item.description) h += '<div class="card-note">' + esc(item.description) + '</div>';
+  }
+
+  if (item.confidence != null) {
+    var pct = Math.round(item.confidence * 100);
+    var cls = pct >= 90 ? 'conf-high' : pct >= 75 ? 'conf-med' : 'conf-low';
+    h += '<div class="confidence" data-tip="How sure the AI is about this finding">' +
+      '<div class="conf-bar"><div class="conf-fill ' + cls + '" style="width:' + pct + '%"></div></div>' +
+      '<span>' + pct + '% confidence</span></div>';
+  }
+
+  h += '<div class="wizard-actions">' +
+    '<button class="btn btn-approve" onclick="approve()">&#10003; Approve</button>' +
+    '<button class="btn btn-reject" onclick="reject()">&#10005; Reject</button>' +
+    '<button class="btn btn-edit" onclick="openEdit()">&#9998; Edit</button>' +
+    '</div></div>';
+
+  area.innerHTML = h;
+}
+
+function renderList() {
+  var area = document.getElementById('wizard-area');
+  // Show actionable changes for the current PDF page
+  var actionable = state.changes.filter(function(c) {
+    return c.change_type !== 'confirmed' && c.change_type !== 'not_found';
+  });
+  actionable = getPageFiltered(actionable);
+
+  if (actionable.length === 0) {
+    area.innerHTML = '<div class="empty-state"><div style="font-size:13px">No actionable items</div></div>';
+    return;
+  }
+
+  var h = '<div class="list-area">';
+  actionable.forEach(function(item) {
+    var done = item.status === 'approved' || item.status === 'rejected';
+    h += '<div class="list-item' + (done ? ' reviewed' : '') + '">';
+    h += '<div class="li-top">';
+    h += '<span class="change-badge ' + item.change_type + '">' + fmtType(item.change_type) + '</span>';
+    h += '<span class="li-title">' + listTitle(item) + '</span>';
+    if (done) {
+      h += '<span class="li-status ' + item.status + '">' + item.status + '</span>';
+      h += '<button class="li-undo" onclick="undoAction(' + item.id + ')">undo</button>';
+    }
+    if (item.confidence != null) h += '<span class="li-conf">' + Math.round(item.confidence * 100) + '%</span>';
+    h += '</div>';
+    h += '<div class="li-detail">' + listDetail(item) + '</div>';
+    if (!done) {
+      h += '<div class="li-actions">' +
+        '<button class="btn btn-approve btn-sm" onclick="listAction(' + item.id + ',\'approved\')">&#10003; Approve</button>' +
+        '<button class="btn btn-reject btn-sm" onclick="listAction(' + item.id + ',\'rejected\')">&#10005; Reject</button>' +
+        '</div>';
+    }
+    h += '</div>';
+  });
+  h += '</div>';
+  area.innerHTML = h;
+}
+
+function listTitle(item) {
+  if (item.change_type === 'modified') {
+    var svc = findSvc(item.service_num);
+    if (svc) return fmtType(svc.type) + ' (' + fmtType(svc.day || '') + ') &mdash; ' + fmtType(item.field_changed) + ' changed';
+    return 'Service #' + item.service_num + ' &mdash; ' + fmtType(item.field_changed) + ' changed';
+  }
+  if (item.change_type === 'new_service') return fmtType(item.service_type || '');
+  return esc(item.title || 'Untitled');
+}
+
+function listDetail(item) {
+  var parts = [];
+  if (item.change_type === 'modified') {
+    parts.push('<span class="diff-old">' + esc(item.old_value) + '</span> &rarr; <span class="diff-new">' + esc(item.new_value) + '</span>');
+  }
+  if (item.change_type === 'new_service') {
+    if (item.day) parts.push(fmtType(item.day));
+    if (item.time) parts.push(fmtTime(item.time));
+    if (item.seasonal) parts.push('{' + item.seasonal + '}');
+    if (item.notes) parts.push(esc(item.notes));
+  }
+  if (item.change_type === 'event') {
+    if (item.event_date) parts.push(fmtDate(item.event_date));
+    if (item.event_time) parts.push(fmtTime(item.event_time) + (item.event_end_time ? '&ndash;' + fmtTime(item.event_end_time) : ''));
+    if (item.location) parts.push(esc(item.location));
+    if (item.category) parts.push(fmtType(item.category));
+    if (item.description) parts.push(esc(item.description.length > 80 ? item.description.substring(0, 77) + '...' : item.description));
+  }
+  if (item.change_type === 'notice') {
+    if (item.effective_date) parts.push(fmtDate(item.effective_date));
+    if (item.description) parts.push(esc(item.description.length > 100 ? item.description.substring(0, 97) + '...' : item.description));
+  }
+  if (item.source_page) parts.push('pg ' + item.source_page);
+  return parts.join(' &middot; ');
+}
+
+function listAction(id, status) {
+  apiPost('/api/v2/update-change', { id: id, status: status }).then(function(r) {
+    if (!r.ok) return toast('Error', 'error');
+    for (var i = 0; i < state.changes.length; i++) {
+      if (state.changes[i].id === id) { state.changes[i].status = status; break; }
+    }
+    state.bulletins[state.bulletinIdx].pending = Math.max(0, state.bulletins[state.bulletinIdx].pending - 1);
+    toast(status === 'approved' ? 'Approved' : 'Rejected', 'success', id);
+    renderHeader(); renderSidebar(); renderReview();
+  });
+}
+
+function renderServices() {
+  var ref = document.getElementById('services-ref');
+  if (state.services.length === 0) { ref.style.display = 'none'; return; }
+  ref.style.display = 'block';
+  var sm = {};
+  state.changes.forEach(function(c) { if (c.service_num) sm[c.service_num] = c.change_type; });
+  var conf = 0;
+  state.services.forEach(function(s) { if (sm[s.num] === 'confirmed') conf++; });
+  document.getElementById('services-summary').textContent =
+    'Known Services (' + conf + '/' + state.services.length + ' confirmed)';
+  var h = '';
+  state.services.forEach(function(s) {
+    var st = sm[s.num] || '', icon = '', cls = '';
+    if (st === 'confirmed') { icon = '&#10003;'; cls = 'svc-ok'; }
+    else if (st === 'not_found') { icon = '&mdash;'; cls = 'svc-miss'; }
+    else if (st === 'modified') { icon = '&#9998;'; cls = 'svc-mod'; }
+    var sl = seasonStr(s.seasonal);
+    h += '<div class="svc-row">' +
+      '<span class="svc-num">' + s.num + '</span>' +
+      '<span class="svc-type">' + fmtType(s.type) + '</span>' +
+      '<span class="svc-detail">' + (s.day || '') + ' &middot; ' + fmtTime(s.time) +
+      (s.language && s.language !== 'en' ? ' [' + s.language + ']' : '') +
+      (sl ? ' {' + sl + '}' : '') + '</span>' +
+      '<span class="svc-status ' + cls + '">' + icon + '</span></div>';
+  });
+  document.getElementById('services-list').innerHTML = h;
+}
+
+// ── EDIT MODAL ──
+var editItem = null;
+function openEdit() {
+  var items = getPending();
+  if (state.wizardIdx >= items.length) return;
+  editItem = items[state.wizardIdx];
+  var h = '<div class="modal-content"><div class="modal-header"><h3>Edit ' + fmtType(editItem.change_type) + '</h3>' +
+    '<button class="modal-close" onclick="closeEdit()">&times;</button></div><div class="modal-body">';
+  if (editItem.change_type === 'modified') {
+    h += fg('Field', '<input value="' + esc(editItem.field_changed) + '" readonly>');
+    h += fg('Current', '<input value="' + esc(editItem.old_value) + '" readonly>');
+    h += fg('New Value', '<input id="ed-nv" value="' + esc(editItem.new_value) + '">');
+  }
+  if (editItem.change_type === 'new_service') {
+    h += fg('Type', sel('ed-st', STYPES, editItem.service_type));
+    h += fg('Day', sel('ed-day', [['','(none)']].concat(DAYS), editItem.day || ''));
+    h += fg('Time', '<input type="time" id="ed-t" value="' + esc(editItem.time) + '">');
+    h += fg('End Time', '<input type="time" id="ed-et" value="' + esc(editItem.end_time) + '">');
+    h += fg('Language', sel('ed-lang', LANGS, editItem.language || 'en'));
+    h += fg('Season', sel('ed-szn', SEASONS, editItem.seasonal || ''));
+    h += fg('Notes', '<input id="ed-notes" value="' + esc(editItem.notes) + '">');
+  }
+  if (editItem.change_type === 'event') {
+    h += fg('Title', '<input id="ed-title" value="' + esc(editItem.title) + '">');
+    h += fg('Date', '<input type="date" id="ed-date" value="' + esc(editItem.event_date) + '">');
+    h += fg('Time', '<input type="time" id="ed-etime" value="' + esc(editItem.event_time) + '">');
+    h += fg('End', '<input type="time" id="ed-eend" value="' + esc(editItem.event_end_time) + '">');
+    h += fg('Location', '<input id="ed-loc" value="' + esc(editItem.location) + '">');
+    h += fg('Category', sel('ed-cat', [['','(none)']].concat(ECATS), editItem.category || ''));
+    h += fg('Description', '<textarea id="ed-desc">' + esc(editItem.description) + '</textarea>');
+  }
+  if (editItem.change_type === 'notice') {
+    h += fg('Title', '<input id="ed-title" value="' + esc(editItem.title) + '">');
+    h += fg('Effective', '<input type="date" id="ed-eff" value="' + esc(editItem.effective_date) + '">');
+    h += fg('Details', '<textarea id="ed-desc">' + esc(editItem.description) + '</textarea>');
+  }
+  h += '</div><div class="modal-footer">' +
+    '<button class="btn btn-secondary" onclick="closeEdit()">Cancel</button>' +
+    '<button class="btn btn-primary" onclick="saveEdit(false)">Save</button>' +
+    '<button class="btn btn-approve" onclick="saveEdit(true)">Save &amp; Approve</button></div></div>';
+  var m = document.getElementById('edit-modal');
+  m.innerHTML = h; m.style.display = 'flex';
+}
+function closeEdit() { document.getElementById('edit-modal').style.display = 'none'; editItem = null; }
+function saveEdit(andApprove) {
+  if (!editItem) return;
+  var u = { id: editItem.id };
+  if (andApprove) u.status = 'approved';
+  if (editItem.change_type === 'modified') u.new_value = v('ed-nv');
+  if (editItem.change_type === 'new_service') {
+    u.service_type=v('ed-st'); u.day=v('ed-day')||null; u.time=v('ed-t')||null;
+    u.end_time=v('ed-et')||null; u.language=v('ed-lang')||null;
+    u.seasonal=v('ed-szn')||null; u.notes=v('ed-notes')||null;
+  }
+  if (editItem.change_type === 'event') {
+    u.title=v('ed-title'); u.event_date=v('ed-date')||null; u.event_time=v('ed-etime')||null;
+    u.event_end_time=v('ed-eend')||null; u.location=v('ed-loc')||null;
+    u.category=v('ed-cat')||null; u.description=v('ed-desc')||null;
+  }
+  if (editItem.change_type === 'notice') {
+    u.title=v('ed-title'); u.effective_date=v('ed-eff')||null; u.description=v('ed-desc')||null;
+  }
+  apiPost('/api/v2/update-change', u).then(function(r) {
+    if (!r.ok) return toast('Error', 'error');
+    for (var i = 0; i < state.changes.length; i++) {
+      if (state.changes[i].id === editItem.id) {
+        Object.keys(u).forEach(function(k) { if (k !== 'id') state.changes[i][k] = u[k]; });
+        break;
+      }
+    }
+    if (andApprove) {
+      state.bulletins[state.bulletinIdx].pending = Math.max(0, state.bulletins[state.bulletinIdx].pending - 1);
+      var np = getPending();
+      if (state.wizardIdx >= np.length) state.wizardIdx = Math.max(0, np.length - 1);
+    }
+    closeEdit();
+    toast(andApprove ? 'Saved & Approved' : 'Saved');
+    renderHeader(); renderSidebar(); renderReview();
+  });
+}
+function v(id) { var el = document.getElementById(id); return el ? el.value : ''; }
+function fg(label, inner) { return '<div class="form-group"><label>' + label + '</label>' + inner + '</div>'; }
+function sel(id, opts, cur) {
+  var h = '<select id="' + id + '">';
+  opts.forEach(function(o) {
+    var val = typeof o === 'string' ? o : o[0], txt = typeof o === 'string' ? fmtType(o) : o[1];
+    h += '<option value="' + val + '"' + (val === cur ? ' selected' : '') + '>' + txt + '</option>';
+  });
+  return h + '</select>';
+}
+var STYPES = ['daily_mass','sunday_mass','communion_service','confession','adoration','perpetual_adoration',
+  'rosary','stations_of_cross','novena','holy_hour','divine_mercy','miraculous_medal','anointing_of_sick',
+  'prayer_group','benediction','vespers','devotion','blessing','gorzkie_zale',
+  'holy_thursday_mass','good_friday_service','easter_vigil_mass','palm_sunday_mass','easter_sunday_mass'];
+var DAYS = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday',
+  'weekday','daily','first_friday','first_saturday','holyday','holyday_eve'];
+var LANGS = [['en','English'],['es','Spanish'],['pl','Polish'],['la','Latin'],['pt','Portuguese'],['fr','French'],['vi','Vietnamese']];
+var SEASONS = [['','(none)'],['year_round','Year Round'],['lent','Lent'],['advent','Advent'],
+  ['holy_week','Holy Week'],['easter_season','Easter'],['academic_year','Academic'],['summer','Summer']];
+var ECATS = ['fish_fry','pancake_breakfast','potluck','dinner_dance','trivia_night','movie_night',
+  'game_night','picnic','festival','bible_study','book_club','speaker_series','retreat','mission',
+  'adult_education','youth_group','choir','senior_group','fraternal','performance','concert'];
+
+// ── KEYBOARD ──
+function toggleHelp() {
+  var m = document.getElementById('help-modal');
+  m.style.display = m.style.display === 'none' ? 'flex' : 'none';
+}
+document.addEventListener('keydown', function(e) {
+  var tag = e.target.tagName;
+  if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') { if (e.key === 'Escape') closeEdit(); return; }
+  var em = document.getElementById('edit-modal').style.display !== 'none';
+  var hm = document.getElementById('help-modal').style.display !== 'none';
+  if (e.key === 'Escape') { if (em) closeEdit(); else if (hm) toggleHelp(); return; }
+  if (em || hm) return;
+  switch (e.key) {
+    case 'j': case 'ArrowDown': e.preventDefault(); nextItem(); break;
+    case 'k': case 'ArrowUp': e.preventDefault(); prevItem(); break;
+    case 'a': case 'A': approve(); break;
+    case 'r': case 'R': reject(); break;
+    case 'e': case 'E': openEdit(); break;
+    case 'n': case 'N': nextItem(); break;
+    case '[': navBulletin(-1); break;
+    case ']': navBulletin(1); break;
+    case '?': toggleHelp(); break;
+    default: var n = parseInt(e.key, 10); if (n >= 1 && n <= 9) setPage(n);
+  }
+});
+
+// ── INIT ──
+if (localStorage.getItem('v2_sidebar') === '0') document.getElementById('sidebar').classList.add('collapsed');
+loadBulletins();
+</script>
+</body>
+</html>

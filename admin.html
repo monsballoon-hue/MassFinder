@@ -685,14 +685,14 @@ const SVC_TYPE_GROUPS = [
 ];
 const DAY_VALUES = [
   'sunday','monday','tuesday','wednesday','thursday','friday','saturday',
-  'daily','weekday','first_friday','first_saturday','first_sunday',
+  'first_friday','first_saturday','first_sunday',
   'first_thursday','fourth_friday','holyday','holyday_eve','lent',
   'good_friday','holy_thursday','easter_vigil','palm_sunday','easter_sunday','civil_holiday'
 ];
 const DAY_LABELS = {
   sunday:'Sunday', monday:'Monday', tuesday:'Tuesday', wednesday:'Wednesday',
   thursday:'Thursday', friday:'Friday', saturday:'Saturday',
-  daily:'Daily', weekday:'Weekdays', first_friday:'1st Friday',
+  first_friday:'1st Friday',
   first_saturday:'1st Saturday', first_sunday:'1st Sunday',
   first_thursday:'1st Thursday', fourth_friday:'4th Friday',
   holyday:'Holy Day', holyday_eve:'Holy Day Eve', lent:'Lent',
@@ -721,7 +721,7 @@ const SVC_TYPE_ABBR = {
 };
 const DAY_ABBR = {
   sunday:'sun', monday:'mon', tuesday:'tue', wednesday:'wed', thursday:'thu',
-  friday:'fri', saturday:'sat', daily:'daily', weekday:'wkday',
+  friday:'fri', saturday:'sat',
   first_friday:'1fri', first_saturday:'1sat', first_sunday:'1sun',
   first_thursday:'1thu', fourth_friday:'4fri',
   holyday:'holyday', holyday_eve:'holyeve', lent:'lent',
@@ -1614,22 +1614,7 @@ function updateSvcHint() {
   if (saveBtn) saveBtn.disabled = false;
 
   var hints = [];
-  // Rule 2: Weekday consolidation warning
-  var indivDays = ['monday','tuesday','wednesday','thursday','friday'];
-  if (indivDays.indexOf(day) >= 0 && pendingParish && pendingParish.services) {
-    var time = val('m_time') || '';
-    var locId = val('m_locid') || null;
-    var lang = val('m_lang') || 'en';
-    var matches = pendingParish.services.filter(function(s, i) {
-      if (svcModalIdx >= 0 && i === svcModalIdx) return false;
-      return s.type === type && s.time === time && (s.location_id||null) === locId && (s.language||'en') === lang && indivDays.indexOf(s.day) >= 0;
-    });
-    if (matches.length >= 4) {
-      hints.push('<span class="svc-hint-warn">\u26A0 This parish already has Mon\u2013Fri ' + type.replace(/_/g,' ') + ' at ' + time + '. Consider using "Weekday" instead.</span>');
-    }
-  }
-
-  // Rule 3: Duplicate detection
+  // Rule 2: Duplicate detection
   if (pendingParish && pendingParish.services && day && type) {
     var time2 = val('m_time') || '';
     var locId2 = val('m_locid') || null;

@@ -53,8 +53,6 @@ This document defines the authoritative conventions for structuring services and
 | Value | Meaning | When to Use |
 |-------|---------|-------------|
 | `monday`–`sunday` | Specific day of week | Default for most services |
-| `weekday` | Mon–Fri | When **all 5 days** have identical time, location, language |
-| `daily` | All 7 days | When every day is the same |
 | `first_friday` | First Friday of month | First Friday devotions/masses (devotional significance) |
 | `first_saturday` | First Saturday of month | First Saturday devotions/masses (devotional significance) |
 | `holyday` | Holy Day of Obligation | Holy Day Mass schedules |
@@ -72,33 +70,24 @@ This document defines the authoritative conventions for structuring services and
 
 **Deprecated day values** (do not use): `first_sunday`, `first_thursday`, `fourth_friday`. Convert to base day + recurrence.
 
-### Weekday Consolidation Rule
+### One Row Per Day — No Consolidation
 
-**Prefer one `weekday` record over five individual day records** when all conditions match:
-- Same time
-- Same location
-- Same language
-- Same seasonal scope
+**Every service occurrence gets its own record.** If a church has Daily Mass Mon–Fri at 8:00 AM, that's 5 records — one per day.
 
 | Scenario | Correct Approach |
 |----------|-----------------|
-| Daily Mass Mon–Fri at 8:00 AM, same church | One record: `day: "weekday", time: "08:00"` |
-| Daily Mass Mon/Wed at 8:00, Tue/Thu at 9:00 | Four individual records |
-| Daily Mass Mon–Fri at 8:00, but Mon at a different church | Five individual records |
-| Daily Mass Mon–Thu at 8:00, Fri at 8:00 (Lent only) | Four individual + one with `seasonal.season: "lent"` |
+| Daily Mass Mon–Fri at 8:00 AM, same church | 5 records: `monday` through `friday`, each at `08:00` |
+| Daily Mass Mon/Wed at 8:00, Tue/Thu at 9:00 | 4 individual records |
+| Daily Mass Mon–Sat at 8:00 | 6 records: `monday` through `saturday` |
+| Rosary Tue & Fri only | 2 individual records |
 
-The renderer auto-collapses 3+ identical weekday entries into "Mon – Fri", but clean data is always preferred.
+**Why no `weekday` or `daily` consolidation?**
+- Eliminates ambiguity for multi-church parishes (each day explicitly assigned to a location)
+- Makes AI change detection trivial (binary: "is Monday 8:30am confirmed? yes/no")
+- Allows per-day modifications without splitting consolidated entries
+- The frontend auto-collapses 3+ identical weekday entries into "Mon – Fri" for display
 
-### Mon–Thu, Mon–Sat, and Other Partial-Week Patterns
-
-There are no special day values for partial-week patterns. Use individual entries or combine `weekday` + `saturday`:
-
-| Pattern | Approach |
-|---------|----------|
-| Mon–Thu (no Friday) | 4 individual entries (`monday`, `tuesday`, `wednesday`, `thursday`) |
-| Mon–Sat | `weekday` (Mon–Fri) + separate `saturday` entry |
-| Mon–Sat identical | Same as above — two entries, not six |
-| Tue & Fri only | 2 individual entries |
+**Deprecated day values** (do not use): `weekday`, `daily`. Use individual day entries instead.
 
 ### First Friday / First Saturday Rules
 
@@ -352,7 +341,7 @@ Format: `{parish_id}-{type_abbr}-{day_abbr}-{time}-{location_abbr}`
 
 Examples:
 - `parish_001-smass-sat-1600-notre` (Sunday Mass, Saturday, 4:00 PM, Notre Dame)
-- `parish_001-dmass-wkday-0900` (Daily Mass, weekday, 9:00 AM)
+- `parish_001-dmass-mon-0900` (Daily Mass, Monday, 9:00 AM)
 - `parish_013-ador-1fri-0645` (Adoration, First Friday, 6:45 AM)
 
 ### Event IDs

@@ -51,7 +51,6 @@
           "enum": [
             "monday", "tuesday", "wednesday", "thursday", "friday",
             "saturday", "sunday",
-            "daily", "weekday",
             "first_friday", "first_saturday",
             "holyday", "holyday_eve",
             "lent",

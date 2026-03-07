@@ -28,7 +28,6 @@ var SEASONS = ['lent', 'advent', 'holy_week', 'easter_season', 'academic_year', 
 
 var DAYS = [
   'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday',
-  'weekday', 'daily',
   'first_friday', 'first_saturday',
   'holyday', 'holyday_eve',
   'good_friday', 'holy_thursday', 'holy_saturday', 'easter_vigil',
@@ -61,6 +60,17 @@ function buildPrompt(churchName, churchTown, pageNumber, totalPages, profile) {
     }
     if (profile.parsing_notes) {
       context += '\nParsing notes: ' + profile.parsing_notes;
+    }
+    if (profile.target_location) {
+      context += '\n\n# MULTI-CHURCH FILTER (CRITICAL)\n' +
+        'This bulletin covers multiple worship sites. You are extracting data for ' +
+        profile.target_location + ' ONLY.\n' +
+        'ONLY extract services/events physically located at or designated for ' + profile.target_location + '.';
+      if (profile.sibling_locations && profile.sibling_locations.length) {
+        context += '\nDO NOT extract services at: ' + profile.sibling_locations.join(', ') + '.' +
+          '\nIf a service is labeled for one of these sibling locations, SKIP it.';
+      }
+      context += '\nIf the location is ambiguous or applies to the whole parish, extract it.';
     }
   }
 
@@ -444,8 +454,137 @@ function buildPrompt(churchName, churchTown, pageNumber, totalPages, profile) {
     '12. Preserve original wording, abbreviations, and punctuation in `original_text`.';
 }
 
+/**
+ * Build a focused schedule-extraction prompt for schedule pages.
+ * ~3,000 tokens instead of ~8,000. Focuses on WHAT to extract, not WHAT to skip.
+ * @param {string} churchName
+ * @param {string} churchTown
+ * @param {number} pageNumber
+ * @param {number} totalPages
+ * @param {object} [profile]
+ * @returns {string}
+ */
+function buildSchedulePrompt(churchName, churchTown, pageNumber, totalPages, profile) {
+  var context = '';
+  if (profile) {
+    if (profile.page_layout_notes) {
+      context += '\nLayout: ' + profile.page_layout_notes;
+    }
+    if (profile.known_recurring && profile.known_recurring.length) {
+      context += '\n\nVERIFICATION CHECKLIST — These services are known to exist at this parish. ' +
+        'If you can see ANY of these on this page, extract them:\n';
+      profile.known_recurring.forEach(function(item, idx) {
+        context += (idx + 1) + '. ' + item + '\n';
+      });
+      context += 'If you cannot find a listed service on this page, that is OK — it may be on another page. ' +
+        'But do NOT skip a service just because it appears in small text or unusual formatting.';
+    }
+    if (profile.common_locations && profile.common_locations.length) {
+      context += '\nVenue names: ' + profile.common_locations.join(', ');
+    }
+    if (profile.target_location) {
+      context += '\n\n# MULTI-CHURCH FILTER (CRITICAL)\n' +
+        'This bulletin covers multiple worship sites. You are extracting data for ' +
+        profile.target_location + ' ONLY.\n' +
+        'ONLY extract services physically located at or designated for ' + profile.target_location + '.';
+      if (profile.sibling_locations && profile.sibling_locations.length) {
+        context += '\nDO NOT extract services at: ' + profile.sibling_locations.join(', ') + '.' +
+          '\nIf a service is labeled for one of these sibling locations, SKIP it.';
+      }
+      context += '\nIf the location is ambiguous or applies to the whole parish, extract it.';
+    }
+  }
+
+  return 'Extract the weekly service schedule from this Catholic parish bulletin page.' +
+    '\n\nChurch: ' + churchName + ', ' + churchTown +
+    '. Page ' + pageNumber + '/' + totalPages + '.' +
+    context +
+    '\n\n# WHAT TO EXTRACT\n' +
+    'Find ALL of these if present:\n' +
+    '1. EVERY Mass time (Sunday, Saturday vigil, weekday, holy day) — one item per time slot\n' +
+    '2. EVERY Confession/Reconciliation time\n' +
+    '3. EVERY Adoration time\n' +
+    '4. Rosary, Divine Mercy, Holy Hour, Benediction, Stations of the Cross times\n' +
+    '5. Any other devotion or prayer service with a scheduled time\n' +
+    '6. Clergy names (pastor, deacon) if visible\n' +
+    '\n' +
+    '# INDIVIDUAL ITEMS RULE (CRITICAL)\n' +
+    'Create ONE item per unique day+time slot. Examples:\n' +
+    '  "Saturday 9AM, 4PM; Sunday 7:30, 9, 11" = 5 separate items.\n' +
+    '  "Mon-Fri 9AM" = 1 item with day: "weekday".\n' +
+    '  "Mon, Wed, Fri 7AM" = 3 items with individual day values.\n' +
+    '  "Mon-Sat 9AM" = 2 items: weekday + saturday.\n' +
+    '\n' +
+    '# DAY VALUES\n' +
+    'Valid: monday, tuesday, wednesday, thursday, friday, saturday, sunday, weekday, daily, ' +
+    'first_friday, first_saturday, holyday, holyday_eve\n' +
+    '- "weekday" = Mon-Fri ONLY when all 5 days have identical time/location/language\n' +
+    '- If any day differs, use individual day values\n' +
+    '\n' +
+    '# SATURDAY RULE\n' +
+    'Saturday before 2PM = "Daily Mass" (category: mass, day: saturday).\n' +
+    'Saturday 2PM or later = "Vigil Mass" (category: mass, day: saturday).\n' +
+    'NEVER title Saturday AM as "Sunday Mass" or "Vigil Mass".\n' +
+    '\n' +
+    '# LOOK CAREFULLY FOR\n' +
+    'Confessions and devotions are often in SMALL TEXT, SIDEBARS, FOOTERS, or NOTES.\n' +
+    'Check: below the Mass schedule, in margins, in italic text, in boxes/borders.\n' +
+    'Common patterns: "Confessions: Sat 3-3:45pm" or "Rosary 30 min before Mass"\n' +
+    'These are easy to miss — scan the ENTIRE page including edges and fine print.\n' +
+    '\n' +
+    '# IGNORE\n' +
+    '- Mass intentions (names with "Req by", "\u2020", "In memory of")\n' +
+    '- Staff listings, ads, financial info\n' +
+    '- Children\'s education (CCD, faith formation, grades K-12)\n' +
+    '- Editorial/devotional text, pastor letters, readings\n' +
+    '- Sacramental prep (RCIA, baptism prep, marriage prep)\n' +
+    '\n' +
+    '# SERVICE CATEGORIES\n' +
+    'mass, confession, adoration, perpetual_adoration, rosary, stations_of_cross, ' +
+    'novena, holy_hour, divine_mercy, miraculous_medal, communion_service, ' +
+    'benediction, vespers, gorzkie_zale, blessing, prayer_group, devotion, anointing_of_sick\n' +
+    '\n' +
+    '# SEASONAL FLAG (for services tied to a liturgical season)\n' +
+    'Values: lent, advent, holy_week, easter_season, academic_year, summer\n' +
+    'Set when service is explicitly seasonal (e.g., "during Lent", "Lenten").\n' +
+    '\n' +
+    '# BILINGUAL SERVICES\n' +
+    'If bilingual, set language to comma-separated: "es,en", "pl,en". Primary language first.\n' +
+    'Only set language when explicitly non-English. Default is "en".\n' +
+    '\n' +
+    '# OUTPUT (JSON only, no markdown wrapping)\n' +
+    '{\n' +
+    '  "items": [{\n' +
+    '    "item_type": "service",\n' +
+    '    "category": "<category from list above>",\n' +
+    '    "title": "<printed heading verbatim>",\n' +
+    '    "original_text": "<verbatim text from bulletin>",\n' +
+    '    "day": "<day enum>",\n' +
+    '    "event_time": "<HH:MM 24hr>",\n' +
+    '    "end_time": "<HH:MM or null>",\n' +
+    '    "location": "<venue or null>",\n' +
+    '    "recurring": "weekly|monthly",\n' +
+    '    "seasonal": "<season or null>",\n' +
+    '    "language": "<en|es|pl|pt|la|vi|fr or comma-separated>",\n' +
+    '    "host_parish": "<if different church>",\n' +
+    '    "tags": [],\n' +
+    '    "confidence": <0.0-1.0>\n' +
+    '  }],\n' +
+    '  "clergy": [{"role": "<pastor|administrator|deacon|...>", "name": "<full name>"}],\n' +
+    '  "mass_schedule": [{"day": "<day>", "time": "HH:MM", "notes": "..."}],\n' +
+    '  "page_type": "<schedule|cover|ads|mixed>",\n' +
+    '  "notes": "any parsing difficulties"\n' +
+    '}\n' +
+    '\nReturn ONLY raw JSON. No markdown. Start with { end with }.\n' +
+    'Use null (not "") for missing fields. Year = ' + new Date().getFullYear() + '.\n' +
+    'Empty page = {"items":[],"clergy":[],"mass_schedule":[],"page_type":"ads","notes":"..."}\n' +
+    'clergy: at most TWO entries (highest priest + first deacon). Only from page 1.\n' +
+    'mass_schedule: Only from page 1 if a standard weekly schedule is displayed.';
+}
+
 module.exports = {
   buildPrompt: buildPrompt,
+  buildSchedulePrompt: buildSchedulePrompt,
   SERVICE_CATEGORIES: SERVICE_CATEGORIES,
   EVENT_CATEGORIES: EVENT_CATEGORIES,
   NOTICE_CATEGORIES: NOTICE_CATEGORIES,
