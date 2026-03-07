@@ -5,3 +5,13 @@ package.json
 freshness-report.json
 review/today-prompt.txt
 review/url-audit.json
+.env
+.env.local
+
+# Working files
+.tmp-*
+bulletins-manual/
+supabase/.temp/
+BULLETIN_PIPELINE_*.md
+MASSFINDER_V2_*.md
+scripts/bulletin-parser/REVIEW_GUIDE.md
