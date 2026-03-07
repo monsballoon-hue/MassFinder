@@ -124,6 +124,15 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .chip.lent-chip.active { background: var(--color-verified); color: white; border-color: var(--color-verified); }
 .chip .chip-count { display: inline-flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.25); border-radius: var(--radius-full); font-size: 11px; min-width: 18px; height: 18px; padding: 0 5px; margin-left: 4px; }
 
+@media (max-width: 767px) {
+  .chip.hide-mobile { display: none !important; }
+  .more-section p, .more-section li, .coming-soon-details div { font-size: var(--text-base) !important; }
+  .saved-evt .ce-item-title { font-size: var(--text-base); }
+  .saved-evt .ce-item-when { font-size: var(--text-sm); }
+  .saved-compact-yc .ce-item-title { font-size: var(--text-base); }
+  .saved-compact-yc .ce-item-when { font-size: var(--text-sm); }
+}
+
 /* ACTIVE FILTER PILLS */
 .active-filters { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--space-4); display: flex; flex-wrap: wrap; gap: var(--space-2); }
 .active-filters:empty { display: none; }
@@ -695,12 +704,12 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
     <button class="chip active" data-filter="all">All</button>
     <button class="chip" data-filter="today">Today</button>
     <button class="chip" data-filter="weekend">This Weekend</button>
-    <button class="chip lent-chip" data-filter="lent" id="lentChip" style="display:none">🌿 Lent</button>
-    <button class="chip" data-filter="confession">Confession</button>
-    <button class="chip" data-filter="adoration">Adoration</button>
-    <button class="chip" data-filter="latin">Latin</button>
-    <button class="chip" data-filter="spanish">Spanish</button>
-    <button class="chip yc-chip" data-filter="yc">YC Events</button>
+    <button class="chip lent-chip hide-mobile" data-filter="lent" id="lentChip" style="display:none">🌿 Lent</button>
+    <button class="chip hide-mobile" data-filter="confession">Confession</button>
+    <button class="chip hide-mobile" data-filter="adoration">Adoration</button>
+    <button class="chip hide-mobile" data-filter="latin">Latin</button>
+    <button class="chip hide-mobile" data-filter="spanish">Spanish</button>
+    <button class="chip yc-chip hide-mobile" data-filter="yc">YC Events</button>
     <button class="chip more-filters" id="moreFiltersBtn" onclick="openMoreFilters()">More Filters</button>
   </div>
   </div>
@@ -771,11 +780,13 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
     </div>
 
 
-    <!-- SAINT OF THE DAY -->
+    <!-- SAINT OF THE DAY — commented out, fetch not working reliably -->
+    <!--
     <div class="more-section">
       <h2 class="more-section-title">🌟 Today's Celebration</h2>
       <div id="saintOfDayCard"><div class="saint-card"><div class="saint-feast">Loading…</div><div class="saint-name" style="font-size:var(--text-base);color:var(--color-text-tertiary);font-family:var(--font-body);font-weight:var(--weight-regular)">Fetching today's feast day…</div></div></div>
     </div>
+    -->
 
     <!-- DAILY READINGS -->
     <div class="more-section">
