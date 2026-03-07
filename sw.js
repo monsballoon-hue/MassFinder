@@ -1,4 +1,4 @@
-const CACHE_NAME = 'massfinder-v2_20260306_05';
+const CACHE_NAME = 'massfinder-v2_20260307_01';
 const SHELL_ASSETS = [
   '/',
   '/index.html',
