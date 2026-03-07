@@ -9,6 +9,7 @@ review/url-audit.json
 # Working files
 .tmp-*
 bulletins-manual/
+bulletins-cache/
 supabase/.temp/
 BULLETIN_PIPELINE_*.md
 MASSFINDER_V2_*.md

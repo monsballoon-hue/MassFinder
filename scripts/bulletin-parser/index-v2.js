@@ -16,6 +16,10 @@ var loader = require('./load-services');
 var promptV2 = require('./prompt-v2');
 var storeV2 = require('./store-results-v2');
 
+// Bulletin PDF cache — rolling 4-week retention
+var CACHE_DIR = path.resolve(__dirname, '../../bulletins-cache');
+var CACHE_MAX_AGE_DAYS = 28;
+
 // Load parish profiles
 var profilesPath = path.resolve(__dirname, 'parish-profiles.json');
 var allProfiles = {};
@@ -67,6 +71,46 @@ console.log('Model: ' + config.PARSE_MODEL);
 console.log('');
 
 var client = dryRun ? null : new Anthropic({ apiKey: config.ANTHROPIC_API_KEY });
+
+// ── Bulletin cache helpers ──
+
+function saveBulletinToCache(churchId, pdfBuffer, bulletinDate) {
+  var churchDir = path.join(CACHE_DIR, churchId);
+  if (!fs.existsSync(CACHE_DIR)) fs.mkdirSync(CACHE_DIR, { recursive: true });
+  if (!fs.existsSync(churchDir)) fs.mkdirSync(churchDir, { recursive: true });
+  var dateStr = bulletinDate || new Date().toISOString().substring(0, 10);
+  var filePath = path.join(churchDir, dateStr + '.pdf');
+  fs.writeFileSync(filePath, pdfBuffer);
+  console.log('  [CACHE] Saved ' + (pdfBuffer.length / 1024).toFixed(0) + ' KB → bulletins-cache/' + churchId + '/' + dateStr + '.pdf');
+}
+
+function cleanBulletinCache() {
+  if (!fs.existsSync(CACHE_DIR)) return;
+  var cutoff = Date.now() - (CACHE_MAX_AGE_DAYS * 24 * 60 * 60 * 1000);
+  var removed = 0;
+  var dirs = fs.readdirSync(CACHE_DIR);
+  dirs.forEach(function(churchId) {
+    var churchDir = path.join(CACHE_DIR, churchId);
+    var stat = fs.statSync(churchDir);
+    if (!stat.isDirectory()) return;
+    var files = fs.readdirSync(churchDir).filter(function(f) { return f.endsWith('.pdf'); });
+    files.forEach(function(f) {
+      var dateStr = f.replace('.pdf', '');
+      var fileDate = new Date(dateStr + 'T00:00:00');
+      if (!isNaN(fileDate.getTime()) && fileDate.getTime() < cutoff) {
+        fs.unlinkSync(path.join(churchDir, f));
+        removed++;
+      }
+    });
+    // Remove empty church directories
+    var remaining = fs.readdirSync(churchDir);
+    if (remaining.length === 0) fs.rmdirSync(churchDir);
+  });
+  if (removed > 0) console.log('[CACHE] Cleaned ' + removed + ' bulletin(s) older than ' + CACHE_MAX_AGE_DAYS + ' days\n');
+}
+
+// Clean old cached bulletins at batch start
+cleanBulletinCache();
 
 // Sequential processing
 var results = [];
@@ -141,6 +185,9 @@ function processChurch(churchId) {
       console.log('  [SKIP] No PDF buffer (images-only source)');
       return { churchId: churchId, status: 'images_only', parish: ctx.parishName };
     }
+
+    // Save PDF to cache for review server
+    saveBulletinToCache(churchId, fetchResult.pdfBuffer, fetchResult.bulletinDate);
 
     // Step 4: Extract text
     console.log('  Extracting text...');

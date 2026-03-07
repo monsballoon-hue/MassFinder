@@ -44,12 +44,17 @@ function fetchBulletin(church, manualPath) {
     return fetchChurchBulletinOrg(church);
   }
 
-  // 4. WordPress — scrape post images
+  // 4. parishesonline.com (LPi) — API-based PDF lookup
+  if (domain === 'parishesonline.com') {
+    return fetchLpi(church);
+  }
+
+  // 5. WordPress — scrape post images
   if (domain.indexOf('wordpress.com') !== -1) {
     return fetchWordPressBulletin(church);
   }
 
-  // 5. All other sites — check manual folder, otherwise skip
+  // 6. All other sites — check manual folder, otherwise skip
   console.log('  [MANUAL] ' + church.name + ' (' + domain + ') — drop PDF in bulletins-manual/' + church.id + '.pdf');
   return Promise.resolve(null);
 }
@@ -95,6 +100,111 @@ function fetchChurchBulletinOrg(church) {
       return tryDates(dates, i + 1);
     });
   }
+}
+
+/**
+ * parishesonline.com (LPi): two-step API lookup.
+ * 1. GET /organizations/slug/{slug} → salesforce_id
+ * 2. GET /organizations/{sfid}/publications?limit=1&type=Church → fileUrl
+ * 3. Download PDF from fileUrl
+ */
+var LPI_API_BASE = 'https://f2141mdwk2.execute-api.us-east-1.amazonaws.com/prod';
+
+function fetchLpi(church) {
+  // Extract slug from URL: /organization/<slug> or /find/<slug>
+  var parsed = url.parse(church.bulletin_url);
+  var pathParts = (parsed.pathname || '').split('/').filter(Boolean);
+  // Expect ["organization", slug] or ["find", slug]
+  var slug = pathParts.length >= 2 ? pathParts[pathParts.length - 1] : null;
+  if (!slug) {
+    console.log('  [ERROR] Could not parse LPi slug from: ' + church.bulletin_url);
+    return Promise.resolve(null);
+  }
+
+  // Strip fragment/hash (e.g. #download-latest)
+  slug = slug.replace(/#.*$/, '');
+
+  console.log('  [LPi] Looking up slug: ' + slug);
+
+  // Step 1: Get salesforce_id
+  return httpGet(LPI_API_BASE + '/organizations/slug/' + slug).then(function(orgResult) {
+    if (orgResult.statusCode !== 200) {
+      console.log('  [ERROR] LPi org lookup returned ' + orgResult.statusCode);
+      return null;
+    }
+
+    var orgData;
+    try {
+      orgData = JSON.parse(orgResult.buffer.toString('utf8'));
+    } catch (e) {
+      console.log('  [ERROR] Could not parse LPi org response');
+      return null;
+    }
+
+    var sfid = orgData.data && orgData.data.salesforce_id;
+    if (!sfid) {
+      console.log('  [ERROR] No salesforce_id in LPi org response');
+      return null;
+    }
+
+    // Step 2: Get latest bulletin
+    var pubUrl = LPI_API_BASE + '/organizations/' + sfid + '/publications?limit=1&type=Church';
+    return httpGet(pubUrl).then(function(pubResult) {
+      if (pubResult.statusCode !== 200) {
+        console.log('  [ERROR] LPi publications API returned ' + pubResult.statusCode);
+        return null;
+      }
+
+      var pubData;
+      try {
+        pubData = JSON.parse(pubResult.buffer.toString('utf8'));
+      } catch (e) {
+        console.log('  [ERROR] Could not parse LPi publications response');
+        return null;
+      }
+
+      var pubs = pubData.data || [];
+      if (pubs.length === 0) {
+        console.log('  [ERROR] No bulletins found for ' + church.name);
+        return null;
+      }
+
+      var latest = pubs[0];
+      var fileUrl = latest.fileUrl;
+      if (!fileUrl) {
+        console.log('  [ERROR] No fileUrl in LPi publication');
+        return null;
+      }
+
+      // Extract bulletin date from publishDate (YYYY-MM-DD)
+      var bulletinDate = null;
+      if (latest.publishDate) {
+        bulletinDate = latest.publishDate.substring(0, 10);
+      }
+
+      console.log('  [LPi] Downloading: ' + latest.name + ' (' + bulletinDate + ')');
+
+      // Step 3: Download PDF
+      return httpGet(fileUrl).then(function(pdfResult) {
+        if (pdfResult.statusCode !== 200 || pdfResult.buffer.length < 1000) {
+          console.log('  [ERROR] LPi PDF download failed (status ' + pdfResult.statusCode + ')');
+          return null;
+        }
+
+        console.log('  [OK] Downloaded ' + (pdfResult.buffer.length / 1024).toFixed(0) + ' KB');
+        return {
+          pdfBuffer: pdfResult.buffer,
+          sourceUrl: fileUrl,
+          sourceDomain: 'parishesonline.com',
+          method: 'lpi',
+          bulletinDate: bulletinDate,
+        };
+      });
+    });
+  }).catch(function(err) {
+    console.log('  [ERROR] LPi fetch failed: ' + err.message);
+    return null;
+  });
 }
 
 /**

@@ -70,6 +70,7 @@ function validateItemUpdate(data) {
 
 var PORT = 3456;
 var MANUAL_DIR = path.resolve(__dirname, '../../bulletins-manual');
+var CACHE_DIR = path.resolve(__dirname, '../../bulletins-cache');
 var IMG_CACHE_DIR = path.resolve(__dirname, '../../.tmp-review-images');
 
 if (!fs.existsSync(IMG_CACHE_DIR)) fs.mkdirSync(IMG_CACHE_DIR, { recursive: true });
@@ -457,11 +458,32 @@ function getBulletins() {
     });
 }
 
+/**
+ * Find the PDF path for a church: manual drop folder first, then latest cached.
+ */
+function findPdfPath(churchId) {
+  // 1. Manual drop folder takes priority
+  var manualPath = path.join(MANUAL_DIR, churchId + '.pdf');
+  if (fs.existsSync(manualPath)) return manualPath;
+
+  // 2. Cached bulletins — pick the latest dated PDF
+  var cacheChurchDir = path.join(CACHE_DIR, churchId);
+  if (fs.existsSync(cacheChurchDir)) {
+    var pdfs = fs.readdirSync(cacheChurchDir)
+      .filter(function(f) { return f.endsWith('.pdf'); })
+      .sort()
+      .reverse();
+    if (pdfs.length > 0) return path.join(cacheChurchDir, pdfs[0]);
+  }
+
+  return null;
+}
+
 function generateImages(churchId) {
   var outDir = path.join(IMG_CACHE_DIR, churchId);
   if (fs.existsSync(outDir) && fs.readdirSync(outDir).length > 0) return Promise.resolve();
-  var pdfPath = path.join(MANUAL_DIR, churchId + '.pdf');
-  if (!fs.existsSync(pdfPath)) return Promise.reject(new Error('No PDF'));
+  var pdfPath = findPdfPath(churchId);
+  if (!pdfPath) return Promise.reject(new Error('No PDF'));
   if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
   var outPattern = path.join(outDir, 'page_%d.png');
   var args = ['-dNOPAUSE', '-dBATCH', '-dSAFER', '-sDEVICE=png16m', '-r150',
@@ -475,14 +497,26 @@ function generateImages(churchId) {
 
 // Pre-generate all images on startup
 function pregenerate() {
-  var pdfs = [];
-  try { pdfs = fs.readdirSync(MANUAL_DIR).filter(function(f) { return f.endsWith('.pdf'); }); } catch(e) {}
-  if (pdfs.length === 0) return;
-  console.log('Pre-generating page images for ' + pdfs.length + ' bulletins...');
+  // Collect church IDs from both manual and cache directories
+  var churchIds = {};
+  try {
+    fs.readdirSync(MANUAL_DIR).filter(function(f) { return f.endsWith('.pdf'); })
+      .forEach(function(f) { churchIds[f.replace('.pdf', '')] = true; });
+  } catch(e) {}
+  try {
+    fs.readdirSync(CACHE_DIR).forEach(function(d) {
+      var dirPath = path.join(CACHE_DIR, d);
+      if (fs.statSync(dirPath).isDirectory()) churchIds[d] = true;
+    });
+  } catch(e) {}
+
+  var ids = Object.keys(churchIds);
+  if (ids.length === 0) return;
+  console.log('Pre-generating page images for ' + ids.length + ' bulletins...');
   var i = 0;
   function next() {
-    if (i >= pdfs.length) { console.log('All images ready.\n'); return; }
-    var cid = pdfs[i].replace('.pdf', '');
+    if (i >= ids.length) { console.log('All images ready.\n'); return; }
+    var cid = ids[i];
     i++;
     process.stdout.write('  ' + cid + '...');
     generateImages(cid).then(function() { console.log(' done'); next(); })
