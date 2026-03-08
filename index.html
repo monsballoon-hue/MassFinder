@@ -660,6 +660,50 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 .saint-card[data-lit-color="white"]  { border-left-color: #94A3B8; }
 .saint-card[data-lit-color="green"]  { border-left-color: #16A34A; }
 .saint-card[data-lit-color="rose"]   { border-left-color: #DB2777; }
+
+/* LITURGICAL SEASON — ambient accent color, shifts with the liturgical year */
+:root[data-season="lent"]     { --color-accent:#7C3AED;--color-accent-text:#5B21B6;--color-accent-light:#9C67F5;--color-accent-pale:#F3E8FF; }
+:root[data-season="advent"]   { --color-accent:#7C3AED;--color-accent-text:#5B21B6;--color-accent-light:#9C67F5;--color-accent-pale:#F3E8FF; }
+:root[data-season="easter"]   { --color-accent:#D97706;--color-accent-text:#B45309;--color-accent-light:#F59E0B;--color-accent-pale:#FEF3C7; }
+:root[data-season="christmas"]{ --color-accent:#D97706;--color-accent-text:#B45309;--color-accent-light:#F59E0B;--color-accent-pale:#FEF3C7; }
+:root[data-season="ordinary"] { --color-accent:#16A34A;--color-accent-text:#15803D;--color-accent-light:#4ADE80;--color-accent-pale:#DCFCE7; }
+
+/* HOLY DAY OF OBLIGATION BANNER */
+.hdo-banner { background:var(--color-accent-pale);border:1px solid var(--color-accent-light);border-radius:var(--radius-md);padding:var(--space-4) var(--space-5);margin-bottom:var(--space-4); }
+.hdo-banner-label { font-size:var(--text-xs);font-weight:var(--weight-semibold);color:var(--color-accent-text);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:var(--space-1); }
+.hdo-banner-title { font-family:var(--font-display);font-size:var(--text-lg);font-weight:700;color:var(--color-text-primary);line-height:1.3;margin-bottom:var(--space-3); }
+.hdo-banner-cta { background:none;border:none;padding:0;cursor:pointer;font-size:var(--text-sm);font-weight:var(--weight-semibold);color:var(--color-accent-text);font-family:var(--font-body); }
+
+/* ICS CALENDAR DOWNLOAD CARD */
+.ics-card { background:var(--color-surface);border-radius:var(--radius-md);padding:var(--space-4) var(--space-5);box-shadow:var(--shadow-card);margin-top:var(--space-3); }
+.ics-card-title { font-size:var(--text-sm);font-weight:var(--weight-semibold);color:var(--color-text-primary);margin-bottom:var(--space-1); }
+.ics-card-body { font-size:var(--text-sm);color:var(--color-text-secondary);line-height:1.5;margin-bottom:var(--space-3); }
+.ics-card-btn { display:inline-flex;align-items:center;gap:var(--space-2);padding:var(--space-2) var(--space-4);background:var(--color-primary);color:#fff;font-size:var(--text-sm);font-weight:var(--weight-semibold);border:none;border-radius:var(--radius-full);cursor:pointer;font-family:var(--font-body);min-height:40px; }
+
+/* CCC REFERENCE BOTTOM SHEET */
+.ccc-overlay { position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:900;opacity:0;pointer-events:none;transition:opacity 0.2s; }
+.ccc-overlay.open { opacity:1;pointer-events:auto; }
+.ccc-sheet { position:fixed;bottom:0;left:0;right:0;background:var(--color-surface);border-radius:16px 16px 0 0;z-index:901;max-height:72vh;display:flex;flex-direction:column;transform:translateY(100%);transition:transform 0.28s cubic-bezier(0.32,0.72,0,1);box-shadow:var(--shadow-elevated); }
+.ccc-sheet.open { transform:translateY(0); }
+@media (min-width:768px) { .ccc-sheet { left:50%;right:auto;width:100%;max-width:var(--max-width);transform:translate(-50%,100%); } .ccc-sheet.open { transform:translate(-50%,0); } }
+.ccc-handle { width:36px;height:4px;background:var(--color-border);border-radius:2px;margin:var(--space-3) auto var(--space-2);flex-shrink:0; }
+.ccc-sheet-scroll { flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 var(--space-5) calc(var(--space-6) + env(safe-area-inset-bottom)); }
+.ccc-back-btn { display:none;align-items:center;gap:4px;font-size:var(--text-sm);color:var(--color-accent-text);cursor:pointer;margin-bottom:var(--space-4);background:none;border:none;padding:0;font-family:var(--font-body); }
+.ccc-sheet-label { font-size:var(--text-xs);color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:var(--space-3); }
+.ccc-para-num { font-family:var(--font-display);font-size:var(--text-xl);font-weight:700;color:var(--color-text-primary);margin-bottom:var(--space-3);margin-top:var(--space-5); }
+.ccc-para-num--first { margin-top:0; }
+.ccc-para-text { font-size:var(--text-sm);color:var(--color-text-primary);line-height:1.85;margin-bottom:var(--space-3); }
+.ccc-blockquote { margin:var(--space-3) 0;padding-left:var(--space-4);border-left:2px solid var(--color-border);font-style:italic;color:var(--color-text-secondary);font-size:var(--text-sm);line-height:1.75; }
+.ccc-blockquote p { margin:0 0 var(--space-1); }
+.ccc-divider { border:none;border-top:1px solid var(--color-border-light);margin:var(--space-5) 0 var(--space-4); }
+.ccc-related-header { font-size:var(--text-xs);font-weight:var(--weight-semibold);color:var(--color-accent-text);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:var(--space-3); }
+.ccc-related-item { padding:var(--space-3) 0;border-bottom:1px solid var(--color-border-light);cursor:pointer; }
+.ccc-related-item:last-child { border-bottom:none; }
+.ccc-related-num { font-family:var(--font-display);font-size:var(--text-base);font-weight:600;color:var(--color-accent-text);margin-bottom:2px; }
+.ccc-related-preview { font-size:var(--text-sm);color:var(--color-text-secondary);line-height:1.6;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden; }
+.ccc-loading { font-size:var(--text-sm);color:var(--color-text-tertiary);padding:var(--space-6) 0;text-align:center; }
+strong.ccc-ref { cursor:pointer;color:var(--color-accent-text);text-decoration:underline;text-decoration-style:dotted;text-underline-offset:2px; }
+
 .saint-feast { font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--color-accent-text); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: var(--space-2); }
 .saint-name { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 700; color: var(--color-text-primary); line-height: 1.3; }
 .saint-subtitle { font-size: var(--text-sm); color: var(--color-text-secondary); margin-top: var(--space-1); line-height: 1.4; }
@@ -764,6 +808,9 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
 <div id="panelMore" class="tab-panel" role="tabpanel">
   <div class="more-content">
 
+    <!-- HOLY DAY OF OBLIGATION BANNER — shown day-of and day-before -->
+    <div id="hdoBanner"></div>
+
     <!-- PWA INSTALL CARD (hidden if installed) -->
     <div id="moreInstallCard"></div>
 
@@ -805,6 +852,11 @@ input { font-family: inherit; font-size: inherit; border: none; outline: none; b
     <div class="more-section">
       <h2 class="more-section-title">🕊 Upcoming Observances</h2>
       <div id="liturgicalContent"></div>
+      <div class="ics-card">
+        <div class="ics-card-title">Add to Your Calendar</div>
+        <div class="ics-card-body">Download solemnities, feasts, and Holy Days of Obligation for this year — ready to import into Apple Calendar, Google Calendar, or Outlook.</div>
+        <button class="ics-card-btn" onclick="exportLitCalICS()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="16" height="16"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Download .ics File</button>
+      </div>
     </div>
 
     <!-- DEVOTIONAL GUIDES -->
@@ -963,6 +1015,41 @@ function isLentSeason(){
   var td=new Date(now.getFullYear(),now.getMonth(),now.getDate());
   return td>=ashWed&&td<=holySat;
 }
+
+// Set data-season attribute on <html> to drive ambient accent color per liturgical season
+function setLiturgicalSeason(events){
+  var now=getNow(),m=now.getMonth()+1,d=now.getDate();
+  var today=events.filter(function(e){return e.month===m&&e.day===d;});
+  var season='ordinary';
+  if(today.length){
+    var s=today[0].liturgical_season||'';
+    if(s==='LENT'||s==='HOLY_WEEK'||s==='EASTER_TRIDUUM')season='lent';
+    else if(s==='ADVENT')season='advent';
+    else if(s==='EASTER'||s==='EASTER_SEASON')season='easter';
+    else if(s==='CHRISTMAS')season='christmas';
+  }
+  document.documentElement.setAttribute('data-season',season);
+}
+
+// Render Holy Day of Obligation banner — shown the day before and the day of
+function renderHDOBanner(events){
+  var el=document.getElementById('hdoBanner');
+  if(!el)return;
+  var now=getNow(),m=now.getMonth()+1,d=now.getDate();
+  var tom=new Date(now);tom.setDate(tom.getDate()+1);
+  var tm=tom.getMonth()+1,td=tom.getDate();
+  var todayHDO=events.filter(function(e){return e.month===m&&e.day===d&&e.holy_day_of_obligation;});
+  var tomHDO=events.filter(function(e){return e.month===tm&&e.day===td&&e.holy_day_of_obligation;});
+  var hdo=todayHDO.length?todayHDO[0]:(tomHDO.length?tomHDO[0]:null);
+  if(!hdo){el.innerHTML='';return;}
+  var when=todayHDO.length?'Today is a':'Tomorrow is a';
+  el.innerHTML='<div class="hdo-banner">'+
+    '<div class="hdo-banner-label">Holy Day of Obligation'+(tomHDO.length?' — Tomorrow':'')+'</div>'+
+    '<div class="hdo-banner-title">'+esc(hdo.name)+'</div>'+
+    '<button class="hdo-banner-cta" onclick="switchTab(\'panelFind\',document.querySelector(\'[data-tab=panelFind]\'))">Find a Mass near you \u2192</button>'+
+    '</div>';
+}
+
 function getNext(parish,filter){
   const now=getNow(),curMin=now.getHours()*60+now.getMinutes(),curDI=now.getDay();
   let svcs=parish.services.filter(s=>{
@@ -2487,13 +2574,15 @@ async function fetchReadings(){
     html+=usccbLink;
     el.innerHTML=html;
 
-    // Enhance with BibleGet verse-by-verse formatting (non-blocking)
+    // Enhance with BibleGet — staggered 800ms apart to stay under rate limits
+    var bgDelay=0;
     sections.forEach(function(s,i){
       if(!s.ref||!s.text)return;
       var textEl=document.getElementById('reading-text-'+i);
       if(!textEl)return;
       var isPsalm=s.heading.toLowerCase().indexOf('psalm')!==-1||s.heading.toLowerCase().indexOf('responsorial')!==-1;
-      enhanceWithBibleGet(textEl,s.ref,s.text,s.heading,isPsalm);
+      setTimeout(enhanceWithBibleGet.bind(null,textEl,s.ref,s.text,s.heading,isPsalm),bgDelay);
+      bgDelay+=800;
     });
   }catch(e){
     el.innerHTML=usccbLink;
@@ -2644,6 +2733,12 @@ async function fetchAcclamationVerse(ref){
 async function enhanceWithBibleGet(textEl,ref,fallbackText,heading,isPsalm){
   var query=convertRefToBibleGet(ref);
   if(!query)return;
+  // sessionStorage cache — avoid re-fetching same ref on repeat tab visits within a session
+  var cacheKey='bg_'+query;
+  try{
+    var cached=sessionStorage.getItem(cacheKey);
+    if(cached){textEl.innerHTML=cached;return;}
+  }catch(e){}
   try{
     var resp=await fetch(
       'https://query.bibleget.io/v3/?query='+encodeURIComponent(query)+'&version=NABRE',
@@ -2654,14 +2749,12 @@ async function enhanceWithBibleGet(textEl,ref,fallbackText,heading,isPsalm){
     if(!data.results||!data.results.length)return;
 
     var html='';
-    // For psalms, extract refrain from the original readings API text
     if(isPsalm){
       var refrain=extractPsalmRefrain(fallbackText);
       if(refrain)html+='<span class="psalm-refrain">R. '+esc(refrain)+'</span>';
       var stanzaBreaks=parseStanzaBreaks(ref);
       html+=renderPsalmVerses(data.results,stanzaBreaks);
     }else{
-      // Prose: intro line from original, then BibleGet verses, then conclusion
       var intro=extractIntroLine(fallbackText);
       var conclusion=extractConclusionLine(fallbackText);
       if(intro)html+='<span class="reading-intro">'+esc(intro)+'</span>';
@@ -2669,6 +2762,7 @@ async function enhanceWithBibleGet(textEl,ref,fallbackText,heading,isPsalm){
       if(conclusion)html+='<span class="reading-conclusion">'+esc(conclusion)+'</span>';
     }
     textEl.innerHTML=html;
+    try{sessionStorage.setItem(cacheKey,html);}catch(e){}
   }catch(e){/* keep fallback */}
 }
 
@@ -3175,6 +3269,18 @@ function renderMore(){
       }
       return renderGuide(g,false);
     }).join('');
+
+    // Wire CCC reference taps — make every <strong>CCC XXXX:</strong> open the popup
+    devotEl.querySelectorAll('strong').forEach(function(el){
+      var m=el.textContent.trim().match(/^CCC ([\d\u2013\-]+):?$/);
+      if(!m)return;
+      el.classList.add('ccc-ref');
+      var num=m[1];
+      el.addEventListener('click',function(e){
+        e.stopPropagation();
+        openCCC(num);
+      });
+    });
   }
 
   // Footer
@@ -3183,6 +3289,8 @@ function renderMore(){
   // Trigger readings and saint card fetches independently
   fetchReadings();
   fetchLiturgicalDay().then(function(events){
+    setLiturgicalSeason(events);
+    renderHDOBanner(events);
     renderSaintCard(events);
     renderLiturgicalCalendar(); // Re-render with LitCal data now cached
   });
@@ -3520,6 +3628,188 @@ function dismissMoreInstall(){
   document.cookie='pf_more_install_dismissed=1;expires='+d.toUTCString()+';path=/;SameSite=Lax';
 }
 window.dismissMoreInstall=dismissMoreInstall;
+
+// ── ICS: export liturgical calendar for the current year ──────────────────────
+async function exportLitCalICS(){
+  if(!window._litcalCache) await fetchLiturgicalDay();
+  var events=(window._litcalCache&&window._litcalCache.events)||[];
+  var year=new Date().getFullYear();
+  var gradeLabels={3:'Memorial',4:'Feast',5:'Feast of the Lord',6:'Solemnity',7:'Solemnity'};
+  var items=events.filter(function(e){
+    if(e.is_vigil_mass)return false;
+    return e.grade>=4||e.holy_day_of_obligation;
+  });
+  var lines=[
+    'BEGIN:VCALENDAR','VERSION:2.0',
+    'PRODID:-//MassFinder//Catholic Liturgical Calendar//EN',
+    'CALSCALE:GREGORIAN','METHOD:PUBLISH',
+    'X-WR-CALNAME:Catholic Liturgical Calendar '+year,
+    'X-WR-CALDESC:Solemnities\\, Feasts\\, and Holy Days of Obligation'
+  ];
+  function icsDate(ms){var d=new Date(ms);return String(d.getFullYear())+(d.getMonth()+1<10?'0':'')+(d.getMonth()+1)+(d.getDate()<10?'0':'')+d.getDate();}
+  items.forEach(function(e){
+    var typeStr=e.holy_day_of_obligation?'Holy Day of Obligation':(gradeLabels[e.grade]||'');
+    lines.push('BEGIN:VEVENT');
+    lines.push('DTSTART;VALUE=DATE:'+icsDate(e.date));
+    lines.push('DTEND;VALUE=DATE:'+icsDate(e.date+86400000));
+    lines.push('SUMMARY:'+(e.name||'').replace(/,/g,'\\,'));
+    if(typeStr)lines.push('DESCRIPTION:'+typeStr.replace(/,/g,'\\,'));
+    lines.push('END:VEVENT');
+  });
+  lines.push('END:VCALENDAR');
+  var blob=new Blob([lines.join('\r\n')],{type:'text/calendar;charset=utf-8'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  a.href=url;a.download='liturgical-calendar-'+year+'.ics';
+  document.body.appendChild(a);a.click();
+  document.body.removeChild(a);URL.revokeObjectURL(url);
+}
+window.exportLitCalICS=exportLitCalICS;
+
+// ── CCC reference popup ────────────────────────────────────────────────────────
+var _cccData=null,_cccXrefs=null,_cccHistory=[],_cccCurrentNum='';
+
+async function _loadCCCData(){
+  if(_cccData)return;
+  try{
+    var resp=await fetch('/ccc-mini.json');
+    var json=await resp.json();
+    _cccData={};
+    Object.keys(json.paragraphs).forEach(function(k){_cccData[parseInt(k,10)]=json.paragraphs[k];});
+    _cccXrefs={};
+    Object.keys(json.xrefs).forEach(function(k){_cccXrefs[parseInt(k,10)]=json.xrefs[k];});
+  }catch(e){}
+}
+
+function _cccEsc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function _stripRefs(t){return t.replace(/\s*\(\d[\d,\s\-\u2013]*\)\s*/g,' ').trim();}
+function _mdItalic(t){return t.replace(/\*([^*]+)\*/g,'<em>$1</em>');}
+
+function _renderParaText(raw){
+  var clean=_stripRefs(raw).trim();
+  var lines=clean.split('\n');
+  var html='',bq=false;
+  for(var i=0;i<lines.length;i++){
+    var line=lines[i].trim();
+    if(!line)continue;
+    if(line.charAt(0)==='>'){
+      if(!bq){html+='<blockquote class="ccc-blockquote">';bq=true;}
+      html+='<p>'+_mdItalic(_cccEsc(line.slice(1).trim()))+'</p>';
+    }else{
+      if(bq){html+='</blockquote>';bq=false;}
+      html+='<p class="ccc-para-text">'+_mdItalic(_cccEsc(line))+'</p>';
+    }
+  }
+  if(bq)html+='</blockquote>';
+  return html;
+}
+
+function _getPreview(raw){
+  var clean=_stripRefs(raw).replace(/>/g,'').replace(/\*/g,'').trim();
+  var m=clean.match(/^(.{10,160}[.!?]["\u201d]?)(\s|$)/);
+  var preview=m?m[1].trim():clean.slice(0,140).trim();
+  if(preview.length<clean.length)preview+='\u2026';
+  return preview;
+}
+
+function _parseCCCRange(numStr){
+  var m=numStr.match(/(\d+)[\-\u2013](\d+)/);
+  if(m){
+    var ids=[],s=parseInt(m[1],10),e=parseInt(m[2],10);
+    for(var i=s;i<=e;i++)ids.push(i);
+    return ids;
+  }
+  return[parseInt(numStr,10)];
+}
+
+async function _renderCCCContent(numStr){
+  var bodyEl=document.getElementById('cccSheetBody');
+  var relEl=document.getElementById('cccSheetRelated');
+  bodyEl.innerHTML='<div class="ccc-loading">Loading\u2026</div>';
+  relEl.innerHTML='';
+  await _loadCCCData();
+
+  var ids=_parseCCCRange(numStr);
+  var bodyHtml='';
+  ids.forEach(function(id,idx){
+    var text=_cccData&&_cccData[id];
+    var numEl='<div class="ccc-para-num'+(idx===0?' ccc-para-num--first':'')+'">&#167;&nbsp;'+id+'</div>';
+    bodyHtml+=numEl;
+    if(text){bodyHtml+=_renderParaText(text);}
+    else{bodyHtml+='<p class="ccc-para-text" style="color:var(--color-text-tertiary)">Full text not in local dataset.</p>';}
+  });
+
+  // Related paragraphs (forward + reverse refs from primary id)
+  var primaryId=ids[0];
+  var relatedIds=[],seen={};
+  ids.forEach(function(id){seen[id]=true;});
+  if(_cccXrefs&&_cccXrefs[primaryId]){
+    var xr=_cccXrefs[primaryId];
+    (xr.fwd||[]).concat(xr.rev||[]).forEach(function(id){
+      if(!seen[id]){seen[id]=true;relatedIds.push(id);}
+    });
+    relatedIds.sort(function(a,b){return a-b;});
+  }
+
+  var relHtml='';
+  if(relatedIds.length){
+    relHtml+='<hr class="ccc-divider"><div class="ccc-related-header">Related Teachings</div>';
+    relatedIds.forEach(function(id){
+      var text=_cccData&&_cccData[id];
+      if(!text)return;
+      var preview=_getPreview(text);
+      relHtml+='<div class="ccc-related-item" onclick="cccNavigate(\''+id+'\')">'+
+        '<div class="ccc-related-num">&#167;&nbsp;'+id+'</div>'+
+        '<div class="ccc-related-preview">'+_cccEsc(preview)+'</div>'+
+        '</div>';
+    });
+  }
+
+  bodyEl.innerHTML=bodyHtml;
+  relEl.innerHTML=relHtml;
+  document.getElementById('cccSheetScroll').scrollTop=0;
+  _cccCurrentNum=numStr;
+}
+
+function cccNavigate(numStr){
+  _cccHistory.push(_cccCurrentNum);
+  document.getElementById('cccBackBtn').style.display='inline-flex';
+  _renderCCCContent(numStr);
+}
+function cccGoBack(){
+  if(!_cccHistory.length)return;
+  var prev=_cccHistory.pop();
+  if(!_cccHistory.length)document.getElementById('cccBackBtn').style.display='none';
+  _renderCCCContent(prev);
+}
+function openCCC(numStr){
+  _cccHistory=[];
+  document.getElementById('cccBackBtn').style.display='none';
+  document.getElementById('cccOverlay').classList.add('open');
+  document.getElementById('cccSheet').classList.add('open');
+  document.body.style.overflow='hidden';
+  _renderCCCContent(numStr);
+}
+function closeCCC(){
+  document.getElementById('cccOverlay').classList.remove('open');
+  document.getElementById('cccSheet').classList.remove('open');
+  document.body.style.overflow='';
+}
+window.closeCCC=closeCCC;
+window.cccNavigate=cccNavigate;
+window.cccGoBack=cccGoBack;
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeCCC();});
 </script>
+
+<div class="ccc-overlay" id="cccOverlay" onclick="closeCCC()"></div>
+<div class="ccc-sheet" id="cccSheet" role="dialog" aria-modal="true" aria-label="Catechism Reference">
+  <div class="ccc-handle"></div>
+  <div class="ccc-sheet-scroll" id="cccSheetScroll">
+    <button class="ccc-back-btn" id="cccBackBtn" onclick="cccGoBack()">&#8592; Back</button>
+    <div class="ccc-sheet-label">Catechism of the Catholic Church</div>
+    <div id="cccSheetBody"></div>
+    <div id="cccSheetRelated"></div>
+  </div>
+</div>
 </body>
 </html>

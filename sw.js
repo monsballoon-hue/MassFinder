@@ -1,10 +1,11 @@
-const CACHE_NAME = 'massfinder-v2_20260307_04';
+const CACHE_NAME = 'massfinder-v2_20260307_11';
 const SHELL_ASSETS = [
   '/',
   '/index.html',
   '/parish_data.json',
   '/events.json',
   '/manifest.json',
+  '/ccc-mini.json',
   '/assets/icon-192.png',
   '/assets/icon-512.png',
   'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;500;600&display=swap',

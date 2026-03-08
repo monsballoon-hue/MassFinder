@@ -1042,7 +1042,16 @@ function renderWizardPanel(b, wizItems) {
     if (item.end_time) html += ' – ' + fmtTime(item.end_time);
     html += '</span>';
   }
-  if (item.event_date) html += '<span class="wizard-detail-label">Date</span><span class="wizard-detail-value">' + esc(item.event_date) + '</span>';
+  // Multi-date events: parse dates:["..."] from notes field
+  var multiDates = null;
+  if (item.notes && item.notes.indexOf('dates:[') >= 0) {
+    try { var m = item.notes.match(/dates:(\[[^\]]+\])/); if (m) multiDates = JSON.parse(m[1]); } catch(e) {}
+  }
+  if (multiDates && multiDates.length > 1) {
+    html += '<span class="wizard-detail-label">Dates</span><span class="wizard-detail-value">' + multiDates.map(function(d){ return esc(fmtDate(d)); }).join(', ') + '</span>';
+  } else if (item.event_date) {
+    html += '<span class="wizard-detail-label">Date</span><span class="wizard-detail-value">' + esc(item.event_date) + '</span>';
+  }
   if (item.recurring) html += '<span class="wizard-detail-label">Recurring</span><span class="wizard-detail-value">' + esc(item.recurring) + '</span>';
   if (item.seasonal) html += '<span class="wizard-detail-label">Seasonal</span><span class="wizard-detail-value">' + esc(item.seasonal) + '</span>';
   if (item.language && item.language !== 'en') html += '<span class="wizard-detail-label">Language</span><span class="wizard-detail-value">' + esc(item.language) + '</span>';
@@ -1278,6 +1287,13 @@ function fmtTime(t) {
   if (h === 0) h = 12;
   else if (h > 12) h = h - 12;
   return h + ':' + m + ' ' + ampm;
+}
+function fmtDate(d) {
+  if (!d) return '';
+  var parts = d.split('-');
+  if (parts.length < 3) return d;
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return months[parseInt(parts[1],10)-1] + ' ' + parseInt(parts[2],10) + ', ' + parts[0];
 }
 
 // ── COMPARE PANEL (left side, side-by-side) ──
@@ -1604,11 +1620,18 @@ function openEdit(itemId) {
   html += '<div class="edit-field"><label>Time</label><input type="time" id="ef-time" value="' + escA(item.event_time || '') + '"></div>';
   html += '<div class="edit-field"><label>End Time</label><input type="time" id="ef-endtime" value="' + escA(item.end_time || '') + '"></div>';
   html += '</div>';
+  // Parse multi-date series from notes field (dates:["...","..."])
+  var multiDatesStr = '';
+  if (item.notes) {
+    var dm = item.notes.match(/dates:(\[[^\]]+\])/);
+    if (dm) { try { multiDatesStr = JSON.parse(dm[1]).join('\n'); } catch(e) {} }
+  }
   html += '<div class="edit-row">';
   html += '<div class="edit-field' + (itype === 'service' ? ' disabled' : '') + '" id="ef-date-wrap"><label>Date</label><input type="date" id="ef-date" value="' + escA(item.event_date || '') + '"' + (itype === 'service' ? ' disabled' : '') + '></div>';
-  html += '<div class="edit-field' + (itype === 'service' ? ' disabled' : '') + '" id="ef-enddate-wrap"><label>End Date</label><input type="date" id="ef-enddate" value="' + escA(item.end_date || '') + '"' + (itype === 'service' ? ' disabled' : '') + '></div>';
+  html += '<div class="edit-field' + (itype === 'service' ? ' disabled' : '') + '" id="ef-enddate-wrap"><label>End Date</label><input type="date" id="ef-enddate" value="' + escA(item.effective_date || item.end_date || '') + '"' + (itype === 'service' ? ' disabled' : '') + '></div>';
   html += '</div>';
-  html += '<div class="edit-field' + (itype !== 'service' ? ' disabled' : '') + '" id="ef-day-wrap"><label>Day</label><select id="ef-day"' + (itype !== 'service' ? ' disabled' : '') + '>';
+  html += '<div class="edit-field' + (itype === 'service' ? ' disabled' : '') + '" id="ef-dates-wrap"><label>Dates (multi-date series, one per line)</label><textarea id="ef-dates" rows="3" placeholder="YYYY-MM-DD per line"' + (itype === 'service' ? ' disabled' : '') + '>' + escA(multiDatesStr) + '</textarea></div>';
+  html += '<div class="edit-field" id="ef-day-wrap"><label>Day (recurring)</label><select id="ef-day">';
   EDIT_ENUMS.DAYS.forEach(function(v) {
     var sel = (item.day || '') === v ? ' selected' : '';
     html += '<option value="' + v + '"' + sel + '>' + (v || '(none)') + '</option>';
@@ -1627,7 +1650,7 @@ function openEdit(itemId) {
     html += '<option value="' + v + '"' + sel + '>' + (v || '(none)') + '</option>';
   });
   html += '</select></div>';
-  html += '<div class="edit-field' + (itype === 'event' ? ' disabled' : '') + '" id="ef-seasonal-wrap"><label>Seasonal</label><select id="ef-seasonal"' + (itype === 'event' ? ' disabled' : '') + '>';
+  html += '<div class="edit-field" id="ef-seasonal-wrap"><label>Seasonal</label><select id="ef-seasonal">';
   EDIT_ENUMS.SEASONAL.forEach(function(v) {
     var sel = (item.seasonal || '') === v ? ' selected' : '';
     html += '<option value="' + v + '"' + sel + '>' + (v || '(none)') + '</option>';
@@ -1802,14 +1825,14 @@ function getEditValues() {
     title: document.getElementById('ef-title').value,
     category: document.getElementById('ef-category').value,
     item_type: itype,
-    day: (itype === 'service') ? (document.getElementById('ef-day').value || null) : null,
+    day: document.getElementById('ef-day').value || null,
     recurring: document.getElementById('ef-recurring').value || null,
     event_date: (itype !== 'service') ? (document.getElementById('ef-date').value || null) : null,
     end_date: (itype !== 'service') ? (document.getElementById('ef-enddate').value || null) : null,
     event_time: document.getElementById('ef-time').value || null,
     end_time: document.getElementById('ef-endtime').value || null,
     location: document.getElementById('ef-location').value || null,
-    seasonal: (itype === 'service') ? (document.getElementById('ef-seasonal').value || null) : null,
+    seasonal: document.getElementById('ef-seasonal').value || null,
     language: document.getElementById('ef-language').value || null,
     contact_name: document.getElementById('ef-contact').value || null,
     contact_phone: document.getElementById('ef-phone').value || null,
@@ -1818,6 +1841,25 @@ function getEditValues() {
     tags: tagsArr,
     description: document.getElementById('ef-desc').value || null
   };
+  // Multi-date series: serialize dates textarea into notes field
+  var datesEl = document.getElementById('ef-dates');
+  if (datesEl && itype !== 'service') {
+    var datesRaw = datesEl.value.trim();
+    if (datesRaw) {
+      var datesArr = datesRaw.split(/[\n,]+/).map(function(d) { return d.trim(); }).filter(Boolean);
+      if (datesArr.length > 0) {
+        // Store dates array in notes, set event_date to first
+        var existing = vals.description || '';
+        vals.notes = 'dates:' + JSON.stringify(datesArr);
+        vals.event_date = datesArr[0];
+        // Auto-set end_date to last date if not manually set
+        if (!vals.end_date) vals.end_date = datesArr[datesArr.length - 1];
+      }
+    }
+    // For recurring events (day set), clear event_date
+    if (vals.day && !datesRaw) vals.event_date = null;
+  }
+  return vals;
 }
 
 function validateEdit(vals) {

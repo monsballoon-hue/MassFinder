@@ -157,7 +157,11 @@ var server = http.createServer(function(req, res) {
       if (data.seasonal !== undefined) updates.seasonal = data.seasonal;
       if (data.new_value !== undefined) updates.new_value = data.new_value;
       if (data.location !== undefined) updates.location = data.location;
+      if (data.venue_name !== undefined) updates.venue_name = data.venue_name;
+      if (data.venue_address !== undefined) updates.venue_address = data.venue_address;
       if (data.effective_date !== undefined) updates.effective_date = data.effective_date;
+      if (data.recurrence_type !== undefined) updates.recurrence_type = data.recurrence_type;
+      if (data.dates !== undefined) updates.dates = data.dates; // TEXT[] — null clears it
       if (data.confidence !== undefined) updates.confidence = data.confidence;
       supabase.from('bulletin_changes').update(updates)
         .eq('id', id).then(function(r) {

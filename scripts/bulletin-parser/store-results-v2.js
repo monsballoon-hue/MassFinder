@@ -1,10 +1,55 @@
 // store-results-v2.js — Store v2 pipeline results in Supabase
 // Writes to bulletins (run metadata) + bulletin_changes (change items)
 
+var path = require('path');
+var fs = require('fs');
 var config = require('./config');
 var sb = require('@supabase/supabase-js');
 
 var supabase = sb.createClient(config.SUPABASE_URL, config.SUPABASE_SERVICE_ROLE_KEY);
+
+// Build location lookup: location_id → { name, address, city, state, zip, lat, lng }
+var parishData = JSON.parse(fs.readFileSync(
+  path.resolve(__dirname, '../../parish_data.json'), 'utf8'
+));
+var locationLookup = {};
+parishData.parishes.forEach(function(p) {
+  (p.locations || []).forEach(function(loc) {
+    locationLookup[loc.id] = {
+      name: loc.name || p.name,
+      address: loc.address || null,
+      city: loc.city || p.town,
+      state: loc.state || p.state,
+      zip: loc.zip || p.zip,
+      lat: loc.lat || null,
+      lng: loc.lng || null,
+    };
+  });
+});
+
+/**
+ * Resolve event location into venue_name + venue_address.
+ * If Claude extracted a relative name ("Parish Hall"), use it as venue_name
+ * and fill venue_address from the church's known address.
+ * If Claude extracted a full address (contains digits + comma), keep as venue_address.
+ */
+function resolveVenue(rawLocation, churchId) {
+  var churchInfo = locationLookup[churchId];
+  var churchAddress = churchInfo ? churchInfo.address : null;
+
+  if (!rawLocation) {
+    return { venue_name: churchInfo ? churchInfo.name : null, venue_address: churchAddress };
+  }
+
+  // Heuristic: if it contains a street number and comma, it's likely a full address
+  var looksLikeAddress = /\d+\s+\w+.*,/.test(rawLocation);
+  if (looksLikeAddress) {
+    return { venue_name: rawLocation.split(',')[0].trim(), venue_address: rawLocation };
+  }
+
+  // Relative location — use as display name, fill address from church
+  return { venue_name: rawLocation, venue_address: churchAddress };
+}
 
 /**
  * Store v2 pipeline results.
@@ -93,6 +138,7 @@ function storeV2Results(opts) {
             field_changed: m.field || null,
             old_value: m.old_value != null ? String(m.old_value) : null,
             new_value: m.new_value != null ? String(m.new_value) : null,
+            source_page: m.source_page || null,
             confidence: m.confidence || null,
             status: 'pending',
           });
@@ -124,25 +170,46 @@ function storeV2Results(opts) {
             language: ns.language || null,
             seasonal: ns.seasonal || null,
             notes: ns.notes || null,
+            source_page: ns.source_page || null,
             confidence: ns.confidence || null,
             status: 'pending',
           });
         });
 
-        // Events
+        // Events — 3 scheduling modes (recurrence_type discriminator):
+        //   once   → event_date only
+        //   series → dates[] array, event_date = first, effective_date = last
+        //   weekly → day column, optional event_date (start), optional effective_date (end)
         events.forEach(function(ev) {
+          var dates = ev.dates && ev.dates.length > 1 ? ev.dates : null; // only for series
+          var day = ev.day || null; // weekly recurring
+          var recurrenceType = day ? 'weekly' : (dates ? 'series' : 'once');
+          var firstDate = dates ? dates[0] : (ev.date || null);
+          var lastDate = dates ? dates[dates.length - 1] : null;
+          // effective_date: explicit end_date from Claude, or last date in series
+          var effectiveDate = ev.end_date || lastDate || null;
+          var venue = resolveVenue(ev.location, opts.churchId);
           rows.push({
             bulletin_id: bulletinId,
             church_id: opts.churchId,
             change_type: 'event',
+            recurrence_type: recurrenceType,
             title: ev.title || null,
             description: ev.description || null,
-            event_date: ev.date || null,
+            day: day,
+            dates: dates, // TEXT[] — only for series
+            event_date: day ? (ev.date || null) : firstDate, // recurring: start date if given
             event_time: ev.time || null,
             event_end_time: ev.end_time || null,
-            location: ev.location || null,
+            effective_date: effectiveDate,
+            location: ev.location || null, // raw text for reference
+            venue_name: venue.venue_name,
+            venue_address: venue.venue_address,
             category: ev.category || null,
+            seasonal: ev.seasonal || null,
+            source_page: ev.source_page || null,
             confidence: ev.confidence || null,
+            notes: ev.notes || null, // Claude's raw notes only, no encoding
             status: 'pending',
           });
         });
@@ -156,6 +223,7 @@ function storeV2Results(opts) {
             title: n.title || null,
             description: n.details || null,
             effective_date: n.effective_date || null,
+            source_page: n.source_page || null,
             confidence: n.confidence || null,
             status: 'pending',
           });

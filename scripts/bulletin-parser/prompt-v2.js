@@ -104,6 +104,13 @@ function buildTaskSection(currentYear) {
     '   Valid types: ' + STANDARDS.SERVICE_TYPES.join(', ') + '\n' +
     '   Valid days: ' + STANDARDS.DAYS.join(', ') + '\n\n' +
     '5. **events** — One-time or limited-run community events, social gatherings, educational programs.\n' +
+    '   Three scheduling modes (use exactly ONE per event):\n' +
+    '   a) **One-time**: "date": "YYYY-MM-DD" — single occurrence.\n' +
+    '   b) **Multi-date series**: "dates": ["YYYY-MM-DD", ...] — list ALL specific dates mentioned. Never pick just one.\n' +
+    '   c) **Weekly recurring**: "day": "friday" — repeats every week. Add "end_date" if a final date is mentioned.\n' +
+    '   Additional fields:\n' +
+    '   - "end_date": "YYYY-MM-DD" — when the event ends (for recurring or series with a known end).\n' +
+    '   - "seasonal": "lent" or "advent" — if the event is tied to a liturgical season.\n' +
     '   Valid categories: ' + STANDARDS.EVENT_CATEGORIES.join(', ') + '\n\n' +
     '6. **notices** — Schedule changes, cancellations, closures, or important announcements.\n\n' +
     '## IGNORE\n' +
@@ -119,22 +126,27 @@ function buildTaskSection(currentYear) {
     '{\n' +
     '  "confirmed": [1, 2, 3],\n' +
     '  "modified": [\n' +
-    '    {"service_num": 4, "field": "time", "old_value": "09:00", "new_value": "08:30", "confidence": 0.95}\n' +
+    '    {"service_num": 4, "field": "time", "old_value": "09:00", "new_value": "08:30", "source_page": 1, "confidence": 0.95}\n' +
     '  ],\n' +
     '  "not_found": [6, 8],\n' +
     '  "new_services": [\n' +
     '    {"type": "stations_of_cross", "day": "friday", "time": "19:00",\n' +
     '     "language": "en", "seasonal": "lent", "notes": "followed by Benediction",\n' +
-    '     "confidence": 0.9}\n' +
+    '     "source_page": 2, "confidence": 0.9}\n' +
     '  ],\n' +
     '  "events": [\n' +
-    '    {"title": "Fish Fry", "date": "' + currentYear + '-03-13", "time": "17:00",\n' +
-    '     "end_time": "19:00", "location": "Parish Hall",\n' +
-    '     "category": "fish_fry", "description": "...", "confidence": 0.95}\n' +
+    '    {"title": "Parish Trivia Night", "date": "' + currentYear + '-04-12", "time": "18:00",\n' +
+    '     "location": "Parish Hall", "category": "trivia_night", "source_page": 3, "confidence": 0.95},\n' +
+    '    {"title": "Hope Lives Lenten Series", "dates": ["' + currentYear + '-03-11", "' + currentYear + '-03-18", "' + currentYear + '-03-25"],\n' +
+    '     "time": "18:30", "location": "Church Hall", "end_date": "' + currentYear + '-03-25",\n' +
+    '     "category": "speaker_series", "seasonal": "lent", "description": "Three-part Lenten series", "source_page": 4, "confidence": 0.9},\n' +
+    '    {"title": "Fish Fry", "day": "friday", "time": "17:00", "end_time": "19:00",\n' +
+    '     "location": "Parish Hall", "end_date": "' + currentYear + '-04-03",\n' +
+    '     "category": "fish_fry", "seasonal": "lent", "source_page": 5, "confidence": 0.95}\n' +
     '  ],\n' +
     '  "notices": [\n' +
     '    {"title": "No Daily Mass Monday", "details": "Pastor away",\n' +
-    '     "effective_date": "' + currentYear + '-03-16", "confidence": 0.9}\n' +
+    '     "effective_date": "' + currentYear + '-03-16", "source_page": 1, "confidence": 0.9}\n' +
     '  ],\n' +
     '  "clergy": [{"role": "pastor", "name": "Fr. John Smith"}],\n' +
     '  "bulletin_date": "' + currentYear + '-03-15",\n' +
@@ -147,7 +159,8 @@ function buildTaskSection(currentYear) {
     '- Use individual day values (monday, tuesday, etc.) for each occurrence. Never use "weekday" or "daily".\n' +
     '- Saturday Mass at 2:00 PM or later = sunday_mass (vigil). Before 2:00 PM = daily_mass.\n' +
     '- Do NOT put mass intentions, prayer requests, or memorial names in events.\n' +
-    '- For clergy, include only ordained ministers (pastor, parochial vicar, deacon). Not staff.';
+    '- For clergy, include only ordained ministers (pastor, parochial vicar, deacon). Not staff.\n' +
+    '- source_page: The page number (from "--- PAGE N ---" markers) where you found the information. Include on every modified, new_service, event, and notice item.';
 }
 
 module.exports = {
